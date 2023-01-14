@@ -356,6 +356,13 @@ class ShoppingListController extends Controller
     public function activeChange(Shopping_list $shopping_list)
     {
 
+        if($shopping_list->status->isStop()){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Lista zablokowana, nie powinno cie tu być!'
+            ]);
+        }
+
         if(!isset($shopping_list->address->id)){
             return response()->json([
                 'status' => 'warning',
@@ -424,17 +431,6 @@ class ShoppingListController extends Controller
             ]);
         }
 
-        /*$is_not_available = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->where([
-            ['status', 'in_prepare'],
-        ]);
-
-        if(isset($is_not_available)){
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'Lista zablokowana!'
-            ]);
-        }*/
-
 
 
         $user = Auth::user();
@@ -467,7 +463,7 @@ class ShoppingListController extends Controller
         //nie działa
 
         //jeżeli jest nie zablokowana czyli status nie order blokada edycji
-        if($shopping_list->status == ShoppingListStatus::RESUME)
+        if($shopping_list->status != ShoppingListStatus::STOP)
         {
             $this->copy($shopping_list);
 

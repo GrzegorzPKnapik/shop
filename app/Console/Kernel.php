@@ -76,10 +76,10 @@ class Kernel extends ConsoleKernel
 
                         /*Jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy*/
                         if ($item->status->isCart()) {
-                            //$item->status = OrderStatus::SKIPPED;
+                            //$item->status = OrderStatus::NONE;
                             $item->delivery_date = $this->nextDate($item->delivery_date);
-                            $item->end_mod_date = $this->endDate($item->delivery_date);
-                            $item->mod_available_date = $this->mod_available_date($item->delivery_date);
+                            $item->end_mod_date = $this->endDate($this->nextDate($item->delivery_date));
+                            $item->mod_available_date = $this->mod_available_date($this->nextDate($item->delivery_date));
                             $item->save();
                         }
                     }
@@ -90,7 +90,7 @@ class Kernel extends ConsoleKernel
 
             }
 
-        })->at('21:47');
+        })->at('22:52');
             //})->daily();
 
 
@@ -108,8 +108,8 @@ class Kernel extends ConsoleKernel
         $copiedShoppingList->status = ShoppingListStatus::NONE;
         $copiedShoppingList->active = ShoppingListActive::TRUE;
         $copiedShoppingList->delivery_date = $this->nextDate($shopping_list->delivery_date);
-        $copiedShoppingList->mod_available_date = $this->mod_available_date($shopping_list->delivery_date);
-        $copiedShoppingList->end_mod_date = $this->endDate($shopping_list->delivery_date);
+        $copiedShoppingList->mod_available_date = $this->mod_available_date($this->nextDate($shopping_list->delivery_date));
+        $copiedShoppingList->end_mod_date = $this->endDate($this->nextDate($shopping_list->delivery_date));
         $copiedShoppingList->created_at = $shopping_list->created_at;
         $copiedShoppingList->updated_at = $shopping_list->updated_at;
         $copiedShoppingList->USERS_id = $shopping_list->USERS_id;
@@ -133,9 +133,11 @@ class Kernel extends ConsoleKernel
         }
 
         //orde też musze skopiować tworze order z tymi samymi danymi ale zminia sie id shopping_list na skopiowaną
+        $order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
 
-        /*$copiedOrder = new Order();
-        $copiedOrder->status = OrderStatus::NONE;
+
+        $copiedOrder = new Order();
+        $copiedOrder->status = OrderStatus::DELIVERED;
         $copiedOrder->created_at = $order->created_at;
         $copiedOrder->updated_at = $order->updated_at;
         $copiedOrder->DELIVERIES_id = $order->DELIVERIES_id;
@@ -143,7 +145,7 @@ class Kernel extends ConsoleKernel
         $copiedOrder->SHOPPING_LISTS_id = $copiedShoppingList->id;
 
 
-        $copiedOrder->save();*/
+        $copiedOrder->save();
     }
 
 

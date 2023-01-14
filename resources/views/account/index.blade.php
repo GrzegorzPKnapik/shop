@@ -114,7 +114,7 @@
                                                                             }
                                                                         @endphp
 
-                                                                        @if($latestOrder && !$latestOrder->status->isDelivered())
+                                                                        @if($latestOrder && $latestOrder->status->isDelivered())
                                                                             <td class="cart-product-name">#{{ $latestOrder->id }}</td>
                                                                         @else
                                                                             <td class="cart-product-name"></td>

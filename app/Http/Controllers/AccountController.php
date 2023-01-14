@@ -33,6 +33,8 @@ class AccountController extends Controller
             /*->orWhereNull('status')*/
             ->get();
 
+
+
         /*  $shopping_lists = Shopping_list::with(['user'])
               ->whereHas('user', function ($query) use ($user) {
                   $query->where('id', $user->id);
