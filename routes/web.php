@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 
 
-    return view('poprawa błedu');
+    return view('poprawattt błedu');
 
 
 });
