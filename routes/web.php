@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 
 
-    return view('poprawattt błedu');
+    return view('welcome');
 
 
 });
