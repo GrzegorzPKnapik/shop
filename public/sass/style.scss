@@ -1,0 +1,27 @@
+/*
+    Template Name: Broccoli
+    Description: Organic Food HTML Template
+    Version: 1.0.0
+*/
+
+//== Global Design
+@import "mixins";
+@import "variables";
+@import "global";
+@import "gutenberg";
+
+//== Sections
+@import "animation";
+@import "breadcrumb";
+@import "widgets";
+@import "header";
+@import "slider";
+@import "product";
+@import "portfolio";
+@import "main";
+@import "footer";
+
+//== Elements
+@import "preloader";
+@import "search_popup";
+@import "button";
