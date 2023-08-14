@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('content')
 
+@section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 order-md-2 col-lg-9">
@@ -47,6 +47,7 @@
                                     <h5 class="card-price small text-warning">
                                         <i>
                                             <s>$199</s> $99</i>
+                                        <button class="button">bbb<button>
                                     </h5>
                                 </div>
                             </div>
