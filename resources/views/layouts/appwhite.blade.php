@@ -28,13 +28,16 @@
 
 <body>
 
+
+<!-- Add your site or application content here -->
+
 <!-- Body main wrapper start -->
-<div class="wrapper">
+<div class="body-wrapper">
 
     <!-- HEADER AREA START (header-5) -->
-    <header class="ltn__header-area ltn__header-5 ltn__header-transparent gradient-color-2">
+    <header class="ltn__header-area ltn__header-5 ltn__header-transparent-- gradient-color-4---">
         <!-- ltn__header-top-area start -->
-        <div class="ltn__header-top-area d-none">
+        <div class="ltn__header-top-area">
             <div class="container">
                 <div class="row">
                     <div class="col-md-7">
@@ -88,17 +91,17 @@
         <!-- ltn__header-top-area end -->
 
         <!-- ltn__header-middle-area start -->
-        <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-black ltn__logo-right-menu-option plr--9---">
+        <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-white ltn__logo-right-menu-option plr--9---">
             <div class="container">
                 <div class="row">
                     <div class="col">
                         <div class="site-logo-wrap">
                             <div class="site-logo">
-                                <a href="index.html"><img src="img/logo-2.png" alt="Logo"></a>
+                                <a href="index.html"><img src="img/logo.png" alt="Logo"></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col header-menu-column menu-color-white">
+                    <div class="col header-menu-column menu-color-white---">
                         <div class="header-menu d-none d-xl-block">
                             <nav>
                                 <div class="ltn__main-menu">
@@ -238,7 +241,7 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="ltn__header-options ltn__header-options-2">
+                    <div class="ltn__header-options ltn__header-options-2 mb-sm-20">
                         <!-- header-search-1 -->
                         <div class="header-search-wrap">
                             <div class="header-search-1">
@@ -262,47 +265,40 @@
                                 <li>
                                     <a href="#"><i class="icon-user"></i></a>
                                     <ul>
-
                                         @guest
-                                            @if (Route::has('login'))
-                                                <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                                        @if (Route::has('login'))
+                                        <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                                        @endif
+                                        @if (Route::has('register'))
+                                        <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                                             @endif
-                                            @if (Route::has('register'))
-                                                <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                                            @endif
-                                        @else
-
+                                            @else
                                             <li><a href="#">{{ Auth::user()->name }} <span class="float-end">>></span></a>
-
                                                 <ul>
                                                     <li><a href="cart.html">Wyloguj</a></li>
                                                     <li><a href="account.html">Moje konto</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a
-                                            href="{{ route('logout') }}"
-                                               onclick="event.preventDefault();
+                                            <li>
+                                                <a href="{{ route('logout') }}"
+                                                           onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a></li>
+                                                            {{ __('Logout') }}
+                                                </a></li>
 
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-
-
+                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                            @csrf
+                                                        </form>
 
 
-                                        @endguest
+                                            @endguest
 
 
                                         <li><a href="account.html">My Account</a></li>
                                         <li><a href="wishlist.html">Wishlist</a></li>
-
                                     </ul>
                                 </li>
                             </ul>
-
                         </div>
                         <!-- mini-cart -->
                         <div class="mini-cart-icon">
@@ -331,6 +327,7 @@
     <!-- HEADER AREA END -->
 
     @yield('content')
+
 
     <!-- Utilize Cart Menu Start -->
     <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
@@ -533,14 +530,14 @@
 
     <!-- FOOTER AREA START -->
     <footer class="ltn__footer-area  ">
-        <div class="footer-top-area  section-bg-1 plr--5">
+        <div class="footer-top-area  section-bg-2 plr--5">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-3 col-md-6 col-sm-6 col-12">
                         <div class="footer-widget footer-about-widget">
                             <div class="footer-logo">
                                 <div class="site-logo">
-                                    <img src="img/logo.png" alt="Logo">
+                                    <img src="img/logo-2.png" alt="Logo">
                                 </div>
                             </div>
                             <p>Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.</p>
@@ -632,12 +629,25 @@
                             <h4 class="footer-title">Newsletter</h4>
                             <p>Subscribe to our weekly Newsletter and receive updates via email.</p>
                             <div class="footer-newsletter">
-                                <form action="#">
-                                    <input type="email" name="email" placeholder="Email*">
-                                    <div class="btn-wrapper">
-                                        <button class="theme-btn-1 btn" type="submit"><i class="fas fa-location-arrow"></i></button>
-                                    </div>
-                                </form>
+                                <div id="mc_embed_signup">
+                                    <form action="https://gmail.us5.list-manage.com/subscribe/post?u=dde0a42ff09e8d43cad40dc82&amp;id=72d274d15d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                        <div id="mc_embed_signup_scroll">
+                                            <div class="mc-field-group">
+                                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Email*">
+                                            </div>
+                                            <div id="mce-responses" class="clear">
+                                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                                <div class="response" id="mce-success-response" style="display:none"></div>
+                                            </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                            <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_dde0a42ff09e8d43cad40dc82_72d274d15d" tabindex="-1" value=""></div>
+                                            <div class="clear">
+                                                <div class="btn-wrapper">
+                                                    <button class="theme-btn-1 btn"  type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"><i class="fas fa-location-arrow"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                             <h5 class="mt-30">We Accept</h5>
                             <img src="img/icons/payment-4.png" alt="Payment Image">
@@ -646,7 +656,7 @@
                 </div>
             </div>
         </div>
-        <div class="ltn__copyright-area ltn__copyright-2 section-bg-2  ltn__border-top-2--- plr--5">
+        <div class="ltn__copyright-area ltn__copyright-2 section-bg-2 ltn__border-top-2 plr--5">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 col-12">
@@ -669,9 +679,19 @@
     </footer>
     <!-- FOOTER AREA END -->
 
-
 </div>
+<!-- Body main wrapper end -->
 
+<!-- preloader area start -->
+<div class="preloader d-none" id="preloader">
+    <div class="preloader-inner">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+</div>
+<!-- preloader area end -->
 
 
 
