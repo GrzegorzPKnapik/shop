@@ -233,6 +233,7 @@
                                         </li>
                                         <li><a href="contact.html">Contact</a></li>
                                         <li class="special-link"><a href="contact.html">GET A QUOTE</a></li>
+                                        <li></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -257,12 +258,11 @@
                             </div>
                         </div>
                         <!-- user-menu -->
-                        <div class="ltn__drop-menu user-menu">
+                        <div class="ltn__drop-menu">
                             <ul>
                                 <li>
                                     <a href="#"><i class="icon-user"></i></a>
                                     <ul>
-
                                         @guest
                                             @if (Route::has('login'))
                                                 <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
@@ -271,26 +271,17 @@
                                                 <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                                             @endif
                                         @else
+                                            <li>
 
-                                            <li><a href="#">{{ Auth::user()->name }} <span class="float-end">>></span></a>
-
-                                                <ul>
-                                                    <li><a href="cart.html">Wyloguj</a></li>
-                                                    <li><a href="account.html">Moje konto</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a
-                                            href="{{ route('logout') }}"
-                                               onclick="event.preventDefault();
+                                                <a href="{{ route('logout') }}"
+                                                   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a></li>
+                                                    {{ __('Logout') }}
+                                                </a></li>
 
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                 @csrf
                                             </form>
-
-
 
 
                                         @endguest
@@ -299,10 +290,10 @@
                                         <li><a href="account.html">My Account</a></li>
                                         <li><a href="wishlist.html">Wishlist</a></li>
 
+
                                     </ul>
                                 </li>
                             </ul>
-
                         </div>
                         <!-- mini-cart -->
                         <div class="mini-cart-icon">
