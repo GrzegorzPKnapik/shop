@@ -267,7 +267,9 @@
                                 <li>
                                     <a href="#"><i class="icon-user"></i></a>
                                     <ul>
+                                        <!-- quest zwraca true jeśli użytkownaik nie zalogowany,false wykonuje else -->
                                         @guest
+
                                         @if (Route::has('login'))
                                         <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                                         @endif
@@ -291,8 +293,7 @@
 
 
                                             @endguest
-
-
+                                        <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
                                         <li><a href="account.html">My Account</a></li>
                                         <li><a href="wishlist.html">Wishlist</a></li>
 

@@ -6,21 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Role extends Model
+class Product extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+
     ];
-    const  ADMIN='admin';
-    const USER='user';
 
-    public function user() :BelongsTo
+    public function image() :BelongsTo
     {
-        return $this->belongsTo(User::class,'ROLE_id');
+        return $this->belongsTo(Image::class,'IMAGES_id');
     }
-
-
-
 }
