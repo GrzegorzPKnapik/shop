@@ -49,7 +49,7 @@
                             <input id="image" type="file" name="image" class="form-control" value="{{ old('image') }}" autofocus onchange="loadFile(event)">
 
                             <img id="output" src="#" alt="Your image" class="mt-3" width="200" height="200"/>
-
+                            
 
 
                             <div class="btn-wrapper mt-0">

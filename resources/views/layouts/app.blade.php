@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- All JS Plugins -->
     <script src="{{asset('js/plugins.js')}}"></script>
     <!-- Main JS -->
