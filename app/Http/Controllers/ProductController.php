@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use http\Env\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -47,7 +48,7 @@ class ProductController extends Controller
         return redirect()->route('products.update');
     }
 
-    public function destroy($id){
+    public function destroy($id): JsonResponse{
 
         $product = Product::find($id);
         $product->delete();
