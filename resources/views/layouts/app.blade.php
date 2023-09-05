@@ -24,6 +24,7 @@
     <script src="{{asset('js/plugins.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('js/main.js')}}"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -663,6 +664,10 @@
 
 </div>
 
+
+<script type="text/javascript">
+    @yield('javascript')
+</script>
 
 
 

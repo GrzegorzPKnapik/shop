@@ -24,9 +24,10 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('can:isUser');
 
-
-Route::get('/product', [ProductController::class, 'create'])->name('product.create');
-Route::post('/product', [ProductController::class, 'store'])->name('product.store');
+Route::delete('/product/{id}', [ProductController::class, 'destroy']);
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
+Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 
 

@@ -294,6 +294,7 @@
 
                                             @endguest
                                         <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
+                                        <li><a href="{{ route('product.index') }}">{{ __('Wyświetl produkty') }}</a></li>
                                         <li><a href="account.html">My Account</a></li>
                                         <li><a href="wishlist.html">Wishlist</a></li>
 

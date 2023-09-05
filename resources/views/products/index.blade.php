@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="body-wrapper">
 
     <!-- BREADCRUMB AREA START -->
@@ -11,8 +10,8 @@
                 <div class="col-lg-12">
                     <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                         <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">Dodawanie produktu</h6>
-                            <h1 class="section-title white-color">Create Product</h1>
+                            <h6 class="section-subtitle ltn__secondary-color">Produkty</h6>
+                            <h1 class="section-title white-color">Produkty</h1>
                         </div>
                         <div class="ltn__breadcrumb-list">
                             <ul>
@@ -28,41 +27,39 @@
     <!-- BREADCRUMB AREA END -->
 
     <!-- LOGIN AREA START -->
-    <div class="ltn__login-area pb-65">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title-area text-center">
-                        <h1 class="section-title">Sign In <br>To  Your Account</h1>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-                            Sit aliquid,  Non distinctio vel iste.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="account-login-inner">
-                        <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
-                                @csrf
-                            <input id="name" type="text" placeholder="nazwa" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+    <div class="col-lg-6 m-auto">
+        <div class="tab-content">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nazwa</th>
+                        <th>Akcje</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($products as $product)
+                    <tr>
+                        <td>{{$product->id}}</td>
+                        <td>{{$product->name}}</td>
+                        <td>
+                        <button class="icon-cancel delete" data-id="{{$product->id}}" data-name="{{$product->name}}"></button>
 
-                            <input id="image" type="file" name="image" class="form-control" value="{{ old('image') }}" autofocus onchange="loadFile(event)">
+                            <a href="{{ route('product.create') }}">
+                                <button class="icon-edit"></button>
+                            </a>
 
-                            <img id="output" src="#" alt="Your image" class="mt-3" width="200" height="200"/>
-                            
+                            <a href="https://www.freecodecamp.org/">
+                                <button class="icon-search"></button>
+                            </a>
 
-
-                            <div class="btn-wrapper mt-0">
-                                <button class="theme-btn-1 btn btn-block" type="submit">
-                                    {{ __('Zatwierdź') }}
-                                </button>
-                            </div>
-
-
-
-                            </form>
-                    </div>
-                </div>
+                        <td><a href="cart.html">Quickview</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -331,12 +328,27 @@
     <!-- Utilize Mobile Menu End -->
 
     <div class="ltn__utilize-overlay"></div>
+
 </div>
+
 @endsection
 
-<script>
-    var loadFile = function(event){
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-    }
-</script>
+@section('javascript')
+    $(function(){
+    $('.delete').click(function (){
+    if(confirm("Usunąć produkt? Id:"+$(this).data("id") + " Nazwa:" + $(this).data("name"))){
+    $.ajax({
+    type: "DELETE",
+    url: "http://127.0.0.1:8000/product/" + $(this).data("id")
+    //data: { id: $}
+    })
+    .done(function( response ) {
+   window.location.reload();
+    })
+    .fail(function( response ) {
+    alert( "ERROR");
+    });
+}
+    });
+    });
+@endsection
