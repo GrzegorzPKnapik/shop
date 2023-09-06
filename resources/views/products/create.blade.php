@@ -44,10 +44,21 @@
                     <div class="account-login-inner">
                         <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
                                 @csrf
-                            <input id="name" type="text" placeholder="nazwa" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
-                            <input id="image" type="file" name="image" class="form-control" value="{{ old('image') }}" autofocus onchange="loadFile(event)">
 
+                            <input id="name" type="text" placeholder="nazwa" class="form-control" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus/>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
+
+                            <input id="image" type="file" @error('image') is-invalid @enderror name="image" class="form-control" value="{{ old('image') }}" autofocus onchange="loadFile(event)">
+                            @error('image')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                             <img id="output" src="#" alt="Your image" class="mt-3" width="200" height="200"/>
 
 
@@ -334,12 +345,9 @@
 
 </div>
 
-<script>
-    var loadFile = function(event){
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-    }
-</script>
 @endsection
 
+@section('js-files')
+    <script src="{{ asset('js/preview_image.js') }}"></script>
+@endsection
 

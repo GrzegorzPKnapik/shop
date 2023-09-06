@@ -1,17 +1,27 @@
-$(function(){
-    $('.delete').click(function (){
-        if(confirm("Usunąć produktuu? Id:"+$(this).data("id") + " Nazwa:" + $(this).data("name"))){
-            $.ajax({
-                type: "DELETE",
-                url: deleteUrl + $(this).data("id")
-                //data: { id: $}
-            })
-                .done(function( response ) {
-                    window.location.reload();
+$(function() {
+    $('.delete').click(function () {
+        Swal.fire({
+            title: 'Czy chcesz usunąć?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Tak',
+            cancelButtonText: 'Nie',
+            position: 'top'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "DELETE",
+                    url: deleteUrl + $(this).data("id")
+
                 })
-                .fail(function( response ) {
-                    alert( "ERROR");
-                });
-        }
+                    .done(function (response) {
+                        window.location.reload();
+                    })
+                    .fail(function (response) {
+                        //console.log(response);
+                        Swal.fire('Ops...', response.responseJSON.message, response.responseJSON.status);
+                    });
+            }
+        });
     });
 });

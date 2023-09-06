@@ -24,6 +24,7 @@
     <script src="{{asset('js/plugins.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('js/main.js')}}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 

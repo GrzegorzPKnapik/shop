@@ -24,7 +24,7 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('can:isUser');
 
-Route::delete('/product/{id}', [ProductController::class, 'destroy']);
+Route::delete('/product/{product}', [ProductController::class, 'destroy']);
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
