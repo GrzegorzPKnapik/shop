@@ -96,7 +96,7 @@
                     <div class="col">
                         <div class="site-logo-wrap">
                             <div class="site-logo">
-                                <a href="index.html"><img src="img/logo-2.png" alt="Logo"></a>
+                                <a href="index.html"><img src="{{ asset('img/logo-2.png') }}" alt="Logo"></a>
                             </div>
                         </div>
                     </div>
@@ -109,47 +109,47 @@
                                             <ul class="sub-menu menu-pages-img-show ltn__sub-menu-col-2---">
                                                 <li>
                                                     <a href="index.html">Home Style 01</a>
-                                                    <img src="img/home-demos/home-1.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-1.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-2.html">Home Style 02</a>
-                                                    <img src="img/home-demos/home-2.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-2.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-3.html">Home Style 03</a>
-                                                    <img src="img/home-demos/home-3.jpg" alt="#">
+                                                    <img src="{{asset('img/home-demos/home-3.jpg')}}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-4.html">Home Style 04</a>
-                                                    <img src="img/home-demos/home-4.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-4.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-5.html">Home Style 05 <span class="menu-item-badge">video</span></a>
-                                                    <img src="img/home-demos/home-5.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-5.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-6.html">Home Style 06</a>
-                                                    <img src="img/home-demos/home-6.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-6.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-7.html">Home Style 07</a>
-                                                    <img src="img/home-demos/home-7.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-7.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-8.html">Home Style 08</a>
-                                                    <img src="img/home-demos/home-8.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-8.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-9.html">Home Style 09</a>
-                                                    <img src="img/home-demos/home-9.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-9.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-10.html">Home Style 10</a>
-                                                    <img src="img/home-demos/home-10.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-10.jpg') }}" alt="#">
                                                 </li>
                                                 <li>
                                                     <a href="index-11.html">Home Style 11 <span class="menu-item-badge">Service</span></a>
-                                                    <img src="img/home-demos/home-11.jpg" alt="#">
+                                                    <img src="{{ asset('img/home-demos/home-11.jpg') }}" alt="#">
                                                 </li>
                                             </ul>
                                         </li>
@@ -229,7 +229,7 @@
                                                         <li><a href="cart.html">Cart</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="shop.html"><img src="img/banner/menu-banner-1.png" alt="#"></a>
+                                                <li><a href="shop.html"><img src="{{ asset('img/banner/menu-banner-1.png') }}" alt="#"></a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -334,8 +334,8 @@
             </div>
             <div class="mini-cart-product-area ltn__scrollbar">
                 <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/1.png" alt="Image"></a>
+                    <div class="mini-cart-img">src="{{ asset('img/product/1.png') }}"
+                        <a href="#"><img src="{{ asset('img/product/1.png') }}" alt="Image"></a>
                         <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                     </div>
                     <div class="mini-cart-info">
@@ -345,7 +345,7 @@
                 </div>
                 <div class="mini-cart-item clearfix">
                     <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/2.png" alt="Image"></a>
+                        <a href="#"><img src="{{ asset('img/product/2.png') }}" alt="Image"></a>
                         <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                     </div>
                     <div class="mini-cart-info">
@@ -355,7 +355,7 @@
                 </div>
                 <div class="mini-cart-item clearfix">
                     <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/3.png" alt="Image"></a>
+                        <a href="#"><img src="{{ asset('img/product/3.png') }}" alt="Image"></a>
                         <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                     </div>
                     <div class="mini-cart-info">
@@ -365,7 +365,7 @@
                 </div>
                 <div class="mini-cart-item clearfix">
                     <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/4.png" alt="Image"></a>
+                        <a href="#"><img src="{{ asset('img/product/4.png') }}" alt="Image"></a>
                         <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                     </div>
                     <div class="mini-cart-info">
@@ -394,7 +394,7 @@
         <div class="ltn__utilize-menu-inner ltn__scrollbar">
             <div class="ltn__utilize-menu-head">
                 <div class="site-logo">
-                    <a href="index.html"><img src="img/logo.png" alt="Logo"></a>
+                    <a href="index.html"><img src="{{ asset('img/logo.png') }}" alt="Logo"></a>
                 </div>
                 <button class="ltn__utilize-close">×</button>
             </div>
@@ -533,7 +533,7 @@
                         <div class="footer-widget footer-about-widget">
                             <div class="footer-logo">
                                 <div class="site-logo">
-                                    <img src="img/logo.png" alt="Logo">
+                                    <img src="{{ asset('img/logo.png') }}" alt="Logo">
                                 </div>
                             </div>
                             <p>Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.</p>
@@ -633,7 +633,7 @@
                                 </form>
                             </div>
                             <h5 class="mt-30">We Accept</h5>
-                            <img src="img/icons/payment-4.png" alt="Payment Image">
+                            <img src="{{ asset('img/icons/payment-4.png') }}" alt="Payment Image">
                         </div>
                     </div>
                 </div>

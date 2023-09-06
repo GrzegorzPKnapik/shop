@@ -52,6 +52,8 @@
                                     </span>
                                         @enderror
 
+
+
                                         <input id="password" type="password" placeholder="hasło" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                         @error('password')
