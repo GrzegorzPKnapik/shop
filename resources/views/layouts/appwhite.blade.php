@@ -276,8 +276,8 @@
                                         @if (Route::has('register'))
                                         <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                                             @endif
-                                            @else
 
+                                            @else
                                             <li class="ltn__secondary-color">{{ Auth::user()->name }}</li>
                                             <li>
 

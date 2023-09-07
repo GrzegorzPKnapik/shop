@@ -25,11 +25,9 @@ Route::get('/home', function () {
 })->middleware('can:isUser');
 
 Route::delete('/product/{product}', [ProductController::class, 'destroy']);
-//Route::get('/product', [ProductController::class, 'index'])->name('product.index');
-//Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 
 Route::resource('product', ProductController::class)->only([
-    'create', 'index'
+    'create', 'index', 'edit', 'update'
 ]);

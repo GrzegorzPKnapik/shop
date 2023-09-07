@@ -43,10 +43,11 @@
                     <tr>
                         <td>{{$product->id}}</td>
                         <td>{{$product->name}}</td>
+                        <td>{{$product->image->name}}</td>
                         <td>
                         <button class="icon-cancel delete" data-id="{{$product->id}}"></button>
 
-                            <a href="{{ route('product.create') }}">
+                            <a href="{{ route('product.edit', $product->id) }}">
                                 <button class="icon-edit"></button>
                             </a>
 

@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 
 use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
+
 class ProductController extends Controller
 {
     public function index()
@@ -46,15 +48,16 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
-    public function update(Request $request){
 
-        return redirect()->route('products.update');
-    }
 
     public function destroy(Product $product): JsonResponse{
-
+        $image = Image::find($product->IMAGES_id);
+        $oldPath = $image->name;
         try {
            // $product = Product::find($id);
+            if (Storage::exists($oldPath)) {
+                Storage::delete($oldPath);
+            }
             $product->delete();
             return response()->json([
                 'status' => 'success'
@@ -66,6 +69,36 @@ class ProductController extends Controller
             ])->setStatusCode(500);
         }
 
+    }
+
+    public function edit(Product $product){
+        //Product::with('image')->get();
+        return view('products.edit',['product'=>$product]);
+    }
+
+    public function update(StoreProductRequest $request, Product $product): RedirectResponse{
+
+        $image = Image::find($product->IMAGES_id);
+        $oldPath = $image->name;
+        $product->fill($request->validated());
+
+
+            if ($request->hasFile('image') && $request->validated()) {
+                //delete images forma products
+                if (Storage::exists($oldPath)) {
+                    Storage::delete($oldPath);
+                }
+                $image->name = $request->file('image')->store('products');
+                //save only for changed image
+                $image->save();
+            }
+
+
+
+
+        $product->save();
+
+        return redirect()->route('product.index');
     }
 
 
