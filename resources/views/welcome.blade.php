@@ -2871,7 +2871,7 @@
 @section('javascript')
     const WELCOME_DATA = {
     addToCartUrl: '{{url('cart')}}/',
-    cart:'{{ url('cart') }}',
+    cart: '{{ url('cart') }}',
     }
     const addToCartUrl = "{{url('cart')}}/";
     const cart = "{{ url('cart') }}";

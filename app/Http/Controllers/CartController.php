@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 
 
-use App\Dtos\Cart\CartDto;
-use App\Dtos\Cart\CartItemDto;
-use Illuminate\Http\JsonResponse;
 use App\Models\Product;
+use App\ValueObjects\Cart;
+use App\ValueObjects\CartItem;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 
@@ -15,27 +15,15 @@ class CartController extends Controller
 {
     public function index()
     {
-        $items=Product::with('image')->get();
-        return view('cart.index',['items'=>$items]);
+        dd(Session::get('cart',new Cart()));
+        //$items=Product::with('image')->get();
+        return view('cart.index');
     }
 
 
     public function store(Product $product): JsonResponse{
-        $cart = Session::get('cart', new CartDto());
-        $items = $cart->getItems();
-        if(Arr::exists($items, $product->id))
-        {
-
-        }else{
-        $cartItemDto = new CartItemDto();
-            $cartItemDto -> setProductId($product->id);
-            $cartItemDto -> setName($product->name);
-
-            $items[$product->id] = $cartItemDto;
-
-        }
-
-        Session::put('cart', $cart);
+        $cart = Session::get('cart', new Cart());
+        Session::put('cart', $cart->addItem($product));
         return response()->json([
             'status' => 'success'
         ]);

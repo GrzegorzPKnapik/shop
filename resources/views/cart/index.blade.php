@@ -54,16 +54,16 @@
                                     <th class="cart-product-subtotal">Subtotal</th>
                                 </thead> -->
                                 <tbody>
-                                @foreach($items as $item)
+
                                     <tr>
                                         <td class="cart-product-remove">x</td>
                                         <td class="cart-product-image">
-                                            <a href="product-details.html"><img src="{{asset('storage/' . $item->image->name)}}" alt="Zdjęcie"></a>
+                                            <a href="product-details.html"><img  alt="Zdjęcie"></a>
                                         </td>
                                         <td class="cart-product-info">
-                                            <h4><a>{{$item->name}}</a></h4>
+                                            <h4><a></a></h4>
                                         </td>
-                                        <td class="cart-product-price">{{$item->price}}</td>
+                                        <td class="cart-product-price"></td>
                                         <td class="cart-product-quantity">
                                             <div class="cart-plus-minus">
                                                 <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
@@ -71,7 +71,7 @@
                                         </td>
                                         <td class="cart-product-subtotal">$298.00</td>
                                     </tr>
-                                @endforeach
+
 
 
 

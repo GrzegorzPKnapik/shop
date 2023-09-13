@@ -29,7 +29,7 @@ Route::delete('/product/{product}', [ProductController::class, 'destroy']);
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 
-Route::match(['get', 'post'], '/cart/{product}',  [CartController::class, 'store']);
+Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
 //Route::post('/cart/{product}', [CartController::class, 'store']);
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');;
 
