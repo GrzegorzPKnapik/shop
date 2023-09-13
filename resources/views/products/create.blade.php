@@ -54,8 +54,10 @@
                                     </span>
                                 @enderror
                                 </div>
-
+                                <div class="mb-3">
                                 <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"  autofocus onchange="loadFile(event)">
+                                .png
+                                </div>
                                 @error('image')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -15,7 +15,7 @@ $(function() {
 
                 })
                     .done(function (data) {
-                        window.location.reload();
+                        window.location.reload()
                     })
                     .fail(function (data) {
                         Swal.fire('Ops...', data.responseJSON.message, data.responseJSON.status);

@@ -45,7 +45,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('status',__('shop.product.status.store.success'));
     }
 
 
@@ -60,7 +60,9 @@ class ProductController extends Controller
             }
             $product->delete();
             return response()->json([
-                'status' => 'success'
+                'status' => 'success',
+                'message' => (__('shop.product.status.delete.success'))
+
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -84,7 +86,7 @@ class ProductController extends Controller
 
 
             if ($request->hasFile('image') && $request->validated()) {
-                //delete images forma products
+                //delete images from products
                 if (Storage::exists($oldPath)) {
                     Storage::delete($oldPath);
                 }

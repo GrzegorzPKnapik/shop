@@ -1,7 +1,7 @@
 $(function() {
     $('.delete').click(function () {
         Swal.fire({
-            title: 'Czy chcesz usunąć?',
+            title: deleteConfirm,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Tak',
@@ -15,8 +15,17 @@ $(function() {
 
                 })
                     .done(function (response) {
-                        window.location.reload();
-                    })
+                        Swal.fire({
+                            position: 'top',
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 3500
+                        }).then(() => {
+                                window.location.reload();
+                            });
+                        })
+
                     .fail(function (response) {
                         //console.log(response);
                         Swal.fire('Ops...', response.responseJSON.message, response.responseJSON.status);
