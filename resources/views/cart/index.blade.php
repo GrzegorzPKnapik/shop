@@ -42,35 +42,43 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="shoping-cart-inner">
-                        <div class="shoping-cart-table table-responsive">
-                            <table class="table">
-                                <!-- <thead>
-                                    <th class="cart-product-remove">Remove</th>
-                                    <th class="cart-product-image">Image</th>
-                                    <th class="cart-product-info">Product</th>
-                                    <th class="cart-product-price">Price</th>
-                                    <th class="cart-product-quantity">Quantity</th>
-                                    <th class="cart-product-subtotal">Subtotal</th>
-                                </thead> -->
-                                <tbody>
+                    <div class="table-responsive">
+                            <table class="table text-center">
+                                <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Image</th>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>SubTotal</th>
+                                </tr>
+                                </thead>
 
+
+                                <tbody>
+                                <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
+                                @foreach($cart->getItems() as $item)
                                     <tr>
                                         <td class="cart-product-remove">x</td>
                                         <td class="cart-product-image">
-                                            <a href="product-details.html"><img  alt="Zdjęcie"></a>
+                                            <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
                                         </td>
                                         <td class="cart-product-info">
-                                            <h4><a></a></h4>
+                                            <h4><a>{{$item->getName()}}</a></h4>
                                         </td>
-                                        <td class="cart-product-price"></td>
-                                        <td class="cart-product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
+
+                                        <td class="cart-product-subtotal">$ww.00</td>
+                                        <td class="cart-product-quantity ">
+                                            <div class="cart-plus-minus m-auto">
+                                                <input type="text" value="{{$item->getQuantity()}}" name="qtybutton"  class="cart-plus-minus-box">
                                             </div>
                                         </td>
+
+
                                         <td class="cart-product-subtotal">$298.00</td>
                                     </tr>
+                                @endforeach
 
 
 
@@ -78,7 +86,7 @@
 
 
                                     <tr class="cart-coupon-row">
-                                        <td colspan="6">
+                                        <td colspan="5">
                                             <div class="cart-coupon">
                                                 <input type="text" name="cart-coupon" placeholder="Coupon code">
                                                 <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
@@ -90,7 +98,8 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                    </div>
+
                         <div class="shoping-cart-total mt-50">
                             <h4>Cart Totals</h4>
                             <table class="table">
@@ -117,7 +126,7 @@
                                 <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
                             </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
         </div>

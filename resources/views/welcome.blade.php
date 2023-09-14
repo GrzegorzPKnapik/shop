@@ -2869,13 +2869,10 @@
 
 @endsection
 @section('javascript')
-    const WELCOME_DATA = {
+    const DATA = {
     addToCartUrl: '{{url('cart')}}/',
     cart: '{{ url('cart') }}',
     }
-    const addToCartUrl = "{{url('cart')}}/";
-    const cart = "{{ url('cart') }}";
-    const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
 @endsection
 @section('js-files')
     <script src="{{ asset('js/welcome.js') }}"></script>

@@ -6,24 +6,22 @@ use App\Models\Product;
 
 class CartItem
 {
+
     private int $productId;
     private string $name;
-   // private float $price;
-    //private ?string $imagePath;
+    // private float $price;
+    private ?string $imagePath;
+
     private int $quantity = 0;
 
     /**
-     * @param Product $product
-     * @param int $quantity
+     * @return string|null
      */
-    public function __construct(Product $product, int $quantity = 1)
+    public function getImagePath(): ?string
     {
-        $this->productId = $product->id;
-        $this->name = $product->name;
-        //$this->price = $product->price;
-       // $this->imagePath = $product->image_path;
-        $this->quantity += $quantity;
+        return $this->imagePath;
     }
+
 
     /**
      * @return int
@@ -33,6 +31,8 @@ class CartItem
         return $this->productId;
     }
 
+
+
     /**
      * @return string
      */
@@ -41,13 +41,7 @@ class CartItem
         return $this->name;
     }
 
-    /**
-     * @return float
-     */
-   // public function getPrice(): float
-   // {
-   //     return $this->price;
-   // }
+
 
     /**
      * @return int
@@ -57,26 +51,21 @@ class CartItem
         return $this->quantity;
     }
 
-    /**
-     * @return string|null
-     */
-    //public function getImagePath(): ?string
-   // {
-    //    return $this->imagePath;
-   // }
 
-    //public function getSum(): float
-    //{
-   ////     return $this->price * $this->quantity;
-   // }
+    public function __construct(Product $product, int $quantity = 1){
 
-   // public function getImage(): string
-   // {
-   //     return !is_null($this->imagePath) ? asset("storage/" . $this->imagePath) : config("shop.defaultImage");
-   // }
+        $this->productId = $product->id;
+        $this->name = $product->name;
+        //$this->price = $product->price;
+        $this->imagePath = $product->image->name;
+        $this->quantity = $quantity;
+    }
+
 
     public function addQuantity(Product $product): CartItem
     {
         return new CartItem($product, ++$this->quantity);
     }
+
+
 }

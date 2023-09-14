@@ -22,9 +22,9 @@ $(function() {
                             showConfirmButton: false,
                             timer: 3500
                         }).then(() => {
-                                window.location.reload();
-                            });
-                        })
+                            window.location.reload();
+                        });
+                    })
 
                     .fail(function (response) {
                         //console.log(response);

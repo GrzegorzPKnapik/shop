@@ -22,4 +22,13 @@ return [
     ],
     ],
 
+    'cart' => [
+        'status' => [
+            'store' => [
+                'success' => 'Produkt dodany do koszyka'
+            ],
+            ],
+
+        ],
+
 ];
