@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 
 
+use App\Models\Image;
 use App\Models\Product;
 use App\ValueObjects\Cart;
 use App\ValueObjects\CartItem;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class CartController extends Controller
@@ -36,6 +40,28 @@ class CartController extends Controller
             'message' => (__('shop.cart.status.store.success'))
         ]);
     }
+
+
+
+    public function destroy(Product $product): JsonResponse{
+
+        try {
+            $cart = Session::get('cart', new Cart());
+            Session::put('cart', $cart->removeItem($product));
+            Session::flash('status', __('shop.product.status.delete.success'));
+
+            return response()->json([
+                'status' => 'success',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Wystąpił błąd!'
+            ])->setStatusCode(500);
+        }
+
+    }
+
 
 
 

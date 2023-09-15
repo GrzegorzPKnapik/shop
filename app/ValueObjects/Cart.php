@@ -56,7 +56,7 @@ class Cart
         //jeden item z listy
         $item = $items->first($this->productIdIsItemProductId($product));
         if (!is_null($item)) {
-            $items = $this->removeItem($items, $product);
+            $items = $this->removeItemFromCollection($items, $product);
             $newItem = $item->addQuantity($product);
         } else {
             $newItem = new CartItem($product);
@@ -81,10 +81,26 @@ class Cart
      * @param Product $product
      * @return Collection
      */
-    private function removeItem(Collection $items, Product $product): Collection
+    public function removeItem(Product $product): Cart
+    {
+        $items = $this->removeItemFromCollection($this->items, $product);
+        return new Cart($items);
+    }
+
+    /**
+     * @param Collection $items
+     * @param Product $product
+     * @return Collection
+     */
+    private function removeItemFromCollection(Collection $items, Product $product): Collection
     {
         return $items->reject($this->productIdIsItemProductId($product));
     }
+    /**
+     * @param Collection $items
+     * @param Product $product
+     * @return Collection
+     */
 
 
 

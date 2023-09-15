@@ -3,6 +3,8 @@
 @section('content')
 
 <body>
+
+
     <!--[if lte IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
@@ -11,7 +13,7 @@
 
 <!-- Body main wrapper start -->
 <div class="body-wrapper">
-
+    @include('helpers.responses')
     <div class="ltn__utilize-overlay"></div>
 
     <!-- BREADCRUMB AREA START -->
@@ -59,8 +61,10 @@
                                 <tbody>
                                 <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
                                 @foreach($cart->getItems() as $item)
-                                    <tr>
-                                        <td class="cart-product-remove">x</td>
+                                    <tr class="align-middle">
+                                        <td>
+                                        <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
+                                        </td>
                                         <td class="cart-product-image">
                                             <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
                                         </td>
@@ -71,7 +75,8 @@
                                         <td class="cart-product-subtotal">$ww.00</td>
                                         <td class="cart-product-quantity ">
                                             <div class="cart-plus-minus m-auto">
-                                                <input type="text" value="{{$item->getQuantity()}}" name="qtybutton"  class="cart-plus-minus-box">
+
+                                                <input type="button" value="{{$item->getQuantity()}}" name="qtybutton"  class="cart-plus-minus-box">
                                             </div>
                                         </td>
 
@@ -139,4 +144,10 @@
 
 
 @endsection
-
+    @section('javascript')
+        const deleteUrl = "{{url('cart')}}/";
+        const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
+    @endsection
+    @section('js-files')
+        <script src="{{ asset('js/delete.js') }}"></script>
+@endsection

@@ -299,9 +299,18 @@
                                                                     <i class="far fa-eye"></i>
                                                                 </a>
                                                             </li>
+
+
+
                                                             <li>
-                                                                <button class="icon-cancel add-to-cart" data-id="{{$product->id}}"></button>
+                                                                <a href="" title="Add to Cart" class="add-to-cart" data-id="{{$product->id}}">
+                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                </a>
                                                             </li>
+
+
+
+
                                                             <li>
                                                                 <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
                                                                     <i class="far fa-heart"></i></a>

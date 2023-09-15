@@ -40,7 +40,7 @@
                     </thead>
                     <tbody>
                     @foreach($products as $product)
-                    <tr>
+                    <tr class="delete_mem{{$product->id}}">
                         <td>{{$product->id}}</td>
                         <td>{{$product->name}}</td>
                         <td>{{$product->image->name}}</td>

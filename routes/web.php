@@ -25,15 +25,21 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('can:isUser');
 
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 Route::delete('/product/{product}', [ProductController::class, 'destroy']);
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
-
-Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
-//Route::post('/cart/{product}', [CartController::class, 'store']);
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');;
-
-
 Route::resource('product', ProductController::class)->only([
     'create', 'index', 'edit', 'update'
 ]);
+
+Route::get('/cart/{product}', [CartController::class, 'quantity']);
+Route::post('/cart/{product}', [CartController::class, 'decQuantity']);
+Route::post('/cart/{product}', [CartController::class, 'incQuantity']);
+Route::delete('/cart/{product}', [CartController::class, 'destroy']);
+Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');;
+//Route::resource('cart', CartController::class)->only([
+//    'index'
+//]);
+
+

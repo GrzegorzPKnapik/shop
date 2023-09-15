@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 
 use App\Models\Image;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -59,10 +60,9 @@ class ProductController extends Controller
                 Storage::delete($oldPath);
             }
             $product->delete();
+            Session::flash('status', __('shop.product.status.delete.success'));
             return response()->json([
                 'status' => 'success',
-                'message' => (__('shop.product.status.delete.success'))
-
             ]);
         } catch (Exception $e) {
             return response()->json([
