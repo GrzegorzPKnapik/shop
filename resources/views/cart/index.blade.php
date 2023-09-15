@@ -76,9 +76,10 @@
                                         <td class="cart-product-quantity ">
                                             <div class="cart-plus-minus m-auto">
 
-                                                <input type="button" value="{{$item->getQuantity()}}" name="qtybutton"  class="cart-plus-minus-box">
+                                                <input type="button" value="{{$item->getQuantity()}}" data-id="{{$item->getProductId()}}" name="qtybutton"  class="cart-plus-minus-box">
                                             </div>
                                         </td>
+
 
 
                                         <td class="cart-product-subtotal">$298.00</td>
@@ -145,7 +146,11 @@
 
 @endsection
     @section('javascript')
-        const deleteUrl = "{{url('cart')}}/";
+        const incUrl = "{{ route('cart.increment') }}";
+        const incUrl = "{{url('cart')}}/";
+
+        const decUrl = "{{url('cart')}}/";
+
         const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
     @endsection
     @section('js-files')

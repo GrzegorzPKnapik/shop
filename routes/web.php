@@ -32,7 +32,7 @@ Route::resource('product', ProductController::class)->only([
     'create', 'index', 'edit', 'update'
 ]);
 
-Route::get('/cart/{product}', [CartController::class, 'quantity']);
+//Route::post('/cart/dec/{product}', [CartController::class, 'decQuantity']);
 Route::post('/cart/{product}', [CartController::class, 'decQuantity']);
 Route::post('/cart/{product}', [CartController::class, 'incQuantity']);
 Route::delete('/cart/{product}', [CartController::class, 'destroy']);

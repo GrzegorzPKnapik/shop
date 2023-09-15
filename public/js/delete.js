@@ -1,23 +1,43 @@
-$(document).ready(function() {
-    $('.delete').click(function() {
+$(function() {
+    $('.delete').click(function () {
         var id = $(this).data("id");
-        var deleteButton = $(this); // Zachowaj referencję do this
+        Swal.fire({
+            title: deleteConfirm,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Tak',
+            cancelButtonText: 'Nie',
+            position: 'top'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "DELETE",
+                    url: deleteUrl + $(this).data("id"),
+                    data: ({
+                        id: id
+                    }),
+                    cache: false,
+                    success: function(html) {
+                        $(".delete_mem" + id).fadeOut('slow');
+                    }
+                })
+                    .done(function (response) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: 'success',
+                            title: response.message,
+                            showConfirmButton: false,
+                            timer: 3500,
+                        })
+                        //window.location.reload();
+                    })
 
-        if (confirm("Are you sure you want to delete this Member?")) {
-            $.ajax({
-                type: "DELETE",
-                url: deleteUrl + id,
-                data: ({
-                    id: id
-                }),
-                cache: false,
-                success: function(html) {
-                    // Użyj deleteButton zamiast $(this) dla prawidłowej referencji
-                    $(".delete_mem" + id).fadeOut('slow');
-                }
-            });
-        } else {
-            return false;
-        }
+                    .fail(function (response) {
+                        //console.log(response);
+                        Swal.fire('Ops...', response.responseJSON.message, response.responseJSON.status);
+                    });
+            }
+        });
     });
 });
+

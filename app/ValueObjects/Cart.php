@@ -30,7 +30,7 @@ class Cart
     {
         return $this->items->isNotEmpty();
     }
-
+    //całej kolekcji a nie jednego produktu
     public function getQuantity(): int
     {
         return $this->items->sum(function ($item) {
@@ -62,7 +62,7 @@ class Cart
             $newItem = new CartItem($product);
         }
         $items->add($newItem);
-        return new Cart($items);
+        return new Cart($items->sort());
     }
 
     /**

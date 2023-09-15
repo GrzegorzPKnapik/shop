@@ -60,9 +60,11 @@ class ProductController extends Controller
                 Storage::delete($oldPath);
             }
             $product->delete();
-            Session::flash('status', __('shop.product.status.delete.success'));
+            //jednorazowe wyświetlenie wiadomości
+            //Session::flash('status', __('shop.product.status.delete.success'));
             return response()->json([
                 'status' => 'success',
+                'message' => __('shop.product.status.delete.success'),
             ]);
         } catch (Exception $e) {
             return response()->json([
