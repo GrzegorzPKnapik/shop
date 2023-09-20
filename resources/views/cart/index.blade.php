@@ -40,6 +40,7 @@
     <!-- BREADCRUMB AREA END -->
 
     <!-- SHOPING CART AREA START -->
+    <div id="refresh">
     <div class="liton__shoping-cart-area mb-120">
         <div class="container">
             <div class="row">
@@ -78,7 +79,7 @@
                                         <td class="cart-product-quantity ">
                                             <div class="cart-plus-minus m-auto">
                                                 <div class="dec qtybutton" data-id="{{$item->getProductId()}}">-</div>
-                                                <input type="button" value="{{$item->getQuantity()}}"  class="cart-plus-minus-box">
+                                                <input type="button" value="{{$item->getQuantity()}}" class="cart-plus-minus-box">
                                                 <div class="inc qtybutton" data-id="{{$item->getProductId()}}">+</div>
                                             </div>
                                         </td>
@@ -141,7 +142,7 @@
         </div>
     </div>
     <!-- SHOPING CART AREA END -->
-
+    </div>
 
 
 </div>

@@ -1262,12 +1262,34 @@
 
         $(".inc").on("click", function() {
             var id = $(this).data("id");
-                $.ajax({
-                    type: "POST",
-                    url: incUrl + id,
-                    //zeby przyciski dzialaly
-                    //zeby bez odświeżania był ajax
-                })
+
+            $.ajax({
+                type: "POST",
+                url: incUrl + id,
+                success: function() {
+                    $("#refresh").load(location.href + " #refresh");
+                }
+
+            });
+
+
+        });
+
+        $(".dec").on("click", function() {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: decUrl + id,
+                //zeby przyciski dzialaly
+                //zeby bez odświeżania był ajax
+                data: ({
+                    id: id
+                }),
+                cache: false,
+                success: function(html) {
+                    $(".delete_mem" + id).fadeOut('slow');
+                }
+            })
 
 
         });
