@@ -48,10 +48,11 @@ class CartController extends Controller
         try {
             $cart = Session::get('cart', new Cart());
             Session::put('cart', $cart->removeItem($product));
-            Session::flash('status', __('shop.product.status.delete.success'));
+            //Session::flash('status', __('shop.product.status.delete.success'));
 
             return response()->json([
                 'status' => 'success',
+                'message' =>  __('shop.product.status.delete.success')
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -62,6 +63,17 @@ class CartController extends Controller
 
     }
 
+
+    public function increment(Product $product): JsonResponse
+    {
+        //pobieram z sesji obiekt koszyka jesli go nie ma to tworze nowy obiekt
+        $cart = Session::get('cart', new Cart());
+        Session::put('cart', $cart->addItem($product));
+        return response()->json([
+            'status' => 'success',
+            'message' => (__('shop.cart.status.store.success'))
+        ]);
+    }
 
 
 

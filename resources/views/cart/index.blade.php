@@ -61,7 +61,7 @@
                                 <tbody>
                                 <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
                                 @foreach($cart->getItems() as $item)
-                                    <tr class="align-middle">
+                                    <tr class="align-middle delete_mem{{$item->getProductId()}}">
                                         <td>
                                         <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
                                         </td>
@@ -73,10 +73,13 @@
                                         </td>
 
                                         <td class="cart-product-subtotal">$ww.00</td>
+
+
                                         <td class="cart-product-quantity ">
                                             <div class="cart-plus-minus m-auto">
-
-                                                <input type="button" value="{{$item->getQuantity()}}" data-id="{{$item->getProductId()}}" name="qtybutton"  class="cart-plus-minus-box">
+                                                <div class="dec qtybutton" data-id="{{$item->getProductId()}}">-</div>
+                                                <input type="button" value="{{$item->getQuantity()}}"  class="cart-plus-minus-box">
+                                                <div class="inc qtybutton" data-id="{{$item->getProductId()}}">+</div>
                                             </div>
                                         </td>
 
@@ -146,11 +149,10 @@
 
 @endsection
     @section('javascript')
-        const incUrl = "{{ route('cart.increment') }}";
-        const incUrl = "{{url('cart')}}/";
 
-        const decUrl = "{{url('cart')}}/";
-
+        const incUrl = "{{url('cart/increment')}}/";
+        const decUrl = "{{url('cart/decrement')}}/";
+        const deleteUrl = "{{url('cart')}}/";
         const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
     @endsection
     @section('js-files')

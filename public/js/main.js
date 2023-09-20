@@ -1259,36 +1259,17 @@
         /* --------------------------------------------------------
             33. Quantity plus minus
         -------------------------------------------------------- */
-        $(".cart-plus-minus").prepend('<div class="dec qtybutton">-</div>');
-        $(".cart-plus-minus").append('<div class="inc qtybutton">+</div>');
-        $(".qtybutton").on("click", function() {
-            var $button = $(this);
-            var oldValue = $button.parent().find("input").val();
-            if ($button.text() == "+") {
-                //
+
+        $(".inc").on("click", function() {
+            var id = $(this).data("id");
                 $.ajax({
                     type: "POST",
-                    url: incUrl + $(this).data("id"),
-
+                    url: incUrl + id,
+                    //zeby przyciski dzialaly
+                    //zeby bez odświeżania był ajax
                 })
-                //
-                //var newVal = parseFloat(oldValue) + 1;
-            }
-            else {
-                if (oldValue > 0) {
-                    //
-                    $.ajax({
-                        type: "POST",
-                        url: decUrl + $(this).data("id"),
-                    })
-                    //
-                    //var newVal = parseFloat(oldValue) - 1;
-                }
-                else {
-                    newVal = 0;
-                }
-            }
-            $button.parent().find("input").val(newVal);
+
+
         });
 
 
