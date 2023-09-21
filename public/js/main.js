@@ -1260,19 +1260,35 @@
             33. Quantity plus minus
         -------------------------------------------------------- */
 
-        $(".inc").on("click", function() {
-            var id = $(this).data("id");
 
-            $.ajax({
-                type: "POST",
-                url: incUrl + id,
-                success: function() {
-                    $("#refresh").load(location.href + " #refresh");
-                }
+
+
+        $(function() {
+            $(document).on("click", ".inc", function () {
+                var ele = $(this); // Pobieramy element przycisku, który został kliknięty
+                var id = ele.data("id"); // Pobieramy identyfikator produktu z atrybutu data-id przycisku
+
+                // Pobieramy ilość produktu z inputa w tej samej tabeli
+                var quantity = ele.closest("tr").find(".cart_update").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: incUrl + id, // Załóżmy, że incUrl zawiera odpowiednią ścieżkę do kontrolera
+                    data: {
+                        _token: '{{ csrf_token() }}', // Dodaj token CSRF, jeśli jest wymagany
+                        quantity: quantity
+                    },
+                    success: function (html) {
+                        // Po sukcesie odświeżamy zawartość
+                        $("#refresh").load(location.href + " #refresh");
+                    },
+                    error: function () {
+                        // Obsługa błędu
+                        console.error('Wystąpił błąd przy zwiększaniu ilości.');
+                    }
+                });
 
             });
-
-
         });
 
         $(".dec").on("click", function() {

@@ -45,6 +45,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+
                     <div class="table-responsive">
                             <table class="table text-center">
                                 <thead>
@@ -61,6 +62,7 @@
 
                                 <tbody>
                                 <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
+
                                 @foreach($cart->getItems() as $item)
                                     <tr class="align-middle delete_mem{{$item->getProductId()}}">
                                         <td>
@@ -76,10 +78,10 @@
                                         <td class="cart-product-subtotal">$ww.00</td>
 
 
-                                        <td class="cart-product-quantity ">
+                                        <td class="cart-product-quantity " data-th="Quantity">
                                             <div class="cart-plus-minus m-auto">
                                                 <div class="dec qtybutton" data-id="{{$item->getProductId()}}">-</div>
-                                                <input type="button" value="{{$item->getQuantity()}}" class="cart-plus-minus-box">
+                                                <input type="button" value="{{$item->getQuantity()}}" class="cart-plus-minus-box cart_update">
                                                 <div class="inc qtybutton" data-id="{{$item->getProductId()}}">+</div>
                                             </div>
                                         </td>
@@ -89,6 +91,7 @@
                                         <td class="cart-product-subtotal">$298.00</td>
                                     </tr>
                                 @endforeach
+
 
 
 
@@ -108,6 +111,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                    </div>
                     </div>
 
                         <div class="shoping-cart-total mt-50">
@@ -137,7 +141,7 @@
                             </div>
                         </div>
 
-                </div>
+
             </div>
         </div>
     </div>
