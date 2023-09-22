@@ -45,7 +45,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-
+                    <div class="shoping-cart-inner">
                     <div class="table-responsive">
                             <table class="table text-center">
                                 <thead>
@@ -91,10 +91,6 @@
                                         <td class="cart-product-subtotal">$298.00</td>
                                     </tr>
                                 @endforeach
-
-
-
-
 
 
 
@@ -147,9 +143,9 @@
     </div>
     <!-- SHOPING CART AREA END -->
     </div>
+    </div>
 
 
-</div>
 
 
 @endsection

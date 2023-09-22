@@ -75,6 +75,20 @@ class CartController extends Controller
         ]);
     }
 
+    public function decrement(Product $product): JsonResponse
+    {
+        //pobieram z sesji obiekt koszyka jesli go nie ma to tworze nowy obiekt
+        $cart = Session::get('cart', new Cart());
+        Session::put('cart', $cart->decrementQuantity($product));
+        return response()->json([
+            'status' => 'success',
+            'message' => (__('shop.cart.status.store.success'))
+        ]);
+    }
+
+
+
+
 
 
 }

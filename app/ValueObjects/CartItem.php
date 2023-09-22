@@ -67,5 +67,10 @@ class CartItem
         return new CartItem($product, ++$this->quantity);
     }
 
+    public function decrementQuantity(Product $product): CartItem
+    {
+        return new CartItem($product, --$this->quantity);
+    }
+
 
 }

@@ -50,6 +50,21 @@ class Cart
      */
 
 
+    public function decrementQuantity(Product $product): Cart
+    {   //itemy cała lista
+        $items = $this->items;
+        //jeden item z listy
+        $item = $items->first($this->productIdIsItemProductId($product));
+        if (!is_null($item)) {
+            $items = $this->removeItemFromCollection($items, $product);
+            $newItem = $item->decrementQuantity($product);
+        } else {
+            $newItem = new CartItem($product);
+        }
+        $items->add($newItem);
+        return new Cart($items->sort());
+    }
+
     public function addItem(Product $product): Cart
     {   //itemy cała lista
         $items = $this->items;
