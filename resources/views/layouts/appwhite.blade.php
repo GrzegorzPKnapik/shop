@@ -310,8 +310,7 @@
                         <div class="mini-cart-icon">
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                @php $cart = session('cart')@endphp
-                                <sup>{{$cart->getItems()->count()}}</sup>
+                                <sup><div class="carttt"></div></sup>
                             </a>
                         </div>
                         <!-- mini-cart -->

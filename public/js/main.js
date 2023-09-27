@@ -1259,7 +1259,25 @@
         /* --------------------------------------------------------
             33. Quantity plus minus
         -------------------------------------------------------- */
+        $(document).ready(function() {
+            var cartContainer = $("#carttt");
+            $.ajax({
+                url: '/path/to/your/cart/endpoint',
+                method: 'GET',
+                success: function(data) {
+                    // Dane koszyka zostały pobrane
+                    // Teraz możesz wyświetlić je w kontenerze koszyka
+                    carttt.html(data);
+                },
+                error: function() {
+                    // Obsłuż błąd pobierania danych koszyka
+                }
+            });
 
+
+
+
+        });
 
 
 
