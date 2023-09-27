@@ -47,13 +47,23 @@
                             <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <input id="name" type="text" placeholder="imie" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                    <input id="name" type="text" placeholder="nazwa" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>
                                 @enderror
                                 </div>
+
+                                <div class="mb-3">
+                                    <input id="price" type="text" placeholder="cena" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required autocomplete="price" autofocus>
+                                    @error('price')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
                                 <div class="mb-3">
                                 <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"  autofocus onchange="loadFile(event)">
                                 .png

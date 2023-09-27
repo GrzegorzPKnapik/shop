@@ -24,8 +24,7 @@ class CartController extends Controller
         //$items=Product::with('image')->get();
         return view('cart.index',[
             //prześlij vartość cart jeśli nie ma to nowy pusty obiekt cart
-            'cart' => Session::get('cart', new Cart(
-            ))
+            'cart' => Session::get('cart', new Cart())
         ]);
     }
 
@@ -66,23 +65,24 @@ class CartController extends Controller
 
     public function increment(Product $product): JsonResponse
     {
-        //pobieram z sesji obiekt koszyka jesli go nie ma to tworze nowy obiekt
         $cart = Session::get('cart', new Cart());
-        Session::put('cart', $cart->addItem($product));
+        if($cart->getProductQuantity($product)<=98) {
+            Session::put('cart', $cart->addItem($product));
+        }
         return response()->json([
             'status' => 'success',
-            'message' => (__('shop.cart.status.store.success'))
         ]);
     }
 
     public function decrement(Product $product): JsonResponse
     {
-        //pobieram z sesji obiekt koszyka jesli go nie ma to tworze nowy obiekt
         $cart = Session::get('cart', new Cart());
-        Session::put('cart', $cart->decrementQuantity($product));
+        if($cart->getProductQuantity($product)>1)
+        {
+            Session::put('cart', $cart->decrementQuantity($product));
+        }
         return response()->json([
             'status' => 'success',
-            'message' => (__('shop.cart.status.store.success'))
         ]);
     }
 

@@ -41,6 +41,7 @@ class ProductController extends Controller
 
 
         $product = new Product($request->validated());
+        $product->price=$request->price;
         $product->name=$request->name;
         $product->IMAGES_id=$image->id;;
 
@@ -84,7 +85,10 @@ class ProductController extends Controller
 
         $image = Image::find($product->IMAGES_id);
         $oldPath = $image->name;
-        $product->fill($request->validated());
+        //$product->fill($request->validated());
+        $product->price=$request->price;
+        $product->name=$request->name;
+
 
 
             if ($request->hasFile('image') && $request->validated()) {

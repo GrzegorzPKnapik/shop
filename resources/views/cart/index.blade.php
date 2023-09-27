@@ -62,7 +62,6 @@
 
                                 <tbody>
                                 <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
-
                                 @foreach($cart->getItems() as $item)
                                     <tr class="align-middle delete_mem{{$item->getProductId()}}">
                                         <td>
@@ -75,7 +74,7 @@
                                             <h4><a>{{$item->getName()}}</a></h4>
                                         </td>
 
-                                        <td class="cart-product-subtotal">$ww.00</td>
+                                        <td class="cart-product-subtotal">${{$item->getPrice()}}</td>
 
 
                                         <td class="cart-product-quantity " data-th="Quantity">
@@ -88,7 +87,7 @@
 
 
 
-                                        <td class="cart-product-subtotal">$298.00</td>
+                                        <td class="cart-product-subtotal">${{$item->getPriceMultiply()}}</td>
                                     </tr>
                                 @endforeach
 
@@ -128,7 +127,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Order Total</strong></td>
-                                        <td><strong>$633.00</strong></td>
+                                        <td><strong>${{$cart->getSum()}}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>

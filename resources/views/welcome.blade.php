@@ -330,8 +330,8 @@
                                                     </div>
                                                     <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                     <div class="product-price">
-                                                        <span>$78.00</span>
-                                                        <del>$85.00</del>
+                                                        <span>${{$product->price}}.00</span>
+                                                        <del>$35.00</del>
                                                     </div>
                                                 </div>
                                             </div>

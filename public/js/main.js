@@ -1265,29 +1265,30 @@
 
         $(document).on("click", ".inc", function () {
             var id = $(this).data("id");
+                $.ajax({
+                    type: "POST",
+                    url: incUrl + id,
+                    success: function () {
+                        $("#refresh").load(location.href + " #refresh");
+                    }
 
-            $.ajax({
-                type: "POST",
-                url: incUrl + id,
-                success: function() {
-                    $("#refresh").load(location.href + " #refresh");
-                }
+                });
 
-            });
+
 
 
         });
 
         $(document).on("click", ".dec", function () {
             var id = $(this).data("id");
-            $.ajax({
-                type: "POST",
-                url: decUrl + id,
-                success: function() {
-                    $("#refresh").load(location.href + " #refresh");
-                }
+                $.ajax({
+                    type: "POST",
+                    url: decUrl + id,
+                    success: function () {
+                        $("#refresh").load(location.href + " #refresh");
+                    }
 
-            });
+                });
 
 
         });

@@ -41,13 +41,15 @@ class Cart
     public function getSum(): float
     {
         return $this->items->sum(function ($item) {
-            return $item->getSum();
+            return $item->getPrice()*$item->getQuantity();
         });
     }
     /**
      * @param Product $product
      * @return Collection
      */
+
+
 
 
     public function decrementQuantity(Product $product): Cart
@@ -78,6 +80,13 @@ class Cart
         }
         $items->add($newItem);
         return new Cart($items->sort());
+    }
+
+    public function getProductQuantity(Product $product): int
+    {
+        $items = $this->items;
+        $item = $items->first($this->productIdIsItemProductId($product));
+        return $item->getQuantity();
     }
 
     /**
