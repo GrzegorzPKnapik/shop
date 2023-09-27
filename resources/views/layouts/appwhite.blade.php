@@ -310,7 +310,8 @@
                         <div class="mini-cart-icon">
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <sup>2</sup>
+                                @php $cart = session('cart')@endphp
+                                <sup>{{$cart->getItems()->count()}}</sup>
                             </a>
                         </div>
                         <!-- mini-cart -->
@@ -343,20 +344,19 @@
                 <button class="ltn__utilize-close">×</button>
             </div>
             <div class="mini-cart-product-area ltn__scrollbar">
-                {{ $cart = Session::get('cart') }}
 
-                @foreach($cart->getItems() as $item)
+
                 <div class="mini-cart-item clearfix">
                     <div class="mini-cart-img">
-                        <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
+                        <a href="product-details.html"></a>>
                         <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                     </div>
                     <div class="mini-cart-info">
-                        <h6><a href="#">{{$item->getName()}}</a></h6>
-                        <span class="mini-cart-quantity">{{$item->getQuantity()}} x ${{$item->getPrice()}}</span>
+                        <h6><a href="#"></a></h6>
+                        <span class="mini-cart-quantity"></span>
                     </div>
                 </div>
-                @endforeach
+
 
             </div>
             <div class="mini-cart-footer">
