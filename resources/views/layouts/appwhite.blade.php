@@ -313,7 +313,9 @@
                                 <i class="icon-shopping-cart"></i>
                                @php $cart = session('cart')@endphp
                                     @if($cart)
-                                        <sup>{{$cart->getItems()->count()}}</sup>
+                                        <sup>{{$cart->getItems()->count()}}
+                                        <span class="cart-count">0</span>
+                                        </sup>
                                     @endif
                             </a>
                         </div>

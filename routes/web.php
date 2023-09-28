@@ -31,7 +31,7 @@ Route::post('/product/store', [ProductController::class, 'store'])->name('produc
 Route::resource('product', ProductController::class)->only([
     'create', 'index', 'edit', 'update'
 ]);
-
+Route::get('/load-cart-data', [CartController::class, 'cartcount']);
 Route::post('/cart/decrement/{product}', [CartController::class, 'decrement']);
 Route::post('/cart/increment/{product}', [CartController::class, 'increment']);
 Route::delete('/cart/{product}', [CartController::class, 'destroy']);

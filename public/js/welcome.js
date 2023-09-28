@@ -1,3 +1,7 @@
+$(document).ready(function (){
+
+
+loadcart();
 $('.add-to-cart').click(function(event) {
     event.preventDefault();
     $.ajax({
@@ -7,6 +11,7 @@ $('.add-to-cart').click(function(event) {
     })
 
         .done(function (response) {
+            loadcart();
             Swal.fire({
                 title: 'Brawo!',
                 text: response.message,
@@ -26,3 +31,15 @@ $('.add-to-cart').click(function(event) {
 });
 
 
+function loadcart(){
+    $.ajax({
+        type: "GET",
+        url: "/load-cart-data",
+        success: function (response) {
+            //$(".cart-count").html('')
+            $(".cart-count").html(response.count)
+        }
+
+    });
+}
+});

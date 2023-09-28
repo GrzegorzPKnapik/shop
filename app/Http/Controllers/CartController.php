@@ -28,6 +28,16 @@ class CartController extends Controller
         ]);
     }
 
+    public function cartcount(): JsonResponse{
+
+        $cart=Session::get('cart', new Cart());
+        $cartcount=$cart->getItems()->count();
+
+        return response()->json([
+            'count' => $cartcount,
+        ]);
+    }
+
 
     public function store(Product $product): JsonResponse
     {

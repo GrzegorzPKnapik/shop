@@ -2875,7 +2875,7 @@
         </div>
     </div>
     <!-- preloader area end -->
-
+    <span class="cart-count">0</span>
 @endsection
 @section('javascript')
     const DATA = {
