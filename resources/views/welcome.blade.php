@@ -1,5 +1,6 @@
 @extends('layouts.appwhite')
 
+
 @section('content')
 
     <!-- Body main wrapper start -->
@@ -2874,7 +2875,6 @@
         </div>
     </div>
     <!-- preloader area end -->
-
 
 @endsection
 @section('javascript')

@@ -34,6 +34,7 @@ class CartController extends Controller
         //pobieram z sesji obiekt koszyka jesli go nie ma to tworze nowy obiekt
         $cart = Session::get('cart', new Cart());
         Session::put('cart', $cart->addItem($product));
+
         return response()->json([
             'status' => 'success',
             'message' => (__('shop.cart.status.store.success'))

@@ -2,8 +2,10 @@ $('.add-to-cart').click(function(event) {
     event.preventDefault();
     $.ajax({
         method: "POST",
-        url: DATA.addToCartUrl + $(this).data('id')
+        url: DATA.addToCartUrl + $(this).data('id'),
+
     })
+
         .done(function (response) {
             Swal.fire({
                 title: 'Brawo!',
@@ -22,3 +24,5 @@ $('.add-to-cart').click(function(event) {
             Swal.fire('Oops...', 'Wystąpił błąd', 'error');
         });
 });
+
+

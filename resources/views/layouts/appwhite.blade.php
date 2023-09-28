@@ -307,12 +307,17 @@
                             </ul>
                         </div>
                         <!-- mini-cart -->
+
                         <div class="mini-cart-icon">
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <sup><div class="carttt"></div></sup>
+                               @php $cart = session('cart')@endphp
+                                    @if($cart)
+                                        <sup>{{$cart->getItems()->count()}}</sup>
+                                    @endif
                             </a>
                         </div>
+
                         <!-- mini-cart -->
                         <!-- Mobile Menu Button -->
                         <div class="mobile-menu-toggle d-xl-none">
@@ -343,19 +348,21 @@
                 <button class="ltn__utilize-close">×</button>
             </div>
             <div class="mini-cart-product-area ltn__scrollbar">
-
-
+                @php $cart = session('cart')@endphp
+                @if($cart)
+                    @foreach($cart->getItems() as $item)
                 <div class="mini-cart-item clearfix">
                     <div class="mini-cart-img">
-                        <a href="product-details.html"></a>>
+                        <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
                         <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                     </div>
                     <div class="mini-cart-info">
-                        <h6><a href="#"></a></h6>
-                        <span class="mini-cart-quantity"></span>
+                        <h6><a href="#">{{$item->getName()}}</a></h6>
+                        <span class="mini-cart-quantity">{{$item->getQuantity()}}x{{$item->getPrice()}}</span>
                     </div>
                 </div>
-
+                    @endforeach
+                @endif
 
             </div>
             <div class="mini-cart-footer">
