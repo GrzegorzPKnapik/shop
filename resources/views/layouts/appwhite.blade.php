@@ -312,13 +312,17 @@
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
                                 <span class="cart-count"></span>
+
                                @php $cart = session('cart')@endphp
+
                                     @if($cart)
                                         <sup>{{$cart->getItems()->count()}}
                                         </sup>
                                     @endif
+                                </div>
                             </a>
                         </div>
+                        <div id="refresh">
 
                         <!-- mini-cart -->
                         <!-- Mobile Menu Button -->
@@ -349,6 +353,7 @@
                 <span class="ltn__utilize-menu-title">Cart</span>
                 <button class="ltn__utilize-close">×</button>
             </div>
+
             <div class="mini-cart-product-area ltn__scrollbar">
                 @php $cart = session('cart')@endphp
                 @if($cart)
@@ -366,7 +371,7 @@
                     @endforeach
                 @endif
 
-            </div>
+            </div></div>
             <div class="mini-cart-footer">
                 <div class="mini-cart-sub-total">
                     <h5>Subtotal: <span>$310.00</span></h5>
