@@ -36,7 +36,7 @@ function loadcart(){
         type: "GET",
         url: "/load-cart-data",
         success: function (response) {
-            //$(".cart-count").html('')
+            $(".cart-count").html('')
             $(".cart-count").html(response.count)
         }
 

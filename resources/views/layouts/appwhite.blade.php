@@ -311,10 +311,10 @@
                         <div class="mini-cart-icon">
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
+                                <span class="cart-count"></span>
                                @php $cart = session('cart')@endphp
                                     @if($cart)
                                         <sup>{{$cart->getItems()->count()}}
-                                        <span class="cart-count">0</span>
                                         </sup>
                                     @endif
                             </a>
