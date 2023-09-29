@@ -36,9 +36,9 @@ function loadcart(){
         type: "GET",
         url: "/load-cart-data",
         success: function (response) {
-            $(".cart-count").html(response.count)
             $("#refresh").load(location.href + " #refresh");
-
+            //$("#mini-cart-icon").load(location.href + " #mini-cart-icon");
+            $(".cart-count").html(response.count)
         }
 
     });
