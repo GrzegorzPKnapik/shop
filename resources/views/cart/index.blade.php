@@ -2,116 +2,118 @@
 
 @section('content')
 
-<body>
+    <body>
 
 
     <!--[if lte IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
 
-<!-- Body main wrapper start -->
-<div class="body-wrapper">
-    @include('helpers.responses')
-    <div class="ltn__utilize-overlay"></div>
+    <!-- Body main wrapper start -->
+    <div class="body-wrapper">
+        @include('helpers.responses')
+        <div class="ltn__utilize-overlay"></div>
 
-    <!-- BREADCRUMB AREA START -->
-    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="img/bg/9.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
-                        <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">//  Welcome to our company</h6>
-                            <h1 class="section-title white-color">Cart</h1>
-                        </div>
-                        <div class="ltn__breadcrumb-list">
-                            <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li>Cart</li>
-                            </ul>
+        <!-- BREADCRUMB AREA START -->
+        <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="img/bg/9.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
+                            <div class="section-title-area ltn__section-title-2">
+                                <h6 class="section-subtitle ltn__secondary-color">//  Welcome to our company</h6>
+                                <h1 class="section-title white-color">Cart</h1>
+                            </div>
+                            <div class="ltn__breadcrumb-list">
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li>Cart</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- BREADCRUMB AREA END -->
+        <!-- BREADCRUMB AREA END -->
 
-    <!-- SHOPING CART AREA START -->
-    <div id="refresh">
-    <div class="liton__shoping-cart-area mb-120">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping-cart-inner">
-                    <div class="table-responsive">
-                            <table class="table text-center">
-                                <thead>
-                                <tr>
-                                    <th>Action</th>
-                                    <th>Image</th>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>SubTotal</th>
-                                </tr>
-                                </thead>
+        <!-- SHOPING CART AREA START -->
+        <div id="refreshSC">
+            <div class="liton__shoping-cart-area mb-120">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="shoping-cart-inner">
+                                <div class="table-responsive">
 
-                                <tbody>
-                                <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
-                                @foreach($cart->getItems() as $item)
-                                    <tr class="align-middle delete_mem{{$item->getProductId()}}">
-                                        <td>
-                                        <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
-                                        </td>
-                                        <td class="cart-product-image">
-                                            <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
-                                        </td>
-                                        <td class="cart-product-info">
-                                            <h4><a>{{$item->getName()}}</a></h4>
-                                        </td>
-
-                                        <td class="cart-product-subtotal">${{$item->getPrice()}}</td>
+                                    <table class="table text-center">
+                                        <thead>
+                                        <tr>
+                                            <th>Action</th>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>SubTotal</th>
+                                        </tr>
+                                        </thead>
 
 
-                                        <td class="cart-product-quantity " data-th="Quantity">
-                                            <div class="cart-plus-minus m-auto">
-                                                <div class="dec qtybutton" data-id="{{$item->getProductId()}}">-</div>
-                                                <input type="button" value="{{$item->getQuantity()}}" class="cart-plus-minus-box cart_update">
-                                                <div class="inc qtybutton" data-id="{{$item->getProductId()}}">+</div>
-                                            </div>
-                                        </td>
+                                        <tbody>
+                                        <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
+                                        @foreach($cart->getItems() as $item)
+                                            <tr class="align-middle delete_mem{{$item->getProductId()}}">
+                                                <td>
+                                                    <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
+                                                </td>
+                                                <td class="cart-product-image">
+                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
+                                                </td>
+                                                <td class="cart-product-info">
+                                                    <h4><a>{{$item->getName()}}</a></h4>
+                                                </td>
+
+                                                <td class="cart-product-subtotal">${{$item->getPrice()}}</td>
 
 
-
-                                        <td class="cart-product-subtotal">${{$item->getSubTotal()}}</td>
-                                    </tr>
-                                @endforeach
+                                                <td class="cart-product-quantity " data-th="Quantity">
+                                                    <div class="cart-plus-minus m-auto">
+                                                        <div class="dec qtybutton" data-id="{{$item->getProductId()}}">-</div>
+                                                        <input type="button" value="{{$item->getQuantity()}}" class="cart-plus-minus-box cart_update">
+                                                        <div class="inc qtybutton" data-id="{{$item->getProductId()}}">+</div>
+                                                    </div>
+                                                </td>
 
 
 
-                                    <tr class="cart-coupon-row">
-                                        <td colspan="5">
-                                            <div class="cart-coupon">
-                                                <input type="text" name="cart-coupon" placeholder="Coupon code">
-                                                <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                    </div>
-                    </div>
+                                                <td class="cart-product-subtotal">${{$item->getSubTotal()}}</td>
+                                            </tr>
 
-                        <div class="shoping-cart-total mt-50">
-                            <h4>Cart Totals</h4>
-                            <table class="table">
-                                <tbody>
+                                        @endforeach
+
+
+                                        <tr class="cart-coupon-row">
+                                            <td colspan="5">
+                                                <div class="cart-coupon">
+                                                    <input type="text" name="cart-coupon" placeholder="Coupon code">
+                                                    <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="shoping-cart-total mt-50">
+                                <h4>Cart Totals</h4>
+                                <table class="table">
+                                    <tbody>
                                     <tr>
                                         <td>Cart Subtotal</td>
                                         <td>$618.00</td>
@@ -128,32 +130,32 @@
                                         <td><strong>Order Total</strong></td>
                                         <td><strong>${{$cart->getSum()}}</strong></td>
                                     </tr>
-                                </tbody>
-                            </table>
-                            <div class="btn-wrapper text-right text-end">
-                                <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                                    </tbody>
+                                </table>
+                                <div class="btn-wrapper text-right text-end">
+                                    <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                                </div>
                             </div>
+
+
                         </div>
-
-
+                    </div>
+                </div>
+                <!-- SHOPING CART AREA END -->
             </div>
         </div>
-    </div>
-    <!-- SHOPING CART AREA END -->
-    </div>
-    </div>
 
 
 
 
-@endsection
-    @section('javascript')
-
-        const incUrl = "{{url('cart/increment')}}/";
-        const decUrl = "{{url('cart/decrement')}}/";
-        const deleteUrl = "{{url('cart')}}/";
-        const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
-    @endsection
-    @section('js-files')
-        <script src="{{ asset('js/delete.js') }}"></script>
+        @endsection
+        @section('javascript')
+            const incUrl = "{{url('cart/increment')}}/";
+            const decUrl = "{{url('cart/decrement')}}/";
+            const deleteUrl = "{{url('cart')}}/";
+            const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
+        @endsection
+        @section('js-files')
+            <script src="{{ asset('js/delete.js') }}"></script>
+            <script src="{{ asset('js/welcome.js') }}"></script>
 @endsection

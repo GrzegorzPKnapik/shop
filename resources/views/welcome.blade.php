@@ -2875,14 +2875,16 @@
         </div>
     </div>
     <!-- preloader area end -->
-    <span class="cart-count">0</span>
 @endsection
 @section('javascript')
     const DATA = {
     addToCartUrl: '{{url('cart')}}/',
     cart: '{{ url('cart') }}',
     }
+    const deleteUrl = "{{url('cart')}}/";
+    const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
 @endsection
 @section('js-files')
+    <script src="{{ asset('js/delete.js') }}"></script>
     <script src="{{ asset('js/welcome.js') }}"></script>
 @endsection

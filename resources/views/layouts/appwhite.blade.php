@@ -354,31 +354,17 @@
                 @if($cart)
                     @foreach($cart->getItems() as $item)
                         <tr class="align-middle delete_mem{{$item->getProductId()}}">
-                            <td>
-                                <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
-                            </td>
-                            <td class="cart-product-image">
-                                <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
-                            </td>
-                            <td class="cart-product-info">
-                                <h4><a>{{$item->getName()}}</a></h4>
-                            </td>
-
-                            <td class="cart-product-subtotal">${{$item->getPrice()}}</td>
-
-
-                            <td class="cart-product-quantity " data-th="Quantity">
-                                <div class="cart-plus-minus m-auto">
-                                    <div class="dec qtybutton" data-id="{{$item->getProductId()}}">-</div>
-                                    <input type="button" value="{{$item->getQuantity()}}" class="cart-plus-minus-box cart_update">
-                                    <div class="inc qtybutton" data-id="{{$item->getProductId()}}">+</div>
-                                </div>
-                            </td>
-
-
-
-                            <td class="cart-product-subtotal">${{$item->getSubTotal()}}</td>
-                        </tr>
+                <div class="mini-cart-item clearfix">
+                    <div class="mini-cart-img">
+                        <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
+                        <span class="mini-cart-item-delete delete" data-id="{{$item->getProductId()}}"><i class="icon-cancel"></i></span>
+                        <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
+                    </div>
+                    <div class="mini-cart-info">
+                        <h6><a href="#">{{$item->getName()}}</a></h6>
+                        <span class="mini-cart-quantity">${{$item->getQuantity()}}x${{$item->getPrice()}}=${{$item->getSubTotal()}}</span>
+                    </div>
+                </div></tr>
                     @endforeach
                 @endif
 
