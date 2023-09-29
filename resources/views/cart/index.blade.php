@@ -59,7 +59,6 @@
                                 </tr>
                                 </thead>
 
-
                                 <tbody>
                                 <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
                                 @foreach($cart->getItems() as $item)
@@ -87,7 +86,7 @@
 
 
 
-                                        <td class="cart-product-subtotal">${{$item->getPriceMultiply()}}</td>
+                                        <td class="cart-product-subtotal">${{$item->getSubTotal()}}</td>
                                     </tr>
                                 @endforeach
 
