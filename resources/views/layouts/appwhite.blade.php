@@ -349,30 +349,31 @@
                 <button class="ltn__utilize-close">×</button>
             </div>
             <div id="refresh">
-            <div class="mini-cart-product-area ltn__scrollbar">
+            <div class="mini-cart-product-area ltn__scrollbar ">
                 @php $cart = session('cart')@endphp
                 @if($cart)
                     @foreach($cart->getItems() as $item)
-                        <tr class="align-middle delete_mem{{$item->getProductId()}}">
-                <div class="mini-cart-item clearfix">
+                <div class="mini-cart-item clearfix delete_mem{{$item->getProductId()}}">
                     <div class="mini-cart-img">
                         <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
                         <span class="mini-cart-item-delete delete" data-id="{{$item->getProductId()}}"><i class="icon-cancel"></i></span>
-                        <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
                     </div>
                     <div class="mini-cart-info">
                         <h6><a href="#">{{$item->getName()}}</a></h6>
                         <span class="mini-cart-quantity">${{$item->getQuantity()}}x${{$item->getPrice()}}=${{$item->getSubTotal()}}</span>
                     </div>
-                </div></tr>
+                </div>
                     @endforeach
                 @endif
 
             </div>
             <div class="mini-cart-footer">
+                @if($cart)
                 <div class="mini-cart-sub-total">
-                    <h5>Total: <span>${{$cart->getSum()}}</span></h5>
+                    <h5>Total: <span>$
+                            {{$cart->getSum()}}</span></h5>
                 </div>
+                @endif
                 <div class="btn-wrapper">
                     <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
                     <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
@@ -556,11 +557,14 @@
 <!-- preloader area end -->
 
 <script type="text/javascript">
+    const deleteUrl = "{{url('cart')}}/";
+    const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
     @yield('javascript')
 
 </script>
 @yield('js-files')
-
+<script src="{{ asset('js/delete.js') }}"></script>
+<script src="{{ asset('js/welcome.js') }}"></script>
 
 </body>
 </html>

@@ -7,7 +7,7 @@ $(function() {
             showCancelButton: true,
             confirmButtonText: 'Tak',
             cancelButtonText: 'Nie',
-            position: 'top'
+            position: 'center'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
@@ -19,11 +19,14 @@ $(function() {
                     cache: false,
                     success: function(html) {
                         $(".delete_mem" + id).fadeOut('slow');
+                        var script = document.createElement('script');
+                        script.src = 'js/welcome.js';
+                        document.head.appendChild(script);
                     }
                 })
                     .done(function (response) {
                         Swal.fire({
-                            position: 'top',
+                            position: 'center',
                             icon: 'success',
                             title: response.message,
                             showConfirmButton: false,
