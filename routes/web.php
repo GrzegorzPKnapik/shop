@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
@@ -31,6 +32,8 @@ Route::post('/product/store', [ProductController::class, 'store'])->name('produc
 Route::resource('product', ProductController::class)->only([
     'create', 'index', 'edit', 'update'
 ]);
+Route::post('/account/store', [AccountController::class, 'store'])->name('account.store');
+Route::get('/account', [AccountController::class, 'index'])->name('account.index');
 Route::get('/load-cart-data', [CartController::class, 'cartcount']);
 Route::post('/cart/decrement/{product}', [CartController::class, 'decrement']);
 Route::post('/cart/increment/{product}', [CartController::class, 'increment']);
