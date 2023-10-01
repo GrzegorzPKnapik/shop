@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Image extends Model
@@ -14,8 +15,8 @@ class Image extends Model
         'name',
     ];
 
-    public function product() :HasOne
+    public function product() :BelongsTo
     {
-        return $this->hasOne(Product::class,'IMAGES_id');
+        return $this->belongsTo(Product::class);
     }
 }

@@ -13,8 +13,8 @@ class AccountController extends Controller
 {
 
     public function index()
-    { $products=Product::with('image')->get();
-        $addresses = Address::with('contact','users')->get();
+    {
+        $addresses = Address::with('user')->get();
         return view('account.index', ['addresses'=>$addresses]);
     }
 

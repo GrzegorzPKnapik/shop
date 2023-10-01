@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Role extends Model
 {
@@ -16,9 +17,9 @@ class Role extends Model
     const  ADMIN='admin';
     const USER='user';
 
-    public function user() :BelongsTo
+    public function users() :HasMany
     {
-        return $this->belongsTo(User::class,'ROLE_id');
+        return $this->hasMany(User::class,'ROLE_id');
     }
 
 

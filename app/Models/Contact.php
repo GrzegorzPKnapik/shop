@@ -18,14 +18,8 @@ class Contact extends Model
     ];
 
 
-    public function users() :HasMany
-    {
-        return $this->hasMany(User::class,'USERS_id');
-    }
 
-    public function addresses() :HasMany
-    {
-        return $this->hasMany(Address::class,'CONTACTS_id');
-    }
+
+
 
 }
