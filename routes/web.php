@@ -32,7 +32,10 @@ Route::post('/product/store', [ProductController::class, 'store'])->name('produc
 Route::resource('product', ProductController::class)->only([
     'create', 'index', 'edit', 'update'
 ]);
-Route::post('/account/store', [AccountController::class, 'store'])->name('account.store');
+
+Route::post('/account/address/update/{address}', [AccountController::class, 'update'])->name('address.update');
+Route::get('/account/address/edit/{address}', [AccountController::class, 'edit'])->name('address.edit');
+Route::post('/account/address/store', [AccountController::class, 'store'])->name('address.store');
 Route::get('/account', [AccountController::class, 'index'])->name('account.index');
 Route::get('/load-cart-data', [CartController::class, 'cartcount']);
 Route::post('/cart/decrement/{product}', [CartController::class, 'decrement']);

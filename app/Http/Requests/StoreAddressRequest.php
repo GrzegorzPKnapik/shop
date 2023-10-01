@@ -23,13 +23,11 @@ class StoreAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price'=>'required',
-            'name'=>'required',
-            'image' => [
-                'image',
-                'mimes:png',
-                'dimensions:width=600,height=600',
-                ],
+            'city'=>'required',
+            'street'=>'required',
+            'zip_code'=>'required',
+            'voivodeship'=>'required'
+
         ];
     }
 }

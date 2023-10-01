@@ -1,6 +1,7 @@
 $(document).ready(function (){
 
 
+
 loadcart();
 $('.add-to-cart').click(function(event) {
     event.preventDefault();
@@ -34,9 +35,10 @@ $('.add-to-cart').click(function(event) {
 function loadcart(){
     $.ajax({
         type: "GET",
-        url: "/load-cart-data",
+        url: DATA.addToCartUrl + $(this).data('id'),
+
         success: function (response) {
-            $(".cart-count").html(response.count)
+            $(".cart-count").html(response.count);
             //$("#refresh").load(location.href + " #refresh");
             $("#refresh").load(location.href + " #refresh");
             //$("#mini-cart-icon").load(location.href + " #mini-cart-icon");
@@ -46,3 +48,5 @@ function loadcart(){
     });
 }
 });
+
+

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -49,4 +50,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Role::class,'ROLES_id');
     }
+
+    //User należy do address
+    public function  address() :BelongsTo
+    {
+        return $this->belongsTo(Address::class,'USER_id');
+    }
+
+
 }
