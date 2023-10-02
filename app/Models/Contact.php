@@ -5,19 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Image extends Model
+class Contact extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'phone_number',
+
     ];
 
-    //każdy obraz może być przypisany tylko do jednego produktu
-    public function product() :HasOne
+
+    //jeden kontakt ma wiele adresów
+    public function address() :HasMany
     {
-        return $this->hasOne(Product::class,'IMAGES_id');
+        return $this->hasMany(User::class,'CONTACTS_id');
     }
+
+
+
 }

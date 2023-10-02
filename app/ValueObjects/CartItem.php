@@ -23,7 +23,7 @@ class CartItem
         return $this->price;
     }
 
-    public function getPriceMultiply(): float
+    public function getSubTotal(): float
     {
         return $this->getPrice()*$this->getQuantity();
     }

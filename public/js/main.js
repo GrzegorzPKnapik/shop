@@ -1268,7 +1268,7 @@
                     type: "POST",
                     url: incUrl + id,
                     success: function () {
-                        $("#refresh").load(location.href + " #refresh");
+                        $("#refreshSC").load(location.href + " #refreshSC");
                     }
 
                 });
@@ -1284,7 +1284,7 @@
                     type: "POST",
                     url: decUrl + id,
                     success: function () {
-                        $("#refresh").load(location.href + " #refresh");
+                        $("#refreshSC").load(location.href + " #refreshSC");
                     }
 
                 });

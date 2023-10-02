@@ -2875,7 +2875,6 @@
         </div>
     </div>
     <!-- preloader area end -->
-    <span class="cart-count">0</span>
 @endsection
 @section('javascript')
     const DATA = {
@@ -2884,5 +2883,5 @@
     }
 @endsection
 @section('js-files')
-    <script src="{{ asset('js/welcome.js') }}"></script>
+
 @endsection
