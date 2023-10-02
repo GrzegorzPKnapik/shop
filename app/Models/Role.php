@@ -17,6 +17,7 @@ class Role extends Model
     const  ADMIN='admin';
     const USER='user';
 
+    //jedna rola ma wiele użytkowników
     public function users() :HasMany
     {
         return $this->hasMany(User::class,'ROLE_id');

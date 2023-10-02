@@ -120,6 +120,21 @@
                                                                         @enderror
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-md-6">
+
+                                                                    <div class="mb-3">
+                                                                        <label>Numer telefonu:</label>
+                                                                        <input id="phone_number" type="text" placeholder="numer telefonu"
+                                                                               class="form-control @error('phone_number') is-invalid @enderror"
+                                                                               name="phone_number" value="{{ $address->contact->phone_number}}"
+                                                                               required autocomplete="phone_number" autofocus>
+                                                                        @error('phone_number')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
                                                             <div class="btn-wrapper">

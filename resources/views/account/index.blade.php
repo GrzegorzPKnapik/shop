@@ -67,7 +67,7 @@
                                         <div class="tab-content">
                                             <div class="tab-pane fade active show" id="liton_tab_1_1">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>Hello <strong>UserName</strong> (not <strong>UserName</strong>?
+                                                    <p>Hello <strong>{{ Auth::user()->name }}</strong> (not <strong>UserName</strong>?
                                                         <small><a href="login-register.html">Log out</a></small> )</p>
                                                     <p>From your account dashboard you can view your
                                                         <span>recent orders</span>, manage your <span>shipping and billing addresses</span>,
@@ -170,7 +170,7 @@
                                                                 <p><strong>Alex Tuntuni</strong></p>
                                                                 <p>{{$address->city}}, {{$address->street}}<br>
                                                                    {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                <p>Mobile: (123) 456-7890</p>
+                                                                <p>Mobile: {{$address->contact->phone_number}}</p>
                                                                 _____________________________
                                                             </address>
                                                             @endforeach
@@ -246,78 +246,15 @@
                                                                         @enderror
                                                                     </div>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="btn-wrapper">
-                                                                <button type="submit"
-                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">
-                                                                    {{__('Save changes')}}
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="liton_tab_1_7">
-                                                <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>Edycja adresu</p>
-                                                    <div class="ltn__form-box">
-                                                        <form  method="POST" action="{{ route('address.store') }}" >
-                                                            @csrf
-                                                            <div class="row mb-50">
-                                                                <div class="col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label>Miasto:</label>
-                                                                        <input id="city" type="text" placeholder="miasto"
-                                                                               class="form-control @error('city') is-invalid @enderror"
-                                                                               name="city" value="{{$address->city }}"
-                                                                               required autocomplete="city" autofocus>
-                                                                        @error('city')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
                                                                 <div class="col-md-6">
 
                                                                     <div class="mb-3">
-                                                                        <label>Ulica:</label>
-                                                                        <input id="street" type="text" placeholder="ulica"
-                                                                               class="form-control @error('street') is-invalid @enderror"
-                                                                               name="street" value="{{ $address->street}}"
-                                                                               required autocomplete="street" autofocus>
-                                                                        @error('street')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-
-                                                                    <div class="mb-3">
-                                                                        <label>Kod pocztowy:</label>
-                                                                        <input id="zip_code" type="text" placeholder="kod pocztowy"
-                                                                               class="form-control @error('zip_code') is-invalid @enderror"
-                                                                               name="zip_code" value="{{ $address->zip_code}}"
-                                                                               required autocomplete="zip_code" autofocus>
-                                                                        @error('zip_code')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-
-                                                                    <div class="mb-3">
-                                                                        <label>Województwo:</label>
-                                                                        <input id="voivodeship" type="text" placeholder="województwo"
-                                                                               class="form-control @error('voivodeship') is-invalid @enderror"
-                                                                               name="voivodeship" value="{{ $address->voivodeship}}"
-                                                                               required autocomplete="voivodeship" autofocus>
-                                                                        @error('voivodeship')
+                                                                        <label>Numer telefonu:</label>
+                                                                        <input id="phone_number" type="text" placeholder="numer telefonu"
+                                                                               class="form-control @error('phone_number') is-invalid @enderror"
+                                                                               name="phone_number" value="{{ old('phone_number') }}"
+                                                                               required autocomplete="phone_number" autofocus>
+                                                                        @error('phone_number')
                                                                         <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>

@@ -27,6 +27,11 @@ class Address extends Model
         return $this->belongsTo(User::class,'USERS_id');
     }
 
+    public function contact() :BelongsTo
+    {
+        return $this->belongsTo(Contact::class,'CONTACTS_id');
+    }
+
 
 
 }

@@ -46,12 +46,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    //jedna rola należy od użytkownika
     public function role() :BelongsTo
     {
         return $this->belongsTo(Role::class,'ROLES_id');
     }
 
-
+    //jede użytkowanik ma wiele adresów hasMany address
     public function  addresses() :HasMany
     {
         return $this->hasMany(Address::class,'USER_id');

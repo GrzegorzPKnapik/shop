@@ -26,8 +26,8 @@ class StoreAddressRequest extends FormRequest
             'city'=>'required',
             'street'=>'required',
             'zip_code'=>'required',
-            'voivodeship'=>'required'
-
+            'voivodeship'=>'required',
+            'phone_number'=>'required'
         ];
     }
 }

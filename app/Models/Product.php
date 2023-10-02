@@ -16,9 +16,10 @@ class Product extends Model
 
     ];
 
-    public function image() :HasOne
+    //każdy obraz moze byc przypisany tylko do jednego produktu
+    public function image() :BelongsTo
     {
-        return $this->hasOne(Image::class);
+        return $this->BelongsTo(Image::class, 'IMAGES_id');
     }
 
 
