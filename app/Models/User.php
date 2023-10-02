@@ -46,25 +46,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-<<<<<<< HEAD
-    //jedna rola należy od użytkownika
     public function role() :BelongsTo
-=======
-    public function roles() :HasMany
->>>>>>> parent of 6017fda (relations changes bad)
     {
-        return $this->hasMany(Role::class,'ROLES_id');
+        return $this->belongsTo(Role::class,'ROLES_id');
     }
 
-<<<<<<< HEAD
-    //jede użytkowanik ma wiele adresów hasMany address
+
     public function  addresses() :HasMany
-=======
-    //User należy do address
-    public function  address() :BelongsTo
->>>>>>> parent of 6017fda (relations changes bad)
     {
-        return $this->belongsTo(Address::class,'USER_id');
+        return $this->hasMany(Address::class,'USER_id');
     }
 
 
