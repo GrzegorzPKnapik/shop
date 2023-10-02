@@ -1,0 +1,246 @@
+[33mcommit 64a9f684273ccf30680e9e309c1593dd94e02a62[m[33m ([m[1;36mHEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 64295e7 8f09cc4
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Mon Oct 2 23:06:40 2023 +0200
+
+    Merge branch 'temporary'
+
+[33mcommit 64295e7212d9fe08502bc514af244b7c599e9762[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 28 13:36:14 2023 +0200
+
+    mini cart no refresh works
+
+[33mcommit 6f12bd7f848e823e1582bfcac7cf051f53874069[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 28 12:40:56 2023 +0200
+
+    mini cart v2 no refresh count
+
+[33mcommit d3329cd2ca5560333439dad8e52f5b5e851ec6c6[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 28 12:32:28 2023 +0200
+
+    mini cart v1 no refresh
+
+[33mcommit c520feab99267ca8f39113548762ac3f631d5542[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 28 11:52:42 2023 +0200
+
+    mini cart refresh
+
+[33mcommit e5ceb903576a79ffde2b4b293fe5629b9087639d[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 28 00:08:12 2023 +0200
+
+    mini cart
+
+[33mcommit aa2ba54cb523866b9c9e896136ac198ca26dbf67[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 27 23:55:49 2023 +0200
+
+    mini cart @php session in blade
+
+[33mcommit aab37d7e1873f00ea22ac350d47e3c9685b2144a[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 27 23:25:46 2023 +0200
+
+    mini cart
+
+[33mcommit ec0d4bd965090828d07543f77758f456838191b5[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Sep 22 22:56:41 2023 +0200
+
+    increment cart v3 fin
+
+[33mcommit 2e819f55b964bbc67ba07a4007ea9d575b63d862[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 21 11:19:51 2023 +0200
+
+    increment cart v2
+
+[33mcommit 5d6fc9977366d44fa344f63cd4ece62cc93a2a8c[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 20 18:32:00 2023 +0200
+
+    increment cart v1
+
+[33mcommit 5918da80e8549fb1988bd06c108cc2c943f47926[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 20 13:38:31 2023 +0200
+
+    increment cart
+
+[33mcommit dd4a1461272e7d0a8734b1aab269483ceb682b0d[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Sat Sep 16 00:19:53 2023 +0200
+
+    delete test route
+
+[33mcommit 8b66674bf4d5570014f330ee3054d2c08ea9769a[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Sep 15 11:00:52 2023 +0200
+
+    delete no refresh works
+
+[33mcommit a6f85f4d926471283df5015deac7dcf31d99e29d[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 14 18:13:18 2023 +0200
+
+    koszyk wygld ok
+
+[33mcommit 9b9f96db61a3c3580cf2bfc6691126e1e85734d0[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 13 20:45:41 2023 +0200
+
+    koszykfin
+
+[33mcommit 298bd934c5c3262c7931d075169c6a3278b2ab19[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 13 14:14:36 2023 +0200
+
+    koszyk1
+
+[33mcommit 8f7c64f37596320ff664ef4efcb97c3dd99b87a1[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 13 10:54:56 2023 +0200
+
+    koszyk
+
+[33mcommit 0b6ae53fb83c52b0aedfd6b21fa02cc575b4dec7[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Sep 8 01:29:45 2023 +0200
+
+    dodanie aktualizacji, poprawienie wyswietlania zdjecia
+
+[33mcommit 8fd50ff9495b8f68b7415615a21372fcc189b3f4[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Sep 7 01:32:55 2023 +0200
+
+    error res
+
+[33mcommit a015c8ee29608913c999c802cf4714e3d23994f8[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Sep 6 22:57:26 2023 +0200
+
+    .
+
+[33mcommit 58f1f1fdd1ae9ff018da977c378a1a266f0aa894[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Tue Sep 5 21:36:23 2023 +0200
+
+    wyekstraktowany js
+
+[33mcommit 5ea568420babf9e9399fe4571d11f28f42bc48fb[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Tue Sep 5 18:11:10 2023 +0200
+
+    js
+
+[33mcommit bd76cf74ce414494f3d030a4642af640195bc685[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Sun Sep 3 23:12:34 2023 +0200
+
+    postep
+
+[33mcommit fadff67a25838c30529618e2b6fcd3f4712cb9ee[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Sun Sep 3 22:46:11 2023 +0200
+
+    dodanie ajax
+
+[33mcommit 62f9cdf1a7f902346e4e6a0cf66dba1bcda2607a[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Aug 31 14:31:13 2023 +0200
+
+    dodanie lang
+
+[33mcommit 37f751238c695eba624461e06957a56525813592[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Wed Aug 23 23:36:41 2023 +0200
+
+    blad
+
+[33mcommit 091a4aca468d0cd7586fe23342302a54faf1dbf2[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Mon Aug 21 22:17:12 2023 +0200
+
+    zmiana users na user
+
+[33mcommit 263cbe60fd0beccedb784cedaaf9a41f01b928f1[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Aug 18 16:05:45 2023 +0200
+
+    d
+
+[33mcommit b7085ee1fcb3735d5ec5ae8123d91a7d23993e22[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Mon Aug 14 21:57:27 2023 +0200
+
+    template app header, content, footer
+
+[33mcommit ef0768f7cf61dc0a18f60ec8b020684fc6e059a1[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Mon Aug 14 11:50:02 2023 +0200
+
+    zmiany do usunicia
+
+[33mcommit 7656121db4ca90ce011e69f766dc233399ad7d6a[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Sat Aug 12 12:08:18 2023 +0200
+
+    t
+
+[33mcommit e05860fa4d560267647409d21e20b0148e205692[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Aug 11 13:08:39 2023 +0200
+
+    test
+
+[33mcommit f4bff1f0094245965fda43f0d03557fdaf668532[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Aug 11 13:08:05 2023 +0200
+
+    test
+
+[33mcommit 718b0bf580a4e7a582deb3fab0a6b29ba3343267[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Aug 11 13:00:17 2023 +0200
+
+    koniec-testu
+
+[33mcommit 1913f4f770555afb9d9a6c1aa6df2b35d59ee037[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Aug 11 12:56:11 2023 +0200
+
+    test
+
+[33mcommit 3373983b20b2006a004cda8f416beb40b57e7a71[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Aug 11 12:51:45 2023 +0200
+
+    test
+
+[33mcommit 8f09cc48922d2093266124f0c3c11882979cee34[m[33m ([m[1;32mtemporary[m[33m)[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Fri Aug 11 12:45:59 2023 +0200
+
+    test
+
+[33mcommit 40eb1597fb6de82c5e29ce9b04c2a9c5db9812c7[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Aug 10 20:02:23 2023 +0200
+
+    zamiana nazwy tabeli-users-test
+
+[33mcommit 6408400815eb554c74efc8abfd57100c79313f2e[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Aug 10 20:05:25 2023 +0200
+
+    Test
+
+[33mcommit 1aaab14f1ba02970defb46be7aa7e5f9d859f1a1[m
+Author: GrzegorzPKnapik <grzegorz.p.knapik@gmail.com>
+Date:   Thu Aug 10 20:02:23 2023 +0200
+
+    First commit
