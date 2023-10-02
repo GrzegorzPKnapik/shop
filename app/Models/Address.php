@@ -21,17 +21,22 @@ class Address extends Model
 
     ];
 
-    //jeden address należy do jednego użytkownika
-    public function user() :BelongsTo
+    //address ma wile users
+    public function users() :HasMany
     {
-        return $this->belongsTo(User::class,'USERS_id');
+        return $this->hasMany(User::class,'USERS_id');
     }
 
     public function contact() :BelongsTo
     {
+<<<<<<< HEAD
         return $this->belongsTo(Contact::class,'CONTACTS_id');
     }
 
 
+=======
+        return $this->belongsTo(contact::class,'CONTACTS_id');
+    }
+>>>>>>> parent of 6017fda (relations changes bad)
 
 }

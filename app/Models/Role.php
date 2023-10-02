@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Role extends Model
 {
@@ -17,10 +16,14 @@ class Role extends Model
     const  ADMIN='admin';
     const USER='user';
 
+<<<<<<< HEAD
     //jedna rola ma wiele użytkowników
     public function users() :HasMany
+=======
+    public function user() :BelongsTo
+>>>>>>> parent of 6017fda (relations changes bad)
     {
-        return $this->hasMany(User::class,'ROLE_id');
+        return $this->belongsTo(User::class,'ROLE_id');
     }
 
 

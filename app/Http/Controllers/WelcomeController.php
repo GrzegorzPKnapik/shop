@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 class WelcomeController extends Controller
 {
     public function index(){
-        //$products=Product::with('image')->get();
-        $products=Product::all();
+        $products=Product::with('image')->get();
         return view('welcome', ['products'=>$products]);
     }
 }

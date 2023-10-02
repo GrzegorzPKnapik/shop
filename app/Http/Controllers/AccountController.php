@@ -16,8 +16,13 @@ class AccountController extends Controller
 {
 
     public function index()
+<<<<<<< HEAD
     {
         $addresses = Address::with('contact')->get();
+=======
+    { $products=Product::with('image')->get();
+        $addresses = Address::with('contact','users')->get();
+>>>>>>> parent of 6017fda (relations changes bad)
         return view('account.index', ['addresses'=>$addresses]);
     }
 
