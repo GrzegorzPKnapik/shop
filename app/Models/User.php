@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,17 +45,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    //jedna rola należy od użytkownika
-    public function role() :BelongsTo
+    public function roles() :HasMany
     {
-        return $this->belongsTo(Role::class,'ROLES_id');
+        return $this->hasMany(Role::class,'ROLES_id');
     }
-
-    //jede użytkowanik ma wiele adresów hasMany address
-    public function  addresses() :HasMany
-    {
-        return $this->hasMany(Address::class,'USER_id');
-    }
-
-
 }

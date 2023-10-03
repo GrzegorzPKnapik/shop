@@ -21,8 +21,4 @@ class Product extends Model
     {
         return $this->BelongsTo(Image::class, 'IMAGES_id');
     }
-
-
-
-
 }
