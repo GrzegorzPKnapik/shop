@@ -131,29 +131,29 @@
                                         <!-- quest zwraca true jeśli użytkownaik nie zalogowany,false wykonuje else -->
                                         @guest
 
-                                        @if (Route::has('login'))
-                                        <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                                        @endif
-                                        @if (Route::has('register'))
-                                        <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                                            @if (Route::has('login'))
+                                                <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                                            @endif
+                                            @if (Route::has('register'))
+                                                <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                                             @endif
 
-                                            @else
+                                        @else
                                             <li class="ltn__secondary-color">{{ Auth::user()->name }}</li>
                                             <li>
 
                                                 <a href="{{ route('logout') }}"
-                                                           onclick="event.preventDefault();
+                                                   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                                            {{ __('Logout') }}
+                                                    {{ __('Logout') }}
                                                 </a></li>
 
-                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                            @csrf
-                                                        </form>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
 
 
-                                            @endguest
+                                        @endguest
                                         <li><a href="{{ route('cart.index') }}">{{ __('Koszyk') }}</a></li>
                                         <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
                                         <li><a href="{{ route('product.index') }}">{{ __('Wyświetl produkty') }}</a></li>
@@ -177,21 +177,21 @@
 
                         <!-- mini-cart -->
                         <!-- Mobile Menu Button -->
-                    <div class="mobile-menu-toggle d-xl-none">
-                        <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
-                            <svg viewBox="0 0 800 600">
-                                <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
-                                <path d="M300,320 L540,320" id="middle"></path>
-                                <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
-                            </svg>
-                        </a>
-                    </div>
+                        <div class="mobile-menu-toggle d-xl-none">
+                            <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
+                                <svg viewBox="0 0 800 600">
+                                    <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
+                                    <path d="M300,320 L540,320" id="middle"></path>
+                                    <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                                </svg>
+                            </a>
+                        </div>
 
                     </div>
                 </div>
             </div>
 
-        <!-- ltn__header-middle-area end -->
+            <!-- ltn__header-middle-area end -->
     </header>
     <!-- HEADER AREA END -->
 
@@ -208,40 +208,40 @@
                 <button class="ltn__utilize-close">×</button>
             </div>
             <div id="refresh">
-            <div class="mini-cart-product-area ltn__scrollbar ">
-                @php $cart = session('cart')@endphp
-                @if($cart)
-                    @foreach($cart->getItems() as $item)
-                <div class="mini-cart-item clearfix delete_mem{{$item->getProductId()}}">
-                    <div class="mini-cart-img">
-                        <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
-                        <span class="mini-cart-item-delete delete" data-id="{{$item->getProductId()}}"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">{{$item->getName()}}</a></h6>
-                        <span class="mini-cart-quantity">${{$item->getQuantity()}}x${{$item->getPrice()}}=${{$item->getSubTotal()}}</span>
-                    </div>
-                </div>
-                    @endforeach
-                @endif
+                <div class="mini-cart-product-area ltn__scrollbar ">
+                    @php $cart = session('cart')@endphp
+                    @if($cart)
+                        @foreach($cart->getItems() as $item)
+                            <div class="mini-cart-item clearfix delete_mem{{$item->getProductId()}}">
+                                <div class="mini-cart-img">
+                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
+                                    <span class="mini-cart-item-delete delete" data-id="{{$item->getProductId()}}"><i class="icon-cancel"></i></span>
+                                </div>
+                                <div class="mini-cart-info">
+                                    <h6><a href="#">{{$item->getName()}}</a></h6>
+                                    <span class="mini-cart-quantity">${{$item->getQuantity()}}x${{$item->getPrice()}}=${{$item->getSubTotal()}}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
 
-            </div>
-            <div class="mini-cart-footer">
-                @if($cart)
-                <div class="mini-cart-sub-total">
-                    <h5>Total: <span>$
+                </div>
+                <div class="mini-cart-footer">
+                    @if($cart)
+                        <div class="mini-cart-sub-total">
+                            <h5>Total: <span>$
                             {{$cart->getSum()}}</span></h5>
+                        </div>
+                    @endif
+                    <div class="btn-wrapper">
+                        <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                        <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                    </div>
+                    <p>Free Shipping on All Orders Over $100!</p>
                 </div>
-                @endif
-                <div class="btn-wrapper">
-                    <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
-                    <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
-                </div>
-                <p>Free Shipping on All Orders Over $100!</p>
-            </div>
 
+            </div>
         </div>
-    </div>
 
 
     </div>

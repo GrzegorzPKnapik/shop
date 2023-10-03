@@ -34,7 +34,7 @@ $('.add-to-cart').click(function(event) {
 
 function loadcart(){
     $.ajax({
-        type: "GET",
+        method: "GET",
         url: DATA.addToCartUrl + $(this).data('id'),
 
         success: function (response) {
