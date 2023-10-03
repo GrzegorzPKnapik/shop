@@ -11,7 +11,6 @@
         <!-- Utilize Mobile Menu Start -->
         <!-- Utilize Mobile Menu End -->
 
-        <div class="ltn__utilize-overlay"></div>
 
         <!-- SLIDER AREA START (slider-3) -->
         <div class="ltn__slider-area ltn__slider-3  section-bg-1">
