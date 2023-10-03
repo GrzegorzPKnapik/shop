@@ -37,12 +37,11 @@ function loadcart(){
         url: "/load-cart-data",
         success: function (response) {
             $(".cart-count").html(response.count)
-            //$("#refresh").load(location.href + " #refresh");
             $("#refresh").load(location.href + " #refresh");
-            //$("#mini-cart-icon").load(location.href + " #mini-cart-icon");
 
         }
 
     });
+    $("#refreshSC").load(location.href + " #refreshSC");
 }
 });

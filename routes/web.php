@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::post('/product/store', [ProductController::class, 'store'])->name('produc
 Route::resource('product', ProductController::class)->only([
     'create', 'index', 'edit', 'update'
 ]);
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');;
 Route::get('/account/edit/{address}', [AccountController::class, 'edit'])->name('address.edit');
 Route::post('/account/update/{address}', [AccountController::class, 'update'])->name('address.update');
 Route::post('/account/store', [AccountController::class, 'store'])->name('address.store');

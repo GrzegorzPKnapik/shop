@@ -8,23 +8,27 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Product extends Model
+class Shopping_lists_product extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-
+        'sub_total',
+        'quantity',
+        'PRODUCTS_id',
+        'SHOPPING_LISTS_id'
     ];
 
-    //każdy obraz moze byc przypisany tylko do jednego produktu
-    public function image() :BelongsTo
+    public function product() :BelongsTo
     {
-        return $this->belongsTo(Image::class, 'IMAGES_id');
+        return $this->belongsTo(Product::class,'PRODUCTS_id');
     }
 
-    public function shopping_lists_products() :HasMany
+    public function shopping_list() :BelongsTo
     {
-        return $this->hasMany(Shopping_lists_product::class, 'PRODUCTS_id');
+        return $this->belongsTo(Shopping_list::class,'SHOPPING_LISTS_id');
     }
+
+
+
 }

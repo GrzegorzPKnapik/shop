@@ -28,6 +28,7 @@ class AccountController extends Controller
 
     public function store(StoreAddressRequest $request): RedirectResponse
     {
+
         $user = Auth::user();
 
         $contact = new Contact($request->validated());
@@ -40,7 +41,7 @@ class AccountController extends Controller
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
         $address->CONTACTS_id=$contact->id;
-        //$address->USERS_id=$user->id;
+        $address->USERS_id=$user->id;
         $address->save();
 
         return redirect()->route('account.index')->with('status',__('shop.product.status.store.success'));

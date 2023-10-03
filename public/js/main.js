@@ -1269,6 +1269,7 @@
                     url: incUrl + id,
                     success: function () {
                         $("#refreshSC").load(location.href + " #refreshSC");
+                        $("#refresh").load(location.href + " #refresh");
                     }
 
                 });
@@ -1285,6 +1286,7 @@
                     url: decUrl + id,
                     success: function () {
                         $("#refreshSC").load(location.href + " #refreshSC");
+                        $("#refresh").load(location.href + " #refresh");
                     }
 
                 });

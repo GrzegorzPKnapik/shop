@@ -62,6 +62,7 @@
 
 
                                         <tbody>
+
                                         <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
                                         @foreach($cart->getItems() as $item)
                                             <tr class="align-middle delete_mem{{$item->getProductId()}}">
@@ -137,7 +138,6 @@
                                 </div>
                             </div>
 
-
                         </div>
                     </div>
                 </div>
@@ -154,5 +154,4 @@
             const decUrl = "{{url('cart/decrement')}}/";
         @endsection
         @section('js-files')
-
 @endsection
