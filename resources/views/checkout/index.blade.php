@@ -114,7 +114,13 @@
                                 </tbody>
                             </table>
                             <div class="btn-wrapper text-right text-end">
-                                <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Finalize and Pay</a>
+                                <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('checkout.store') }}">
+                                    @csrf
+                                    @method('POST')
+                                    <button class="theme-btn-1 btn btn-effect-1" type="submit">
+                                        {{ __('Submit') }}
+                                    </button>
+                                </form>
                             </div>
                         </div>
 

@@ -33,6 +33,7 @@ Route::post('/product/store', [ProductController::class, 'store'])->name('produc
 Route::resource('product', ProductController::class)->only([
     'create', 'index', 'edit', 'update'
 ]);
+Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');;
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');;
 Route::get('/account/edit/{address}', [AccountController::class, 'edit'])->name('address.edit');
 Route::post('/account/update/{address}', [AccountController::class, 'update'])->name('address.update');

@@ -39,10 +39,8 @@ class ProductController extends Controller
         }
         $image->save();
 
-
+        //przypusuje tylko zwalidowane dane
         $product = new Product($request->validated());
-        $product->price=$request->price;
-        $product->name=$request->name;
         $product->IMAGES_id=$image->id;;
 
         $product->save();
