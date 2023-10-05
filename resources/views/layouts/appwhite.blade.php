@@ -32,12 +32,12 @@
 
 
 <!-- Add your site or application content here -->
-
 <!-- Body main wrapper start -->
-<div class="body-wrapper">
-
+<div class="wrapper">
     <!-- HEADER AREA START (header-5) -->
-    <header class="ltn__header-area ltn__header-5 ltn__header-transparent-- gradient-color-4---">
+    <header class="ltn__header-area ltn__header-5 ltn__header-transparent-- gradient-color-4">
+
+
         <!-- ltn__header-top-area start -->
         <div class="ltn__header-top-area">
             <div class="container">
@@ -90,6 +90,7 @@
                 </div>
             </div>
         </div>
+
         <!-- ltn__header-top-area end -->
 
         <!-- ltn__header-middle-area start -->
@@ -99,7 +100,7 @@
                     <div class="col">
                         <div class="site-logo-wrap">
                             <div class="site-logo">
-                                <a href="/"><img src="img/logo.png" alt="Logo"></a>
+                                <a href="/"><img src="{{asset('img/logo.png')}}" alt="Logo"></a>
                             </div>
                         </div>
                     </div>
@@ -111,133 +112,70 @@
                                         <li class="menu-icon"><a href="#">Home</a>
                                             <ul class="sub-menu menu-pages-img-show ltn__sub-menu-col-2---">
                                                 <li>
-                                                    <a href="index.html">Home Style 01</a>
-                                                    <img src="img/home-demos/home-1.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-2.html">Home Style 02</a>
-                                                    <img src="img/home-demos/home-2.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-3.html">Home Style 03</a>
-                                                    <img src="img/home-demos/home-3.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-4.html">Home Style 04</a>
-                                                    <img src="img/home-demos/home-4.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-5.html">Home Style 05 <span class="menu-item-badge">video</span></a>
-                                                    <img src="img/home-demos/home-5.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-6.html">Home Style 06</a>
-                                                    <img src="img/home-demos/home-6.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-7.html">Home Style 07</a>
-                                                    <img src="img/home-demos/home-7.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-8.html">Home Style 08</a>
-                                                    <img src="img/home-demos/home-8.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-9.html">Home Style 09</a>
-                                                    <img src="img/home-demos/home-9.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-10.html">Home Style 10</a>
-                                                    <img src="img/home-demos/home-10.jpg" alt="#">
                                                 </li>
                                                 <li>
-                                                    <a href="index-11.html">Home Style 11 <span class="menu-item-badge">Service</span></a>
-                                                    <img src="img/home-demos/home-11.jpg" alt="#">
                                                 </li>
                                             </ul>
                                         </li>
                                         <li class="menu-icon"><a href="#">About</a>
                                             <ul>
-                                                <li><a href="about.html">About</a></li>
-                                                <li><a href="service.html">Services</a></li>
-                                                <li><a href="service-details.html">Service Details</a></li>
-                                                <li><a href="portfolio.html">Gallery</a></li>
-                                                <li><a href="portfolio-2.html">Gallery - 02</a></li>
-                                                <li><a href="portfolio-details.html">Gallery Details</a></li>
-                                                <li><a href="team.html">Team</a></li>
-                                                <li><a href="team-details.html">Team Details</a></li>
-                                                <li><a href="faq.html">FAQ</a></li>
-                                                <li><a href="locations.html">Google Map Locations</a></li>
                                             </ul>
                                         </li>
                                         <li class="menu-icon"><a href="#">Shop</a>
                                             <ul>
-                                                <li><a href="shop.html">Shop</a></li>
-                                                <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                                <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                                                <li><a href="product-details.html">Shop details </a></li>
-                                                <li><a href="product-details-no-sidebar.html">Shop details no sidebar </a></li>
-                                                <li><a href="#">Other Pages <span class="float-end">>></span></a>
+
                                                     <ul>
-                                                        <li><a href="cart.html">Cart</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                        <li><a href="order-tracking.html">Order Tracking</a></li>
-                                                        <li><a href="account.html">My Account</a></li>
-                                                        <li><a href="login.html">Sign in</a></li>
-                                                        <li><a href="register.html">Register</a></li>
+
                                                     </ul>
-                                                </li>
+
                                             </ul>
                                         </li>
                                         <li class="menu-icon"><a href="#">News</a>
                                             <ul>
-                                                <li><a href="blog.html">News</a></li>
-                                                <li><a href="blog-grid.html">News Grid</a></li>
-                                                <li><a href="blog-left-sidebar.html">News Left sidebar</a></li>
-                                                <li><a href="blog-right-sidebar.html">News Right sidebar</a></li>
-                                                <li><a href="blog-details.html">News details</a></li>
+
                                             </ul>
                                         </li>
                                         <li class="menu-icon"><a href="#">Pages</a>
                                             <ul class="mega-menu">
                                                 <li><a href="#">Inner Pages</a>
                                                     <ul>
-                                                        <li><a href="portfolio.html">Gallery</a></li>
-                                                        <li><a href="portfolio-2.html">Gallery - 02</a></li>
-                                                        <li><a href="portfolio-details.html">Gallery Details</a></li>
-                                                        <li><a href="team.html">Team</a></li>
-                                                        <li><a href="team-details.html">Team Details</a></li>
-                                                        <li><a href="faq.html">FAQ</a></li>
+
                                                     </ul>
                                                 </li>
                                                 <li><a href="#">Inner Pages</a>
                                                     <ul>
-                                                        <li><a href="history.html">History</a></li>
-                                                        <li><a href="contact.html">Appointment</a></li>
-                                                        <li><a href="locations.html">Google Map Locations</a></li>
-                                                        <li><a href="404.html">404</a></li>
-                                                        <li><a href="contact.html">Contact</a></li>
-                                                        <li><a href="coming-soon.html">Coming Soon</a></li>
+
                                                     </ul>
                                                 </li>
                                                 <li><a href="#">Shop Pages</a>
                                                     <ul>
-                                                        <li><a href="shop.html">Shop</a></li>
-                                                        <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                                        <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                                                        <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                        <li><a href="product-details.html">Shop details </a></li>
-                                                        <li><a href="cart.html">Cart</a></li>
+
                                                     </ul>
                                                 </li>
-                                                <li><a href="shop.html"><img src="img/banner/menu-banner-1.png" alt="#"></a>
+                                                <li>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                        <li class="special-link"><a href="contact.html">GET A QUOTE</a></li>
+                                        <li><a>Contact</a></li>
+                                        <li class="special-link"><a>GET A QUOTE</a></li>
                                         <li></li>
                                     </ul>
                                 </div>
@@ -331,13 +269,13 @@
                     </div>
                 </div>
             </div>
+        </div>
 
             <!-- ltn__header-middle-area end -->
     </header>
     <!-- HEADER AREA END -->
 
     @yield('content')
-
 
 
 
@@ -400,7 +338,8 @@
                         <div class="footer-widget footer-about-widget">
                             <div class="footer-logo">
                                 <div class="site-logo">
-                                    <img src="img/logo-2.png" alt="Logo">
+                                    <img src="{{asset('img/logo-2.png')}}" alt="Logo">
+Z
                                 </div>
                             </div>
                             <p>Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.</p>
@@ -419,7 +358,7 @@
                                             <i class="icon-call"></i>
                                         </div>
                                         <div class="footer-address-info">
-                                            <p><a href="tel:+0123-456789">+0123-456789</a></p>
+                                            <p><a >+0123-456789</a></p>
                                         </div>
                                     </li>
                                     <li>
@@ -427,7 +366,7 @@
                                             <i class="icon-mail"></i>
                                         </div>
                                         <div class="footer-address-info">
-                                            <p><a href="mailto:example@example.com">example@example.com</a></p>
+                                            <p><a >example@example.com</a></p>
                                         </div>
                                     </li>
                                 </ul>
@@ -447,12 +386,7 @@
                             <h4 class="footer-title">Company</h4>
                             <div class="footer-menu">
                                 <ul>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="shop.html">All Products</a></li>
-                                    <li><a href="locations.html">Locations Map</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -462,12 +396,7 @@
                             <h4 class="footer-title">Services.</h4>
                             <div class="footer-menu">
                                 <ul>
-                                    <li><a href="order-tracking.html">Order tracking</a></li>
-                                    <li><a href="wishlist.html">Wish List</a></li>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="account.html">My account</a></li>
-                                    <li><a href="about.html">Terms & Conditions</a></li>
-                                    <li><a href="about.html">Promotional Offers</a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -477,12 +406,7 @@
                             <h4 class="footer-title">Customer Care</h4>
                             <div class="footer-menu">
                                 <ul>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="account.html">My account</a></li>
-                                    <li><a href="wishlist.html">Wish List</a></li>
-                                    <li><a href="order-tracking.html">Order tracking</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
+
                                 </ul>
                             </div>
                         </div>
@@ -513,7 +437,7 @@
                                 </div>
                             </div>
                             <h5 class="mt-30">We Accept</h5>
-                            <img src="img/icons/payment-4.png" alt="Payment Image">
+                            <img src="{{asset('img/icons/payment-4.png')}}" alt="Payment Image">
                         </div>
                     </div>
                 </div>

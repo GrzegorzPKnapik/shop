@@ -302,7 +302,7 @@
                         <div class="mini-cart-icon">
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <sup>2</sup>
+                                <span class="cart-count"></span>
                             </a>
                         </div>
                         <!-- mini-cart -->
@@ -325,6 +325,7 @@
     <!-- HEADER AREA END -->
 
     @yield('content')
+    @include('helpers.responses')
 
     <!-- Utilize Cart Menu Start -->
     <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
@@ -333,61 +334,45 @@
                 <span class="ltn__utilize-menu-title">Cart</span>
                 <button class="ltn__utilize-close">×</button>
             </div>
-            <div class="mini-cart-product-area ltn__scrollbar">
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">src="{{ asset('img/product/1.png') }}"
-                        <a href="#"><img src="{{ asset('img/product/1.png') }}" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Red Hot Tomato</a></h6>
-                        <span class="mini-cart-quantity">1 x $65.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="{{ asset('img/product/2.png') }}" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Vegetables Juices</a></h6>
-                        <span class="mini-cart-quantity">1 x $85.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="{{ asset('img/product/3.png') }}" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Orange Sliced Mix</a></h6>
-                        <span class="mini-cart-quantity">1 x $92.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="{{ asset('img/product/4.png') }}" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Orange Fresh Juice</a></h6>
-                        <span class="mini-cart-quantity">1 x $68.00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="mini-cart-footer">
-                <div class="mini-cart-sub-total">
-                    <h5>Subtotal: <span>$310.00</span></h5>
-                </div>
-                <div class="btn-wrapper">
-                    <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View Cart</a>
-                    <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
-                </div>
-                <p>Free Shipping on All Orders Over $100!</p>
-            </div>
+            <div id="refresh">
+                <div class="mini-cart-product-area ltn__scrollbar ">
+                    @php $cart = session('cart')@endphp
+                    @if($cart)
+                        @foreach($cart->getItems() as $item)
+                            <div class="mini-cart-item clearfix delete_mem{{$item->getProductId()}}">
+                                <div class="mini-cart-img">
+                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
+                                    <span class="mini-cart-item-delete delete" data-id="{{$item->getProductId()}}"><i class="icon-cancel"></i></span>
+                                </div>
+                                <div class="mini-cart-info">
+                                    <h6><a href="#">{{$item->getName()}}</a></h6>
+                                    <span class="mini-cart-quantity">${{$item->getQuantity()}}x${{$item->getPrice()}}=${{$item->getSubTotal()}}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
 
+                </div>
+                <div class="mini-cart-footer">
+                    @if($cart)
+                        <div class="mini-cart-sub-total">
+                            <h5>Total: <span>$
+                            {{$cart->getSum()}}</span></h5>
+                        </div>
+                    @endif
+                    <div class="btn-wrapper">
+                        <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                        <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                    </div>
+                    <p>Free Shipping on All Orders Over $100!</p>
+                </div>
+
+            </div>
         </div>
+
+
     </div>
+
     <!-- Utilize Cart Menu End -->
 
     <!-- Utilize Mobile Menu Start -->
@@ -534,11 +519,15 @@
 
 </div>
 
-
 <script type="text/javascript">
+    const deleteUrl = "{{url('cart')}}/";
+    const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
     @yield('javascript')
+
 </script>
 @yield('js-files')
+<script src="{{ asset('js/delete.js') }}"></script>
+<script src="{{ asset('js/welcome.js') }}"></script>
 
 
 
