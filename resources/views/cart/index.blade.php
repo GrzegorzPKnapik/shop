@@ -63,33 +63,32 @@
 
                                         <tbody>
 
-                                        <h4><a> Liczba produktów w koszyku: {{$cart->getItems()->count()}}</a></h4>
-                                        @foreach($cart->getItems() as $item)
-                                            <tr class="align-middle delete_mem{{$item->getProductId()}}">
+                                        <h4><a> Liczba produktów w koszyku: {{$quantity}}</a></h4>
+                                        @foreach($cart as $item)
+                                            <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
                                                 <td>
-                                                    <button class="icon-cancel delete" data-id="{{$item->getProductId()}}"></button>
+                                                    <button class="icon-cancel delete" data-id="{{$item->PRODUCTS_id}}"></button>
                                                 </td>
                                                 <td class="cart-product-image">
-                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
+                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
                                                 </td>
                                                 <td class="cart-product-info">
-                                                    <h4><a>{{$item->getName()}}</a></h4>
+                                                    <h4><a>{{$item->product->name}}</a></h4>
                                                 </td>
 
-                                                <td class="cart-product-subtotal">${{$item->getPrice()}}</td>
-
+                                                <td class="cart-product-subtotal">${{$item->product->price}}</td>
 
                                                 <td class="cart-product-quantity " data-th="Quantity">
                                                     <div class="cart-plus-minus m-auto">
-                                                        <div class="dec qtybutton" data-id="{{$item->getProductId()}}">-</div>
-                                                        <input type="button" value="{{$item->getQuantity()}}" class="cart-plus-minus-box cart_update">
-                                                        <div class="inc qtybutton" data-id="{{$item->getProductId()}}">+</div>
+                                                        <div class="dec qtybutton" data-id="{{$item->PRODUCTS_id}}">-</div>
+                                                        <input type="button" value="{{$item->quantity}}" class="cart-plus-minus-box cart_update">
+                                                        <div class="inc qtybutton" data-id="{{$item->PRODUCTS_id}}">+</div>
                                                     </div>
                                                 </td>
 
 
 
-                                                <td class="cart-product-subtotal">${{$item->getSubTotal()}}</td>
+                                                <td class="cart-product-subtotal">${{$item->sub_total}}</td>
                                             </tr>
 
                                         @endforeach
@@ -127,10 +126,8 @@
                                         <td>Vat</td>
                                         <td>$00.00</td>
                                     </tr>
-                                    <tr>
-                                        <td><strong>Order Total</strong></td>
-                                        <td><strong>${{$cart->getSum()}}</strong></td>
-                                    </tr>
+                                    <td><strong>Order Total</strong></td>
+                                    <td><strong>${{$item->shopping_list->total}}</strong></td>
                                     </tbody>
                                 </table>
                                 <div class="btn-wrapper text-right text-end">

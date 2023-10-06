@@ -21,7 +21,7 @@ class Shopping_list extends Model
     ];
 
 
-    public function shopping_lists_product() :HasMany
+    public function shopping_lists_products() :HasMany
     {
         return $this->hasMany(Shopping_lists_product::class,'SHOPPING_LISTS_id');
     }

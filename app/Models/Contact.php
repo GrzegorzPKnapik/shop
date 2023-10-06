@@ -19,7 +19,7 @@ class Contact extends Model
 
 
     //jeden kontakt ma wiele adresów
-    public function address() :HasMany
+    public function addresses() :HasMany
     {
         return $this->hasMany(User::class,'CONTACTS_id');
     }
