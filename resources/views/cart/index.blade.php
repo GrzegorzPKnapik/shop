@@ -62,8 +62,8 @@
 
 
                                         <tbody>
-
-                                        <h4><a> Liczba produktów w koszyku: {{$quantity}}</a></h4>
+@if(isset($cart))
+                                        <h4><a> Liczba produktów w koszyku: {{$cart->count()}}</a></h4>
                                         @foreach($cart as $item)
                                             <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
                                                 <td>
@@ -127,14 +127,16 @@
                                         <td>$00.00</td>
                                     </tr>
                                     <td><strong>Order Total</strong></td>
-                                    <td><strong>${{$item->shopping_list->total}}</strong></td>
+                                    <td><strong>
+                                            ${{  isset($item->shopping_list->total) ? $item->shopping_list->total : '0' }}
+                                        </strong></td>
                                     </tbody>
                                 </table>
                                 <div class="btn-wrapper text-right text-end">
                                     <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
                                 </div>
                             </div>
-
+                            @endif
                         </div>
                     </div>
                 </div>

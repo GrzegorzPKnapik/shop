@@ -288,30 +288,8 @@
             </div>
             <div id="refresh">
                 <div class="mini-cart-product-area ltn__scrollbar ">
-                    @php $cart = session('cart')@endphp
-                    @if($cart)
-                        @foreach($cart->getItems() as $item)
-                            <div class="mini-cart-item clearfix delete_mem{{$item->getProductId()}}">
-                                <div class="mini-cart-img">
-                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
-                                    <span class="mini-cart-item-delete delete" data-id="{{$item->getProductId()}}"><i class="icon-cancel"></i></span>
-                                </div>
-                                <div class="mini-cart-info">
-                                    <h6><a href="#">{{$item->getName()}}</a></h6>
-                                    <span class="mini-cart-quantity">${{$item->getQuantity()}}x${{$item->getPrice()}}=${{$item->getSubTotal()}}</span>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
 
-                </div>
-                <div class="mini-cart-footer">
-                    @if($cart)
-                        <div class="mini-cart-sub-total">
-                            <h5>Total: <span>$
-                            {{$cart->getSum()}}</span></h5>
-                        </div>
-                    @endif
+@
                     <div class="btn-wrapper">
                         <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
