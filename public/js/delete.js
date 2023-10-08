@@ -19,9 +19,18 @@ $(function() {
                     cache: false,
                     success: function(html) {
                         $(".delete_mem" + id).fadeOut('slow');
-                        var script = document.createElement('script');
-                        script.src = 'js/welcome.js';
-                        document.head.appendChild(script);
+                        //var script = document.createElement('script');
+                      //  script.src = 'js/welcome.js';
+                       // document.head.appendChild(script);
+                       // script.onload = function () {
+                            // Wywołaj tylko funkcję load() z pliku welcome.js
+                            //loadSCMCAfterDelete();
+
+                      //  };
+                        $("#refresh").load(location.href + " #refresh");
+                        $("#refreshSC").load(location.href + " #refreshSC");
+                        loadMiniQuantity();
+
                     }
                 })
                     .done(function (response) {
@@ -44,3 +53,16 @@ $(function() {
     });
 });
 
+
+
+function loadMiniQuantity() {
+    $.ajax({
+        type: "POST",
+        url: "/load-cart-data",
+        success: function (response) {
+            $(".cart-count").html(response.count)
+
+        }
+
+    })
+}

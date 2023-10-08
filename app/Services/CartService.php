@@ -96,7 +96,7 @@ class CartService
             $this->findShoppingListsProduct($product, $shopping_list)
                 ->update([
                     'quantity' => DB::raw('quantity + 1'),
-                    'sub_total' => DB::raw('(' . $product->price . ' * (quantity + 1))'),
+                    'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
                     'PRODUCTS_id' => $product->id
                 ]);
             $this->updateTotal($shopping_list);
@@ -116,7 +116,7 @@ class CartService
             $this->findShoppingListsProduct($product, $shopping_list)
                 ->update([
                     'quantity' => DB::raw('quantity - 1'),
-                    'sub_total' => DB::raw('(' . $product->price . ' * (quantity - 1))'),
+                    'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
                     'PRODUCTS_id' => $product->id
                 ]);
             $this->updateTotal($shopping_list);

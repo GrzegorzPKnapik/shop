@@ -54,15 +54,14 @@
                                         <th>SubTotal</th>
                                     </tr>
                                     </thead>
-                                    @php $itemCounter = 1 @endphp
 
 
                                     <tbody>
 
                                     <h4><a> Liczba produktów: {{$cart->getItems()->count()}}</a></h4>
-                                    @foreach($cart->getItems() as $item)
+                                    @foreach($cart->getItems() as $index => $item)
                                         <tr class="align-middle">
-                                            <td class="cart-product-subtotal">{{ $itemCounter }}.</td>
+                                            <td class="cart-product-subtotal">{{ $index +1}}.</td>
                                             <td class="cart-product-image">
                                                 <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
                                             </td>

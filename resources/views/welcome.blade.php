@@ -301,14 +301,10 @@
                                                             </li>
 
 
-
-
-
                                                             <li>
-                                                                <div class="add-to-cart qtybutton" data-id="{{$product->id}}">+</div>
-                                                                <div class="inc qtybutton" data-id="{{$product->id}}">+</div>
+                                                                <a href="" title="Add to Cart" class="add-to-cart" data-id="{{$product->id}}">
                                                                     <i class="fas fa-shopping-cart"></i>
-
+                                                                </a>
                                                             </li>
 
 
@@ -2879,7 +2875,6 @@
     <!-- preloader area end -->
 @endsection
 @section('javascript')
-    const incUrl = "{{url('cart/increment')}}/";
     const DATA = {
     addToCartUrl: '{{url('cart')}}/',
     cart: '{{ url('cart') }}',

@@ -491,7 +491,5 @@ Z
 </script>
 @yield('js-files')
 <script src="{{ asset('js/delete.js') }}"></script>
-<script src="{{ asset('js/welcome.js') }}"></script>
-
 </body>
 </html>
