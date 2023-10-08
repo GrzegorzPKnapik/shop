@@ -20,9 +20,30 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
-class CartService
+class ShoppingList
 {
+    private Collection $items;
 
+    /**
+     * @param Collection|null $items
+     */
+    public function __construct(Collection $items = null)
+    {
+        $this->items = $items ?? Collection::empty();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function getTotal(): Collection
+    {
+        return $this->items;
+    }
     public function getQuantity(): int
     {
         $shopping_list = $this->findShoppingList()->first();
@@ -49,7 +70,7 @@ class CartService
             $this->newShoppingListsProduct($product, $shopping_list);
         }
 
-        $this->updateTotal($shopping_list);
+        $this->updateTotal();
     }
 
 
@@ -80,8 +101,8 @@ class CartService
      * @param $shopping_list
      * @return void
      */
-    private function updateTotal($shopping_list): void
-    {
+    private function updateTotal(): void
+    {$shopping_list = $this->findShoppingList();
         $total = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
             ->sum('sub_total');
         $shopping_list->total = $total;
@@ -99,7 +120,7 @@ class CartService
                     'sub_total' => DB::raw('(' . $product->price . ' * (quantity + 1))'),
                     'PRODUCTS_id' => $product->id
                 ]);
-            $this->updateTotal($shopping_list);
+            $this->updateTotal();
         }
 
 
@@ -131,7 +152,7 @@ class CartService
     {
         $shopping_list = $this->findShoppingList()->first();
         $this->findShoppingListsProduct($product, $shopping_list)->delete();
-        $this->updateTotal($shopping_list);
+        $this->updateTotal();
     }
 
     /**

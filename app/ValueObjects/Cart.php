@@ -3,6 +3,8 @@
 namespace App\ValueObjects;
 
 use App\Models\Product;
+use App\Models\Shopping_list;
+use App\Models\Shopping_lists_product;
 use Closure;
 use Illuminate\Support\Collection;
 
@@ -31,12 +33,7 @@ class Cart
         return $this->items->isNotEmpty();
     }
     //całej kolekcji a nie jednego produktu
-    public function getQuantity(): int
-    {
-        return $this->items->sum(function ($item) {
-            return $item->getQuantity();
-        });
-    }
+
 
     public function getSum(): float
     {
@@ -119,6 +116,11 @@ class Cart
     private function removeItemFromCollection(Collection $items, Product $product): Collection
     {
         return $items->reject($this->productIdIsItemProductId($product));
+    }
+
+    private function findShoppingList()
+    {
+        return Shopping_list::where('status', 'lista_a');
     }
     /**
      * @param Collection $items

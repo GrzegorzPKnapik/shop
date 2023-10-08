@@ -8,7 +8,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
-use App\Services\CartService;
+use App\Services\ShoppingList;
 use App\ValueObjects\Cart;
 use App\ValueObjects\CartItem;
 use Exception;
@@ -23,29 +23,32 @@ use Illuminate\View\View;
 class CartController extends Controller
 {
     private $cartService;
-    private $cart;
 
-    public function __construct(CartService $cartService)
+    public function __construct(ShoppingList $cartService)
     {
         $this->cartService = $cartService;
-        $shopping_list = Shopping_list::where('status', 'lista_a')->first();
-        if($shopping_list != null)
-            $cart = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
-        $this->cart = $cart; // Tutaj pobierz koszyk z serwisu.
-
     }
 
+    public function getItems():Cart
+    {
+        $shopping_list = Shopping_list::where('status', 'lista_a')->first();
+        if($shopping_list != null)
+            $this->cart = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
+        return $this->cart;
+    }
 
     public function index(): View
     {
         $shopping_list = Shopping_list::where('status', 'lista_a')->first();
         if($shopping_list != null)
-            $cart = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
+            $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
+        $cart = new ShoppingList($shopping_lists_product);
 
-
-
+        $cart =$shopping_list;
+            $items = $shopping_lists_product;
         return view('cart.index',[
-            'cart' => $cart
+            'cart' => $cart,
+            'items' => $items
         ]);
     }
 
