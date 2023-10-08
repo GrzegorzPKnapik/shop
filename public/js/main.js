@@ -1260,7 +1260,33 @@
             33. Quantity plus minus
         -------------------------------------------------------- */
 
+        $(document).on("click", ".add-to-cart", function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: DATA.addToCartUrl + $(this).data('id'),
+                success: function () {
+                    $("#refresh").load(location.href + " #refresh");
+                }
 
+            })
+
+        });
+
+
+        function loadcart() {
+            $.ajax({
+                type: "POST",
+                url: "/load-cart-data",
+                success: function (response) {
+                    $(".cart-count").html(response.count)
+                    $("#refresh").load(location.href + " #refresh");
+                    $("#refreshSC").load(location.href + " #refreshSC");
+
+                }
+
+            })
+        }
 
         $(document).on("click", ".inc", function () {
             var id = $(this).data("id");

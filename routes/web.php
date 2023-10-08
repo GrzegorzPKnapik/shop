@@ -41,7 +41,7 @@ Route::get('/account/edit/{address}', [AccountController::class, 'edit'])->name(
 Route::post('/account/update/{address}', [AccountController::class, 'update'])->name('address.update');
 Route::post('/account/store', [AccountController::class, 'store'])->name('address.store');
 Route::get('/account', [AccountController::class, 'index'])->name('account.index');
-Route::get('/load-cart-data', [CartController::class, 'cartcount']);
+Route::post('/load-cart-data', [CartController::class, 'cartcount']);
 Route::post('/cart/decrement/{product}', [CartController::class, 'decrement']);
 Route::post('/cart/increment/{product}', [CartController::class, 'increment']);
 Route::delete('/cart/{product}', [CartController::class, 'destroy']);

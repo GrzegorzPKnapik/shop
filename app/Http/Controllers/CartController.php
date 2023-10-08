@@ -8,6 +8,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
+use App\Services\CartService;
 use App\Services\ShoppingList;
 use App\ValueObjects\Cart;
 use App\ValueObjects\CartItem;
@@ -24,7 +25,7 @@ class CartController extends Controller
 {
     private $cartService;
 
-    public function __construct(ShoppingList $cartService)
+    public function __construct(CartService $cartService)
     {
         $this->cartService = $cartService;
     }
@@ -45,10 +46,10 @@ class CartController extends Controller
         $cart = new ShoppingList($shopping_lists_product);
 
         $cart =$shopping_list;
-            $items = $shopping_lists_product;
+            $item = $shopping_lists_product;
         return view('cart.index',[
-            'cart' => $cart,
-            'items' => $items
+            //'cart' => $cart,
+            //'items' => $item
         ]);
     }
 

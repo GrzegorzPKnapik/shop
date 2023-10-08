@@ -63,8 +63,9 @@
 
                                         <tbody>
 @if(isset($cart))
-                                        <h4><a> Liczba produktów w koszyku: {{$cart->getQuantity()}}</a></h4>
-                                        @foreach($cart->getItems() as $item)
+                                        <h4><a> Liczba produktów w koszyku: {{$cart->total}}</a></h4>
+                                        @foreach($items as $index => $item)
+                                            {{$index+1}}
                                             <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
                                                 <td>
                                                     <button class="icon-cancel delete" data-id="{{$item->PRODUCTS_id}}"></button>

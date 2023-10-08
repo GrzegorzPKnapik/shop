@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
             $cart = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
 
 
-        View::share('cart', $cart);
+        View::share(['cart' => $shopping_list, 'items' => $cart]);
     }
 }
