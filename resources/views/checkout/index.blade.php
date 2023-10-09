@@ -58,28 +58,27 @@
 
                                     <tbody>
 
-                                    <h4><a> Liczba produktów: {{$cart->getItems()->count()}}</a></h4>
-                                    @foreach($cart->getItems() as $index => $item)
+                                    @if(isset($cart))
+                                        <h4><a> Liczba produktów w koszyku: {{$items->count()}}</a></h4>
+                                        @foreach($items as $index => $item)
                                         <tr class="align-middle">
                                             <td class="cart-product-subtotal">{{ $index +1}}.</td>
                                             <td class="cart-product-image">
-                                                <a href="product-details.html"><img src="{{asset('storage/' . $item->getImagePath())}}" alt="Zdjęcie"></a>
+                                                <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
                                             </td>
                                             <td class="cart-product-info">
-                                                <h4><a>{{$item->getName()}}</a></h4>
+                                                <h4><a>{{$item->product->name}}</a></h4>
                                             </td>
 
-                                            <td class="cart-product-subtotal">${{$item->getPrice()}}</td>
-
-
-                                            <td class="cart-product-subtotal">x{{$item->getQuantity()}}</td>
+                                            <td class="cart-product-subtotal">${{$item->product->price}}</td>
+                                            <td class="cart-product-subtotal">x{{$item->quantity}}</td>
 
 
 
-                                            <td class="cart-product-subtotal">${{$item->getSubTotal()}}</td>
+                                            <td class="cart-product-subtotal">${{$item->sub_total}}</td>
                                         </tr>
-                                        @php $itemCounter++ @endphp
                                     @endforeach
+                                    @endif
 
 
                                     <tr class="cart-coupon-row">
@@ -108,7 +107,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Order Total</strong></td>
-                                    <td><strong>${{$cart->getSum()}}</strong></td>
+                                    <td><strong>${{$cart->total}}</strong></td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -30,23 +30,16 @@ class CartController extends Controller
         $this->cartService = $cartService;
     }
 
-    public function getItems():Cart
-    {
-        $shopping_list = Shopping_list::where('status', 'lista_a')->first();
-        if($shopping_list != null)
-            $this->cart = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
-        return $this->cart;
-    }
 
     public function index(): View
     {
-        $shopping_list = Shopping_list::where('status', 'lista_a')->first();
-        if($shopping_list != null)
-            $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
-        $cart = new ShoppingList($shopping_lists_product);
+        //$shopping_list = Shopping_list::where('status', 'lista_a')->first();
+        //if($shopping_list != null)
+            //$shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
+        //$cart = new ShoppingList($shopping_lists_product);
 
-        $cart =$shopping_list;
-            $item = $shopping_lists_product;
+        //$cart =$shopping_list;
+            //$item = $shopping_lists_product;
         return view('cart.index',[
             //'cart' => $cart,
             //'items' => $item
@@ -56,15 +49,13 @@ class CartController extends Controller
     //count unique products
 
 
-    public function cartcount(): JsonResponse{
+    public function cartCount(): JsonResponse{
 
-        //$cart=Session::get('cart', new Cart());
-        //$cartcount=$cart->getItems()->count();
 
-        $cartcount=$this->cartService->getQuantity();
+        $cartCount=$this->cartService->getQuantity();
 
         return response()->json([
-            'count' => $cartcount,
+            'count' => $cartCount,
         ]);
     }
 

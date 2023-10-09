@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $shopping_list = Shopping_list::where('status', 'lista_a')->first();
         if($shopping_list != null)
-            $cart = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
+            $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
 
 
-        View::share(['cart' => $shopping_list, 'items' => $cart]);
+        View::share(['cart' => $shopping_list, 'items' => $shopping_lists_product]);
     }
 }

@@ -62,7 +62,7 @@
 
 
                                         <tbody>
-@if(isset($cart))
+                                        @if(isset($cart))
                                         <h4><a> Liczba produktów w koszyku: {{$items->count()}}</a></h4>
                                         @foreach($items as $item)
                                             <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
@@ -78,7 +78,7 @@
 
                                                 <td class="cart-product-subtotal">${{$item->product->price}}</td>
 
-                                                <td class="cart-product-quantity " data-th="Quantity">
+                                                <td class="cart-product-quantity">
                                                     <div class="cart-plus-minus m-auto">
                                                         <div class="dec qtybutton" data-id="{{$item->PRODUCTS_id}}">-</div>
                                                         <input type="button" value="{{$item->quantity}}" class="cart-plus-minus-box cart_update">

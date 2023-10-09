@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Orders;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
 use App\Models\User;
@@ -16,9 +17,10 @@ class CheckoutController extends Controller
 
     public function index()
     {
-        return view('checkout.index',[
-            'cart' => Session::get('cart', new Cart())
-        ]);
+        //return view('checkout.index',[
+        //    'cart' => Session::get('cart', new Cart())
+        //]);
+        return view('checkout.index');
     }
 
     public function order_summary(Shopping_list $shopping_list)
@@ -30,20 +32,21 @@ class CheckoutController extends Controller
     public function store()
     {
 
-        $cart = Session::get('cart', new Cart());
 
         $user = Auth::user();
 
+        $r = Shopping_list::where('status', 'lista_a');
 
-        $shopping_list = new Shopping_list();
-        $shopping_list->total = $cart->getSum();
+
+        $order = new Orders();
+        //$order->total = $cart->total;
         //$shopping_list->mode =
         //$shopping_list->status =
         //$shopping_list->mod_available_date
-        $shopping_list->USERS_id = $user->id;
+        $order->SHOPPING_LIST_id = $r->id;
 
         try {
-            $shopping_list->save();
+            $order->save();
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -52,23 +55,6 @@ class CheckoutController extends Controller
         }
 
 
-        foreach ($cart->getItems() as $item)
-        {
-            $shopping_lists_product = new Shopping_lists_product();
-
-            $shopping_lists_product->sub_total = $item->getSubTotal();
-            $shopping_lists_product->quantity = $item->getQuantity();
-            $shopping_lists_product->SHOPPING_LISTS_id =$shopping_list->id;
-            $shopping_lists_product->PRODUCTS_id = $item->getProductId();
-            try {
-                $shopping_lists_product->save();
-            } catch (Exception $e) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Błąd zapisu w bazie!'
-                ])->setStatusCode(500);
-            }
-        }
 
         Session::forget('cart');
         return redirect()->route('checkout.order_summary', $shopping_list)->with('status',__('shop.product.status.store.success'));

@@ -249,7 +249,7 @@
                         <div class="mini-cart-icon">
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="cart-count"></span>
+                                    <sup class="cart-count"></sup>
                             </a>
                         </div>
 
@@ -301,7 +301,6 @@
                                     <span class="mini-cart-quantity">${{$item->quantity}}x${{$item->product->price}}=${{$item->sub_total}}</span>
                                 </div>
                             </div>
-                            {{$item->shopping_list->total}}
                         @endforeach
 
 
