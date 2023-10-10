@@ -57,6 +57,8 @@
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>SubTotal</th>
+
+
                                         </tr>
                                         </thead>
 
@@ -64,6 +66,9 @@
                                         <tbody>
                                         @if(isset($cart))
                                         <h4><a> Liczba produktów w koszyku: {{$items->count()}}</a></h4>
+
+
+
                                         @foreach($items as $item)
                                             <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
                                                 <td>

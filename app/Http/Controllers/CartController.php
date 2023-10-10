@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -40,6 +41,8 @@ class CartController extends Controller
 
         //$cart =$shopping_list;
             //$item = $shopping_lists_product;
+
+
         return view('cart.index',[
             //'cart' => $cart,
             //'items' => $item

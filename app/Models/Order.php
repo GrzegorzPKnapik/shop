@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Orders extends Model
+class Order extends Model
 {
     use HasFactory;
 
@@ -26,6 +26,8 @@ class Orders extends Model
     {
         return $this->belongsTo(Shopping_list::class,'SHOPPING_LISTS_id');
     }
+
+
 
 
 

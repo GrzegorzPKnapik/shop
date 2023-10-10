@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Address::class,'USERS_id');
     }
+
+    public function shopping_lists() :HasMany
+    {
+        return $this->hasMany(Shopping_list::class,'SHOPPING_LISTS_id');
+    }
 }

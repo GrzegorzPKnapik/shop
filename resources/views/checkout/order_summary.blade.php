@@ -39,14 +39,87 @@
                         <div class="account-login-inner section-bg-1">
                             <form action="#" class="ltn__form-box contact-form-box">
                                 <p class="text-center"> To track your order please enter your Order ID in the box below and press the "Track Order" button. This was given to you on your receipt and in the confirmation email you should have received. </p>
-                                <label>Order ID:</label>
-                                <h1>#{{$cart->id}}</h1>
-                                <label>Billing email</label>
+                                @foreach($items as $item)
+                                    <p class="text-center">
+                                    <label>Order ID:</label>
+                                    <h1 class="text-center">#{{$item->order_id}}</h1>
+                                 <br>
+                                    </p>
+                                    @php break;@endphp
+                                @endforeach
+
+
+                                <table class="table text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>Number</th>
+                                        <th>Image</th>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>SubTotal</th>
+                                    </tr>
+                                    </thead>
+
+
+                                    <tbody>
+
+
+                                        @foreach($items as $index => $item)
+                                            <tr class="align-middle">
+                                                <td class="cart-product-subtotal">{{ $index +1}}.</td>
+                                                <td class="cart-product-image">
+                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->name)}}" alt="Zdjęcie"></a>
+                                                </td>
+                                                <td class="cart-product-info">
+                                                    <h4><a>{{$item->product_name}}</a></h4>
+                                                </td>
+
+                                                <td class="cart-product-subtotal">${{$item->price}}</td>
+                                                <td class="cart-product-subtotal">x{{$item->quantity}}</td>
+                                                <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                            </tr>
+                                        @endforeach
+
+
+                                    </tbody>
+                                </table>
+
+                                <p class="text-center">
+                                    <label>Przygotuj taką kwotę:</label>
+                                <br>
+                                </p>
+
+                                <div class="shoping-cart-total mt-0 w-25">
+                                    <h4>Order total</h4>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>Vat</td>
+                                        <td>$00.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Order Total</td>
+                                        <td><strong>$
+                                                @foreach($items as $item)
+                                                    {{$item->total}}
+                                                    @php break; @endphp
+                                                @endforeach
+                                            </strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+
+
+
                                 <input type="text" name="email" placeholder="Email you used during checkout.">
                                 <div class="btn-wrapper mt-0 text-center">
                                     <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Track Order</button>
                                 </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>

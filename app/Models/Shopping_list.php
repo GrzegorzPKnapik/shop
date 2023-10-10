@@ -28,7 +28,12 @@ class Shopping_list extends Model
 
     public function orders() :HasMany
     {
-        return $this->hasMany(Orders::class,'SHOPPING_LISTS_id');
+        return $this->hasMany(Order::class,'SHOPPING_LISTS_id');
+    }
+
+    public function user() :BelongsTo
+    {
+        return $this->belongsTo(User::class,'SHOPPING_LISTS_id');
     }
 
 

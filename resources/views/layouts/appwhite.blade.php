@@ -250,6 +250,7 @@
                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                 <i class="icon-shopping-cart"></i>
                                     <sup class="cart-count"></sup>
+
                             </a>
                         </div>
 
@@ -289,7 +290,7 @@
             <div id="refresh">
                 <div class="mini-cart-product-area ltn__scrollbar ">
 
-@if(isset($items) && isset($cart))
+                    @if(isset($items) && isset($cart))
                         @foreach($items as $item)
                             <div class="mini-cart-item clearfix delete_mem{{$item->PRODUCTS_id}}">
                                 <div class="mini-cart-img">
@@ -307,12 +308,12 @@
                 </div>
                 <div class="mini-cart-footer">
 
-                        <div class="mini-cart-sub-total">
-                            <h5>Total: <span>$
+                    <div class="mini-cart-sub-total">
+                        <h5>Total: <span>$
 
                             {{$cart->total}}</span></h5>
 
-                        </div>
+                    </div>
                     @endif
                     <div class="btn-wrapper">
                         <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
