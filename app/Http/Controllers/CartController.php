@@ -55,8 +55,7 @@ class CartController extends Controller
     public function cartCount(): JsonResponse{
 
 
-        //$cartCount=$this->cartService->getQuantity();
-        $cartCount=2;
+        $cartCount=$this->cartService->getQuantity();
 
         return response()->json([
             'count' => $cartCount,

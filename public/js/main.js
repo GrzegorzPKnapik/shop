@@ -1260,7 +1260,7 @@
             33. Quantity plus minus
         -------------------------------------------------------- */
 
-        loadMiniQuantity();
+
 
         $(document).on("click", ".add-to-cart", function (event) {
             event.preventDefault();

@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -25,10 +26,15 @@ class CartService
 
     public function getQuantity(): int
     {
-        $shopping_list = $this->findShoppingList()->first();
+       // $shopping_list = $this->findShoppingList()->first();
 
-        return Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
-            ->count('PRODUCTS_id');
+       //if(isset($shopping_list))
+       //    $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
+        //    ->count('PRODUCTS_id');
+
+
+       // return //$shopping_lists_product ?? 0;
+        return 99;
     }
 
     public function addItem(Product $product)
@@ -55,11 +61,13 @@ class CartService
 
     private function newShoppingList(Product $product):void
     {
+        $user = Auth::user();
+
         $shopping_list = new Shopping_list();
         $shopping_list->status = 'lista_zakupów';
         $shopping_list->total = $product->price;
+        $shopping_list->USERS_id = $user->id;
         $shopping_list->save();
-
     }
 
     /**
