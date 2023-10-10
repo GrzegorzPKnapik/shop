@@ -45,7 +45,7 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
 
-        $r = Shopping_list::where('status', 'lista_zakupów')->first();
+        $shopping_list = Shopping_list::where('status', 'lista_zakupów')->first();
 
 
         $order = new Order();
@@ -53,10 +53,11 @@ class CheckoutController extends Controller
         //$shopping_list->mode =
         //$shopping_list->status =
         //$shopping_list->mod_available_date
-        $order->SHOPPING_LISTS_id = $r->id;
+        $order->SHOPPING_LISTS_id = $shopping_list->id;
 
-        $r->status = 'zamówienie';
-        $r->save();
+            $shopping_list->update([
+                'status' => 'zamówienie'
+            ]);
 
         try {
             $order->save();
