@@ -21,12 +21,6 @@ class CartMiddleware
 
         public function handle($request, Closure $next) {
         if(Auth::check()) {
-//            $authUser = auth()->user();
-//            $profil = Profil_user::where('user_id',$authUser->id)->first();
-
-            //view()->share([
-           //     'profil', $profil
-           // ]);
             $user = Auth::user();
 
             $shopping_list = Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id)->first();

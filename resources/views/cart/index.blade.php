@@ -133,6 +133,7 @@
                                     </tr>
                                     <td><strong>Order Total</strong></td>
                                     <td><strong>
+
                                             ${{$cart->total}}
                                         </strong></td>
                                     </tbody>

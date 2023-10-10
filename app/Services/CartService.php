@@ -26,19 +26,16 @@ class CartService
 
     public function getQuantity(): int
     {
-       // $shopping_list = $this->findShoppingList()->first();
+        $shopping_list = $this->findShoppingList()->first();
 
-       //if(isset($shopping_list))
-       //    $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
-        //    ->count('PRODUCTS_id');
-
-
-       // return //$shopping_lists_product ?? 0;
-        return 99;
+        return Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
+            ->count('PRODUCTS_id');
     }
 
-    public function addItem(Product $product)
+    public function addItem(Product $product): JsonResponse
     {
+
+
         $shopping_list = $this->findShoppingList()->first();
         if(!is_null($shopping_list))
             $shopping_Lists_Product = $this->findShoppingListsProduct($product, $shopping_list)->first();
@@ -56,18 +53,18 @@ class CartService
         }
 
         $this->updateTotal($shopping_list);
+
+
     }
 
 
     private function newShoppingList(Product $product):void
     {
-        $user = Auth::user();
-
         $shopping_list = new Shopping_list();
         $shopping_list->status = 'lista_zakupów';
         $shopping_list->total = $product->price;
-        $shopping_list->USERS_id = $user->id;
         $shopping_list->save();
+
     }
 
     /**
@@ -148,7 +145,11 @@ class CartService
      */
     private function findShoppingList()
     {
-        return Shopping_list::where('status', 'lista_zakupów');
+        if(Auth::check()) {
+            $user = Auth::user();
+
+        return Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id);
+        }
     }
 
     /**
