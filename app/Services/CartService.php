@@ -58,6 +58,7 @@ class CartService
             $this->newShoppingListsProduct($product, $this->shopping_list);
         }
 
+
         $this->updateTotal($this->shopping_list);
     }
 
