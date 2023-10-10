@@ -109,9 +109,7 @@
                                     <td><strong>Order Total</strong></td>
                                     <td><strong>$
                                             @if(isset($cart))
-                                            {{$cart->total}}
-                                            @endif
-                                        </strong></td>
+                                            {{$cart->total}}@endif</strong></td>
                                 </tr>
                                 </tbody>
                             </table>

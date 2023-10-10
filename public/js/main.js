@@ -46,7 +46,7 @@
 ======================================*/
 
 (function($) {
-  "use strict";
+    "use strict";
 
     jQuery(document).ready(function(){
 
@@ -54,14 +54,14 @@
             1. Variables
         --------------------------------------------------------- */
         var $window = $(window),
-        $body = $('body');
+            $body = $('body');
 
         /* --------------------------------------------------------
             2. Mobile Menu
         --------------------------------------------------------- */
-         /* ---------------------------------
-            Utilize Function
-        ----------------------------------- */
+        /* ---------------------------------
+           Utilize Function
+       ----------------------------------- */
         (function () {
             var $ltn__utilizeToggle = $('.ltn__utilize-toggle'),
                 $ltn__utilize = $('.ltn__utilize'),
@@ -173,23 +173,23 @@
         /* Category Menu Responsive */
         function ltn__CategoryMenuToggle(){
             $('.ltn__category-menu-toggle .ltn__category-menu-drop > a').on('click', function(){
-            if($(window).width() < 991){
-                $(this).removeAttr('href');
-                var element = $(this).parent('li');
-                if (element.hasClass('open')) {
-                    element.removeClass('open');
-                    element.find('li').removeClass('open');
-                    element.find('ul').slideUp();
+                if($(window).width() < 991){
+                    $(this).removeAttr('href');
+                    var element = $(this).parent('li');
+                    if (element.hasClass('open')) {
+                        element.removeClass('open');
+                        element.find('li').removeClass('open');
+                        element.find('ul').slideUp();
+                    }
+                    else {
+                        element.addClass('open');
+                        element.children('ul').slideDown();
+                        element.siblings('li').children('ul').slideUp();
+                        element.siblings('li').removeClass('open');
+                        element.siblings('li').find('li').removeClass('open');
+                        element.siblings('li').find('ul').slideUp();
+                    }
                 }
-                else {
-                    element.addClass('open');
-                    element.children('ul').slideDown();
-                    element.siblings('li').children('ul').slideUp();
-                    element.siblings('li').removeClass('open');
-                    element.siblings('li').find('li').removeClass('open');
-                    element.siblings('li').find('ul').slideUp();
-                }
-            }
             });
             $('.ltn__category-menu-toggle .ltn__category-menu-drop > a').append('<span class="expand"></span>');
         }
@@ -1166,8 +1166,8 @@
         // $('.ltn__counter').counterUp();
 
         $('.counter').counterUp({
-          delay: 10,
-          time: 2000
+            delay: 10,
+            time: 2000
         });
         $('.counter').addClass('animated fadeInDownBig');
         $('h3').addClass('animated fadeIn');
@@ -1253,7 +1253,7 @@
             }
         });
         $( ".amount" ).val( "$" + $( ".slider-range" ).slider( "values", 0 ) +
-        " - $" + $( ".slider-range" ).slider( "values", 1 ) );
+            " - $" + $( ".slider-range" ).slider( "values", 1 ) );
 
 
         /* --------------------------------------------------------
@@ -1316,15 +1316,15 @@
 
         $(document).on("click", ".inc", function () {
             var id = $(this).data("id");
-                $.ajax({
-                    type: "POST",
-                    url: incUrl + id,
-                    success: function () {
-                        $("#refreshSC").load(location.href + " #refreshSC");
-                        $("#refresh").load(location.href + " #refresh");
-                    }
+            $.ajax({
+                type: "POST",
+                url: incUrl + id,
+                success: function () {
+                    $("#refreshSC").load(location.href + " #refreshSC");
+                    $("#refresh").load(location.href + " #refresh");
+                }
 
-                });
+            });
 
 
 
@@ -1333,15 +1333,15 @@
 
         $(document).on("click", ".dec", function () {
             var id = $(this).data("id");
-                $.ajax({
-                    type: "POST",
-                    url: decUrl + id,
-                    success: function () {
-                        $("#refreshSC").load(location.href + " #refreshSC");
-                        $("#refresh").load(location.href + " #refresh");
-                    }
+            $.ajax({
+                type: "POST",
+                url: decUrl + id,
+                success: function () {
+                    $("#refreshSC").load(location.href + " #refreshSC");
+                    $("#refresh").load(location.href + " #refresh");
+                }
 
-                });
+            });
 
 
         });
@@ -1359,7 +1359,7 @@
         });
 
 
-	    /* --------------------------------------------------------
+        /* --------------------------------------------------------
             35. Parallax active ( About Section  )
         -------------------------------------------------------- */
         /*
@@ -1371,7 +1371,7 @@
         }
 
 
-	    /* --------------------------------------------------------
+        /* --------------------------------------------------------
             36. Testimonial Slider 4
         -------------------------------------------------------- */
         var ltn__testimonial_quote_slider = $('.ltn__testimonial-slider-4-active');

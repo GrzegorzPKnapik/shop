@@ -24,47 +24,54 @@ use Illuminate\View\View;
 class CartService
 {
 
+    private $shopping_list;
+
     public function getQuantity(): int
     {
         $shopping_list = $this->findShoppingList()->first();
 
-        return Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
-            ->count('PRODUCTS_id');
+        if(isset($shopping_list)) {
+            $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
+                ->count('PRODUCTS_id');
+            return $shopping_lists_product;
+        }else return 0;
+
+
+
     }
 
-    public function addItem(Product $product): JsonResponse
+    public function addItem(Product $product)
     {
+        $this->shopping_list = $this->findShoppingList()->first();
+        if(!is_null($this->shopping_list))
+            $shopping_Lists_Product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
 
-
-        $shopping_list = $this->findShoppingList()->first();
-        if(!is_null($shopping_list))
-            $shopping_Lists_Product = $this->findShoppingListsProduct($product, $shopping_list)->first();
-
-        //jest koszyk i produkt był w koszyku cos zle
-        if (!is_null($shopping_list) && !is_null($shopping_Lists_Product)) {
+        //jest koszyk i produkt był w koszyku dziala
+        if (!is_null($this->shopping_list) && !is_null($shopping_Lists_Product)) {
             $this->increment($product);
-            //nie ma produktu i koszyka1. dziala
-        }else if(is_null($shopping_list)) {
-            $this->newShoppingList($product);
-            $this->newShoppingListsProduct($product, $shopping_list);
-            //koszyk jest nie ma produktu
-        }else if(!is_null($shopping_list) && is_null($shopping_Lists_Product)){
-            $this->newShoppingListsProduct($product, $shopping_list);
+            //nie ma produktu i koszyka1 dziala
+        }else if(is_null($this->shopping_list)) {
+            $this->shopping_list = $this->newShoppingList($product);
+            $this->newShoppingListsProduct($product, $this->shopping_list);
+            //koszyk jest nie ma produktu dziala
+        }else if(!is_null($this->shopping_list) && is_null($shopping_Lists_Product)){
+            $this->newShoppingListsProduct($product, $this->shopping_list);
         }
 
-        $this->updateTotal($shopping_list);
-
-
+        $this->updateTotal($this->shopping_list);
     }
 
 
-    private function newShoppingList(Product $product):void
+    private function newShoppingList(Product $product)
     {
+        $user = Auth::user();
+
         $shopping_list = new Shopping_list();
         $shopping_list->status = 'lista_zakupów';
         $shopping_list->total = $product->price;
+        $shopping_list->USERS_id = $user->id;
         $shopping_list->save();
-
+        return $shopping_list;
     }
 
     /**
@@ -145,11 +152,7 @@ class CartService
      */
     private function findShoppingList()
     {
-        if(Auth::check()) {
-            $user = Auth::user();
-
-        return Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id);
-        }
+        return Shopping_list::where('status', 'lista_zakupów');
     }
 
     /**
