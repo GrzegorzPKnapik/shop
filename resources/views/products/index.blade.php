@@ -45,7 +45,7 @@
                         <td>{{$product->name}}</td>
                         <td>{{$product->image->name}}</td>
                         <td>
-                        <button class="icon-cancel delete" data-id="{{$product->id}}"></button>
+                        <button class="icon-cancel deleteProduct" data-id="{{$product->id}}"></button>
 
                             <a href="{{ route('product.edit', $product->id) }}">
                                 <button class="icon-edit"></button>
@@ -202,9 +202,8 @@
 @endsection
 
 @section('javascript')
-    const deleteUrl = "{{url('product')}}/";
-    const deleteConfirm = "{{ __('shop.messages.delete_confirm') }}";
+ const deleteProductUrl = "{{url('product')}}/";
 @endsection
+
 @section('js-files')
-    <script src="{{ asset('js/delete.js') }}"></script>
 @endsection

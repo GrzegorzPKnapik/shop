@@ -32,7 +32,7 @@ Route::group(['middleware' => 'cart'], function (){
 
 
     Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
-    Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.delete');;
+    Route::delete('/product/{product}', [ProductController::class, 'destroy']);
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
     Route::resource('product', ProductController::class)->only([
         'create', 'index', 'edit', 'update'
@@ -49,7 +49,7 @@ Route::group(['middleware' => 'cart'], function (){
     Route::post('/cart/increment/{product}', [CartController::class, 'increment']);
     Route::delete('/cart/{product}', [CartController::class, 'destroy']);
     Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');;
+    Route::get('/cart', [CartController::class, 'index'])->middleware('logged')->name('cart.index');;
 });
 
 

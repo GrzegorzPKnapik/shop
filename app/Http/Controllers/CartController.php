@@ -65,12 +65,20 @@ class CartController extends Controller
 
     public function store(Product $product): JsonResponse
     {
+        if(!Auth::check())
+        {
+
         $this->cartService->addItem($product);
 
         return response()->json([
             'status' => 'success',
             'message' => (__('shop.cart.status.store.success'))
         ]);
+        }else
+            return response()->json([
+                'status' => 'warning',
+            ]);
+
     }
 
 

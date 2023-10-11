@@ -28,10 +28,10 @@ class CartService
 
     public function getQuantity(): int
     {
-        $shopping_list = $this->findShoppingList()->first();
+        $this->shopping_list = $this->findShoppingList()->first();
 
-        if(isset($shopping_list)) {
-            $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
+        if(isset($this->shopping_list)) {
+            $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $this->shopping_list->id)
                 ->count('PRODUCTS_id');
             return $shopping_lists_product;
         }else return 0;
@@ -46,6 +46,7 @@ class CartService
         if(!is_null($this->shopping_list))
             $shopping_Lists_Product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
 
+        //bez this->shopping_lists_product nadpisywal sie pustym obiektem dla pierwszego produktu
         //jest koszyk i produkt był w koszyku dziala
         if (!is_null($this->shopping_list) && !is_null($shopping_Lists_Product)) {
             $this->increment($product);
@@ -104,16 +105,17 @@ class CartService
 
     public function increment(Product $product): JsonResponse
     {
-        $shopping_list = $this->findShoppingList()->first();
-        $shopping_lists_product = $this->findShoppingListsProduct($product, $shopping_list)->first();
+        //dodac this! trzeba bo z zewnatrz inc
+        $this->shopping_list = $this->findShoppingList()->first();
+        $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
         if($shopping_lists_product->quantity <= 98) {
-            $this->findShoppingListsProduct($product, $shopping_list)
+            $this->findShoppingListsProduct($product, $this->shopping_list)
                 ->update([
                     'quantity' => DB::raw('quantity + 1'),
                     'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
                     'PRODUCTS_id' => $product->id
                 ]);
-            $this->updateTotal($shopping_list);
+            $this->updateTotal($this->shopping_list);
         }
 
 
@@ -124,16 +126,16 @@ class CartService
 
     public function decrement(Product $product): JsonResponse
     {
-        $shopping_list = $this->findShoppingList()->first();
-        $shopping_lists_product = $this->findShoppingListsProduct($product, $shopping_list)->first();
+        $this->shopping_list = $this->findShoppingList()->first();
+        $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
         if($shopping_lists_product->quantity > 1) {
-            $this->findShoppingListsProduct($product, $shopping_list)
+            $this->findShoppingListsProduct($product, $this->shopping_list)
                 ->update([
                     'quantity' => DB::raw('quantity - 1'),
                     'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
                     'PRODUCTS_id' => $product->id
                 ]);
-            $this->updateTotal($shopping_list);
+            $this->updateTotal($this->shopping_list);
         }
         return response()->json([
             'status' => 'success',
@@ -153,7 +155,9 @@ class CartService
      */
     private function findShoppingList()
     {
-        return Shopping_list::where('status', 'lista_zakupów');
+        $user = Auth::user();
+
+        return Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id);
     }
 
     /**

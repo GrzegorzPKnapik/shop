@@ -1261,9 +1261,9 @@
         -------------------------------------------------------- */
 
         loadMiniQuantity();
-
         $(document).on("click", ".add-to-cart", function (event) {
             event.preventDefault();
+
             $.ajax({
                 type: "POST",
                 url: DATA.addToCartUrl + $(this).data('id'),
@@ -1273,6 +1273,10 @@
 
             })
                 .done(function (response) {
+                    if (response.status == 'warning') {
+                        Swal.fire('Jesteś niezalogowany', 'Zaloguj się', 'warning');
+                    }else
+
                     Swal.fire({
                         title: 'Brawo!',
                         text: response.message,

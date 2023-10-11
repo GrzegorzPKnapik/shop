@@ -7,7 +7,7 @@
     <div class="body-wrapper">
         <!-- Utilize Cart Menu Start -->
         <!-- Utilize Cart Menu End -->
-
+        @include('helpers.responses')
         <!-- Utilize Mobile Menu Start -->
         <!-- Utilize Mobile Menu End -->
 

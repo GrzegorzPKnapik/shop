@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
+use App\Models\Order;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
@@ -53,12 +54,15 @@ class ProductController extends Controller
     public function destroy(Product $product): JsonResponse{
         $image = Image::find($product->IMAGES_id);
         $oldPath = $image->name;
+
         try {
            // $product = Product::find($id);
             if (Storage::exists($oldPath)) {
                 Storage::delete($oldPath);
             }
+            //$image->delete();
             $product->delete();
+
             //jednorazowe wyświetlenie wiadomości
             //Session::flash('status', __('shop.product.status.delete.success'));
             return response()->json([
