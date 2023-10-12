@@ -277,6 +277,7 @@
                             <div class="tab-pane fade active show" id="liton_tab_3_1">
                                 <div class="ltn__product-tab-content-inner">
                                     <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
+
                                         <!-- ltn__product-item -->
                                         @foreach($products as $product)
                                         <div class="col-lg-12">

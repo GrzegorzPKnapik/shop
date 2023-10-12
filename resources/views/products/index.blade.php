@@ -30,7 +30,7 @@
     <div class="col-lg-6 m-auto">
         <div class="tab-content">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table text-center table-sm">
                     <thead>
                     <tr>
                         <th>Id</th>

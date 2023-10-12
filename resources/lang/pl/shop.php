@@ -17,10 +17,27 @@ return [
             'success' => 'Produkt zaktualizowany!'
         ],
         'delete' => [
-            'success' => 'Produkt usunięty!'
+            'success' => 'Produkt usunięty!',
+            'fail' => 'Błąd przy usuwaniu produktu!'
         ],
     ],
     ],
+    'address' => [
+        'status' => [
+            'store' => [
+                'success' => 'Adres zapisany!'
+            ],
+            'update' => [
+                'success' => 'Adres zaktualizowany!'
+            ],
+            'delete' => [
+                'success' => 'Adres usunięty!',
+                'fail' => 'Błąd przy usuwaniu adresu!'
+            ],
+        ],
+
+    ],
+
 
     'cart' => [
         'status' => [

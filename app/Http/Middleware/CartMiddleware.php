@@ -26,9 +26,9 @@ class CartMiddleware
                 //if ($shopping_list) {
                 //    $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image', 'shopping_list')->get();
 
-            //        View::share(['cart' => null, 'items' => null]);
+                   //View::share(['cart' => null, 'items' => null]);
 
-           // }
+            //}
 
         if(Auth::check()) {
             $user = Auth::user();

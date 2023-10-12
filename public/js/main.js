@@ -1263,12 +1263,13 @@
         loadMiniQuantity();
         $(document).on("click", ".add-to-cart", function (event) {
             event.preventDefault();
-
             $.ajax({
                 type: "POST",
                 url: DATA.addToCartUrl + $(this).data('id'),
-                success: function () {
-                    loadMiniCart()
+                success: function (response) {
+                    if (response.status != 'warning') {
+                        loadMiniCart()
+                    }
                 }
 
             })

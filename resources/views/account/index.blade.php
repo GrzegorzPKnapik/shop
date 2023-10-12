@@ -9,7 +9,7 @@
 
     <!-- Body main wrapper start -->
     <div class="body-wrapper">
-
+        @include('helpers.responses')
 
 
             <!-- BREADCRUMB AREA START -->
@@ -51,7 +51,7 @@
                                             <div class="nav">
                                                 <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dashboard
                                                     <i class="fas fa-home"></i></a>
-                                                <a data-bs-toggle="tab" href="cart.index">Orders <i
+                                                <a data-bs-toggle="tab" href="#liton_tab_1_2">Orders <i
                                                         class="fas fa-file-alt"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_3">Downloads <i
                                                         class="fas fa-arrow-down"></i></a>
@@ -83,38 +83,31 @@
                                             <div class="tab-pane fade" id="liton_tab_1_2">
                                                 <div class="ltn__myaccount-tab-content-inner">
                                                     <div class="table-responsive">
-                                                        <table class="table">
+                                                        <table class="table text-center table-sm">
                                                             <thead>
                                                             <tr>
-                                                                <th>Order</th>
+                                                                <th>Number</th>
                                                                 <th>Date</th>
-                                                                <th>Status</th>
-                                                                <th>Total</th>
+                                                                <th>Price</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
+                                                            @foreach($orders as $item)
                                                             <tr>
-                                                                <td>1</td>
-                                                                <td>Jun 22, 2019</td>
-                                                                <td>Pending</td>
-                                                                <td>$3000</td>
-                                                                <td><a href="cart.html">View</a></td>
+
+                                                                <td class="cart-product-name">#{{$item->id}}</td>
+                                                                <td class="cart-product-name">{{$item->created_at}}</td>
+
+                                                                <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+                                                                <td>
+                                                                    <a href="{{ route('account.order', $item->id) }}">
+                                                                        <button class="icon-search"></button>
+                                                                    </a>
+                                                                </td>
+
                                                             </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>Nov 22, 2019</td>
-                                                                <td>Approved</td>
-                                                                <td>$200</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>Jan 12, 2020</td>
-                                                                <td>On Hold</td>
-                                                                <td>$990</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -164,18 +157,38 @@
                                             </div>
                                             <div class="tab-pane fade" id="liton_tab_1_4">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>The following addresses will be used on the checkout page by
-                                                        default.</p>
+                                                    <p>Zapisane adresy
+                                                        </p>
                                                     <div class="row">
                                                         <div class="col-md-6 col-12 learts-mb-30">
                                                             <h4>Adres dostawy: <small></small></h4>
                                                                 @foreach($addresses as $address)
-                                                                    <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small></h4>
+                                                                    <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
+                                                                <form action="{{route('address.delete', $address->id)}}" method="post" style="display: inline;">
+                                                                    @csrf
+                                                                    @method('delete')
+                                                                    <button type="submit" class="icon-cancel"></button>
+                                                                </form></h4>
+                                                                <form action="{{ route('address.updateSelected', $address->id) }}" method="POST">
+                                                                    @csrf
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
+                                                                               @if($address->selected == true)
+                                                                                   checked
+                                                                               @endif
+
+                                                                               onchange="this.form.submit()">
+                                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                                            Wybrany jako główny
+                                                                        </label>
+                                                                    </div>
+
+                                                                </form>
                                                                     <address>
                                                                         <p><strong>Alex Tuntuni</strong></p>
                                                                         <p>{{$address->city}}, {{$address->street}}<br>
                                                                             {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                        <p>Mobile: {{$address->contact->phone_number}}</p>
+                                                                        <p>Telefon: {{$address->contact->phone_number}}</p>
                                                                         _____________________________
                                                                     </address>
                                                                 @endforeach

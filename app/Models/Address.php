@@ -17,6 +17,7 @@ class Address extends Model
         'street',
         'zip_code',
         'voivodeship',
+        'selected',
         'USERS_id'
 
     ];

@@ -54,18 +54,21 @@ class CartController extends Controller
 
     public function cartCount(): JsonResponse{
 
-
-        $cartCount=$this->cartService->getQuantity();
-
+        if(Auth::check()) {
+            //quantity rozne od 0 jesli true to quantity, false to null przypisuje
+            $quantity = $this->cartService->getQuantity();
+            $cartCount = $quantity !=0 ? $quantity: null;
+        }
         return response()->json([
-            'count' => $cartCount,
+            //jesli nie jest zdefiniowana
+            'count' => $cartCount ?? null
         ]);
     }
 
 
     public function store(Product $product): JsonResponse
     {
-        if(!Auth::check())
+        if(Auth::check())
         {
 
         $this->cartService->addItem($product);

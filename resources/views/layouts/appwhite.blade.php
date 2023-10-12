@@ -207,6 +207,7 @@
                                 <li>
                                     <a href="#"><i class="icon-user"></i></a>
                                     <ul>
+
                                         <!-- quest zwraca true jeśli użytkownaik nie zalogowany,false wykonuje else -->
                                         @guest
 
@@ -243,7 +244,9 @@
                                         @auth
                                         <li><a href="{{ route('product.index') }}">{{ __('Wyświetl produkty') }}</a></li>
                                         @endauth
+                                        @auth
                                         <li><a href="{{ route('account.index') }}">{{ __('My Account') }}</a></li>
+                                        @endauth
                                         <li><a href="wishlist.html">Wishlist</a></li>
 
 

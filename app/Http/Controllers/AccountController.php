@@ -5,20 +5,52 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAddressRequest;
 use App\Models\Address;
 use App\Models\Contact;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
 
     public function index()
     {
-        $addresses = Address::with('contact')->get();
-        return view('account.index', ['addresses'=>$addresses]);
+
+        $user = Auth::user();
+
+
+
+        $orders = Order::with('shopping_list.user')->whereHas('shopping_list.user', function ($query) use ($user){
+            $query->where('id', $user->id);
+        })->get();
+
+
+        $addresses = Address::with('contact','user')->whereHas('user', function ($query) use ($user){
+            $query->where('id', $user->id);
+        })->get();
+        return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders]);
+    }
+
+
+    public function order(Order $order)
+    {
+        //join działa
+//        $order = Order::join('shopping_lists', 'orders.SHOPPING_LISTS_id', '=', 'shopping_lists.id')
+//            ->join('shopping_lists_products', 'shopping_lists.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
+//            ->join('products', 'shopping_lists_products.PRODUCTS_id', '=', 'products.id')
+//            ->join('images', 'products.IMAGES_id', '=', 'images.id')
+//            ->select('orders.id as order_id', 'users.*', 'addresses.*','shopping_lists_products.*', 'shopping_lists.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
+//            ->get();
+
+        $order = Order::with(['shopping_list.user.addresses.contact','shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+
+        //dd($order);
+        return view('account.order-preview',['order'=>$order]);
     }
 
     public function edit(Address $address){
@@ -40,11 +72,12 @@ class AccountController extends Controller
         $address->street = $request->street;
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
-        $address->CONTACTS_id=$contact->id;
+        $address->CONTACTS_id = $contact->id;
+        $address->selected = true;
         $address->USERS_id=$user->id;
         $address->save();
 
-        return redirect()->route('account.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('account.index')->with('status',__('shop.address.status.store.success'));
     }
 
     public function update(StoreAddressRequest $request, Address $address): RedirectResponse{
@@ -56,13 +89,40 @@ class AccountController extends Controller
         $address->street = $request->street;
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
-
-
-
-
         $address->save();
 
+
         return redirect()->route('account.index');
+    }
+
+    public function updateSelected(Address $address): RedirectResponse{
+
+
+        $oldAddress = Address::where('selected', true)->first();
+        $newAddress = Address::where('id', $address->id)->first();
+        //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
+
+        if($oldAddress != $newAddress) {
+                $oldAddress->selected = false;
+                $oldAddress->save();
+
+            $newAddress->selected = true;
+            $newAddress->save();
+        }
+
+        return redirect()->route('account.index');
+    }
+
+
+    public function destroy(Address $address): RedirectResponse{
+
+        try {
+            $address->delete();
+            return redirect()->route('account.index')->with('status',__('shop.address.status.delete.success'));
+        } catch (Exception $e) {
+            return redirect()->route('account.index')->with('status',__('shop.address.status.delete.fail'))->setStatusCode(500);
+        }
+
     }
 
 

@@ -20,6 +20,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'email',
+        'password',
+        'surname',
+        'pesel',
+        'age',
         'name',
         'email',
         'password',
@@ -59,6 +64,6 @@ class User extends Authenticatable
 
     public function shopping_lists() :HasMany
     {
-        return $this->hasMany(Shopping_list::class,'SHOPPING_LISTS_id');
+        return $this->hasMany(Shopping_list::class,'USERS_id');
     }
 }

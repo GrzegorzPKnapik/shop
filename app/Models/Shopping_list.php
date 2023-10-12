@@ -33,7 +33,7 @@ class Shopping_list extends Model
 
     public function user() :BelongsTo
     {
-        return $this->belongsTo(User::class,'SHOPPING_LISTS_id');
+        return $this->belongsTo(User::class,'USERS_id');
     }
 
 

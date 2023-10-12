@@ -48,7 +48,7 @@
                             <div class="shoping-cart-inner">
                                 <div class="table-responsive">
 
-                                    <table class="table text-center">
+                                    <table class="table text-center table-sm">
                                         <thead>
                                         <tr>
                                             <th>Action</th>
@@ -93,7 +93,7 @@
 
                             <div class="shoping-cart-total mt-50">
                                 <h4>Cart Totals</h4>
-                                <table class="table">
+                                <table class="table text-center table-sm">
                                     <tbody>
                                     <tr>
                                         <td>Cart Subtotal</td>
