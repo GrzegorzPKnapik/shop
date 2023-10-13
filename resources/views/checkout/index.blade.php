@@ -94,6 +94,32 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                <h4>Adres dostawy: <small></small></h4>
+                                @foreach($addresses as $address)
+                                    <form action="{{ route('address.updateSelected', $address->id) }}" method="POST">
+                                        @csrf
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
+                                                   @if($address->selected == true)
+                                                       checked
+                                                   @endif
+
+                                                   onchange="this.form.submit()">
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Wybrany jako główny
+                                            </label>
+                                        </div>
+
+                                    </form>
+                                    <address>
+                                        <p><strong>Alex Tuntuni</strong></p>
+                                        <p>{{$address->city}}, {{$address->street}}<br>
+                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                        <p>Telefon: {{$address->contact->phone_number}}</p>
+                                        _____________________________
+                                    </address>
+                                @endforeach
+
                             </div>
                         </div>
 

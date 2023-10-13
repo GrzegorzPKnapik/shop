@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
@@ -17,14 +18,18 @@ class CheckoutController extends Controller
 
     public function index()
     {
-        //return view('checkout.index',[
-        //    'cart' => Session::get('cart', new Cart())
-        //]);
-        return view('checkout.index');
+        $user = Auth::user();
+
+        $addresses = Address::with('contact', 'user')->whereHas('user', function ($query) use ($user){
+            $query->where('id', $user->id);
+        })->get();
+
+        return view('checkout.index',['addresses'=>$addresses]);
     }
 
     public function order_summary(Order $order)
     {
+
 
         $items = Order::join('shopping_lists', 'orders.SHOPPING_LISTS_id', '=', 'shopping_lists.id')
             ->join('shopping_lists_products', 'shopping_lists.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
@@ -32,6 +37,7 @@ class CheckoutController extends Controller
             ->join('images', 'products.IMAGES_id', '=', 'images.id')
             ->select('orders.id as order_id', 'shopping_lists_products.*', 'shopping_lists.*','products.name as product_name','products.*', 'images.name')->where('orders.id', $order->id)
             ->get();
+
 
 
         return view('checkout.order_summary',['items'=>$items]);
