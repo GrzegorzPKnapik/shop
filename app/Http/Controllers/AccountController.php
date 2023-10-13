@@ -73,8 +73,15 @@ class AccountController extends Controller
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
         $address->CONTACTS_id = $contact->id;
-        $address->selected = true;
         $address->USERS_id=$user->id;
+
+        $hasSelectedAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
+
+        if($hasSelectedAddress){
+            $address->selected = false;
+            $address->save();
+        }else
+        $address->selected = true;
         $address->save();
 
         return redirect()->route('account.index')->with('status',__('shop.address.status.store.success'));
@@ -97,8 +104,8 @@ class AccountController extends Controller
 
     public function updateSelected(Address $address): RedirectResponse{
 
-
-        $oldAddress = Address::where('selected', true)->first();
+        $user = Auth::user();
+        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
         $newAddress = Address::where('id', $address->id)->first();
         //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
 
