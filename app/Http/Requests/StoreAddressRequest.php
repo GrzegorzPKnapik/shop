@@ -23,6 +23,8 @@ class StoreAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name'=>'required',
+            'surname'=>'required',
             'city'=>'required',
             'street'=>'required',
             'zip_code'=>'required',

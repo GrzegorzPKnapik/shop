@@ -20,7 +20,7 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
 
-        $addresses = Address::with('user')->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
 
@@ -56,8 +56,10 @@ class CheckoutController extends Controller
 
 
         $toCopyAddress = Address::where('USERS_id', $user->id)->where('selected', true)->first();
-        //mozana zamiast kopiowac to zrobic coś nwm
+
         $copiedAddress = new Address();
+        $copiedAddress->name = $toCopyAddress->name;
+        $copiedAddress->surname = $toCopyAddress->surname;
         $copiedAddress->city = $toCopyAddress->city;
         $copiedAddress->street = $toCopyAddress->street;
         $copiedAddress->zip_code = $toCopyAddress->zip_code;

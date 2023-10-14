@@ -67,34 +67,14 @@
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
                                                                 <br>
                                                                 </p>
+                                                                <td>Address:</td>
+                                                                    <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
+                                                                    <p>{{$item->address->city}}, {{$item->address->street}}<br>
+                                                                        {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
+                                                                    <p>Telefon: {{$item->address->phone_number}}</p>
                                                                 @php break;@endphp
                                                             @endforeach
-                                                                <table class="table text-center caption-top table-sm">
-                                                                    <caption>Address</caption>
 
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th>City</th>
-                                                                        <th>Street</th>
-                                                                        <th>Voivodeship</th>
-                                                                        <th>Zip Code</th>
-                                                                        <th>Phone number</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    @foreach($order as $item)
-                                                                        @foreach ($item->shopping_list->user as $item)
-                                                                            <tr>
-                                                                                <td class="cart-product-name">{{ $item->city}}</td>
-                                                                                <td class="cart-product-name">{{ $item->street}}</td>
-                                                                                <td class="cart-product-name">{{ $item->voivodeship}}</td>
-                                                                                <td class="cart-product-name">{{ $item->zip_code}}</td>
-                                                                                <td class="cart-product-name">{{ $item->phone_number}}</td>
-                                                                            </tr>
-                                                                            @endforeach
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
                                                                 <br>
 
                                                             <table class="table text-center caption-top table-sm">

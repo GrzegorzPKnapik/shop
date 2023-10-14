@@ -63,8 +63,36 @@
                                                         <div class="row mb-50">
                                                             <div class="col-md-6">
                                                                 <div class="mb-3">
+                                                                    <label>Imie:</label>
+                                                                    <input id="name" type="text" placeholder="Imie"
+                                                                           class="form-control @error('name') is-invalid @enderror"
+                                                                           name="name" value="{{$address->name }}"
+                                                                           required autocomplete="name" autofocus>
+                                                                    @error('name')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3">
+                                                                    <label>Nazwisko:</label>
+                                                                    <input id="surname" type="text" placeholder="Nazwisko"
+                                                                           class="form-control @error('surname') is-invalid @enderror"
+                                                                           name="surname" value="{{$address->surname }}"
+                                                                           required autocomplete="surname" autofocus>
+                                                                    @error('surname')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3">
                                                                     <label>Miasto:</label>
-                                                                    <input id="city" type="text" placeholder="miasto"
+                                                                    <input id="city" type="text" placeholder="Miasto"
                                                                            class="form-control @error('city') is-invalid @enderror"
                                                                            name="city" value="{{$address->city }}"
                                                                            required autocomplete="city" autofocus>
@@ -79,7 +107,7 @@
 
                                                                 <div class="mb-3">
                                                                     <label>Ulica:</label>
-                                                                    <input id="street" type="text" placeholder="ulica"
+                                                                    <input id="street" type="text" placeholder="Ulica"
                                                                            class="form-control @error('street') is-invalid @enderror"
                                                                            name="street" value="{{ $address->street}}"
                                                                            required autocomplete="street" autofocus>
@@ -94,7 +122,7 @@
 
                                                                 <div class="mb-3">
                                                                     <label>Kod pocztowy:</label>
-                                                                    <input id="zip_code" type="text" placeholder="kod pocztowy"
+                                                                    <input id="zip_code" type="text" placeholder="Kod pocztowy"
                                                                            class="form-control @error('zip_code') is-invalid @enderror"
                                                                            name="zip_code" value="{{ $address->zip_code}}"
                                                                            required autocomplete="zip_code" autofocus>
@@ -109,7 +137,7 @@
 
                                                                 <div class="mb-3">
                                                                     <label>Województwo:</label>
-                                                                    <input id="voivodeship" type="text" placeholder="województwo"
+                                                                    <input id="voivodeship" type="text" placeholder="Województwo"
                                                                            class="form-control @error('voivodeship') is-invalid @enderror"
                                                                            name="voivodeship" value="{{ $address->voivodeship}}"
                                                                            required autocomplete="voivodeship" autofocus>
@@ -124,7 +152,7 @@
 
                                                                 <div class="mb-3">
                                                                     <label>Numer telefonu:</label>
-                                                                    <input id="phone_number" type="text" placeholder="numer telefonu"
+                                                                    <input id="phone_number" type="text" placeholder="Numer telefonu"
                                                                            class="form-control @error('phone_number') is-invalid @enderror"
                                                                            name="phone_number" value="{{ $address->phone_number}}"
                                                                            required autocomplete="phone_number" autofocus>

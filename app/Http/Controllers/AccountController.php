@@ -30,7 +30,7 @@ class AccountController extends Controller
         })->get();
 
 
-        $addresses = Address::with('user')->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
         return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders]);
@@ -65,6 +65,8 @@ class AccountController extends Controller
 
 
         $address = new Address($request->validated());
+        $address->name = $request->name;
+        $address->surname = $request->surname;
         $address->city = $request->city;
         $address->street = $request->street;
         $address->zip_code = $request->zip_code;
