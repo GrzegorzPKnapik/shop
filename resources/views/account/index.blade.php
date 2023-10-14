@@ -188,7 +188,7 @@
                                                                         <p><strong>Alex Tuntuni</strong></p>
                                                                         <p>{{$address->city}}, {{$address->street}}<br>
                                                                             {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                        <p>Telefon: {{$address->contact->phone_number}}</p>
+                                                                        <p>Telefon: {{$address->phone_number}}</p>
                                                                         _____________________________
                                                                     </address>
                                                                 @endforeach

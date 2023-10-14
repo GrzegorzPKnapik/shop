@@ -83,16 +83,13 @@
                                                                     </thead>
                                                                     <tbody>
                                                                     @foreach($order as $item)
-                                                                        @foreach ($item->shopping_list->user->addresses as $item)
+                                                                        @foreach ($item->shopping_list->user as $item)
                                                                             <tr>
                                                                                 <td class="cart-product-name">{{ $item->city}}</td>
                                                                                 <td class="cart-product-name">{{ $item->street}}</td>
                                                                                 <td class="cart-product-name">{{ $item->voivodeship}}</td>
                                                                                 <td class="cart-product-name">{{ $item->zip_code}}</td>
-                                                                                <td class="cart-product-name">{{ $item->contact->phone_number}}</td>
-
-
-
+                                                                                <td class="cart-product-name">{{ $item->phone_number}}</td>
                                                                             </tr>
                                                                             @endforeach
                                                                         @endforeach

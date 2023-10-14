@@ -237,9 +237,9 @@
                                         @auth
                                         <li><a href="{{ route('cart.index') }}">{{ __('Koszyk') }}</a></li>
                                         @endauth
-                                        @can('isAdmin')
+
                                         <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
-                                        @endcan
+
 
                                         @auth
                                         <li><a href="{{ route('product.index') }}">{{ __('Wyświetl produkty') }}</a></li>

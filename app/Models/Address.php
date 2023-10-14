@@ -18,6 +18,7 @@ class Address extends Model
         'zip_code',
         'voivodeship',
         'selected',
+        'status',
         'USERS_id'
 
     ];
@@ -28,10 +29,13 @@ class Address extends Model
         return $this->belongsTo(User::class,'USERS_id');
     }
 
-    public function contact() :BelongsTo
+    public function orders() :HasMany
     {
-        return $this->belongsTo(Contact::class,'CONTACTS_id');
+        return $this->hasMany(Order::class,'USERS_id');
     }
+
+
+
 
 
 

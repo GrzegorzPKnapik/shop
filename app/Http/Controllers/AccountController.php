@@ -30,7 +30,7 @@ class AccountController extends Controller
         })->get();
 
 
-        $addresses = Address::with('contact','user')->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
         return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders]);
@@ -47,7 +47,7 @@ class AccountController extends Controller
 //            ->select('orders.id as order_id', 'users.*', 'addresses.*','shopping_lists_products.*', 'shopping_lists.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
 //            ->get();
 
-        $order = Order::with(['shopping_list.user.addresses.contact','shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
         //dd($order);
         return view('account.order-preview',['order'=>$order]);
@@ -63,16 +63,13 @@ class AccountController extends Controller
 
         $user = Auth::user();
 
-        $contact = new Contact($request->validated());
-        $contact->phone_number = $request->phone_number;
-        $contact->save();
 
         $address = new Address($request->validated());
         $address->city = $request->city;
         $address->street = $request->street;
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
-        $address->CONTACTS_id = $contact->id;
+        $address->phone_number = $request->phone_number;
         $address->USERS_id=$user->id;
 
         $hasSelectedAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
@@ -88,14 +85,12 @@ class AccountController extends Controller
     }
 
     public function update(StoreAddressRequest $request, Address $address): RedirectResponse{
-        $contact = Contact::find($address->CONTACTS_id);
-        $contact->phone_number = $request->phone_number;
-        $contact->save();
 
         $address->city = $request->city;
         $address->street = $request->street;
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
+        $address->phone_number = $request->phone_number;
         $address->save();
 
 
@@ -110,8 +105,11 @@ class AccountController extends Controller
         //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
 
         if($oldAddress != $newAddress) {
+            if(isset($oldAddress))
+            {
                 $oldAddress->selected = false;
                 $oldAddress->save();
+            }
 
             $newAddress->selected = true;
             $newAddress->save();
@@ -130,6 +128,27 @@ class AccountController extends Controller
             return redirect()->route('account.index')->with('status',__('shop.address.status.delete.fail'))->setStatusCode(500);
         }
 
+    }
+
+    public function changeAddress(Address $address): JsonResponse
+    {
+
+        $user = Auth::user();
+        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
+        $newAddress = Address::where('id', $address->id)->first();
+        //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
+
+        if($oldAddress != $newAddress) {
+            $oldAddress->selected = false;
+            $oldAddress->save();
+
+            $newAddress->selected = true;
+            $newAddress->save();
+        }
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
 

@@ -1351,6 +1351,23 @@
 
         });
 
+        $(document).on("click", ".changeAddress", function () {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: DATA.changeAddressUrl + id,
+                success: function () {
+                    $("#refreshAddress").load(location.href + " #refreshAddress");
+                }
+
+            });
+
+
+
+
+        });
+
+
 
 
         /* --------------------------------------------------------

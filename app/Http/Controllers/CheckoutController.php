@@ -20,7 +20,7 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
 
-        $addresses = Address::with('contact', 'user')->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
 
@@ -51,18 +51,29 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
 
-        $r = Shopping_list::where('status', 'lista_zakupów')->first();
+        $shopping_list = Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id)->first();
+        //najpier kopia potem id do ordera czyli id do shoppoing_list
 
+
+        $toCopyAddress = Address::where('USERS_id', $user->id)->where('selected', true)->first();
+        //mozana zamiast kopiowac to zrobic coś nwm
+        $copiedAddress = new Address();
+        $copiedAddress->city = $toCopyAddress->city;
+        $copiedAddress->street = $toCopyAddress->street;
+        $copiedAddress->zip_code = $toCopyAddress->zip_code;
+        $copiedAddress->voivodeship = $toCopyAddress->voivodeship;
+        $copiedAddress->phone_number = $toCopyAddress->phone_number;
+        $copiedAddress->status = 'order';
+        $copiedAddress->USERS_id = $toCopyAddress->USERS_id;
+        $copiedAddress->save();
 
         $order = new Order();
-        //$order->total = $cart->total;
-        //$shopping_list->mode =
-        //$shopping_list->status =
-        //$shopping_list->mod_available_date
-        $order->SHOPPING_LISTS_id = $r->id;
+        $order->SHOPPING_LISTS_id = $shopping_list->id;
+        $order->ADDRESSES_id = $copiedAddress->id;
+        $order->save();
 
-        $r->status = 'zamówienie';
-        $r->save();
+        $shopping_list->status = 'zamówienie';
+        $shopping_list->save();
 
         try {
             $order->save();
@@ -72,8 +83,6 @@ class CheckoutController extends Controller
                 'message' => 'Błąd zapisu w bazie!'
             ])->setStatusCode(500);
         }
-
-       // <a href="{{ route('product.edit', $product->id) }}">
 
         return redirect()->route('checkout.order_summary', $order->id)->with('status',__('shop.product.status.store.success'));
     }

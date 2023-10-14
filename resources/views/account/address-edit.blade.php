@@ -126,7 +126,7 @@
                                                                     <label>Numer telefonu:</label>
                                                                     <input id="phone_number" type="text" placeholder="numer telefonu"
                                                                            class="form-control @error('phone_number') is-invalid @enderror"
-                                                                           name="phone_number" value="{{ $address->contact->phone_number}}"
+                                                                           name="phone_number" value="{{ $address->phone_number}}"
                                                                            required autocomplete="phone_number" autofocus>
                                                                     @error('phone_number')
                                                                     <span class="invalid-feedback" role="alert">

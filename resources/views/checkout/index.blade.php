@@ -95,7 +95,7 @@
                                     </tbody>
                                 </table>
 
-
+                                <div id="refreshAddress">
                                 <p>
                                 <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                         Wybierz inny adres
@@ -103,29 +103,20 @@
                                 </p>
                                 <div class="collapse" id="collapseExample">
                                     <div class="card card-body">
-                                        <h4>Adres dostawy: <small></small></h4>
                                         @foreach($addresses as $address)
                                             @if($address->selected != true)
-                                                <form action="{{ route('address.updateSelected', $address->id) }}" method="POST">
-                                                    @csrf
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                               @if($address->selected == true)
-                                                                   checked
-                                                               @endif
-
-                                                               onchange="this.form.submit()">
+                                                    <div class="form-check changeAddress" data-id="{{$address->id}}">
+                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
                                                         <label class="form-check-label" for="flexRadioDefault2">
                                                             Wybrany jako główny
                                                         </label>
                                                     </div>
 
-                                                </form>
                                                 <address>
                                                     <p><strong>Alex Tuntuni</strong></p>
                                                     <p>{{$address->city}}, {{$address->street}}<br>
                                                         {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                    <p>Telefon: {{$address->contact->phone_number}}</p>
+                                                    <p>Telefon: {{$address->phone_number}}</p>
                                                     _____________________________
                                                 </address>
                                             @endif
@@ -134,7 +125,7 @@
                                 </div>
 
 
-                                <h4>Adres dostawy: <small></small></h4>
+                                    <h4>Adres dostawy: </h4>
                                 @foreach($addresses as $address)
                                     @if($address->selected == true)
                                         <div class="form-check">
@@ -151,15 +142,15 @@
 
                                     </form>
                                     <address>
-                                        <p><strong>Alex Tuntuni</strong></p>
+                                        <p>Alex Tuntuni</p>
                                         <p>{{$address->city}}, {{$address->street}}<br>
                                             {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                        <p>Telefon: {{$address->contact->phone_number}}</p>
+                                        <p>Telefon: {{$address->phone_number}}</p>
                                         _____________________________
                                     </address>
                                     @endif
                                 @endforeach
-
+                                </div>
                             </div>
                         </div>
 
@@ -180,8 +171,10 @@
                                 </tbody>
                             </table>
 
+
                             <div class="btn-wrapper text-right text-end">
                                 <div class="mb-4"></div>
+
                                 <form method="POST" action="{{ route('checkout.store') }}">
                                     <button class="theme-btn-1 btn btn-effect-1" type="submit">
                                         {{ __('Submit') }}
@@ -439,6 +432,7 @@
     @section('javascript')
         const DATA = {
         editfieldUrl: '{{url('cart')}}/',
+        changeAddressUrl: '{{url('change-address')}}/',
 
         }
 @endsection
