@@ -9,9 +9,12 @@ use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\ValueObjects\Cart;
+use function PHPUnit\Framework\isNull;
 
 class CheckoutController extends Controller
 {
@@ -88,6 +91,26 @@ class CheckoutController extends Controller
 
         return redirect()->route('checkout.order_summary', $order->id)->with('status',__('shop.product.status.store.success'));
     }
+
+
+    public function isAddress(){
+
+
+        $user = Auth::user();
+        $address = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
+        //jeżeli to i to jest puste to dopiero
+
+
+        if(isset($address)){
+            return $this->store();
+        }else
+            return response()->json([
+                'status' => 'warning',
+            ]);
+
+
+    }
+
 
 
 

@@ -48,7 +48,11 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/change-address/{address}', [AccountController::class, 'changeAddress']);
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::get('/checkout/order_summary/{order}', [CheckoutController::class, 'order_summary'])->name('checkout.order_summary');;
-        Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');;
+        Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+        //Route::post('/isAddress/{form}', [CheckoutController::class, 'isAddress'])->name('checkout.isAddress');
+
+        //checkoutContr na address
+        Route::post('/addAddress', [AccountController::class, 'addAddress'])->name('address.addAddress');;
     });
 
 

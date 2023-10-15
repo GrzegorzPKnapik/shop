@@ -1359,8 +1359,41 @@
                 success: function () {
                     $("#refreshAddress").load(location.href + " #refreshAddress");
                 }
-
             });
+        });
+
+        $(document).on("click", ".isAddress", function () {
+            $.ajax({
+                type: "POST",
+                url: DATA.isAddressUrl + $(this).data('id'),
+            })
+                .done(function (response) {
+                    if (response.status == 'warning') {
+                        Swal.fire('Adres nie został podany', 'Proszę podać adres dostawy', 'warning');
+                    }else
+                        Swal.fire('git', 'git', 'warning');
+
+
+                        });
+
+
+
+
+
+        });
+
+
+        $(document).on("click", ".addAddress", function () {
+            $.ajax({
+                type: "POST",
+                url: DATA.addAddressUrl + $('#myForm').data('id'),
+            })
+                .done(function (response) {
+                    Swal.fire('Adres dodany', 'git', 'success');
+
+
+                });
+
 
 
 

@@ -76,10 +76,17 @@ class AccountController extends Controller
 
         $hasSelectedAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
 
+        //jeżeli istenieje jakis adres
         if($hasSelectedAddress){
-            $address->selected = false;
+            //$address->selected = false;
+            $hasSelectedAddress->selected=false;
+            $hasSelectedAddress->save();
+
+            $address->selected = true;
             $address->save();
+            //$address->save();
         }else
+            //jeżeli nie istnieje zaden adres
         $address->selected = true;
         $address->save();
 
@@ -102,7 +109,7 @@ class AccountController extends Controller
     public function updateSelected(Address $address): RedirectResponse{
 
         $user = Auth::user();
-        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
+        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
         $newAddress = Address::where('id', $address->id)->first();
         //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
 
@@ -151,6 +158,41 @@ class AccountController extends Controller
         return response()->json([
             'status' => 'success',
         ]);
+    }
+
+
+    public function addAddress(StoreAddressRequest $request)
+    {
+
+        $user = Auth::user();
+
+
+        $address = new Address($request->validated());
+        $address->name = $request->name;
+        $address->surname = $request->surname;
+        $address->city = $request->city;
+        $address->street = $request->street;
+        $address->zip_code = $request->zip_code;
+        $address->voivodeship = $request->voivodeship;
+        $address->phone_number = $request->phone_number;
+        $address->USERS_id=$user->id;
+
+        $hasSelectedAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
+
+        if($hasSelectedAddress){
+            //$address->selected = false;
+            $hasSelectedAddress->selected=false;
+            $hasSelectedAddress->save();
+
+            $address->selected = true;
+            $address->save();
+            //$address->save();
+        }else
+            //jeżeli nie istnieje zaden adres
+            $address->selected = true;
+        $address->save();
+
+        return redirect()->route('checkout.index');
     }
 
 
