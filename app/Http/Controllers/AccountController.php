@@ -164,6 +164,7 @@ class AccountController extends Controller
     public function addAddress(StoreAddressRequest $request)
     {
 
+
         $user = Auth::user();
 
 
@@ -192,7 +193,9 @@ class AccountController extends Controller
             $address->selected = true;
         $address->save();
 
-        return redirect()->route('checkout.index');
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
 

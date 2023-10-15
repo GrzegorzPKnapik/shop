@@ -223,8 +223,8 @@
                         <div class="ltn__quick-view-modal-inner">
                             <div class="modal-product-item">
                                 <div class="row">
-                                    <div class="ltn__form-box">
-                                        <form  method="POST" action="{{ route('address.addAddress') }}">
+                                    <div class="ltn__form-box add-address">
+                                        <form class="addAddress" method="POST">
                                             @csrf
                                             <div class="row mb-50">
                                                 <div class="col-md-6">
@@ -333,7 +333,7 @@
 
                                             <div class="btn-wrapper">
                                                 <button type="submit"
-                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase addAddress" >
+                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" >
                                                     {{__('Zapisz adres')}}
                                                 </button>
                                             </div>
@@ -358,7 +358,7 @@
         const DATA = {
         editfieldUrl: '{{url('cart')}}/',
         changeAddressUrl: '{{url('change-address')}}/',
-        addAddressUrl: '{{url('addAddress')}}/',
+        addAddressUrl: '{{url('addAddress')}}',
         isAddressUrl: '{{url('isAddress')}}/',
 
         }

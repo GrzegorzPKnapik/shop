@@ -1383,20 +1383,27 @@
         });
 
 
-        $(document).on("click", ".addAddress", function () {
+
+
+        $(document).ready(function () {
+            $('.save-address').click(function (e) {
+                e.preventDefault();
+                var form = $('.addAddress').serialize();
+
             $.ajax({
                 type: "POST",
-                url: DATA.addAddressUrl + $('#myForm').data('id'),
+                url: DATA.addAddressUrl,
+                data: form,
             })
                 .done(function (response) {
-                    Swal.fire('Adres dodany', 'git', 'success');
+                    Swal.fire('git', 'git', 'warning');
 
 
                 });
 
 
 
-
+            });
 
         });
 

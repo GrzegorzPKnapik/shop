@@ -52,7 +52,7 @@ Route::group(['middleware' => 'cart'], function (){
         //Route::post('/isAddress/{form}', [CheckoutController::class, 'isAddress'])->name('checkout.isAddress');
 
         //checkoutContr na address
-        Route::post('/addAddress', [AccountController::class, 'addAddress'])->name('address.addAddress');;
+        Route::post('/addAddress', [AccountController::class, 'addAddress']);
     });
 
 
