@@ -54,15 +54,6 @@ class AddressController extends Controller
     }
 
 
-    public function isAddress(){
-        $user = Auth::user();
-        $address = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
-        //jeżeli to i to jest puste to dopiero
-
-        return $address;
-
-    }
-
     public function store(StoreAddressRequest $request): RedirectResponse
     {
 
@@ -133,45 +124,18 @@ class AddressController extends Controller
     }
 
 
-    public function destroy(Address $address): JsonResponse{
+    public function destroy(Address $address): RedirectResponse{
 
         try {
             $address->delete();
-            return response()->json([
-                'status' => 'success',
-                'message' => __('shop.address.status.delete.success'),
-            ]);
+            return redirect()->route('account.index')->with('status',__('shop.address.status.delete.success'));
         } catch (Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Wystąpił błąd!'
-            ])->setStatusCode(500);
+            return redirect()->route('account.index')->with('status',__('shop.address.status.delete.fail'))->setStatusCode(500);
         }
 
     }
 
-    public function changeSelected(Address $address): RedirectResponse{
-
-        $user = Auth::user();
-        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
-        $newAddress = Address::where('id', $address->id)->first();
-        //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
-
-        if($oldAddress != $newAddress) {
-            if(isset($oldAddress))
-            {
-                $oldAddress->selected = false;
-                $oldAddress->save();
-            }
-
-            $newAddress->selected = true;
-            $newAddress->save();
-        }
-
-        return redirect()->route('account.index');
-    }
-
-    public function selectAddress(Address $address): JsonResponse
+    public function changeAddress(Address $address): JsonResponse
     {
 
         $user = Auth::user();

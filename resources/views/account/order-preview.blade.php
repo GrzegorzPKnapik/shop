@@ -124,6 +124,15 @@
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
+
+                                                                    <div class="btn-wrapper text-right text-end">
+                                                                        <div class="mb-4"></div>
+                                                                        <form method="POST" action="{{ route('checkout.store') }}">
+                                                                            <button class="theme-btn-1 btn btn-effect-1" type="submit">
+                                                                                {{ __('Submit') }}
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
 
                                                         </div>

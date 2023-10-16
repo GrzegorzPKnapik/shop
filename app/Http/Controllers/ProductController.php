@@ -14,7 +14,6 @@ use App\Models\Product;
 use App\Models\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use JsValidator;
 
 class ProductController extends Controller
 {

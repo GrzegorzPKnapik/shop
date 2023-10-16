@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
@@ -39,35 +38,21 @@ Route::group(['middleware' => 'cart'], function (){
         'create', 'index', 'edit', 'update'
     ]);
     Route::group(['middleware' => 'logged'], function () {
-
-        ///address
-        Route::get('/address/edit/{address}', [AddressController::class, 'edit'])->name('address.edit');
-        Route::post('/address/update/{address}', [AddressController::class, 'update'])->name('address.update');
-        Route::delete('/address/{address}', [AddressController::class, 'destroy'])->name('address.delete');
-        //oba ponizej połaczyć teraz robie 'select' po prostu
-        Route::post('/address/select/{address}', [AddressController::class, 'selectAddress'])->name('address.selectAddress');
-        //Route::post('/address/change-address/{address}', [AddressController::class, 'changeAddress'])->name('address.updateSelected');;
-        //zmienic na addres zrefaktoryzowane
-        Route::post('/address/isAddress', [CheckoutController::class, 'isAddress'])->name('address.isAddress');
-        //oba poniżej połaczyć
-        Route::post('/address/addAddress', [AccountController::class, 'addAddress']);
-        Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
-        //
-
-
-        ///account
-        Route::get('/account', [AccountController::class, 'index'])->name('account.index');
-
-
-        ////chceckout
-
-
+        Route::delete('/account/address/{address}', [AccountController::class, 'destroy'])->name('address.delete');
+        Route::get('/account/edit/{address}', [AccountController::class, 'edit'])->name('address.edit');
+        Route::post('/account/update/{address}', [AccountController::class, 'update'])->name('address.update');
+        Route::post('/account/updateSelected/{address}', [AccountController::class, 'updateSelected'])->name('address.updateSelected');
+        Route::post('/account/store', [AccountController::class, 'store'])->name('address.store');
         Route::get('/account/order/{order}', [AccountController::class, 'order'])->name('account.order');
+        Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+        Route::post('/change-address/{address}', [AccountController::class, 'changeAddress']);
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
         Route::get('/checkout/order_summary/{order}', [CheckoutController::class, 'order_summary'])->name('checkout.order_summary');;
         Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+        Route::post('/isAddress', [CheckoutController::class, 'isAddress'])->name('checkout.isAddress');
 
         //checkoutContr na address
+        Route::post('/addAddress', [AccountController::class, 'addAddress']);
     });
 
 

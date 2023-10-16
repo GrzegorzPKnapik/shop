@@ -107,7 +107,7 @@
                                     <div class="card card-body">
                                         @foreach($addresses as $address)
                                             @if($address->selected != true)
-                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
+                                                    <div class="form-check changeAddress" data-id="{{$address->id}}">
                                                         <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
                                                         <label class="form-check-label" for="flexRadioDefault2">
                                                             Wybrany jako główny
@@ -357,9 +357,9 @@
     @section('javascript')
         const DATA = {
         editfieldUrl: '{{url('cart')}}/',
-        selectAddressUrl: '{{url('address/select')}}/',
-        addAddressUrl: '{{url('address/addAddress')}}',
-        isAddressUrl: '{{url('address/isAddress')}}',
+        changeAddressUrl: '{{url('change-address')}}/',
+        addAddressUrl: '{{url('addAddress')}}',
+        isAddressUrl: '{{url('isAddress')}}/',
 
         }
 @endsection
