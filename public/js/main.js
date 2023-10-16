@@ -1351,13 +1351,15 @@
 
         });
 
-        $(document).on("click", ".changeAddress", function () {
+        $(document).on("click", ".selectAddress", function () {
             var id = $(this).data("id");
             $.ajax({
                 type: "POST",
-                url: DATA.changeAddressUrl + id,
+                url: DATA.selectAddressUrl + id,
                 success: function () {
                     $("#refreshAddress").load(location.href + " #refreshAddress");
+                    $("#refreshAddress1").load(location.href + " #refreshAddress1");
+
                 }
             });
         });
@@ -1398,6 +1400,8 @@
             })
                 .done(function (response) {
                     $("#refreshAddress").load(location.href + " #refreshAddress");
+                    $("#refreshAddress1").load(location.href + " #refreshAddress1");
+
                     closeButton.click();
                 });
 

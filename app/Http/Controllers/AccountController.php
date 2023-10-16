@@ -106,26 +106,7 @@ class AccountController extends Controller
         return redirect()->route('account.index');
     }
 
-    public function updateSelected(Address $address): RedirectResponse{
 
-        $user = Auth::user();
-        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
-        $newAddress = Address::where('id', $address->id)->first();
-        //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
-
-        if($oldAddress != $newAddress) {
-            if(isset($oldAddress))
-            {
-                $oldAddress->selected = false;
-                $oldAddress->save();
-            }
-
-            $newAddress->selected = true;
-            $newAddress->save();
-        }
-
-        return redirect()->route('account.index');
-    }
 
 
     public function destroy(Address $address): RedirectResponse{

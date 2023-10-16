@@ -19,6 +19,7 @@ use function PHPUnit\Framework\isNull;
 class CheckoutController extends Controller
 {
 
+
     public function index()
     {
         $user = Auth::user();
@@ -95,11 +96,8 @@ class CheckoutController extends Controller
 
     public function isAddress(){
 
-
-        $user = Auth::user();
-        $address = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
-        //jeżeli to i to jest puste to dopiero
-
+        $addressController = new AddressController();
+        $address = $addressController->isAddress();
 
         if(isset($address)){
             return $this->store();
@@ -108,6 +106,7 @@ class CheckoutController extends Controller
             return response()->json([
                 'status' => 'warning',
             ]);
+
 
 
     }
