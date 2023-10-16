@@ -1363,9 +1363,10 @@
         });
 
         $(document).on("click", ".isAddress", function () {
+            event.preventDefault();
             $.ajax({
                 type: "POST",
-                url: DATA.isAddressUrl + $(this).data('id'),
+                url: DATA.isAddressUrl,
             })
                 .done(function (response) {
                     if (response.status == 'warning') {
@@ -1385,10 +1386,10 @@
 
 
 
-        $(document).ready(function () {
-            $('.save-address').click(function (e) {
-                e.preventDefault();
+        $(document).on("click", ".save-address", function () {
+                event.preventDefault();
                 var form = $('.addAddress').serialize();
+            var closeButton = document.getElementById("close");
 
             $.ajax({
                 type: "POST",
@@ -1396,14 +1397,13 @@
                 data: form,
             })
                 .done(function (response) {
-                    Swal.fire('git', 'git', 'warning');
-
-
+                    $("#refreshAddress").load(location.href + " #refreshAddress");
+                    closeButton.click();
                 });
 
 
 
-            });
+
 
         });
 
