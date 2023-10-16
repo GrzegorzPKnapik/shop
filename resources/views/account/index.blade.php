@@ -12,7 +12,7 @@
         @include('helpers.responses')
 
 
-            <!-- BREADCRUMB AREA START -->
+        <!-- BREADCRUMB AREA START -->
         <div
             class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image"
             data-bg="img/bg/9.jpg">
@@ -71,7 +71,7 @@
                                                 <div class="ltn__myaccount-tab-content-inner">
                                                     <p>Hello <strong>
                                                             @guest
-                                                                @else
+                                                            @else
                                                                 {{ Auth::user()->name }}
                                                             @endguest</strong> (not <strong>UserName</strong>?
                                                         <small><a href="login-register.html">Log out</a></small> )</p>
@@ -94,19 +94,19 @@
                                                             </thead>
                                                             <tbody>
                                                             @foreach($orders as $item)
-                                                            <tr>
+                                                                <tr>
 
-                                                                <td class="cart-product-name">#{{$item->id}}</td>
-                                                                <td class="cart-product-name">{{$item->created_at}}</td>
+                                                                    <td class="cart-product-name">#{{$item->id}}</td>
+                                                                    <td class="cart-product-name">{{$item->created_at}}</td>
 
-                                                                <td class="cart-product-name">${{$item->shopping_list->total}}</td>
-                                                                <td>
-                                                                    <a href="{{ route('account.order', $item->id) }}">
-                                                                        <button class="icon-search"></button>
-                                                                    </a>
-                                                                </td>
+                                                                    <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+                                                                    <td>
+                                                                        <a href="{{ route('account.order', $item->id) }}">
+                                                                            <button class="icon-search"></button>
+                                                                        </a>
+                                                                    </td>
 
-                                                            </tr>
+                                                                </tr>
                                                             @endforeach
                                                             </tbody>
                                                         </table>
@@ -155,35 +155,29 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="tab-pane fade" id="liton_tab_1_4">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>Zapisane adresy
+                                                    <div id="refreshAddress1">
+                                                        <p>Zapisane adresy
                                                         </p>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-12 learts-mb-30">
-                                                            <h4>Adres dostawy: <small></small></h4>
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-12 learts-mb-30">
+                                                                <h4>Adres dostawy: <small></small></h4>
                                                                 @foreach($addresses as $address)
-                                                                    <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
-                                                                <form action="{{route('address.delete', $address->id)}}" method="post" style="display: inline;">
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <button type="submit" class="icon-cancel"></button>
-                                                                </form></h4>
-                                                                <form action="{{ route('address.updateSelected', $address->id) }}" method="POST">
-                                                                    @csrf
-                                                                    <div class="form-check">
+                                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
+                                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
                                                                         <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
                                                                                @if($address->selected == true)
                                                                                    checked
-                                                                               @endif
+                                                                            @endif
 
-                                                                               onchange="this.form.submit()">
+                                                                        >
                                                                         <label class="form-check-label" for="flexRadioDefault2">
                                                                             Wybrany jako główny
                                                                         </label>
                                                                     </div>
 
-                                                                </form>
                                                                     <address>
                                                                         <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
                                                                         <p>{{$address->city}}, {{$address->street}}<br>
@@ -192,6 +186,7 @@
                                                                         _____________________________
                                                                     </address>
                                                                 @endforeach
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -201,7 +196,7 @@
                                                     <p>The following addresses will be used on the checkout page by
                                                         default.</p>
                                                     <div class="ltn__form-box">
-                                                        <form  method="POST" action="{{ route('address.store') }}" >
+                                                        <form class="addAddress" method="POST">
                                                             @csrf
                                                             <div class="row mb-50">
                                                                 <div class="col-md-6">
@@ -310,7 +305,7 @@
 
                                                             <div class="btn-wrapper">
                                                                 <button type="submit"
-                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">
+                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
                                                                     {{__('Save changes')}}
                                                                 </button>
                                                             </div>
@@ -589,6 +584,8 @@
 @section('javascript')
     const DATA = {
     editfieldUrl: '{{url('cart')}}/',
-
+    selectAddressUrl: '{{url('address/select')}}/',
+    addAddressUrl: '{{url('address/addAddress')}}',
+    deleteAddressUrl: '{{url('address')}}/',
     }
 @endsection

@@ -61,23 +61,23 @@
                                     @if(isset($cart))
                                         <h4><a> Liczba produktów w koszyku: {{$items->count()}}</a></h4>
                                         @foreach($items as $index => $item)
-                                        <tr class="align-middle">
-                                            <td class="cart-product-subtotal">{{ $index +1}}.</td>
-                                            <td class="cart-product-image">
-                                                <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
-                                            </td>
-                                            <td class="cart-product-info">
-                                                <h4><a>{{$item->product->name}}</a></h4>
-                                            </td>
+                                            <tr class="align-middle">
+                                                <td class="cart-product-subtotal">{{ $index +1}}.</td>
+                                                <td class="cart-product-image">
+                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
+                                                </td>
+                                                <td class="cart-product-info">
+                                                    <h4><a>{{$item->product->name}}</a></h4>
+                                                </td>
 
-                                            <td class="cart-product-subtotal">${{$item->product->price}}</td>
-                                            <td class="cart-product-subtotal">x{{$item->quantity}}</td>
+                                                <td class="cart-product-subtotal">${{$item->product->price}}</td>
+                                                <td class="cart-product-subtotal">x{{$item->quantity}}</td>
 
 
 
-                                            <td class="cart-product-subtotal">${{$item->sub_total}}</td>
-                                        </tr>
-                                    @endforeach
+                                                <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                            </tr>
+                                        @endforeach
                                     @endif
 
 
@@ -98,60 +98,60 @@
 
 
                                 <div id="refreshAddress">
-                                <p>
-                                <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                        Wybierz inny adres
-                                    </a></small></h4>
-                                </p>
-                                <div class="collapse" id="collapseExample">
-                                    <div class="card card-body">
-                                        @foreach($addresses as $address)
-                                            @if($address->selected != true)
-                                                    <div class="form-check changeAddress" data-id="{{$address->id}}">
+                                    <p>
+                                    <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                Wybierz inny adres
+                                            </a></small></h4>
+                                    </p>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            @foreach($addresses as $address)
+                                                @if($address->selected != true)
+                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
                                                         <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
                                                         <label class="form-check-label" for="flexRadioDefault2">
                                                             Wybrany jako główny
                                                         </label>
                                                     </div>
 
-                                                <address>
-                                                    <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                    <p>{{$address->city}}, {{$address->street}}<br>
-                                                        {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                    <p>Telefon: {{$address->phone_number}}</p>
-                                                    _____________________________
-                                                </address>
-                                            @endif
-                                        @endforeach
+                                                    <address>
+                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                        <p>{{$address->city}}, {{$address->street}}<br>
+                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                        <p>Telefon: {{$address->phone_number}}</p>
+                                                        _____________________________
+                                                    </address>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
 
 
                                     <h4>Adres dostawy: </h4>
-                                @foreach($addresses as $address)
-                                    @if($address->selected == true)
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                   @if($address->selected == true)
-                                                       checked
-                                                   @endif
+                                    @foreach($addresses as $address)
+                                        @if($address->selected == true)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
+                                                       @if($address->selected == true)
+                                                           checked
+                                                    @endif
 
-                                                   >
-                                            <label class="form-check-label" for="flexRadioDefault2">
-                                                Wybrany jako główny
-                                            </label>
-                                        </div>
+                                                >
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    Wybrany jako główny
+                                                </label>
+                                            </div>
 
-                                    </form>
-                                    <address>
-                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                        <p>{{$address->city}}, {{$address->street}}<br>
-                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                        <p>Telefon: {{$address->phone_number}}</p>
-                                        _____________________________
-                                    </address>
-                                    @endif
-                                @endforeach
+                                            </form>
+                                            <address>
+                                                <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                <p>{{$address->city}}, {{$address->street}}<br>
+                                                    {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                <p>Telefon: {{$address->phone_number}}</p>
+                                                _____________________________
+                                            </address>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                                     <td><strong>Order Total</strong></td>
                                     <td><strong>$
                                             @if(isset($cart))
-                                            {{$cart->total}}@endif</strong></td>
+                                                {{$cart->total}}@endif</strong></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -186,9 +186,9 @@
                                 <div class="mb-4"></div>
 
 
-                                    <button class="theme-btn-1 btn btn-effect-1 isAddress" type="submit">
-                                        {{ __('Potwierdź submit') }}
-                                    </button>
+                                <button class="theme-btn-1 btn btn-effect-1 isAddress" type="submit">
+                                    {{ __('Potwierdź submit') }}
+                                </button>
 
 
                                 <form method="POST" action="{{ route('checkout.store') }}">
@@ -347,7 +347,7 @@
             </div>
         </div>
     </div>
-        <!-- WISHLIST AREA START -->
+    <!-- WISHLIST AREA START -->
 
 
     <!-- Body main wrapper end -->
@@ -357,9 +357,9 @@
     @section('javascript')
         const DATA = {
         editfieldUrl: '{{url('cart')}}/',
-        changeAddressUrl: '{{url('change-address')}}/',
-        addAddressUrl: '{{url('addAddress')}}',
-        isAddressUrl: '{{url('isAddress')}}/',
+        selectAddressUrl: '{{url('address/select')}}/',
+        addAddressUrl: '{{url('address/addAddress')}}',
+        isAddressUrl: '{{url('address/isAddress')}}',
 
         }
 @endsection

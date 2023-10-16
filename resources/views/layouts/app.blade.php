@@ -30,6 +30,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
+
+
 </head>
 
 <body>
@@ -291,9 +293,9 @@
 
 
                                         @endguest
-                                            <li><a href="{{ route('cart.index') }}">{{ __('Koszyk') }}</a></li>
-                                            <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
-                                            <li><a href="{{ route('product.index') }}">{{ __('Wyświetl produkty') }}</a></li>
+                                        <li><a href="{{ route('cart.index') }}">{{ __('Koszyk') }}</a></li>
+                                        <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
+                                        <li><a href="{{ route('product.index') }}">{{ __('Wyświetl produkty') }}</a></li>
                                         <li><a href="account.html">My Account</a></li>
                                         <li><a href="wishlist.html">Wishlist</a></li>
 
