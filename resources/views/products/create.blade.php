@@ -48,11 +48,11 @@
                                 @csrf
                                 <div class="mb-3">
                                     <input id="name" type="text" placeholder="nazwa" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
-                                @error('name')
+                                    @error('name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>
-                                @enderror
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3">
@@ -65,8 +65,8 @@
                                 </div>
 
                                 <div class="mb-3">
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"  autofocus onchange="loadFile(event)">
-                                .png
+                                    <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"  autofocus onchange="loadFile(event)">
+                                    .png
                                 </div>
                                 @error('image')
                                 <span class="invalid-feedback" role="alert">
@@ -74,9 +74,9 @@
                                     </span>
                                 @enderror
 
-                             <div>
+                                <div>
                                     <img id="output" alt="Product image" class="mt-3" width="200" height="200" style="display: none;"/>
-                            </div>
+                                </div>
 
 
                                 <div class="btn-wrapper mt-0">
@@ -85,9 +85,11 @@
                                     </button>
                                 </div>
 
-
-
                             </form>
+
+
+
+
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -108,58 +110,59 @@
 
         <!-- LOGIN AREA END -->
 
-    <!-- FEATURE AREA START ( Feature - 3) -->
-    <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ltn__feature-item-box-wrap ltn__border-between-column white-bg">
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/11.png') }}" alt="#">
-                                    </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Curated Products</h4>
-                                        <p>Provide Curated Products for
-                                            all product over $100</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/12.png') }}" alt="#">
-                                    </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Handmade</h4>
-                                        <p>We ensure the product quality
-                                            that is our main goal</p>
+        <!-- FEATURE AREA START ( Feature - 3) -->
+        <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ltn__feature-item-box-wrap ltn__border-between-column white-bg">
+                            <div class="row">
+                                <div class="col-xl-3 col-md-6 col-12">
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{{ asset('img/icons/icon-img/11.png') }}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Curated Products</h4>
+                                            <p>Provide Curated Products for
+                                                all product over $100</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/13.png') }}" alt="#">
-                                    </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Natural Food</h4>
-                                        <p>Return product within 3 days
-                                            for any product you buy</p>
+                                <div class="col-xl-3 col-md-6 col-12">
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{{ asset('img/icons/icon-img/12.png') }}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Handmade</h4>
+                                            <p>We ensure the product quality
+                                                that is our main goal</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/14.png') }}" alt="#">
+                                <div class="col-xl-3 col-md-6 col-12">
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{{ asset('img/icons/icon-img/13.png') }}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Natural Food</h4>
+                                            <p>Return product within 3 days
+                                                for any product you buy</p>
+                                        </div>
                                     </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Free home delivery</h4>
-                                        <p>We ensure the product quality
-                                            that you can trust easily</p>
+                                </div>
+                                <div class="col-xl-3 col-md-6 col-12">
+                                    <div class="ltn__feature-item ltn__feature-item-8">
+                                        <div class="ltn__feature-icon">
+                                            <img src="{{ asset('img/icons/icon-img/14.png') }}" alt="#">
+                                        </div>
+                                        <div class="ltn__feature-info">
+                                            <h4>Free home delivery</h4>
+                                            <p>We ensure the product quality
+                                                that you can trust easily</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -168,18 +171,18 @@
                 </div>
             </div>
         </div>
+        <!-- FEATURE AREA END -->
+
+        <!-- Utilize Cart Menu Start -->
+        <!-- Utilize Cart Menu End -->
+
+        <!-- Utilize Mobile Menu Start -->
+        <!-- Utilize Mobile Menu End -->
+
+
+        <div class="ltn__utilize-overlay"></div>
+
     </div>
-    <!-- FEATURE AREA END -->
-
-    <!-- Utilize Cart Menu Start -->
-    <!-- Utilize Cart Menu End -->
-
-    <!-- Utilize Mobile Menu Start -->
-    <!-- Utilize Mobile Menu End -->
-
-    <div class="ltn__utilize-overlay"></div>
-
-</div>
 @endsection
 
 @section('js-files')

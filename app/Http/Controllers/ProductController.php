@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use JsValidator;
 
 class ProductController extends Controller
 {
@@ -56,7 +57,7 @@ class ProductController extends Controller
         $oldPath = $image->name;
 
         try {
-           // $product = Product::find($id);
+            // $product = Product::find($id);
             if (Storage::exists($oldPath)) {
                 Storage::delete($oldPath);
             }
@@ -93,15 +94,15 @@ class ProductController extends Controller
 
 
 
-            if ($request->hasFile('image') && $request->validated()) {
-                //delete images from products
-                if (Storage::exists($oldPath)) {
-                    Storage::delete($oldPath);
-                }
-                $image->name = $request->file('image')->store('products');
-                //save only for changed image
-                $image->save();
+        if ($request->hasFile('image') && $request->validated()) {
+            //delete images from products
+            if (Storage::exists($oldPath)) {
+                Storage::delete($oldPath);
             }
+            $image->name = $request->file('image')->store('products');
+            //save only for changed image
+            $image->save();
+        }
 
 
 

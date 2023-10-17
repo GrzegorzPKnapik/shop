@@ -68,14 +68,14 @@
                                                                 <br>
                                                                 </p>
                                                                 <td>Address:</td>
-                                                                    <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
-                                                                    <p>{{$item->address->city}}, {{$item->address->street}}<br>
-                                                                        {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
-                                                                    <p>Telefon: {{$item->address->phone_number}}</p>
+                                                                <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
+                                                                <p>{{$item->address->city}}, {{$item->address->street}}<br>
+                                                                    {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
+                                                                <p>Telefon: {{$item->address->phone_number}}</p>
                                                                 @php break;@endphp
                                                             @endforeach
 
-                                                                <br>
+                                                            <br>
 
                                                             <table class="table text-center caption-top table-sm">
                                                                 <caption>Products</caption>
@@ -91,7 +91,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                 @foreach($order as $index => $item)
-                                                                        @foreach ($item->shopping_list->shopping_lists_products as $index => $item)
+                                                                    @foreach ($item->shopping_list->shopping_lists_products as $index => $item)
                                                                         <tr>
                                                                             <td class="cart-product-name">{{ $index+1}}.</td>
                                                                             <td class="cart-product-image"> <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a></td>
@@ -100,40 +100,31 @@
                                                                             <td class="cart-product-name">x{{$item->quantity}}</td>
                                                                             <td class="cart-product-subtotal">${{$item->sub_total}}</td>
                                                                         </tr>
-                                                                        @endforeach
+                                                                    @endforeach
                                                                 @endforeach
                                                                 </tbody>
                                                             </table>
 
-                                                                <div class="shoping-cart-total mt-50">
-                                                                    <h4>Cart Totals</h4>
-                                                                    <table class="table text-center table-sm">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td>Vat</td>
-                                                                            <td>$00.00</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><strong>Order Total</strong></td>
-                                                                            <td><strong>$
-                                                                                    @foreach($order as $item)
-                                                                                        {{$item->shopping_list->total}}
-                                                                                        @php break;@endphp
-                                                                                    @endforeach
-                                                                                    </strong></td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                    <div class="btn-wrapper text-right text-end">
-                                                                        <div class="mb-4"></div>
-                                                                        <form method="POST" action="{{ route('checkout.store') }}">
-                                                                            <button class="theme-btn-1 btn btn-effect-1" type="submit">
-                                                                                {{ __('Submit') }}
-                                                                            </button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="shoping-cart-total mt-50">
+                                                                <h4>Cart Totals</h4>
+                                                                <table class="table text-center table-sm">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td>Vat</td>
+                                                                        <td>$00.00</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><strong>Order Total</strong></td>
+                                                                        <td><strong>$
+                                                                                @foreach($order as $item)
+                                                                                    {{$item->shopping_list->total}}
+                                                                                    @php break;@endphp
+                                                                                @endforeach
+                                                                            </strong></td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
 
                                                         </div>
                                                     </div>

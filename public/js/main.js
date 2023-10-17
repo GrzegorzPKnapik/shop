@@ -1278,18 +1278,18 @@
                         Swal.fire('Jesteś niezalogowany', 'Zaloguj się', 'warning');
                     }else
 
-                    Swal.fire({
-                        title: 'Brawo!',
-                        text: response.message,
-                        icon: 'success',
-                        showCancelButton: true,
-                        confirmButtonText: '<i class="fas fa-cart-plus"></i> Przejdź do koszyka',
-                        cancelButtonText: '<i class="fas fa-shopping-bag"></i> Kontynuuj zakupy'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location = DATA.cart;
-                        }
-                    })
+                        Swal.fire({
+                            title: 'Brawo!',
+                            text: response.message,
+                            icon: 'success',
+                            showCancelButton: true,
+                            confirmButtonText: '<i class="fas fa-cart-plus"></i> Przejdź do koszyka',
+                            cancelButtonText: '<i class="fas fa-shopping-bag"></i> Kontynuuj zakupy'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = DATA.cart;
+                            }
+                        })
                 })
                 .fail(function () {
                     Swal.fire('Oops...', 'Wystąpił błąd', 'error');
@@ -1351,13 +1351,15 @@
 
         });
 
-        $(document).on("click", ".changeAddress", function () {
+        $(document).on("click", ".selectAddress", function () {
             var id = $(this).data("id");
             $.ajax({
                 type: "POST",
-                url: DATA.changeAddressUrl + id,
+                url: DATA.selectAddressUrl + id,
                 success: function () {
                     $("#refreshAddress").load(location.href + " #refreshAddress");
+                    $("#refreshAddress1").load(location.href + " #refreshAddress1");
+
                 }
             });
         });
@@ -1375,7 +1377,7 @@
                         Swal.fire('git', 'git', 'warning');
 
 
-                        });
+                });
 
 
 
@@ -1387,8 +1389,8 @@
 
 
         $(document).on("click", ".save-address", function () {
-                event.preventDefault();
-                var form = $('.addAddress').serialize();
+            event.preventDefault();
+            var form = $('.addAddress').serialize();
             var closeButton = document.getElementById("close");
 
             $.ajax({
@@ -1398,6 +1400,8 @@
             })
                 .done(function (response) {
                     $("#refreshAddress").load(location.href + " #refreshAddress");
+                    $("#refreshAddress1").load(location.href + " #refreshAddress1");
+
                     closeButton.click();
                 });
 
@@ -1406,7 +1410,6 @@
 
 
         });
-
 
 
 
