@@ -1389,21 +1389,37 @@
 
 
         $(document).on("click", ".save-address", function () {
-            event.preventDefault();
-            var form = $('.addAddress').serialize();
-            var closeButton = document.getElementById("close");
 
-            $.ajax({
-                type: "POST",
-                url: DATA.addAddressUrl,
-                data: form,
-            })
-                .done(function (response) {
-                    $("#refreshAddress").load(location.href + " #refreshAddress");
-                    $("#refreshAddress1").load(location.href + " #refreshAddress1");
 
-                    closeButton.click();
-                });
+
+
+
+            if ($.active > 0) {
+                event.preventDefault();
+                setTimeout(function () {
+                    var form = $('.addAddress').serialize();
+                    var closeButton = document.getElementById("close");
+
+                    $.ajax({
+                        type: "POST",
+                        url: DATA.addAddressUrl,
+                        data: form,
+                    })
+                        .done(function (response) {
+                            $("#refreshAddress").load(location.href + " #refreshAddress");
+                            $("#refreshAddress1").load(location.href + " #refreshAddress1");
+
+                            if (closeButton) {
+                                closeButton.click();
+                            }
+                        });
+                }, 300);
+
+                return false;
+            }
+            return true;
+
+
 
 
 

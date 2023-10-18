@@ -19,13 +19,21 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- All JS Plugins -->
-    <script src="{{asset('js/plugins.js')}}"></script>
-    <!-- Main JS -->
-    <script src="{{asset('js/main.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="{{asset('js/plugins.js')}}"></script>
+
+    <script src="{{asset('js/main.js')}}"></script>
+
+
 </head>
 
 <body>
@@ -492,6 +500,10 @@ Z
     </div>
 </div>
 <!-- preloader area end -->
+
+
+
+
 
 <script type="text/javascript">
     const deleteUrl = "{{url('cart')}}/";

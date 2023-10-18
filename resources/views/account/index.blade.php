@@ -196,7 +196,7 @@
                                                     <p>The following addresses will be used on the checkout page by
                                                         default.</p>
                                                     <div class="ltn__form-box">
-                                                        <form class="addAddress" method="POST">
+                                                        <form class="addAddress" method="POST" id="my-form">
                                                             @csrf
                                                             <div class="row mb-50">
                                                                 <div class="col-md-6">
@@ -576,8 +576,14 @@
     </div>
     <!-- Body main wrapper end -->
 
+    <!-- Javascript Requirements -->
+    <!-- Laravel Javascript Validation -->
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
+    {!! JsValidator::formRequest('App\Http\Requests\StoreAddressRequest', '#my-form') !!}
     </body>
+
+
 
 @endsection
 
