@@ -9,6 +9,7 @@ use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -56,11 +57,11 @@ class OrderController extends Controller
     }
 
 //git
-    public function store()
+    public function store(Request $request)
     {
-
         $addressController = new AddressController();
         $address = $addressController->isAddress();
+        dd($request->input('option'));
 
         if(isset($address)){
 
@@ -83,6 +84,10 @@ class OrderController extends Controller
         $copiedAddress->status = 'order';
         $copiedAddress->USERS_id = $toCopyAddress->USERS_id;
         $copiedAddress->save();
+
+            dd($request);
+        if($request->value==2)
+            dd($request);
 
         $order = new Order();
         $order->SHOPPING_LISTS_id = $shopping_list->id;
