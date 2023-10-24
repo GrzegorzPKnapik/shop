@@ -1358,26 +1358,30 @@
                 url: DATA.selectAddressUrl + id,
                 success: function () {
                     $("#refreshAddress").load(location.href + " #refreshAddress");
-                    $("#refreshAddress1").load(location.href + " #refreshAddress1");
-
                 }
-            });
+            })
+                .done(function () {
+                });
         });
 
-        $(document).on("click", ".isAddress", function () {
+        $(document).on("click", ".storeOrder", function () {
             event.preventDefault();
             $.ajax({
                 type: "POST",
-                url: DATA.isAddressUrl,
+                url: DATA.storeOrderUrl,
             })
                 .done(function (response) {
                     if (response.status == 'warning') {
-                        Swal.fire('Adres nie został podany', 'Proszę podać adres dostawy', 'warning');
-                    }else
-                        Swal.fire('git', 'git', 'warning');
+                        Swal.fire(response.message, 'Proszę podać adres dostawy', 'warning');
+                    }else if(response.status == 'success') {
+                        window.location = DATA.summaryUrl + response.order
+                    }
+                })
 
-
-                });
+                 .fail(function (xhr) {
+                     var errorMessage = xhr.responseJSON.message;
+                     Swal.fire('Błąd', errorMessage, 'error');
+                 });
 
 
 
@@ -1388,50 +1392,57 @@
 
 
 
-        $(document).on("click", ".save-address", function () {
 
 
 
+        $("#address").on('submit', function(){
+            var responseStatus = false;
+            var form = $('.addAddress').serialize();
+            var closeButton = document.getElementById("close");
+
+            $.ajax({
+                type: 'POST',
+                url: DATA.storeAddressUrl,
+                async: false,
+                data: form,
+                success: function(result){
+                    if(result.status === true){
+                        responseStatus = true;
+                    } else {
+                        responseStatus = false;
+                        return false;
+                    }
+                },
 
 
-            if ($.active > 0) {
-                event.preventDefault();
-                setTimeout(function () {
-                    var form = $('.addAddress').serialize();
-                    var closeButton = document.getElementById("close");
+                error: function () {
+                    return false;
+                }
+            })
+                .done(function () {
+                    $("#refreshForm").load(location.href + " #refreshForm");
+                    Swal.fire('Dodano nowy adres', '', 'success');
+                $("#refreshAddress").load(location.href + " #refreshAddress");
 
-                    $.ajax({
-                        type: "POST",
-                        url: DATA.addAddressUrl,
-                        data: form,
-                    })
-                        .done(function (response) {
-                            $("#refreshAddress").load(location.href + " #refreshAddress");
-                            $("#refreshAddress1").load(location.href + " #refreshAddress1");
+                    if (closeButton) {
+                        closeButton.click();
+                    }
+            });
 
-                            if (closeButton) {
-                                closeButton.click();
-                            }
-                        });
-                }, 300);
-
+            if(responseStatus === false){
                 return false;
+            } else {
+                return true;
             }
-            return true;
-
-
-
-
-
-
-
         });
 
 
 
-        /* --------------------------------------------------------
-            34. scrollUp active
-        -------------------------------------------------------- */
+
+
+            /* --------------------------------------------------------
+                34. scrollUp active
+            -------------------------------------------------------- */
         $.scrollUp({
             scrollText: '<i class="fa fa-angle-up"></i>',
             easingType: 'linear',

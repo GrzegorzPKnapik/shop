@@ -101,7 +101,7 @@
 
                                                                     <td class="cart-product-name">${{$item->shopping_list->total}}</td>
                                                                     <td>
-                                                                        <a href="{{ route('account.order', $item->id) }}">
+                                                                        <a href="{{ route('order.show', $item->id) }}">
                                                                             <button class="icon-search"></button>
                                                                         </a>
                                                                     </td>
@@ -158,13 +158,15 @@
 
                                             <div class="tab-pane fade" id="liton_tab_1_4">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <div id="refreshAddress1">
+                                                    <div id="refreshAddress">
                                                         <p>Zapisane adresy
                                                         </p>
                                                         <div class="row">
                                                             <div class="col-md-6 col-12 learts-mb-30">
                                                                 <h4>Adres dostawy: <small></small></h4>
                                                                 @foreach($addresses as $address)
+                                                                    <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
+                                                                    <button class="icon-cancel deleteAddress" data-id="{{$address->id}}"></button></h4>
                                                                     <div class="form-check selectAddress" data-id="{{$address->id}}">
                                                                         <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
                                                                         <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
@@ -173,6 +175,7 @@
                                                                             @endif
 
                                                                         >
+
                                                                         <label class="form-check-label" for="flexRadioDefault2">
                                                                             Wybrany jako główny
                                                                         </label>
@@ -196,7 +199,11 @@
                                                     <p>The following addresses will be used on the checkout page by
                                                         default.</p>
                                                     <div class="ltn__form-box">
-                                                        <form class="addAddress" method="POST" id="my-form">
+
+
+
+                                                        <form class="addAddress" id="address" method="POST">
+                                                            <div id="refreshForm">
                                                             @csrf
                                                             <div class="row mb-50">
                                                                 <div class="col-md-6">
@@ -308,6 +315,7 @@
                                                                         class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
                                                                     {{__('Save changes')}}
                                                                 </button>
+                                                            </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -578,9 +586,10 @@
 
     <!-- Javascript Requirements -->
     <!-- Laravel Javascript Validation -->
+
     <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
-    {!! JsValidator::formRequest('App\Http\Requests\StoreAddressRequest', '#my-form') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\StoreAddressRequest') !!}
     </body>
 
 
@@ -591,7 +600,7 @@
     const DATA = {
     editfieldUrl: '{{url('cart')}}/',
     selectAddressUrl: '{{url('address/select')}}/',
-    addAddressUrl: '{{url('address/addAddress')}}',
+    storeAddressUrl: '{{url('address/store')}}',
     deleteAddressUrl: '{{url('address')}}/',
     }
 @endsection

@@ -57,19 +57,14 @@ class AddressController extends Controller
     public function isAddress(){
         $user = Auth::user();
         $address = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
-        //jeżeli to i to jest puste to dopiero
 
         return $address;
 
     }
 
-    public function store(StoreAddressRequest $request): RedirectResponse
-    {
 
-        $user = Auth::user();
+    public function update(StoreAddressRequest $request, Address $address): RedirectResponse{
 
-
-        $address = new Address($request->validated());
         $address->name = $request->name;
         $address->surname = $request->surname;
         $address->city = $request->city;
@@ -77,57 +72,8 @@ class AddressController extends Controller
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
         $address->phone_number = $request->phone_number;
-        $address->USERS_id=$user->id;
-
-        $hasSelectedAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
-
-        //jeżeli istenieje jakis adres
-        if($hasSelectedAddress){
-            //$address->selected = false;
-            $hasSelectedAddress->selected=false;
-            $hasSelectedAddress->save();
-
-            $address->selected = true;
-            $address->save();
-            //$address->save();
-        }else
-            //jeżeli nie istnieje zaden adres
-            $address->selected = true;
         $address->save();
 
-        return redirect()->route('account.index')->with('status',__('shop.address.status.store.success'));
-    }
-
-    public function update(StoreAddressRequest $request, Address $address): RedirectResponse{
-
-        $address->city = $request->city;
-        $address->street = $request->street;
-        $address->zip_code = $request->zip_code;
-        $address->voivodeship = $request->voivodeship;
-        $address->phone_number = $request->phone_number;
-        $address->save();
-
-
-        return redirect()->route('account.index');
-    }
-
-    public function updateSelected(Address $address): RedirectResponse{
-
-        $user = Auth::user();
-        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
-        $newAddress = Address::where('id', $address->id)->first();
-        //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
-
-        if($oldAddress != $newAddress) {
-            if(isset($oldAddress))
-            {
-                $oldAddress->selected = false;
-                $oldAddress->save();
-            }
-
-            $newAddress->selected = true;
-            $newAddress->save();
-        }
 
         return redirect()->route('account.index');
     }
@@ -150,26 +96,6 @@ class AddressController extends Controller
 
     }
 
-    public function changeSelected(Address $address): RedirectResponse{
-
-        $user = Auth::user();
-        $oldAddress = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', null)->first();
-        $newAddress = Address::where('id', $address->id)->first();
-        //dzieki onchange nie trzeba Address::where('id', $address->id)->first(); bo musimy pracowac na obiekcie nowym czyli na $oldAddress
-
-        if($oldAddress != $newAddress) {
-            if(isset($oldAddress))
-            {
-                $oldAddress->selected = false;
-                $oldAddress->save();
-            }
-
-            $newAddress->selected = true;
-            $newAddress->save();
-        }
-
-        return redirect()->route('account.index');
-    }
 
     public function selectAddress(Address $address): JsonResponse
     {
@@ -193,7 +119,7 @@ class AddressController extends Controller
     }
 
 
-    public function addAddress(StoreAddressRequest $request)
+    public function store(StoreAddressRequest $request)
     {
 
 

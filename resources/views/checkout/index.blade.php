@@ -142,7 +142,6 @@
                                                 </label>
                                             </div>
 
-                                            </form>
                                             <address>
                                                 <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
                                                 <p>{{$address->city}}, {{$address->street}}<br>
@@ -160,7 +159,11 @@
                         <h4><small><a data-bs-target="#quick_view_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                     Wpisz adres dostawy
                                 </a></small></h4>
-                        </p>
+
+                        <h4><small><a data-bs-target="#quick_view_cycle_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                    Wybierz cykliczne dostawy
+                                </a></small></h4>
+
 
 
 
@@ -186,16 +189,10 @@
                                 <div class="mb-4"></div>
 
 
-                                <button class="theme-btn-1 btn btn-effect-1 isAddress" type="submit">
-                                    {{ __('Potwierdź submit') }}
+                                <button class="theme-btn-1 btn btn-effect-1 storeOrder" type="submit">
+                                    {{ __('Submit') }}
                                 </button>
 
-
-                                <form method="POST" action="{{ route('checkout.store') }}">
-                                    <button class="theme-btn-1 btn btn-effect-1" type="submit">
-                                        {{ __('Submit') }}
-                                    </button>
-                                </form>
                             </div>
                         </div>
 
@@ -206,7 +203,60 @@
         </div>
     </div>
 
+    <div class="ltn__modal-area ltn__quick-view-modal-area">
+        <div class="modal fade" id="quick_view_cycle_modal" tabindex="-1">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" id="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <!-- <i class="fas fa-times"></i> -->
+                        </button>
+                    </div>
 
+                    <div class="modal-body">
+                        <div class="ltn__quick-view-modal-inner">
+                            <div class="modal-product-item">
+                                <div class="row">
+                                    <div class="ltn__form-box">
+
+
+                                        <h3 class="pt-4 pb-2">Cykliczne dostawy</h3>
+                                        <form>
+                                            <div class="row mb-50">
+                                            <div class="row form-group">
+                                                <div class="col-sm-4"><label>Dzień cyklicznych dostaw:</label>
+
+                                                    <div class="input-group date" id="datepicker">
+                                                        <input type="text" class="form-control">
+                                                        <span class="input-group-append">
+
+                                                 </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </form>
+
+                                        <script type="text/javascript">
+                                            $(document).ready(function() {
+                                                $("#datepicker").datepicker({ startDate:'+0d',
+                                                    autoclose: true,
+                                                });
+                                            });
+                                        </script>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="ltn__modal-area ltn__quick-view-modal-area">
@@ -219,18 +269,20 @@
                             <!-- <i class="fas fa-times"></i> -->
                         </button>
                     </div>
+
                     <div class="modal-body">
                         <div class="ltn__quick-view-modal-inner">
                             <div class="modal-product-item">
                                 <div class="row">
                                     <div class="ltn__form-box">
-                                        <form class="addAddress" method="POST">
+                                        <form class="addAddress" id="address" method="POST">
+                                            <div id="refreshForm">
                                             @csrf
                                             <div class="row mb-50">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label>Imie:</label>
-                                                        <input id="name" type="text" placeholder="Imie"
+                                                       <input id="name" type="text" placeholder="Imie"
                                                                class="form-control @error('name') is-invalid @enderror"
                                                                name="name"
                                                                required autocomplete="name" autofocus>
@@ -337,6 +389,7 @@
                                                     {{__('Zapisz adres')}}
                                                 </button>
                                             </div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -352,14 +405,18 @@
 
     <!-- Body main wrapper end -->
 
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+    {!! JsValidator::formRequest('App\Http\Requests\StoreAddressRequest') !!}
     @endsection
 
     @section('javascript')
         const DATA = {
         editfieldUrl: '{{url('cart')}}/',
         selectAddressUrl: '{{url('address/select')}}/',
-        addAddressUrl: '{{url('address/addAddress')}}',
-        isAddressUrl: '{{url('address/isAddress')}}',
-
+        storeAddressUrl: '{{url('address/store')}}',
+        storeOrderUrl: '{{url('/order/store')}}',
+        summaryUrl: '{{url('/order/summary')}}/',
         }
 @endsection

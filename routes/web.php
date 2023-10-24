@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Auth;
@@ -40,34 +41,22 @@ Route::group(['middleware' => 'cart'], function (){
     ]);
     Route::group(['middleware' => 'logged'], function () {
 
-        ///address
+        //address
+        Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
         Route::get('/address/edit/{address}', [AddressController::class, 'edit'])->name('address.edit');
         Route::post('/address/update/{address}', [AddressController::class, 'update'])->name('address.update');
         Route::delete('/address/{address}', [AddressController::class, 'destroy'])->name('address.delete');
-        //oba ponizej połaczyć teraz robie 'select' po prostu
         Route::post('/address/select/{address}', [AddressController::class, 'selectAddress'])->name('address.selectAddress');
-        //Route::post('/address/change-address/{address}', [AddressController::class, 'changeAddress'])->name('address.updateSelected');;
-        //zmienic na addres zrefaktoryzowane
-        Route::post('/address/isAddress', [CheckoutController::class, 'isAddress'])->name('address.isAddress');
-        //oba poniżej połaczyć
-        Route::post('/address/addAddress', [AccountController::class, 'addAddress']);
-        Route::post('/address/store', [AddressController::class, 'store'])->name('address.store');
-        //
+        //order
+        Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+        Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
+        Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
 
-
-        ///account
+        //account
         Route::get('/account', [AccountController::class, 'index'])->name('account.index');
 
-
-        ////chceckout
-
-
-        Route::get('/account/order/{order}', [AccountController::class, 'order'])->name('account.order');
+        //chceckout
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-        Route::get('/checkout/order_summary/{order}', [CheckoutController::class, 'order_summary'])->name('checkout.order_summary');;
-        Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
-
-        //checkoutContr na address
     });
 
 
