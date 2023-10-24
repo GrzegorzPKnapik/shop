@@ -203,6 +203,7 @@
         </div>
     </div>
 
+
     <div class="ltn__modal-area ltn__quick-view-modal-area">
         <div class="modal fade" id="quick_view_cycle_modal" tabindex="-1">
             <div class="modal-dialog modal-lg" role="document">
@@ -213,30 +214,33 @@
                             <!-- <i class="fas fa-times"></i> -->
                         </button>
                     </div>
-
                     <div class="modal-body">
                         <div class="ltn__quick-view-modal-inner">
                             <div class="modal-product-item">
                                 <div class="row">
                                     <div class="ltn__form-box">
 
-
                                         <h3 class="pt-4 pb-2">Cykliczne dostawy</h3>
-                                        <form>
                                             <div class="row mb-50">
-                                            <div class="row form-group">
-                                                <div class="col-sm-4"><label>Dzień cyklicznych dostaw:</label>
 
-                                                    <div class="input-group date" id="datepicker">
-                                                        <input type="text" class="form-control">
-                                                        <span class="input-group-append">
 
-                                                 </span>
+                                                <div class="col-md-6">
+                                                    <div class="input-item">
+                                                        <label>Dzień cyklicznych dostaw:</label>
+                                                        <select class="nice-select">
+                                                            <option>Wybierz dzień</option>
+                                                            <option value="1">Poniedziałek</option>
+                                                            <option value="2">Wtorek</option>
+                                                            <option value="3">Środa</option>
+                                                            <option value="4">Czwartek</option>
+                                                            <option value="5">Piątek</option>
+                                                            <option value="6">Sobota</option>
+                                                        </select>
                                                     </div>
                                                 </div>
+
+
                                             </div>
-                                            </div>
-                                        </form>
 
                                         <script type="text/javascript">
                                             $(document).ready(function() {
