@@ -61,7 +61,8 @@ class OrderController extends Controller
     {
         $addressController = new AddressController();
         $address = $addressController->isAddress();
-        dd($request->input('option'));
+        //dd($request->input('option'));
+        dd($request->select);
 
         if(isset($address)){
 

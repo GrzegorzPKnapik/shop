@@ -1366,9 +1366,11 @@
 
         $(document).on("click", ".storeOrder", function () {
             event.preventDefault();
+            var form = $('.selectDay').serialize();
             $.ajax({
                 type: "POST",
                 url: DATA.storeOrderUrl,
+                data: form,
             })
                 .done(function (response) {
                     if (response.status == 'warning') {
@@ -1399,7 +1401,6 @@
             var responseStatus = false;
             var form = $('.addAddress').serialize();
             var closeButton = document.getElementById("close");
-
             $.ajax({
                 type: 'POST',
                 url: DATA.storeAddressUrl,

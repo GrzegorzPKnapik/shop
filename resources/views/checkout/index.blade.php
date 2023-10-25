@@ -167,32 +167,25 @@
                         <h3 class="pt-4 pb-2">Cykliczne dostawy</h3>
 
 
-                            <form class="date" id="date" action="/order/store" method="POST">
+                            <form class="selectDay" method="POST">
                                     @csrf
 
-                                <input id="name" type="text" placeholder="Imie"
-                                       class="form-control @error('name') is-invalid @enderror"
-                                       name="name"
-                                       required autocomplete="name" autofocus>
-                            <div class="col-md-6">
-                                <div class="input-item">
-                                    <label>Dzień cyklicznych dostaw:</label>
-                                    <select name="option" class="nice-select">
-                                        <option>Wybierz dzień</option>
-                                        <option value="1">Poniedziałek</option>
-                                        <option value="2">Wtorek</option>
-                                        <option value="3">Środa</option>
-                                        <option value="4">Czwartek</option>
-                                        <option value="5">Piątek</option>
-                                        <option value="6">Sobota</option>
-                                    </select>
+                                <div class="col-md-6">
+                                    <div class="input-item">
+                                        <label>Dzień cyklicznych dostaw:</label>
+                                        <select name="select" class="nice-select">
+                                            <option value="0"> Wybierz dzień</option>
+                                            <option value="1">Poniedziałek</option>
+                                            <option value="2">Wtorek</option>
+                                            <option value="3">Środa</option>
+                                            <option value="4">Czwartek</option>
+                                            <option value="5">Piątek</option>
+                                            <option value="6">Sobota</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-
-
-
-
+                            </form>
 
 
 
@@ -227,7 +220,7 @@
                             </div>
 
                         </div>
-                            </form>
+
 
                     </div>
                 </div>
