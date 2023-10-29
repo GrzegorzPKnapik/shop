@@ -20,7 +20,12 @@ use function PHPUnit\Framework\isNull;
 class OrderController extends Controller
 {
 
+    private $checkoutController;
 
+    public function __construct(CheckoutController $checkoutController)
+    {
+        $this->checkoutController = $checkoutController;
+    }
 
     //git
     public function summary(Order $order)
@@ -31,12 +36,22 @@ class OrderController extends Controller
             ->join('shopping_lists_products', 'shopping_lists.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
             ->join('products', 'shopping_lists_products.PRODUCTS_id', '=', 'products.id')
             ->join('images', 'products.IMAGES_id', '=', 'images.id')
-            ->select('orders.id as order_id', 'shopping_lists_products.*', 'shopping_lists.*','products.name as product_name','products.*', 'images.name')->where('orders.id', $order->id)
+            ->select('orders.id as order_id', 'orders.*','shopping_lists_products.*', 'shopping_lists.*','products.name as product_name','products.*', 'images.name')->where('orders.id', $order->id)
             ->get();
 
+        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+
+        return view('order.order_summary',['items'=>$items, 'order'=>$order]);
+    }
+
+    public function cyclic_show(Order $order)
+    {
+        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+
+        $collectionDates = $this->checkoutController->date();
+        return view('shopping_lists.index',['order'=>$order, 'collectionDates'=>$collectionDates]);
 
 
-        return view('order.order_summary',['items'=>$items]);
     }
 
     //git
@@ -59,10 +74,14 @@ class OrderController extends Controller
 //git
     public function store(Request $request)
     {
+
+        $object = json_decode($request->deliveryDate);
+
+        $deliveryDayName = $object[0]->name;
+        $deliveryDayDate = $object[0]->date;
+
         $addressController = new AddressController();
         $address = $addressController->isAddress();
-        //dd($request->input('option'));
-        dd($request->select);
 
         if(isset($address)){
 
@@ -86,11 +105,21 @@ class OrderController extends Controller
         $copiedAddress->USERS_id = $toCopyAddress->USERS_id;
         $copiedAddress->save();
 
-            dd($request);
-        if($request->value==2)
-            dd($request);
+
+        //zapis dnia w bazie danych czyli nie zpisy=uje dnia tylko date tego dnia i poźniej sie bedą n
+
+
+
+
 
         $order = new Order();
+        if($request->select==0)
+            $order->set_delivery_date = $deliveryDayDate;
+        else{
+            $order->set_delivery_date = $request->select;
+            $shopping_list->mode = 'cyclical';
+        }
+
         $order->SHOPPING_LISTS_id = $shopping_list->id;
         $order->ADDRESSES_id = $copiedAddress->id;
 
@@ -117,6 +146,8 @@ class OrderController extends Controller
 
 
     }
+
+
 
 
 

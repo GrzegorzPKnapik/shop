@@ -53,6 +53,8 @@
                                                     <i class="fas fa-home"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_2">Orders <i
                                                         class="fas fa-file-alt"></i></a>
+                                                <a data-bs-toggle="tab" href="#liton_tab_1_7">Cyclical delivery<i
+                                                        class="fas fa-file-alt"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_3">Downloads <i
                                                         class="fas fa-arrow-down"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_4">Address <i
@@ -80,6 +82,44 @@
                                                         and <span>edit your password and account details</span>.</p>
                                                 </div>
                                             </div>
+
+                                            <div class="tab-pane fade" id="liton_tab_1_7">
+                                                <div class="ltn__myaccount-tab-content-inner">
+                                                    <p>Aktywne cykliczne dostawy(cykliczna lista zakupów).</p>
+                                                    <div class="table-responsive">
+                                                        <table class="table text-center table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Number</th>
+                                                                <th>Date</th>
+                                                                <th>Price</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($orders as $item)
+                                                                @if($item->shopping_list->mode=='cyclical')
+                                                                <tr>
+
+                                                                    <td class="cart-product-name">#{{$item->id}}</td>
+                                                                    <td class="cart-product-name">{{$item->created_at}}</td>
+
+                                                                    <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+                                                                    <td>
+                                                                        <a href="{{ route('order.cyclic_show', $item->id) }}">
+                                                                            <button class="icon-search"></button>
+                                                                        </a>
+                                                                    </td>
+
+                                                                </tr>
+                                                                @endif
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="tab-pane fade" id="liton_tab_1_2">
                                                 <div class="ltn__myaccount-tab-content-inner">
                                                     <div class="table-responsive">
@@ -186,7 +226,7 @@
                                                                         <p>{{$address->city}}, {{$address->street}}<br>
                                                                             {{$address->zip_code}}, {{$address->voivodeship}}</p>
                                                                         <p>Telefon: {{$address->phone_number}}</p>
-                                                                        _____________________________
+                                                                        <hr style="width: 60%; border-top: 3px solid black; background-color: black;">
                                                                     </address>
                                                                 @endforeach
                                                             </div>

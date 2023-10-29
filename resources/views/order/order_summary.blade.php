@@ -85,6 +85,35 @@
                                     </tbody>
                                 </table>
 
+
+                                <p >
+                                    @foreach($order as $item)
+                                        @if($item->shopping_list->mode != 'cyclical')
+                                    <label>Dostawa: </label>
+                                        @endif
+
+                                    @if($item->shopping_list->mode == 'cyclical')
+                                    <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
+                                        @endif
+                                    {{ \Carbon\Carbon::parse($item->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                        @if($item->shopping_list->mode == 'cyclical')
+                                        <label>Najbliższa data cyklicznej dostawy: </label>
+                                        @endif
+                                            {{ date('Y-m-d', strtotime($item->set_delivery_date)) }}
+                                    @php break;@endphp
+                                    @endforeach
+                                    <br>
+                                </p>
+
+                                @foreach($order as $item)
+                                    <td>Address:</td>
+                                    <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
+                                    <p>{{$item->address->city}}, {{$item->address->street}}<br>
+                                        {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
+                                    <p>Telefon: {{$item->address->phone_number}}</p>
+                                    @php break;@endphp
+                                @endforeach
+
                                 <p class="text-center">
                                     <label>Przygotuj taką kwotę:</label>
                                 <br>

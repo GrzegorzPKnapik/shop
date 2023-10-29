@@ -147,7 +147,9 @@
                                                 <p>{{$address->city}}, {{$address->street}}<br>
                                                     {{$address->zip_code}}, {{$address->voivodeship}}</p>
                                                 <p>Telefon: {{$address->phone_number}}</p>
-                                                _____________________________
+
+                                                <hr style="width: 20%; border-top: 3px solid black; background-color: black;">
+
                                             </address>
                                         @endif
                                     @endforeach
@@ -164,23 +166,29 @@
                                     Wybierz cykliczne dostawy
                                 </a></small></h4>
 
-                        <h3 class="pt-4 pb-2">Cykliczne dostawy</h3>
+                        <h4 class="pt-4 pb-2">Dostawa:</h4>
+                        @foreach($deliveryDate as $date)
+                          {{$date['name'] }}, {{$date['date']}}
+                                @endforeach
+
+
+                        <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
 
 
                             <form class="selectDay" method="POST">
                                     @csrf
+
+                                <input type="hidden" name="deliveryDate" value="{{ $deliveryDate }}">
 
                                 <div class="col-md-6">
                                     <div class="input-item">
                                         <label>Dzień cyklicznych dostaw:</label>
                                         <select name="select" class="nice-select">
                                             <option value="0"> Wybierz dzień</option>
-                                            <option value="1">Poniedziałek</option>
-                                            <option value="2">Wtorek</option>
-                                            <option value="3">Środa</option>
-                                            <option value="4">Czwartek</option>
-                                            <option value="5">Piątek</option>
-                                            <option value="6">Sobota</option>
+                                                @foreach($collectionDates as $date)
+                                                <option value={{$date['date']}}> {{$date['name']}} (najbliższa dostawa:   {{ $date['date'] }} )
+                                                @endforeach
+                                            </option>
                                         </select>
                                     </div>
                                 </div>

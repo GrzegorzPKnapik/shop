@@ -7,6 +7,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
+use App\Models\Shopping_list;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,9 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
         Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
+
+        //shopping list
+        Route::get('/shopping_lists/cyclic_show/{order}', [OrderController::class, 'cyclic_show'])->name('order.cyclic_show');
 
         //account
         Route::get('/account', [AccountController::class, 'index'])->name('account.index');

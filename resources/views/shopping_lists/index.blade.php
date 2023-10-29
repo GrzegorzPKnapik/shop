@@ -20,12 +20,12 @@
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
                                 <h6 class="section-subtitle ltn__secondary-color">// Welcome to our company</h6>
-                                <h1 class="section-title white-color">Order preview</h1>
+                                <h1 class="section-title white-color">Shopping list preview</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li>My Account</li>
+                                    <li>Shopping list</li>
                                 </ul>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                     <div class="col-lg-4">
                                         <div class="ltn__tab-menu-list mb-50">
                                             <div class="nav">
-                                                <a class="active show" data-bs-toggle="tab">Order preview <i
+                                                <a class="active show" data-bs-toggle="tab">Shopping list<i
                                                         class="fas fa-file-alt"></i></a>
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                         <div class="tab-content">
 
                                             <div class="ltn__myaccount-tab-content-inner">
-                                                <p>Podgląd zamówienia</p>
+                                                <p>Lista zakupów</p>
                                                 <div class="ltn__form-box">
                                                     <div class="ltn__myaccount-tab-content-inner">
                                                         <div class="table-responsive">
@@ -65,6 +65,9 @@
                                                                 <p class="text-center">
                                                                     <label>Order ID:</label>
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
+                                                                <p class="text-center">
+                                                                <label>Shopping list ID:</label>
+                                                                <h1 class="text-center">#{{$item->shopping_list->id}}</h1>
                                                                 <br>
                                                                 </p>
                                                                 <td>Address:</td>
@@ -104,16 +107,45 @@
                                                                 @endforeach
                                                                 </tbody>
                                                             </table>
+                                                                <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
 
                                                                 <p >
                                                                     <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
                                                                     @foreach($order as $item){{ \Carbon\Carbon::parse($item->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
                                                                     <br>
+                                                                <p>
+                                                                <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                            Zmień dzień dostaw
+                                                                        </a></small></h4>
+
+                                                                <div class="collapse" id="collapseExample">
+                                                                    <div class="card card-body">
+                                                                        <form class="selectDay" method="POST">
+                                                                            @csrf
+                                                                            <div class="col-md-6">
+                                                                                <div class="input-item">
+                                                                                    <label>Dzień cyklicznych dostaw:</label>
+                                                                                    <select name="select" class="nice-select">
+                                                                                        <option value="0"> Wybierz dzień</option>
+                                                                                        @foreach($collectionDates as $date)
+                                                                                            <option value={{$date['date']}}> {{$date['name']}} (najbliższa dostawa:   {{ $date['date'] }} )
+                                                                                                @endforeach
+                                                                                            </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                </p>
                                                                     <label>Najbliższa data cyklicznej dostawy: {{ date('Y-m-d', strtotime($item->set_delivery_date)) }}</label>
                                                                     @php break;@endphp
                                                                     @endforeach
                                                                     <br>
                                                                 </p>
+                                                                <h4 class="pt-4 pb-2">Status:</h4>
+                                                                <br>
 
                                                             <div class="shoping-cart-total mt-50">
                                                                 <h4>Cart Totals</h4>
@@ -136,6 +168,8 @@
                                                                 </table>
                                                             </div>
 
+
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -153,6 +187,8 @@
     </div>
 
     </div>
+
+
     <!-- Body main wrapper end -->
 
 
