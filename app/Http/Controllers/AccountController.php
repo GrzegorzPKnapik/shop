@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Shopping_list;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -24,6 +25,14 @@ class AccountController extends Controller
         $user = Auth::user();
 
 
+        $shopping_lists = Shopping_list::with(['user', 'orders'])
+            ->whereHas('user', function ($query) use ($user) {
+                $query->where('id', $user->id);
+            })
+            ->where("mode", 'cyclical')
+            ->get();
+
+
 
         $orders = Order::with('shopping_list.user')->whereHas('shopping_list.user', function ($query) use ($user){
             $query->where('id', $user->id);
@@ -33,7 +42,7 @@ class AccountController extends Controller
         $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
-        return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders]);
+        return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders, 'shopping_lists'=>$shopping_lists]);
     }
 
 

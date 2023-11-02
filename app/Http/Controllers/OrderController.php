@@ -36,42 +36,72 @@ class OrderController extends Controller
             ->join('shopping_lists_products', 'shopping_lists.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
             ->join('products', 'shopping_lists_products.PRODUCTS_id', '=', 'products.id')
             ->join('images', 'products.IMAGES_id', '=', 'images.id')
-            ->select('orders.id as order_id', 'orders.*','shopping_lists_products.*', 'shopping_lists.*','products.name as product_name','products.*', 'images.name')->where('orders.id', $order->id)
+            ->select('orders.id as order_id', 'orders.*', 'shopping_lists_products.*', 'shopping_lists.*', 'products.name as product_name', 'products.*', 'images.name')->where('orders.id', $order->id)
             ->get();
 
         $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
-        return view('order.order_summary',['items'=>$items, 'order'=>$order]);
+        return view('order.order_summary', ['items' => $items, 'order' => $order]);
     }
 
-    public function cyclic_show(Order $order)
-    {
-        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
-        $collectionDates = $this->checkoutController->date();
-        return view('shopping_lists.index',['order'=>$order, 'collectionDates'=>$collectionDates]);
-
-
-    }
 
     //git
     public function show(Order $order)
     {
         //join działa
-//        $order = Order::join('shopping_lists', 'orders.SHOPPING_LISTS_id', '=', 'shopping_lists.id')
-//            ->join('shopping_lists_products', 'shopping_lists.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
+//        $order = Order::join('shopping_list', 'orders.SHOPPING_LISTS_id', '=', 'shopping_list.id')
+//            ->join('shopping_lists_products', 'shopping_list.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
 //            ->join('products', 'shopping_lists_products.PRODUCTS_id', '=', 'products.id')
 //            ->join('images', 'products.IMAGES_id', '=', 'images.id')
-//            ->select('orders.id as order_id', 'users.*', 'addresses.*','shopping_lists_products.*', 'shopping_lists.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
+//            ->select('orders.id as order_id', 'users.*', 'addresses.*','shopping_lists_products.*', 'shopping_list.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
 //            ->get();
 
         $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
         //dd($order);
-        return view('order.order_show',['order'=>$order]);
+        return view('order.order_show', ['order' => $order]);
     }
 
 //git
+
+
+    public function save_day(Order $order, Request $request)
+    {
+
+//        $object = json_decode($request->select);
+//
+//
+//        $deliveryDayDate = $object[0]->date;
+
+        $user = Auth::user();
+
+            $shopping_list = Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id)->first();
+            //najpier kopia potem id do ordera czyli id do shoppoing_list
+
+        if($request->select!=0)
+            $order->set_delivery_date = $request->select;
+
+
+
+            try {
+                $order->save();
+                return response()->json([
+                    'status' => 'success',
+                    'order' => $order->id
+                ]);
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
+                ])->setStatusCode(500);
+            }
+
+
+    }
+
+
+
     public function store(Request $request)
     {
 
@@ -79,6 +109,7 @@ class OrderController extends Controller
 
         $deliveryDayName = $object[0]->name;
         $deliveryDayDate = $object[0]->date;
+
 
         $addressController = new AddressController();
         $address = $addressController->isAddress();

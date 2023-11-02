@@ -48,24 +48,55 @@ class CheckoutController extends Controller
             4 => 'czwartek',
             5 => 'piątek',
             6 => 'sobota',
+            7 => 'n',
 
         ];
 
-        //niedziela to pon za tydz, wtorek ten, sroda ta...
 
-       // 2c
-       // 1d
+        //pon działa wszystko 100%
+        //wt działa
+        //2
+        //nastepny za 2 dni
+
+        //7
 
 
+
+
+        $daysToAdd = 2;
         $currentDay = date('N');
         for ($i = 1; $i <= 6; $i++) {
             $dayOfWeek = $i;
-            if ($currentDay > $dayOfWeek) {
+            //1>1 nie prawda ale 1==1
+            //1,2 ; 1<2
+            //7,1 ;
+            //działa od pon do sb
+            if($currentDay==7 && $dayOfWeek==1)
+            {
+                $daysToAdd = 8;
+
+            }else
+            if ($currentDay > $dayOfWeek || $currentDay == $dayOfWeek) {
                 $daysToAdd = 7 - $currentDay + $dayOfWeek;
+            }else
+            {
+                //if do przeszłych i 2 dni odstępu nie dziąła dla 7
+                $test = $dayOfWeek - $currentDay;
+                if($test<2)
+                $daysToAdd = 8;
+                else
+                    $daysToAdd = $dayOfWeek - $currentDay;
+
+
             }
-            else {
-                $daysToAdd = $dayOfWeek - $currentDay;
-            }
+
+
+
+
+
+
+
+
 
             $date = date('Y-m-d', strtotime("+$daysToAdd days"));
             $collectionDates->push(['id' => $i, 'name' => $daysOfWeek[$i], 'date' => $date]);

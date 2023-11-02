@@ -53,7 +53,7 @@
                                                     <i class="fas fa-home"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_2">Orders <i
                                                         class="fas fa-file-alt"></i></a>
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_7">Cyclical delivery<i
+                                                <a data-bs-toggle="tab" href="#liton_tab_1_7">Cyclical delivery (Shopping lists)<i
                                                         class="fas fa-file-alt"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_3">Downloads <i
                                                         class="fas fa-arrow-down"></i></a>
@@ -90,29 +90,30 @@
                                                         <table class="table text-center table-sm">
                                                             <thead>
                                                             <tr>
-                                                                <th>Number</th>
-                                                                <th>Date</th>
+                                                                <th>Newest order number</th>
+                                                                <th>Shopping list number</th>
+                                                                <th>Update date</th>
                                                                 <th>Price</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            @foreach($orders as $item)
-                                                                @if($item->shopping_list->mode=='cyclical')
+                                                            @foreach($shopping_lists as $item)
+                                                                @foreach($item->orders as $order)
                                                                 <tr>
-
+                                                                    <td class="cart-product-name">#{{$order->id}}</td>
                                                                     <td class="cart-product-name">#{{$item->id}}</td>
-                                                                    <td class="cart-product-name">{{$item->created_at}}</td>
+                                                                    <td class="cart-product-name">{{$item->updated_at}}</td>
 
-                                                                    <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+                                                                    <td class="cart-product-name">${{$item->total}}</td>
                                                                     <td>
-                                                                        <a href="{{ route('order.cyclic_show', $item->id) }}">
+                                                                        <a href="{{ route('shoppingList.show', $item->id) }}">
                                                                             <button class="icon-search"></button>
                                                                         </a>
                                                                     </td>
 
                                                                 </tr>
-                                                                @endif
+                                                                @endforeach
                                                             @endforeach
                                                             </tbody>
                                                         </table>

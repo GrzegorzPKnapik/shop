@@ -52,6 +52,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-8">
                                         <div class="tab-content">
 
@@ -61,22 +62,28 @@
                                                     <div class="ltn__myaccount-tab-content-inner">
                                                         <div class="table-responsive">
 
-                                                            @foreach($order as $item)
+                                                            @foreach($shopping_list as $item)
                                                                 <p class="text-center">
-                                                                    <label>Order ID:</label>
+                                                                    <label>Shopping List ID:</label>
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
-                                                                <p class="text-center">
-                                                                <label>Shopping list ID:</label>
-                                                                <h1 class="text-center">#{{$item->shopping_list->id}}</h1>
-                                                                <br>
-                                                                </p>
+                                                                 </p>
+
+                                                                @foreach ($item->orders as $index => $item)
+                                                                    <p class="text-center">
+                                                                        <label>Order ID:</label>
+                                                                    <h1 class="text-center">#{{$item->id}}</h1>
+                                                                    </p>
+                                                                    <br>
+
                                                                 <td>Address:</td>
                                                                 <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
                                                                 <p>{{$item->address->city}}, {{$item->address->street}}<br>
                                                                     {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
                                                                 <p>Telefon: {{$item->address->phone_number}}</p>
                                                                 @php break;@endphp
+                                                                @endforeach
                                                             @endforeach
+
 
                                                             <br>
 
@@ -93,8 +100,8 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($order as $index => $item)
-                                                                    @foreach ($item->shopping_list->shopping_lists_products as $index => $item)
+                                                                @foreach($shopping_list as $index => $item)
+                                                                    @foreach ($item->shopping_lists_products as $index => $item)
                                                                         <tr>
                                                                             <td class="cart-product-name">{{ $index+1}}.</td>
                                                                             <td class="cart-product-image"> <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a></td>
@@ -108,12 +115,27 @@
                                                                 </tbody>
                                                             </table>
                                                                 <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
-
-                                                                <p >
-                                                                    <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
-                                                                    @foreach($order as $item){{ \Carbon\Carbon::parse($item->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
-                                                                    <br>
+                                                                <div id="refreshShoppingList">
                                                                 <p>
+                                                                    <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
+                                                                    @foreach($shopping_list as $item)
+                                                                        @foreach ($item->orders as $index => $itemm)
+                                                                        {{ \Carbon\Carbon::parse($itemm->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                                                    <br>
+
+
+
+
+                                                                    <label>Najbliższa data cyklicznej dostawy: {{ date('Y-m-d', strtotime($itemm->set_delivery_date)) }}</label>
+
+                                                                    @php break;@endphp
+                                                                        @endforeach
+                                                                    @endforeach
+
+                                                                    <br>
+                                                                 </div>
+                                                                </p>
+
                                                                 <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                                             Zmień dzień dostaw
                                                                         </a></small></h4>
@@ -122,13 +144,17 @@
                                                                     <div class="card card-body">
                                                                         <form class="selectDay" method="POST">
                                                                             @csrf
+
+                                                                            <input type="hidden" name="order" value="{{ $item }}">
+
+
                                                                             <div class="col-md-6">
                                                                                 <div class="input-item">
                                                                                     <label>Dzień cyklicznych dostaw:</label>
                                                                                     <select name="select" class="nice-select">
                                                                                         <option value="0"> Wybierz dzień</option>
                                                                                         @foreach($collectionDates as $date)
-                                                                                            <option value={{$date['date']}}> {{$date['name']}} (najbliższa dostawa:   {{ $date['date'] }} )
+                                                                                            <option value={{$date['date']}}> {{$date['name']}} (dostawa:{{ $date['date'] }} )
                                                                                                 @endforeach
                                                                                             </option>
                                                                                     </select>
@@ -139,11 +165,7 @@
                                                                     </div>
                                                                 </div>
                                                                 </p>
-                                                                    <label>Najbliższa data cyklicznej dostawy: {{ date('Y-m-d', strtotime($item->set_delivery_date)) }}</label>
-                                                                    @php break;@endphp
-                                                                    @endforeach
-                                                                    <br>
-                                                                </p>
+
                                                                 <h4 class="pt-4 pb-2">Status:</h4>
                                                                 <br>
 
@@ -158,8 +180,8 @@
                                                                     <tr>
                                                                         <td><strong>Order Total</strong></td>
                                                                         <td><strong>$
-                                                                                @foreach($order as $item)
-                                                                                    {{$item->shopping_list->total}}
+                                                                                @foreach($shopping_list as $item)
+                                                                                    {{$item->total}}
                                                                                     @php break;@endphp
                                                                                 @endforeach
                                                                             </strong></td>
@@ -168,9 +190,24 @@
                                                                 </table>
                                                             </div>
 
+                                                                <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$itemm->id}}" type="submit">
+                                                                    {{ __('Save changes') }}
+                                                                </button>
+
+
+
 
 
                                                         </div>
+
+                                                        <div class="btn-wrapper">
+                                                            <a href="{{ route('shoppingList.upload', $item->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
+                                                        </div>
+
+                                                        <br>
+                                                        <button class="theme-btn-1 btn btn-effect-1">
+                                                            {{ __('Załaduj listę zakupów do dalszej edycji') }}
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -198,7 +235,7 @@
 
 @section('javascript')
     const DATA = {
-    editfieldUrl: '{{url('cart')}}/',
+    saveDayUrl: '{{url('/shopping_list/save_day')}}/',
 
     }
 @endsection

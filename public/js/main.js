@@ -1364,6 +1364,32 @@
                 });
         });
 
+
+
+        $(document).on("click", ".saveDay", function () {
+            event.preventDefault();
+            var form = $('.selectDay').serialize();
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: DATA.saveDayUrl + $(this).data("id"),
+                data: form,
+            })
+                .done(function (response) {
+                    $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
+
+
+
+        });
+
         $(document).on("click", ".storeOrder", function () {
             event.preventDefault();
             var form = $('.selectDay').serialize();

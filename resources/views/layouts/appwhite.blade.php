@@ -308,8 +308,7 @@
             <div id="refresh">
                 <div class="mini-cart-product-area ltn__scrollbar ">
 
-                    @if(isset($items) && isset($cart))
-                        @foreach($items as $item)
+                        @forelse($items as $item)
                             <div class="mini-cart-item clearfix delete_mem{{$item->PRODUCTS_id}}">
                                 <div class="mini-cart-img">
                                     <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
@@ -320,8 +319,13 @@
                                     <span class="mini-cart-quantity">${{$item->quantity}}x${{$item->product->price}}=${{$item->sub_total}}</span>
                                 </div>
                             </div>
-                        @endforeach
 
+
+                            @empty
+
+
+                    @endforelse
+                                @if(isset($cart) && $cart->total!=0)
 
                 </div>
                 <div class="mini-cart-footer">
@@ -332,12 +336,16 @@
                             {{$cart->total}}</span></h5>
 
                     </div>
-                    @endif
                     <div class="btn-wrapper">
                         <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                        @if($cart->status=='lista_zakupów')
+                            <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">Save shopping list changes</a>
+                        @endif
                     </div>
+
                     <p>Free Shipping on All Orders Over $100!</p>
+                    @endif
                 </div>
 
             </div>

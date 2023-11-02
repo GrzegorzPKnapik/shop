@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Shopping_list;
 use Illuminate\Support\Facades\Auth;
@@ -53,8 +54,12 @@ Route::group(['middleware' => 'cart'], function (){
         Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
 
+
         //shopping list
-        Route::get('/shopping_lists/cyclic_show/{order}', [OrderController::class, 'cyclic_show'])->name('order.cyclic_show');
+        Route::get('/shopping_list/show/{shopping_list}', [ShoppingListController::class, 'show'])->name('shoppingList.show');
+        Route::post('/shopping_list/save_day/{order}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
+        Route::get('/shopping_list/upload/{shopping_list}', [ShoppingListController::class, 'upload'])->name('shoppingList.upload');
+
 
         //account
         Route::get('/account', [AccountController::class, 'index'])->name('account.index');

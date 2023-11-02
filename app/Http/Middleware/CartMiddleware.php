@@ -29,8 +29,11 @@ class CartMiddleware
                    //View::share(['cart' => null, 'items' => null]);
 
             //}
+        //dd($request);
 
         if(Auth::check()) {
+
+
             $user = Auth::user();
 
             $shopping_list = Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id)->first();
@@ -42,5 +45,6 @@ class CartMiddleware
         }
         return $next($request);
     }
+
 
 }
