@@ -42,10 +42,10 @@ class ShoppingListController extends Controller
     }
 
 
-    public function save(Shopping_list $shopping_list){
+    //save jest na bieżąco wykonywany
+    public function savee(Shopping_list $shopping_list){
 
         //dla nadpisania !=delivery
-        $shopping_list = Shopping_list::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
 
 
 
@@ -57,12 +57,37 @@ class ShoppingListController extends Controller
     }
 
 
+    //zmienic nazwe na finish czy final
+    public function save(Shopping_list $shopping_list){
+
+        $shopping_list->mode = 'cyclical';
+        $shopping_list->status = 'order';
+        $shopping_list->save();
+        $user = Auth::user();
+
+        $old_cart_shopping_list = Shopping_list::where('status', 'disable')->whereNull('mode')->where('USERS_id', $user->id)->first();
+
+        if(isset($old_cart_shopping_list))
+        {
+            $old_cart_shopping_list->status = 'shopping_list';
+            $old_cart_shopping_list->save();
+        }
+
+        return redirect()->route('welcome.index');
+
+
+    }
+
+
     public function upload(Shopping_list $shopping_list)
     {
-        $uploadShopping_list = Shopping_list::where('id', $shopping_list->id)->first();
+        //$shopping_list = Shopping_list::where('id', $shopping_list->id)->first();
 
         $user = Auth::user();
-        $shopping_list = Shopping_list::where('mode', 'edit')->where('USERS_id', $user->id)->first();
+        $old_shopping_list = Shopping_list::where('mode', 'edit')->where('USERS_id', $user->id)->first();
+
+        $old_cart_shopping_list = Shopping_list::where('status', 'shopping_list')->whereNull('mode')->where('USERS_id', $user->id)->first();
+
 
         //kopia tabeli
 
@@ -86,15 +111,30 @@ class ShoppingListController extends Controller
 //
       //  }
 
-
-        //jeżeli aktualny jest edit
-        if(isset($shopping_list))
+        //manipulacja stary cart i s_l
+        //jeśli istnieje cart to disable
+        //stary card
+        if(isset($old_cart_shopping_list))
         {
-            $shopping_list->mode = 'cyclical';
-            $shopping_list->save();
+            $old_cart_shopping_list->status = 'disable';
+            $old_cart_shopping_list->save();
         }
-            $uploadShopping_list->mode = 'edit';
-            $uploadShopping_list->save();
+
+
+        //operacje dla manipulacji s_l
+        if(isset($old_shopping_list))
+        {
+            //stara
+            $old_shopping_list->status = 'order';
+            $old_shopping_list->mode = 'cyclical';
+            $old_shopping_list->save();
+        }
+            //nowa
+            $shopping_list->status = 'shopping_list';
+            $shopping_list->mode = 'edit';
+            $shopping_list->save();
+
+
 
 
 
