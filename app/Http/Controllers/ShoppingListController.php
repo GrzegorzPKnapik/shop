@@ -42,30 +42,64 @@ class ShoppingListController extends Controller
     }
 
 
+    public function save(Shopping_list $shopping_list){
+
+        //dla nadpisania !=delivery
+        $shopping_list = Shopping_list::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
+
+
+
+        $shopping_list->save;
+        //$order->save;
+
+
+        return redirect()->route('welcome.index');
+    }
+
+
     public function upload(Shopping_list $shopping_list)
     {
         $uploadShopping_list = Shopping_list::where('id', $shopping_list->id)->first();
 
         $user = Auth::user();
-        $shopping_list = Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id)->first();
+        $shopping_list = Shopping_list::where('mode', 'edit')->where('USERS_id', $user->id)->first();
 
+        //kopia tabeli
+
+
+        //jezeli nie ma statusu =='delivered'
+        //to po prostu nadpisuje sam shopping list do ordera
+        //gdy jest...
+
+        //$order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
+
+        //if($order->status=='delivered')
+       // {
+        //    //kopia
+        //    if(isset($shopping_list))
+        //    {
+        //        $shopping_list->mode = 'cyclical';
+        //        $shopping_list->save();
+        //    }
+        //    $uploadShopping_list->mode = 'edit';
+       //     $uploadShopping_list->save();
+//
+      //  }
+
+
+        //jeżeli aktualny jest edit
         if(isset($shopping_list))
         {
-            $shopping_list->status = 'zamówienie';
+            $shopping_list->mode = 'cyclical';
             $shopping_list->save();
         }
-            $uploadShopping_list->status = 'lista_zakupów';
+            $uploadShopping_list->mode = 'edit';
             $uploadShopping_list->save();
 
 
 
 
         return redirect()->route('welcome.index');
-
-        //$collectionDates = $this->checkoutController->date();
-       // return view('shopping_list.index', ['shopping_list' => $shopping_list, 'collectionDates' => $collectionDates]);
-
-
     }
 
 

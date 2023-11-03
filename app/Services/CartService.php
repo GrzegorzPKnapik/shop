@@ -69,7 +69,7 @@ class CartService
         $user = Auth::user();
 
         $shopping_list = new Shopping_list();
-        $shopping_list->status = 'lista_zakupów';
+        $shopping_list->status = 'shopping_list';
         $shopping_list->total = $product->price;
         $shopping_list->USERS_id = $user->id;
         $shopping_list->save();
@@ -157,7 +157,7 @@ class CartService
     {
         $user = Auth::user();
 
-        return Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id);
+        return Shopping_list::where('status', 'shopping_list')->where('USERS_id', $user->id);
     }
 
     /**

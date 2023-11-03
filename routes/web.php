@@ -59,6 +59,8 @@ Route::group(['middleware' => 'cart'], function (){
         Route::get('/shopping_list/show/{shopping_list}', [ShoppingListController::class, 'show'])->name('shoppingList.show');
         Route::post('/shopping_list/save_day/{order}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
         Route::get('/shopping_list/upload/{shopping_list}', [ShoppingListController::class, 'upload'])->name('shoppingList.upload');
+        Route::get('/shopping_list/save/{shopping_list}', [ShoppingListController::class, 'save'])->name('shoppingList.save');
+
 
 
         //account

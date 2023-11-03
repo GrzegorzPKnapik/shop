@@ -307,8 +307,8 @@
             </div>
             <div id="refresh">
                 <div class="mini-cart-product-area ltn__scrollbar ">
-
-                        @forelse($items as $item)
+                    @if(isset($cart) && isset($items))
+                        @foreach($items as $item)
                             <div class="mini-cart-item clearfix delete_mem{{$item->PRODUCTS_id}}">
                                 <div class="mini-cart-img">
                                     <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
@@ -321,13 +321,14 @@
                             </div>
 
 
-                            @empty
 
 
-                    @endforelse
-                                @if(isset($cart) && $cart->total!=0)
+                    @endforeach
+                    @endif
+
 
                 </div>
+                @if(isset($cart) && $cart->total!=0)
                 <div class="mini-cart-footer">
 
                     <div class="mini-cart-sub-total">
@@ -339,8 +340,12 @@
                     <div class="btn-wrapper">
                         <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
-                        @if($cart->status=='lista_zakupów')
-                            <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">Save shopping list changes</a>
+                    </div>
+                    <div class="btn-wrapper">
+
+                    @if($cart->mode=='edit')
+                            <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Save shopping list changes') }}</a>
+
                         @endif
                     </div>
 

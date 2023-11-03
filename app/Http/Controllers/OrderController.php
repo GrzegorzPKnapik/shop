@@ -74,9 +74,9 @@ class OrderController extends Controller
 //
 //        $deliveryDayDate = $object[0]->date;
 
-        $user = Auth::user();
+       // $user = Auth::user();
 
-            $shopping_list = Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id)->first();
+            //$shopping_list = Shopping_list::where('status', 'shopping_list')->where('USERS_id', $user->id)->first();
             //najpier kopia potem id do ordera czyli id do shoppoing_list
 
         if($request->select!=0)
@@ -118,7 +118,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
 
-        $shopping_list = Shopping_list::where('status', 'lista_zakupów')->where('USERS_id', $user->id)->first();
+        $shopping_list = Shopping_list::where('status', 'shopping_list')->where('USERS_id', $user->id)->first();
         //najpier kopia potem id do ordera czyli id do shoppoing_list
 
 
@@ -145,6 +145,7 @@ class OrderController extends Controller
 
         $order = new Order();
         if($request->select==0)
+
             $order->set_delivery_date = $deliveryDayDate;
         else{
             $order->set_delivery_date = $request->select;
@@ -154,7 +155,7 @@ class OrderController extends Controller
         $order->SHOPPING_LISTS_id = $shopping_list->id;
         $order->ADDRESSES_id = $copiedAddress->id;
 
-        $shopping_list->status = 'zamówienie';
+        $shopping_list->status = 'order';
 
         try {
             $shopping_list->save();
