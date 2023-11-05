@@ -53,6 +53,7 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
         Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
+        Route::get('/order/status', [OrderController::class, 'changeStatus'])->name('order.changeStatus');
 
 
         //shopping list
@@ -60,6 +61,7 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/shopping_list/save_day/{order}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
         Route::get('/shopping_list/upload/{shopping_list}', [ShoppingListController::class, 'upload'])->name('shoppingList.upload');
         Route::get('/shopping_list/save/{shopping_list}', [ShoppingListController::class, 'save'])->name('shoppingList.save');
+
 
 
 

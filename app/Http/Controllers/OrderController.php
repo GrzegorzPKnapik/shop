@@ -118,7 +118,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
 
-        $shopping_list = Shopping_list::where('status', 'shopping_list')->where('USERS_id', $user->id)->first();
+        $shopping_list = Shopping_list::where('status', 'cart')->where('USERS_id', $user->id)->first();
         //najpier kopia potem id do ordera czyli id do shoppoing_list
 
 
@@ -145,17 +145,20 @@ class OrderController extends Controller
 
         $order = new Order();
         if($request->select==0)
-
-            $order->set_delivery_date = $deliveryDayDate;
+            {
+                $order->set_delivery_date = $deliveryDayDate;
+                $shopping_list->status = 'order';
+            }
         else{
             $order->set_delivery_date = $request->select;
             $shopping_list->mode = 'cyclical';
+            $shopping_list->status = 'shopping_list';
         }
 
         $order->SHOPPING_LISTS_id = $shopping_list->id;
         $order->ADDRESSES_id = $copiedAddress->id;
 
-        $shopping_list->status = 'order';
+        //$shopping_list->status = 'order';
 
         try {
             $shopping_list->save();

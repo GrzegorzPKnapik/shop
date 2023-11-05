@@ -60,8 +60,8 @@ class ShoppingListController extends Controller
     //zmienic nazwe na finish czy final
     public function save(Shopping_list $shopping_list){
 
-        $shopping_list->mode = 'cyclical';
-        $shopping_list->status = 'order';
+        //$shopping_list->mode = 'cyclical';
+        $shopping_list->status = 'shopping_list';
         $shopping_list->save();
         $user = Auth::user();
 
@@ -69,7 +69,7 @@ class ShoppingListController extends Controller
 
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = 'shopping_list';
+            $old_cart_shopping_list->status = 'cart';
             $old_cart_shopping_list->save();
         }
 
@@ -84,64 +84,116 @@ class ShoppingListController extends Controller
         //$shopping_list = Shopping_list::where('id', $shopping_list->id)->first();
 
         $user = Auth::user();
-        $old_shopping_list = Shopping_list::where('mode', 'edit')->where('USERS_id', $user->id)->first();
+        $old_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'cyclical')->where('USERS_id', $user->id)->first();
 
-        $old_cart_shopping_list = Shopping_list::where('status', 'shopping_list')->whereNull('mode')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->whereNull('mode')->where('USERS_id', $user->id)->first();
 
 
         //kopia tabeli
 
+        $order_is_delivered = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->where('delivery_status', 'delivered')->first();
 
-        //jezeli nie ma statusu =='delivered'
-        //to po prostu nadpisuje sam shopping list do ordera
-        //gdy jest...
 
-        //$order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
-
-        //if($order->status=='delivered')
-       // {
-        //    //kopia
-        //    if(isset($shopping_list))
-        //    {
-        //        $shopping_list->mode = 'cyclical';
-        //        $shopping_list->save();
-        //    }
-        //    $uploadShopping_list->mode = 'edit';
-       //     $uploadShopping_list->save();
-//
-      //  }
-
-        //manipulacja stary cart i s_l
-        //jeśli istnieje cart to disable
-        //stary card
         if(isset($old_cart_shopping_list))
         {
             $old_cart_shopping_list->status = 'disable';
             $old_cart_shopping_list->save();
         }
 
+        //kliknięcie w ten sam rekord
+        if(isset($old_shopping_list))
+            if ($old_shopping_list->id == $shopping_list->id)
+            {
+                return redirect()->route('welcome.index');
+            }
 
-        //operacje dla manipulacji s_l
+
+        //jezeli stare bylo listą zakupów to zmien z cart na shopping_list
         if(isset($old_shopping_list))
         {
-            //stara
-            $old_shopping_list->status = 'order';
-            $old_shopping_list->mode = 'cyclical';
+            $old_shopping_list->status = 'shopping_list';
             $old_shopping_list->save();
         }
-            //nowa
+
+        //jeżeli jest dostarczony, utwórz kopie
+        if(isset($order_is_delivered))
+        {
+
+            $this->copy($shopping_list, $order_is_delivered);
+
+            //starą ustawian na shopping_list
             $shopping_list->status = 'shopping_list';
-            $shopping_list->mode = 'edit';
             $shopping_list->save();
 
+            return redirect()->route('welcome.index');
 
 
+        }
 
+
+        $shopping_list->status = 'cart';
+        $shopping_list->save();
 
 
         return redirect()->route('welcome.index');
     }
 
+
+
+
+    /**
+     * @param Shopping_list $shopping_list
+     * @param $order_is_delivered
+     * @return void
+     */
+    private function copy(Shopping_list $shopping_list, $order_is_delivered): void
+    {
+        $copiedShoppingList = new Shopping_list();
+
+        $copiedShoppingList->total = $shopping_list->total;
+        $copiedShoppingList->mode = $shopping_list->mode;
+        $copiedShoppingList->status = 'cart';
+        $copiedShoppingList->mod_available_date = $shopping_list->mod_available_date;
+        $copiedShoppingList->created_at = $shopping_list->created_at;
+        $copiedShoppingList->updated_at = $shopping_list->updated_at;
+        $copiedShoppingList->USERS_id = $shopping_list->USERS_id;
+
+        $copiedShoppingList->save();
+
+
+        //kopia asocjacyjnej
+
+        $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->get();
+
+
+        foreach ($shopping_lists_product as $product) {
+            $copiedShoppingListsProduct = new Shopping_lists_product();
+            $copiedShoppingListsProduct->sub_total = $product->sub_total;
+            $copiedShoppingListsProduct->quantity = $product->quantity;
+            $copiedShoppingListsProduct->created_at = $product->created_at;
+            $copiedShoppingListsProduct->updated_at = $product->updated_at;
+            $copiedShoppingListsProduct->PRODUCTS_id = $product->PRODUCTS_id;
+            $copiedShoppingListsProduct->SHOPPING_LISTS_id = $copiedShoppingList->id;
+            $copiedShoppingListsProduct->save();
+        }
+
+        //orde też musze skopiować tworze order z tymi samymi danymi ale zminia sie id shopping_list na skopiowaną
+        $copiedOrder = new Order();
+        $copiedOrder->set_delivery_date = $order_is_delivered->set_delivery_date;
+        //usunąć status
+        $copiedOrder->delivery_status = $order_is_delivered->delivery_status;
+        $copiedOrder->end_date = $order_is_delivered->end_date;
+        $copiedOrder->create_date = $order_is_delivered->create_date;
+        $copiedOrder->created_at = $order_is_delivered->created_at;
+        $copiedOrder->updated_at = $order_is_delivered->updated_at;
+        $copiedOrder->DELIVERIES_id = $order_is_delivered->DELIVERIES_id;
+        $copiedOrder->PAYMENTS_id = $order_is_delivered->PAYMENTS_id;
+        $copiedOrder->ADDRESSES_id = $order_is_delivered->ADDRESSES_id;
+        $copiedOrder->SHOPPING_LISTS_id = $copiedShoppingList->id;
+
+
+        $copiedOrder->save();
+    }
 
 
 }

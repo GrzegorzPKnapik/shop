@@ -343,7 +343,7 @@
                     </div>
                     <div class="btn-wrapper">
 
-                    @if($cart->mode=='edit')
+                    @if($cart->mode=='cyclical')
                             <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Finish editing shopping list') }}</a>
 
                         @endif
