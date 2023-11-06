@@ -108,6 +108,8 @@ class CheckoutController extends Controller
     {
         $deliveryDate = new Collection();
 
+
+
         $daysOfWeek = [
             1 => 'poniedziałek',
             2 => 'wtorek',

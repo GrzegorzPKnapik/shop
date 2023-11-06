@@ -91,7 +91,7 @@ class ShoppingListController extends Controller
 
         //kopia tabeli
 
-        $order_is_delivered = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->where('delivery_status', 'delivered')->first();
+        $order_is_delivered = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->where('status', 'delivered')->first();
 
 
         if(isset($old_cart_shopping_list))
@@ -180,8 +180,6 @@ class ShoppingListController extends Controller
         //orde też musze skopiować tworze order z tymi samymi danymi ale zminia sie id shopping_list na skopiowaną
         $copiedOrder = new Order();
         $copiedOrder->set_delivery_date = $order_is_delivered->set_delivery_date;
-        //usunąć status
-        $copiedOrder->delivery_status = $order_is_delivered->delivery_status;
         $copiedOrder->end_date = $order_is_delivered->end_date;
         $copiedOrder->create_date = $order_is_delivered->create_date;
         $copiedOrder->created_at = $order_is_delivered->created_at;
