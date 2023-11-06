@@ -17,6 +17,7 @@ class Shopping_list extends Model
         'mode',
         'status',
         'mod_available_date',
+        'end_mod_date',
         'USERS_id'
     ];
 

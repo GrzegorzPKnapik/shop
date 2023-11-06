@@ -42,20 +42,6 @@ class ShoppingListController extends Controller
     }
 
 
-    //save jest na bieżąco wykonywany
-    public function savee(Shopping_list $shopping_list){
-
-        //dla nadpisania !=delivery
-
-
-
-        $shopping_list->save;
-        //$order->save;
-
-
-        return redirect()->route('welcome.index');
-    }
-
 
     //zmienic nazwe na finish czy final
     public function save(Shopping_list $shopping_list){
@@ -153,7 +139,7 @@ class ShoppingListController extends Controller
         $copiedShoppingList->total = $shopping_list->total;
         $copiedShoppingList->mode = $shopping_list->mode;
         $copiedShoppingList->status = 'cart';
-        $copiedShoppingList->mod_available_date = $shopping_list->mod_available_date;
+        $copiedShoppingList->end_mode_date = $shopping_list->end_mode_date;
         $copiedShoppingList->created_at = $shopping_list->created_at;
         $copiedShoppingList->updated_at = $shopping_list->updated_at;
         $copiedShoppingList->USERS_id = $shopping_list->USERS_id;
@@ -180,7 +166,6 @@ class ShoppingListController extends Controller
         //orde też musze skopiować tworze order z tymi samymi danymi ale zminia sie id shopping_list na skopiowaną
         $copiedOrder = new Order();
         $copiedOrder->set_delivery_date = $order_is_delivered->set_delivery_date;
-        $copiedOrder->end_date = $order_is_delivered->end_date;
         $copiedOrder->create_date = $order_is_delivered->create_date;
         $copiedOrder->created_at = $order_is_delivered->created_at;
         $copiedOrder->updated_at = $order_is_delivered->updated_at;

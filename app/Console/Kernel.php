@@ -29,7 +29,9 @@ class Kernel extends ConsoleKernel
                 //jeżeli jest dostarczona wyznacz następną datę dostawy cyklicznej
                 if($item->status == 'delivered'){
                     $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
-                    $item->end_date = $this->endDate($item->set_delivery_date);
+                    $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
+                    $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
+
                     $item->status = '';
                 }
 
@@ -46,7 +48,8 @@ class Kernel extends ConsoleKernel
                     if ($item->shopping_list->status == 'cart' && $item->shopping_list->mode=='cyclical') {
                         $item->status = 'skipped';
                         $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
-                        $item->end_date = $this->endDate($item->set_delivery_date);
+                        $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
+                        $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
                     }
                 }
                 $item->save();
@@ -68,6 +71,12 @@ class Kernel extends ConsoleKernel
     {
         $end_date = date('Y-m-d', strtotime($date . ' -1 day'));
         return $end_date;
+    }
+
+    private function mod_available_date($date)
+    {
+        $mod_date = date('Y-m-d', strtotime($date . ' -2 day'));
+        return $mod_date;
     }
 
     /**

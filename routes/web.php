@@ -53,8 +53,7 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
         Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
-        //do usunięcia
-        Route::get('/order/status', [OrderController::class, 'checkStatus'])->name('order.checkStatus');
+
 
 
         //shopping list

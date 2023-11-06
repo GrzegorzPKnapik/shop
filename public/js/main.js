@@ -1464,18 +1464,6 @@
         });
 
 
-        //setInterval(checkStatus, 1000);
-
-
-        function checkStatus() {
-
-            $.ajax({
-                type: "GET",
-                url: "/order/status",
-
-            })
-        }
-
 
 
 

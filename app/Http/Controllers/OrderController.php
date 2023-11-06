@@ -80,16 +80,24 @@ class OrderController extends Controller
             //$shopping_list = Shopping_list::where('status', 'shopping_list')->where('USERS_id', $user->id)->first();
             //najpier kopia potem id do ordera czyli id do shoppoing_list
 
+        $s_l = Shopping_list::where('id', $order->SHOPPING_LISTS_id)->first();
+
+
+
+
         if($request->select!=0)
         {
             $order->set_delivery_date = $request->select;
-            $order->end_date = $this->endDate($request->select);
+            $s_l->end_mode_date = $this->endDate($request->select);
+            $s_l->mod_available_date = $this->mod_available_date($request->select);
+
         }
 
 
 
 
             try {
+            $s_l->save();
                 $order->save();
                 return response()->json([
                     'status' => 'success',
@@ -101,67 +109,6 @@ class OrderController extends Controller
                     'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
                 ])->setStatusCode(500);
             }
-
-
-    }
-
-
-    public function checkStatus()
-    {
-        $orders = Order::all();
-
-        foreach ($orders as $item) {
-
-
-            if($item->delivery_status == ''){
-                $item->delivery_status = 'w';
-            }
-
-        $item->save();
-    }
-
-
-
-        $orders = Order::with('shopping_list')->get();
-
-        foreach ($orders as $i)
-        {
-            dd($i->shopping_list->status);
-        }
-
-
-        $is_cart = Order::with('shopping_list')->whereHas('shopping_list', function ($query) {
-            $query->where('status', 'cart');
-        })
-            ->get();
-
-        //jeśli data wybije zmienia na za tydzień i status też zmienia
-
-        dd($is_cart);
-
-        if(isset($is_cart)){
-            $order->end_date = $this->nextDate();
-            $order->status = 'false';
-            $order->save();
-            return true;
-        }
-        //zmień status na w przygotowaniu i nowa data
-        $order->status = 'in_prepare';
-        $order->end_date = $this->nextDate();
-
-        try {
-            $order->save();
-            return response()->json([
-                'status' => 'success'
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
-            ])->setStatusCode(500);
-        }
-
-
 
 
     }
@@ -210,15 +157,20 @@ class OrderController extends Controller
 
 
         $order = new Order();
+
+
         if($request->select==0)
             {
                 $order->set_delivery_date = $deliveryDayDate;
-                $order->end_date = null;
-                $shopping_list->status = 'order';
+                //$s_l->end_mod_date = null;
+                $shopping_list->end_mod_date = null;
+                $shopping_list->mod_available_date = null;
             }
         else{
             $order->set_delivery_date = $request->select;
-            $order->end_date = $this->endDate($deliveryDayDate);
+
+            $shopping_list->end_mod_date = $this->endDate($request->select);
+            $shopping_list->mod_available_date = $this->mod_available_date($request->select);
             $shopping_list->mode = 'cyclical';
             $shopping_list->status = 'shopping_list';
         }
@@ -226,10 +178,11 @@ class OrderController extends Controller
         $order->SHOPPING_LISTS_id = $shopping_list->id;
         $order->ADDRESSES_id = $copiedAddress->id;
 
-        //$shopping_list->status = 'order';
+        $shopping_list->status = 'order';
 
         try {
             $shopping_list->save();
+            //$s_l->save();
             $order->save();
             return response()->json([
                 'status' => 'success',
@@ -262,6 +215,12 @@ class OrderController extends Controller
     {
         $end_date = date('Y-m-d', strtotime($date . ' -1 day'));
         return $end_date;
+    }
+
+    private function mod_available_date($date)
+    {
+        $mod_date = date('Y-m-d', strtotime($date . ' -2 day'));
+        return $mod_date;
     }
 
 
