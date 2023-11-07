@@ -72,7 +72,7 @@ class ShoppingListController extends Controller
         $user = Auth::user();
         $old_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'cyclical')->where('USERS_id', $user->id)->first();
 
-        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->whereNull('mode')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'single')->where('USERS_id', $user->id)->first();
 
 
         //kopia tabeli

@@ -162,9 +162,10 @@ class OrderController extends Controller
         if($request->select==0)
             {
                 $order->set_delivery_date = $deliveryDayDate;
-                //$s_l->end_mod_date = null;
                 $shopping_list->end_mod_date = null;
                 $shopping_list->mod_available_date = null;
+                $shopping_list->mode = 'single';
+                $shopping_list->status = 'order';
             }
         else{
             $order->set_delivery_date = $request->select;
@@ -172,17 +173,16 @@ class OrderController extends Controller
             $shopping_list->end_mod_date = $this->endDate($request->select);
             $shopping_list->mod_available_date = $this->mod_available_date($request->select);
             $shopping_list->mode = 'cyclical';
+            //gotowa na zmiane statusu na in_prepare
             $shopping_list->status = 'shopping_list';
         }
 
         $order->SHOPPING_LISTS_id = $shopping_list->id;
         $order->ADDRESSES_id = $copiedAddress->id;
 
-        $shopping_list->status = 'order';
 
         try {
             $shopping_list->save();
-            //$s_l->save();
             $order->save();
             return response()->json([
                 'status' => 'success',
