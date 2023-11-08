@@ -137,6 +137,21 @@ class OrderController extends Controller
         }
 
 
+        if($shopping_list->active == null)
+        {
+            $shopping_list->active = true;
+            $shopping_list->save();
+        }else{
+            $shopping_list->active = null;
+            $shopping_list->save();
+            return response()->json([
+                'status' => 'deleted',
+            ]);
+        }
+
+
+
+
         $copiedAddress = new Address();
         $copiedAddress->name = $address->name;
         $copiedAddress->surname = $address->surname;

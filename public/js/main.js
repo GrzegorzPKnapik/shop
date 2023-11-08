@@ -1450,9 +1450,10 @@
                 url: DATA.storeOrderSLUrl + $(this).data("id")
             })
                 .done(function (response) {
+                    $("#refreshActive").load(location.href + " #refreshActive")
+                    if(response.status != 'deleted')
                         Swal.fire(response.message, '', response.status);
                     if(response.status == 'success') {
-                        $("#refreshActive").load(location.href + " #refreshActive")
                         Swal.fire('Złożono zamówienie', 'nr:' + response.order, 'success');
                     }
                 })

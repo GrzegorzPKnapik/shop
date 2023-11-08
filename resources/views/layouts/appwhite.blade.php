@@ -340,7 +340,7 @@
 
                     <div class="btn-wrapper">
                         <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
-                        @if($cart->mode=='cyclical')
+                        @if($cart->mode!='cyclical')
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
                         @endif
                     </div>

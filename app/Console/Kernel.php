@@ -22,7 +22,6 @@ class Kernel extends ConsoleKernel
 
             $orders = Order::with('shopping_list')->get();
 
-            $shopping_lists = Shopping_list::all();
 
 
 
@@ -33,37 +32,107 @@ class Kernel extends ConsoleKernel
 
             foreach ($orders as $item) {
 
-                //jeżeli jest dostarczona wyznacz następną datę dostawy cyklicznej
-                if($item->status == 'delivered'){
-                    $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
-                    $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
-                    $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
+                if ($item->status == 'delivered') {
+//                    foreach ($item->shopping_list as $shoppingListItem) {
+//                        $shoppingListItem->status = 'resume';
+//                    }
 
-                    $item->status = '';
+                    //powinno utworzyć nowe zamówinie z tym orderem  albo z kopią od razu
+
+                    $item->shopping_list->status = 'resume';
                 }
 
-                $end_date = Carbon::parse($item->end_date)->format('Y-m-d');
-                if ($end_date == $currentTime){
+
+                if($item->shopping_list->active == true)
+                {
+                    //powinno utworzyć nowe zamówinie z tym orderem  albo z kopią od razu
+                    //tworzy nowe zamówinie i s_l kopia wszystko
+                    //moze wykonać to co wczytaj edycje ale sie nei da bo jest w order i wtedy tworzy nowe
+                    // {{ __('Załaduj listę zakupów do dalszej edycji') }}
+
+
+                }
+
+
+
+                $end_date = Carbon::parse($item->shopping_list->end_mod_date)->format('Y-m-d');
+                if ($end_date == $currentTime) {
 
                     //jeżeli jest wszytko jak nalezy czyli status shopping_list
                     //to zmiana statsusu na in_prepare
                     if ($item->shopping_list->status == 'shopping_list') {
                         $item->status = 'in_prepare';
+                        $item->shopping_list->status = 'stop';
                     }
 
                     //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
-                    if ($item->shopping_list->status == 'cart' && $item->shopping_list->mode=='cyclical') {
+                    if ($item->shopping_list->status == 'cart' && $item->shopping_list->mode == 'cyclical') {
                         $item->status = 'skipped';
-                        $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
-                        $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
-                        $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
+                        $item->shopping_list->delivery_date = $this->nextDate($item->shopping_list->delivery_date);
+                        $item->shopping_list->end_mod_date = $this->endDate($item->shopping_list->delivery_date);
+                        $item->shopping_list->mod_available_date = $this->mod_available_date($item->shopping_list->delivery_date);
                     }
                 }
                 $item->save();
+                $item->shopping_list->save();
+
             }
 
 
-        })->daily();
+
+
+
+
+                //jeżeli delivered to resume przyznaj
+                //uwtórz nowe zamówinie i nową listezakupów
+                //
+
+                //przyznaie resume
+//                if($item->status == 'delivered'){
+//
+//
+//                    $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
+//                    $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
+//                    $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
+//
+//                    $item->status = '';
+//                }
+//
+//
+//
+//
+//
+//                //jeżeli jest dostarczona wyznacz następną datę dostawy cyklicznej
+//                if($item->status == 'delivered'){
+//                    $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
+//                    $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
+//                    $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
+//
+//                    $item->status = '';
+//                }
+//
+//                $end_date = Carbon::parse($item->end_date)->format('Y-m-d');
+//                if ($end_date == $currentTime){
+//
+//                    //jeżeli jest wszytko jak nalezy czyli status shopping_list
+//                    //to zmiana statsusu na in_prepare
+//                    if ($item->shopping_list->status == 'shopping_list') {
+//                        $item->status = 'in_prepare';
+//                    }
+//
+//                    //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
+//                    if ($item->shopping_list->status == 'cart' && $item->shopping_list->mode=='cyclical') {
+//                        $item->status = 'skipped';
+//                        $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
+//                        $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
+//                        $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
+//                    }
+//                }
+//                $item->save();
+//            }
+
+
+        })->at('16:43');
     }
 
     public function nextDate($date)

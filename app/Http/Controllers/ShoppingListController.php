@@ -88,14 +88,15 @@ class ShoppingListController extends Controller
 
 
 
-    public function active(Shopping_list $shopping_list){
+    //zapis zmian w sl
 
-        if($shopping_list->active == false)
+    /*public function active(Shopping_list $shopping_list){
+
+        if($shopping_list->active == null)
         {
             $shopping_list->active = true;
-            $this->orderController->storeSL($shopping_list);
         }else
-            $shopping_list->active = false;
+            $shopping_list->active = null;
 
         //zrób order
 
@@ -106,9 +107,7 @@ class ShoppingListController extends Controller
         return redirect()->route('account.index');
 
     }
-
-    //zapis zmian w sl
-    //tworzenie nowej sl
+    *///tworzenie nowej sl
     //_____do tego save może być
     public function save(Shopping_list $shopping_list){
 
@@ -155,7 +154,17 @@ class ShoppingListController extends Controller
 
     public function upload(Shopping_list $shopping_list)
     {
-        $is_not_available = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->where([
+
+
+
+        if($shopping_list->status == 'stop'){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Lista zablokowana!'
+            ]);
+        }
+
+        /*$is_not_available = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->where([
             ['status', 'in_prepare'],
         ]);
 
@@ -164,7 +173,7 @@ class ShoppingListController extends Controller
                 'status' => 'warning',
                 'message' => 'Lista zablokowana!'
             ]);
-        }
+        }*/
 
 
 
@@ -194,6 +203,20 @@ class ShoppingListController extends Controller
         {
             $old_cart_shopping_list->status = 'shopping_list';
             $old_cart_shopping_list->save();
+        }
+
+        //jeżeli jest nie zablokowana czyli status nie order
+        if($shopping_list->status == 'resume')
+        {
+            $this->copy($shopping_list);
+
+            //starą ustawiam na shopping_list
+            //$shopping_list->status = 'shopping_list';
+            //$shopping_list->save();
+
+            return redirect()->route('welcome.index');
+
+
         }
 
 
@@ -333,14 +356,19 @@ class ShoppingListController extends Controller
      * @param $order_is_delivered
      * @return void
      */
-    private function copy(Shopping_list $shopping_list, $order_is_delivered): void
+    private function copy(Shopping_list $shopping_list): void
     {
+        $order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
+
+
         $copiedShoppingList = new Shopping_list();
 
         $copiedShoppingList->total = $shopping_list->total;
         $copiedShoppingList->mode = $shopping_list->mode;
         $copiedShoppingList->status = 'cart';
-        $copiedShoppingList->end_mode_date = $shopping_list->end_mode_date;
+        $copiedShoppingList->delivery_date = $shopping_list->delivery_date;
+        $copiedShoppingList->mod_available_date = $shopping_list->mod_available_date;
+        $copiedShoppingList->end_mod_date = $shopping_list->end_mod_date;
         $copiedShoppingList->created_at = $shopping_list->created_at;
         $copiedShoppingList->updated_at = $shopping_list->updated_at;
         $copiedShoppingList->USERS_id = $shopping_list->USERS_id;
@@ -349,7 +377,6 @@ class ShoppingListController extends Controller
 
 
         //kopia asocjacyjnej
-
         $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->get();
 
 
@@ -365,14 +392,15 @@ class ShoppingListController extends Controller
         }
 
         //orde też musze skopiować tworze order z tymi samymi danymi ale zminia sie id shopping_list na skopiowaną
+
         $copiedOrder = new Order();
-        $copiedOrder->set_delivery_date = $order_is_delivered->set_delivery_date;
-        $copiedOrder->create_date = $order_is_delivered->create_date;
-        $copiedOrder->created_at = $order_is_delivered->created_at;
-        $copiedOrder->updated_at = $order_is_delivered->updated_at;
-        $copiedOrder->DELIVERIES_id = $order_is_delivered->DELIVERIES_id;
-        $copiedOrder->PAYMENTS_id = $order_is_delivered->PAYMENTS_id;
-        $copiedOrder->ADDRESSES_id = $order_is_delivered->ADDRESSES_id;
+        $copiedOrder->set_delivery_date = $shopping_list->set_delivery_date;
+        $copiedOrder->create_date = $order->create_date;
+        $copiedOrder->created_at = $order->created_at;
+        $copiedOrder->updated_at = $order->updated_at;
+        $copiedOrder->DELIVERIES_id = $order->DELIVERIES_id;
+        $copiedOrder->PAYMENTS_id = $order->PAYMENTS_id;
+        $copiedOrder->ADDRESSES_id = $order->ADDRESSES_id;
         $copiedOrder->SHOPPING_LISTS_id = $copiedShoppingList->id;
 
 
