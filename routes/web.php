@@ -51,6 +51,7 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/address/select/{address}', [AddressController::class, 'selectAddress'])->name('address.selectAddress');
         //order
         Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+        Route::post('/order/storeSL/{shopping_list}', [OrderController::class, 'storeSL'])->name('order.storeSL');
         Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
 
@@ -58,9 +59,13 @@ Route::group(['middleware' => 'cart'], function (){
 
         //shopping list
         Route::get('/shopping_list/show/{shopping_list}', [ShoppingListController::class, 'show'])->name('shoppingList.show');
-        Route::post('/shopping_list/save_day/{order}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
+        Route::post('/shopping_list/delete_day/{shopping_list}', [ShoppingListController::class, 'delete_day'])->name('shoppingList.delete_day');
+        Route::post('/shopping_list/save_day/{shopping_list}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
         Route::get('/shopping_list/upload/{shopping_list}', [ShoppingListController::class, 'upload'])->name('shoppingList.upload');
+        Route::get('/shopping_list/copyToCart/{shopping_list}', [ShoppingListController::class, 'copyToCart'])->name('shoppingList.copyToCart');
+
         Route::get('/shopping_list/save/{shopping_list}', [ShoppingListController::class, 'save'])->name('shoppingList.save');
+        Route::get('/shopping_list/active/{shopping_list}', [ShoppingListController::class, 'active'])->name('shoppingList.active');
 
 
 

@@ -84,6 +84,67 @@
                                                                 @endforeach
                                                             @endforeach
 
+                                                                <div id="refreshAddress">
+                                                                    <p>
+                                                                    <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                                Wybierz inny adres
+                                                                            </a></small></h4>
+                                                                    </p>
+                                                                    <div class="collapse" id="collapseExample">
+                                                                        <div class="card card-body">
+                                                                            @foreach($addresses as $address)
+                                                                                @if($address->selected != true)
+                                                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
+                                                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
+                                                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                                                            Wybrany jako główny
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                    <address>
+                                                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                                                        <p>{{$address->city}}, {{$address->street}}<br>
+                                                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                                                        <p>Telefon: {{$address->phone_number}}</p>
+                                                                                        _____________________________
+                                                                                    </address>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <h4>Adres dostawy: </h4>
+                                                                    @foreach($addresses as $address)
+                                                                        @if($address->selected == true)
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
+                                                                                       @if($address->selected == true)
+                                                                                           checked
+                                                                                    @endif
+
+                                                                                >
+                                                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                                                    Wybrany jako główny
+                                                                                </label>
+                                                                            </div>
+
+                                                                            <address>
+                                                                                <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                                                <p>{{$address->city}}, {{$address->street}}<br>
+                                                                                    {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                                                <p>Telefon: {{$address->phone_number}}</p>
+
+                                                                                <hr style="width: 20%; border-top: 3px solid black; background-color: black;">
+
+                                                                            </address>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </div>
+
+                                                                <h4><small><a data-bs-target="#quick_view_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                                                            Wpisz adres dostawy
+                                                                        </a></small></h4>
 
                                                             <br>
 
@@ -114,57 +175,80 @@
                                                                 @endforeach
                                                                 </tbody>
                                                             </table>
+
+
+
+
+
+
+
                                                                 <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
                                                                 <div id="refreshShoppingList">
                                                                 <p>
-                                                                    <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
+
+
                                                                     @foreach($shopping_list as $item)
-                                                                        @foreach ($item->orders as $index => $itemm)
-                                                                        {{ \Carbon\Carbon::parse($itemm->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
-                                                                    <br>
+                                                                            @if($item->delivery_date == null)
+                                                                                <label>Brak dodanej daty dostawy </label>
+                                                                            @else
+                                                                                <label>Ustawiony dzień realizacji cyklicznych dostaw:
+                                                                                    {{ \Carbon\Carbon::parse($item->delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                                                                </label>
+                                                                            <br>
+                                                                            <label>Najbliższa data cyklicznej dostawy:
+                                                                                {{ date('Y-m-d', strtotime($item->delivery_date)) }}
+                                                                            </label>
+                                                                            <br>
+                                                                            <label>Data ostatniej możliwej edycji listy w przypadku złożenia zamówinia:
+                                                                                {{ date('Y-m-d', strtotime($item->mod_available_date)) }}
+                                                                            </label>
 
+                                                                            @endif
 
-
-
-                                                                    <label>Najbliższa data cyklicznej dostawy: {{ date('Y-m-d', strtotime($itemm->set_delivery_date)) }}</label>
-
-                                                                    @php break;@endphp
-                                                                        @endforeach
                                                                     @endforeach
-
                                                                     <br>
-                                                                 </div>
                                                                 </p>
+                                                                            @if($item->delivery_date == null)
+                                                                        <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
+                                                                                    Dodaj dzień dostawy
+                                                                                </a></small></h4>
+                                                                        </p>
+                                                                            @else
+                                                                        <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
+                                                                                    Zmień dzień dostawy
+                                                                                </a></small></h4>
+                                                                        </p>
+                                                                            @endif
 
-                                                                <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                            Zmień dzień dostaw
                                                                         </a></small></h4>
+                                                                </div>
 
-                                                                <div class="collapse" id="collapseExample">
+
+                                                                <div class="collapse" id="collapseDayPicker">
                                                                     <div class="card card-body">
-                                                                        <form class="selectDay" method="POST">
+                                                                        <form class="custom-form selectDay" method="POST">
                                                                             @csrf
-
-                                                                            <input type="hidden" name="order" value="{{ $item }}">
-
-
                                                                             <div class="col-md-6">
                                                                                 <div class="input-item">
                                                                                     <label>Dzień cyklicznych dostaw:</label>
                                                                                     <select name="select" class="nice-select">
                                                                                         <option value="0"> Wybierz dzień</option>
                                                                                         @foreach($collectionDates as $date)
-                                                                                            <option value={{$date['date']}}> {{$date['name']}} (dostawa:{{ $date['date'] }} )
+                                                                                            <option value={{$date['date']}}> {{$date['name']}} (dostawa:   {{ $date['date'] }} )
                                                                                                 @endforeach
                                                                                             </option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
-
                                                                         </form>
+                                                                        <div id="refreshDayDelete">
+                                                                        @if($item->delivery_date != null)
+                                                                        <h4><small><a href="" class="deleteDay" data-id="{{$item->id}}"> Usuń adres</a></small>
+                                                                            @endif
+                                                                         </div>
+                                                                        <br>
                                                                     </div>
                                                                 </div>
-                                                                </p>
 
                                                                 <h4 class="pt-4 pb-2">Status:</h4>
                                                                 <br>
@@ -190,24 +274,41 @@
                                                                 </table>
                                                             </div>
 
-                                                                <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$itemm->id}}" type="submit">
+                                                                <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$item->id}}" type="submit">
                                                                     {{ __('Save changes') }}
                                                                 </button>
 
+                                                                <div id="refreshActive">
+                                                                <div class="btn-wrapper">
+                                                                        <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
+                                                                        @if($item->active == false)
+                                                                            {{
+                                                                                __('Aktywuj')
+                                                                            }}
+                                                                        @else
+                                                                            {{
+                                                                            __('Dezaktywuj')
+                                                                       }}
+                                                                        @endif
+                                                                        </button>
+                                                                </div>
+                                                                </div>
 
 
 
 
                                                         </div>
 
+                                                        moźliwość nanoszenia zmian i pracowania z lsitą zakupów
                                                         <div class="btn-wrapper">
                                                             <a href="{{ route('shoppingList.upload', $item->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
                                                         </div>
 
                                                         <br>
-                                                        <button class="theme-btn-1 btn btn-effect-1">
-                                                            {{ __('Załaduj listę zakupów do dalszej edycji') }}
-                                                        </button>
+                                                        tylko kopiuje produkty do koszyka i pracujemy jakby nie istniała lista zakupów, tworzy nowy koszyk w bazie
+                                                        <div class="btn-wrapper">
+                                                            <a href="{{ route('shoppingList.copyToCart', $item->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Skopiuj zawartość listy zakupów do koszyka') }}</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,6 +327,148 @@
     </div>
 
 
+
+    <div class="ltn__modal-area ltn__quick-view-modal-area">
+        <div class="modal fade" id="quick_view_modal" tabindex="-1">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" id="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <!-- <i class="fas fa-times"></i> -->
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="ltn__quick-view-modal-inner">
+                            <div class="modal-product-item">
+                                <div class="row">
+                                    <div class="ltn__form-box">
+                                        <form class="addAddress" id="address" method="POST">
+                                            <div id="refreshForm">
+                                                @csrf
+                                                <div class="row mb-50">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label>Imie:</label>
+                                                            <input id="name" type="text" placeholder="Imie"
+                                                                   class="form-control @error('name') is-invalid @enderror"
+                                                                   name="name"
+                                                                   required autocomplete="name" autofocus>
+                                                            @error('name')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label>Nazwisko:</label>
+                                                            <input id="surname" type="text" placeholder="Nazwisko"
+                                                                   class="form-control @error('surname') is-invalid @enderror"
+                                                                   name="surname"
+                                                                   required autocomplete="surname" autofocus>
+                                                            @error('surname')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label>Miasto:</label>
+                                                            <input id="city" type="text" placeholder="Miasto"
+                                                                   class="form-control @error('city') is-invalid @enderror"
+                                                                   name="city" value="{{ old('city') }}"
+                                                                   required autocomplete="city" autofocus>
+                                                            @error('city')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                        <div class="mb-3">
+                                                            <label>Ulica:</label>
+                                                            <input id="street" type="text" placeholder="Ulica"
+                                                                   class="form-control @error('street') is-invalid @enderror"
+                                                                   name="street" value="{{ old('street') }}"
+                                                                   required autocomplete="street" autofocus>
+                                                            @error('street')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                        <div class="mb-3">
+                                                            <label>Kod pocztowy:</label>
+                                                            <input id="zip_code" type="text" placeholder="Kod pocztowy"
+                                                                   class="form-control @error('zip_code') is-invalid @enderror"
+                                                                   name="zip_code" value="{{ old('zip_code') }}"
+                                                                   required autocomplete="zip_code" autofocus>
+                                                            @error('zip_code')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                        <div class="mb-3">
+                                                            <label>Województwo:</label>
+                                                            <input id="voivodeship" type="text" placeholder="Województwo"
+                                                                   class="form-control @error('voivodeship') is-invalid @enderror"
+                                                                   name="voivodeship" value="{{ old('voivodeship') }}"
+                                                                   required autocomplete="voivodeship" autofocus>
+                                                            @error('voivodeship')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+
+                                                        <div class="mb-3">
+                                                            <label>Numer telefonu:</label>
+                                                            <input id="phone_number" type="text" placeholder="Numer telefonu"
+                                                                   class="form-control @error('phone_number') is-invalid @enderror"
+                                                                   name="phone_number" value="{{ old('phone_number') }}"
+                                                                   required autocomplete="phone_number" autofocus>
+                                                            @error('phone_number')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="btn-wrapper">
+                                                    <button type="submit"
+                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" >
+                                                        {{__('Zapisz adres')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Body main wrapper end -->
 
 
@@ -236,6 +479,9 @@
 @section('javascript')
     const DATA = {
     saveDayUrl: '{{url('/shopping_list/save_day')}}/',
-
+    deleteDayUrl: '{{url('/shopping_list/delete_day')}}/',
+    selectAddressUrl: '{{url('address/select')}}/',
+    storeAddressUrl: '{{url('address/store')}}',
+    storeOrderSLUrl: '{{url('/order/storeSL')}}/',
     }
 @endsection

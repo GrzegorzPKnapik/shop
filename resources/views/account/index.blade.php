@@ -94,26 +94,52 @@
                                                                 <th>Shopping list number</th>
                                                                 <th>Update date</th>
                                                                 <th>Price</th>
+                                                                <th>Active</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
+
+{{--                                                            @foreach($shopping_lists as $item)--}}
+{{--                                                                    <tr>--}}
+{{--                                                                        <td class="cart-product-name">#{{$item->id}}</td>--}}
+{{--                                                                        <td class="cart-product-name">{{$item->updated_at}}</td>--}}
+
+{{--                                                                        <td class="cart-product-name">${{$item->total}}</td>--}}
+{{--                                                                        <td>--}}
+{{--                                                                            <a href="{{ route('shoppingList.show', $item->id) }}">--}}
+{{--                                                                                <button class="icon-search"></button>--}}
+{{--                                                                            </a>--}}
+{{--                                                                        </td>--}}
+
+{{--                                                                    </tr>--}}
+{{--                                                            @endforeach--}}
+
                                                             @foreach($shopping_lists as $item)
-                                                                @foreach($item->orders as $order)
-                                                                <tr>
-                                                                    <td class="cart-product-name">#{{$order->id}}</td>
-                                                                    <td class="cart-product-name">#{{$item->id}}</td>
-                                                                    <td class="cart-product-name">{{$item->updated_at}}</td>
+                                                                    <tr>
+                                                                    @forelse($item->orders as $v => $order)
+                                                                            <td class="cart-product-name">#{{$order->id}}</td>
+                                                                        @empty
+                                                                            <td class="cart-product-name"></td>
+                                                                        @endforelse
 
-                                                                    <td class="cart-product-name">${{$item->total}}</td>
-                                                                    <td>
-                                                                        <a href="{{ route('shoppingList.show', $item->id) }}">
-                                                                            <button class="icon-search"></button>
-                                                                        </a>
-                                                                    </td>
 
-                                                                </tr>
-                                                                @endforeach
+                                                                        <td class="cart-product-name">#{{$item->id}}</td>
+                                                                        <td class="cart-product-name">{{$item->updated_at}}</td>
+
+                                                                        <td class="cart-product-name">${{$item->total}}</td>
+                                                                        <td class="cart-product-name">
+                                                                            @if($item->active==true)
+                                                                                {{__('YES')}}
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="{{ route('shoppingList.show', $item->id) }}">
+                                                                                <button class="icon-search"></button>
+                                                                            </a>
+                                                                        </td>
+
+                                                                    </tr>
                                                             @endforeach
                                                             </tbody>
                                                         </table>

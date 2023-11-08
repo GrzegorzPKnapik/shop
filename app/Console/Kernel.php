@@ -22,6 +22,13 @@ class Kernel extends ConsoleKernel
 
             $orders = Order::with('shopping_list')->get();
 
+            $shopping_lists = Shopping_list::all();
+
+
+
+            //if($shopping_lists->mode)
+
+
 
 
             foreach ($orders as $item) {
@@ -78,6 +85,14 @@ class Kernel extends ConsoleKernel
         $mod_date = date('Y-m-d', strtotime($date . ' -2 day'));
         return $mod_date;
     }
+
+    private function shopping_list_no_active($date)
+    {
+
+    }
+
+
+
 
     /**
      * Register the commands for the application.

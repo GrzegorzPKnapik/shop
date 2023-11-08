@@ -113,7 +113,64 @@ class OrderController extends Controller
 
     }
 
+    public function storeSL(Shopping_list $shopping_list)
+    {
 
+        $addressController = new AddressController();
+        $address = $addressController->isAddress();
+
+
+        if(!isset($address)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Adres nie został podany!'
+            ]);
+        }
+
+
+
+        if(!isset($shopping_list->delivery_date)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Data nie została podana!'
+            ]);
+        }
+
+
+        $copiedAddress = new Address();
+        $copiedAddress->name = $address->name;
+        $copiedAddress->surname = $address->surname;
+        $copiedAddress->city = $address->city;
+        $copiedAddress->street = $address->street;
+        $copiedAddress->zip_code = $address->zip_code;
+        $copiedAddress->voivodeship = $address->voivodeship;
+        $copiedAddress->phone_number = $address->phone_number;
+        $copiedAddress->status = 'order';
+        $copiedAddress->USERS_id = $address->USERS_id;
+        $copiedAddress->save();
+
+
+        $order = new Order();
+
+        $order->SHOPPING_LISTS_id = $shopping_list->id;
+        $order->ADDRESSES_id = $copiedAddress->id;
+
+
+        try {
+            $order->save();
+            return response()->json([
+                'status' => 'success',
+                'order' => $order->id
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
+            ])->setStatusCode(500);
+        }
+
+
+    }
 
     public function store(Request $request)
     {
@@ -127,7 +184,13 @@ class OrderController extends Controller
         $addressController = new AddressController();
         $address = $addressController->isAddress();
 
-        if(isset($address)){
+        if(!isset($address)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Adres nie został podany!'
+            ]);
+        }
+
 
         $user = Auth::user();
 
@@ -135,25 +198,20 @@ class OrderController extends Controller
         //najpier kopia potem id do ordera czyli id do shoppoing_list
 
 
-        $toCopyAddress = Address::where('USERS_id', $user->id)->where('selected', true)->first();
-
         $copiedAddress = new Address();
-        $copiedAddress->name = $toCopyAddress->name;
-        $copiedAddress->surname = $toCopyAddress->surname;
-        $copiedAddress->city = $toCopyAddress->city;
-        $copiedAddress->street = $toCopyAddress->street;
-        $copiedAddress->zip_code = $toCopyAddress->zip_code;
-        $copiedAddress->voivodeship = $toCopyAddress->voivodeship;
-        $copiedAddress->phone_number = $toCopyAddress->phone_number;
+        $copiedAddress->name = $address->name;
+        $copiedAddress->surname = $address->surname;
+        $copiedAddress->city = $address->city;
+        $copiedAddress->street = $address->street;
+        $copiedAddress->zip_code = $address->zip_code;
+        $copiedAddress->voivodeship = $address->voivodeship;
+        $copiedAddress->phone_number = $address->phone_number;
         $copiedAddress->status = 'order';
-        $copiedAddress->USERS_id = $toCopyAddress->USERS_id;
+        $copiedAddress->USERS_id = $address->USERS_id;
         $copiedAddress->save();
 
 
         //zapis dnia w bazie danych czyli nie zpisy=uje dnia tylko date tego dnia i poźniej sie bedą n
-
-
-
 
 
         $order = new Order();
@@ -194,11 +252,7 @@ class OrderController extends Controller
                 'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
             ])->setStatusCode(500);
         }
-        }else
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'Adres nie został podany!'
-            ]);
+
 
 
     }

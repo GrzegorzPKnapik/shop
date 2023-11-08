@@ -1377,6 +1377,8 @@
             })
                 .done(function (response) {
                     $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
+                    $("#refreshDayDelete").load(location.href + " #refreshDayDelete")
+                    $('.collapse').collapse('hide');
                 })
 
                 .fail(function (xhr) {
@@ -1390,6 +1392,32 @@
 
         });
 
+
+        $(document).on("click", ".deleteDay", function () {
+            event.preventDefault();
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: DATA.deleteDayUrl + $(this).data("id"),
+            })
+                .done(function (response) {
+                    $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
+                    $("#refreshDayDelete").load(location.href + " #refreshDayDelete")
+                    $('.collapse').collapse('hide');
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
+
+
+
+        });
+
+
         $(document).on("click", ".storeOrder", function () {
             event.preventDefault();
             var form = $('.selectDay').serialize();
@@ -1399,9 +1427,8 @@
                 data: form,
             })
                 .done(function (response) {
-                    if (response.status == 'warning') {
-                        Swal.fire(response.message, 'Proszę podać adres dostawy', 'warning');
-                    }else if(response.status == 'success') {
+                    Swal.fire(response.message, '', response.status);
+                   if(response.status == 'success') {
                         window.location = DATA.summaryUrl + response.order
                     }
                 })
@@ -1411,9 +1438,29 @@
                      Swal.fire('Błąd', errorMessage, 'error');
                  });
 
+        });
 
 
+        $(document).on("click", ".storeOrderSL", function () {
+            event.preventDefault();
+            var id = $(this).data("id");
 
+            $.ajax({
+                type: "POST",
+                url: DATA.storeOrderSLUrl + $(this).data("id")
+            })
+                .done(function (response) {
+                        Swal.fire(response.message, '', response.status);
+                    if(response.status == 'success') {
+                        $("#refreshActive").load(location.href + " #refreshActive")
+                        Swal.fire('Złożono zamówienie', 'nr:' + response.order, 'success');
+                    }
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
 
         });
 

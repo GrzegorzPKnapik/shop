@@ -70,6 +70,7 @@ class CartService
 
         $shopping_list = new Shopping_list();
         $shopping_list->status = 'cart';
+        $shopping_list->mode = 'single';
         $shopping_list->total = $product->price;
         $shopping_list->USERS_id = $user->id;
         $shopping_list->save();

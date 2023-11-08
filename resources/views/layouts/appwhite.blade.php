@@ -342,13 +342,14 @@
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
                     </div>
                     <div class="btn-wrapper">
-
-                    @if($cart->mode=='cyclical')
-                            <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Finish editing shopping list') }}</a>
-
-                        @endif
+                         <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zapisz jako nową listę zakupów') }}</a>
                     </div>
-
+                    <br>
+                    <div class="btn-wrapper">
+                    @if($cart->mode=='cyclical')
+                        <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zakończ edycje listy zakupów') }}</a>
+                    @endif
+                    </div>
                     <p>Free Shipping on All Orders Over $100!</p>
                     @endif
                 </div>
