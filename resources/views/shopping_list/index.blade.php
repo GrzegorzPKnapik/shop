@@ -68,18 +68,18 @@
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
                                                                  </p>
 
-                                                                @foreach ($item->orders as $index => $item)
+                                                                @foreach ($item->orders as $index => $orderItem)
                                                                     <p class="text-center">
                                                                         <label>Order ID:</label>
-                                                                    <h1 class="text-center">#{{$item->id}}</h1>
+                                                                    <h1 class="text-center">#{{$orderItem->id}}</h1>
                                                                     </p>
                                                                     <br>
 
                                                                 <td>Address:</td>
-                                                                <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
-                                                                <p>{{$item->address->city}}, {{$item->address->street}}<br>
-                                                                    {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
-                                                                <p>Telefon: {{$item->address->phone_number}}</p>
+                                                                <p><strong>{{$orderItem->address->name}} {{{$orderItem->address->surname}}}</strong></p>
+                                                                <p>{{$orderItem->address->city}}, {{$orderItem->address->street}}<br>
+                                                                    {{$orderItem->address->zip_code}}, {{$orderItem->address->voivodeship}}</p>
+                                                                <p>Telefon: {{$orderItem->address->phone_number}}</p>
                                                                 @php break;@endphp
                                                                 @endforeach
                                                             @endforeach
@@ -250,7 +250,12 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <h4 class="pt-4 pb-2">Status:</h4>
+                                                                <h4 class="pt-4 pb-2">Status zamówinia:</h4>
+                                                                @if($orderItem->status == null)
+                                                                    Złożone
+                                                                @else
+                                                                {{$orderItem->status}}
+                                                                @endif
                                                                 <br>
 
                                                             <div class="shoping-cart-total mt-50">
@@ -300,9 +305,18 @@
                                                         </div>
 
                                                         moźliwość nanoszenia zmian i pracowania z lsitą zakupów
-                                                        <div class="btn-wrapper">
-                                                            <a href="{{ route('shoppingList.upload', $item->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
-                                                        </div>
+                                                        @if($orderItem->status == null || $orderItem->status == 'in_prepare')
+                                                            <div class="btn-wrapper">
+                                                                <a href="{{ route('shoppingList.upload', $item->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
+                                                            </div>
+                                                        @else
+                                                            <div class="btn-wrapper">
+                                                                    <span class="theme-btn-2 btn btn-effect-2" style="opacity: 0.6; cursor: not-allowed;"title="Edycja zablokowana">
+                                                                {{ __('Załaduj listę zakupów do dalszej edycji') }}
+                                                            </span>
+                                                            </div>
+                                                        @endif
+
 
                                                         <br>
                                                         tylko kopiuje produkty do koszyka i pracujemy jakby nie istniała lista zakupów, tworzy nowy koszyk w bazie

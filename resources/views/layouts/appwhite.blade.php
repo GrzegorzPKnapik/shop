@@ -337,19 +337,24 @@
                             {{$cart->total}}</span></h5>
 
                     </div>
+
                     <div class="btn-wrapper">
                         <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                        @if($cart->mode=='cyclical')
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                        @endif
                     </div>
+                    @if($cart->mode=='single')
                     <div class="btn-wrapper">
                          <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zapisz jako nową listę zakupów') }}</a>
                     </div>
-                    <br>
-                    <div class="btn-wrapper">
-                    @if($cart->mode=='cyclical')
-                        <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zakończ edycje listy zakupów') }}</a>
                     @endif
+                    <br>
+                    @if($cart->mode=='cyclical')
+                    <div class="btn-wrapper">
+                        <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zakończ edycje listy zakupów') }}</a>
                     </div>
+                    @endif
                     <p>Free Shipping on All Orders Over $100!</p>
                     @endif
                 </div>

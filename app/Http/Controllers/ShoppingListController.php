@@ -106,14 +106,18 @@ class ShoppingListController extends Controller
         return redirect()->route('account.index');
 
     }
+
+    //zapis zmian w sl
+    //tworzenie nowej sl
+    //_____do tego save może być
     public function save(Shopping_list $shopping_list){
 
         //$shopping_list->mode = 'cyclical';
-        $shopping_list->mode = 'cyclical'; //s_l lub
+        $shopping_list->mode = 'cyclical';
         $shopping_list->status = 'shopping_list';
         $shopping_list->save();
 
-       /* $user = Auth::user();
+        $user = Auth::user();
 
         $old_cart = Shopping_list::where('status', 'disable')->where('mode', 'single')->where('USERS_id', $user->id)->first();
 
@@ -121,7 +125,7 @@ class ShoppingListController extends Controller
         {
             $old_cart->status = 'cart';
             $old_cart->save();
-        }*/
+        }
 
         return redirect()->route('account.index')->with('status',__('shop.address.status.delete.success'));
     }
@@ -151,7 +155,18 @@ class ShoppingListController extends Controller
 
     public function upload(Shopping_list $shopping_list)
     {
-        //$shopping_list = Shopping_list::where('id', $shopping_list->id)->first();
+        $is_not_available = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->where([
+            ['status', 'in_prepare'],
+        ]);
+
+        if(isset($is_not_available)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Lista zablokowana!'
+            ]);
+        }
+
+
 
         $user = Auth::user();
         //stara lista zapupów załadowane cart
@@ -180,6 +195,8 @@ class ShoppingListController extends Controller
             $old_cart_shopping_list->status = 'shopping_list';
             $old_cart_shopping_list->save();
         }
+
+
 
 
 
