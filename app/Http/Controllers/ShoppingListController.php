@@ -19,14 +19,16 @@ use function PHPUnit\Framework\isNull;
 
 class ShoppingListController extends Controller
 {
-    private $orderController;
-    private $checkoutController;
+//    private $orderController;
+//    private $checkoutController;
+//
+//    public function __construct(OrderController $orderController, CheckoutController $checkoutController)
+//    {
+//        $this->orderController = $orderController;
+//        $this->checkoutController = $checkoutController;
+//    }
 
-    public function __construct(OrderController $orderController, CheckoutController $checkoutController)
-    {
-        $this->orderController = $orderController;
-        $this->checkoutController = $checkoutController;
-    }
+
 
     public function show(Shopping_list $shopping_list)
     {
@@ -37,7 +39,9 @@ class ShoppingListController extends Controller
 
         $shopping_list = Shopping_list::with(['orders.address', 'user', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->get();
 
-        $collectionDates = $this->checkoutController->date();
+        $checkoutController = new CheckoutController();
+        $collectionDates = $checkoutController->date();
+        //$collectionDates = $this->checkoutController->date();
         return view('shopping_list.index', ['shopping_list' => $shopping_list, 'collectionDates' => $collectionDates, 'addresses' => $addresses]);
     }
 
@@ -356,7 +360,7 @@ class ShoppingListController extends Controller
      * @param $order_is_delivered
      * @return void
      */
-    private function copy(Shopping_list $shopping_list): void
+    public function copy(Shopping_list $shopping_list): void
     {
         $order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
 
