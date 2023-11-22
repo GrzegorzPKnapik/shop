@@ -6,6 +6,7 @@ use App\Http\Controllers\ShoppingListController;
 use App\Models\Order;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
+use App\Models\Status;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Carbon;
@@ -42,6 +43,12 @@ class Kernel extends ConsoleKernel
                     //jeżeli jest wszytko jak nalezy czyli status shopping_list
                     if ($item->shopping_list->active && $item->shopping_list->status == null && $item->status == null) {
                         $item->status = 'in_prepare';
+                        //$status_id = Status::where('name', 'in_prepare')->value('id');
+                        //$item->status->associate(Status::where('name', 'in_prepare')->first());
+                        //$item->STATUSES_id = $status_id;
+                        //$item->save();
+
+                        //$item->STATUSES_id = Status::where('name', 'in_prepare')->value('id');
                         $item->shopping_list->status = 'stop';
                     }
 

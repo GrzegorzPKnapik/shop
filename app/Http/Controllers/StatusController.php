@@ -26,8 +26,11 @@ class StatusController extends Controller
 {
     public function index()
     {
+
+        $item = Order::all();
+
         $statuses=Status::all();
-        return view('statuses.index',['statuses'=>$statuses]);
+        return view('statuses.index',['statuses'=>$statuses, 'item'=>$item]);
     }
 
 
