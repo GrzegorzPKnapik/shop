@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,11 @@ Route::group(['middleware' => 'cart'], function (){
     Route::delete('/producer/{producer}', [ProducerController::class, 'destroy']);
 
 
+    //status
+    Route::delete('/status/{status}', [StatusController::class, 'destroy']);
+    Route::resource('status', StatusController::class)->only([
+        'create', 'index', 'edit', 'update', 'store'
+    ]);
 
 
 
@@ -81,6 +87,8 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/order/storeSL/{shopping_list}', [OrderController::class, 'storeSL'])->name('order.storeSL');
         Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
+        Route::get('/order/editStatus/{order}', [OrderController::class, 'editStatus'])->name('order.editStatus');
+        Route::put('/order/updateStatus/{order}', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
 
 
         //user

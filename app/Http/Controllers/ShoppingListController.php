@@ -50,7 +50,7 @@ class ShoppingListController extends Controller
         $checkoutController = new CheckoutController();
         $collectionDates = $checkoutController->date();
         //$collectionDates = $this->checkoutController->date();
-        return view('shopping_list.index', ['shopping_list' => $shopping_list, 'collectionDates' => $collectionDates, 'addresses' => $addresses]);
+        return view('shopping_list.show', ['shopping_list' => $shopping_list, 'collectionDates' => $collectionDates, 'addresses' => $addresses]);
     }
 
     public function save_day(Shopping_list $shopping_list, Request $request)

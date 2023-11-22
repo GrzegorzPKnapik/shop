@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
+use App\Models\Status;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -30,17 +31,23 @@ class OrderController extends Controller
 
     public function index()
     {
+        $statuses = Status::all();
         $orders = Order::all();
-        return view('order.index', ['orders' => $orders]);
+        return view('order.index', ['orders' => $orders, 'statuses' => $statuses]);
 
     }
 
     public function updateStatus(Order $order, Request $request)
     {
-        $order->status = $request->name;
+        $order->status->name = $request->name;
         $order->save();
-        return redirect('order.index');
+        return redirect(route('order.index'));
+    }
 
+    public function editStatus(Order $order)
+    {
+        $statuses = Status::all();
+        return view('order.editStatus',['order'=>$order, 'statuses'=>$statuses]);
     }
 
 
