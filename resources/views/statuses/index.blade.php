@@ -44,11 +44,7 @@
                     </tr>
                     </thead>
                     <tbody>
-ss
-                    @foreach($item as $i)
-                        {{$i}}
-                    @endforeach
-ss
+
                     @foreach($statuses as $status)
                         <tr class="align-middle delete_mem{{$status->id}}">
                             <td class="cart-product-info">

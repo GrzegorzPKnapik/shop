@@ -25,6 +25,11 @@ class Shopping_list extends Model
         'ADDRESSES_id'
     ];
 
+    const RESUME='resume';
+    const STOP='stop';
+
+
+
     public function address() :BelongsTo
     {
         return $this->belongsTo(Address::class,'ADDRESSES_id');

@@ -18,6 +18,10 @@ class Status extends Model
 
     ];
 
+    const  IN_PREPARE='in_prepare';
+    const SKIPPED='skipped';
+    const DELIVERED='delivered';
+
     public function orders() :HasMany
     {
         return $this->hasMany(Order::class, 'STATUSES_id');
