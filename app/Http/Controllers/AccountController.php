@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
-
+x
     public function index()
     {
 
