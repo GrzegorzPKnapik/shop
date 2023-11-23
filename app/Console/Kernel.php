@@ -26,10 +26,10 @@ class Kernel extends ConsoleKernel
             foreach ($orders as $item) {
 
 
-                if($item->shopping_list->active && $item->status == Status::DELIVERED)
+                if($item->shopping_list->active && $item->status == 'delivered')
                 {
                     //stara s_l
-                    $item->shopping_list->status = Shopping_list::RESUME;
+                    $item->shopping_list->status = 'resume';
                     $item->shopping_list->active = false;
                     $item->shopping_list->save();
 
@@ -42,13 +42,19 @@ class Kernel extends ConsoleKernel
 
                     //jeżeli jest wszytko jak nalezy czyli status shopping_list
                     if ($item->shopping_list->active && $item->shopping_list->status == null && $item->status == null) {
-                        $item->status()->associate(Status::where('name',  Status::IN_PREPARE)->first())->save();
-                        $item->shopping_list->status = Shopping_list::STOP;
+                        $item->status = 'in_prepare';
+                        //$status_id = Status::where('name', 'in_prepare')->value('id');
+                        //$item->status->associate(Status::where('name', 'in_prepare')->first());
+                        //$item->STATUSES_id = $status_id;
+                        //$item->save();
+
+                        //$item->STATUSES_id = Status::where('name', 'in_prepare')->value('id');
+                        $item->shopping_list->status = 'stop';
                     }
 
                     //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
                     if ($item->shopping_list->status == 'cart' && $item->shopping_list->active == true) {
-                        $item->status()->associate(Status::where('name',  Status::SKIPPED)->first())->save();
+                        $item->status = 'skipped';
                         $item->shopping_list->delivery_date = $this->nextDate($item->shopping_list->delivery_date);
                         $item->shopping_list->end_mode_date = $this->endDate($item->shopping_list->delivery_date);
                         $item->shopping_list->mod_available_date = $this->mod_available_date($item->shopping_list->delivery_date);
@@ -62,7 +68,7 @@ class Kernel extends ConsoleKernel
             }
 
 
-        })->at('22:14');
+        })->at('22:44');
 
 
 
@@ -144,6 +150,13 @@ class Kernel extends ConsoleKernel
         $mod_date = date('Y-m-d', strtotime($date . ' -2 day'));
         return $mod_date;
     }
+
+    private function shopping_list_no_active($date)
+    {
+
+    }
+
+
 
 
     /**

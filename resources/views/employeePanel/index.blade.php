@@ -55,9 +55,7 @@
                                                 <a href="{{ url(route('order.index')) }}">Orders <i class="fas fa-file-alt"></i></a>
                                                 <a href="{{ url(route('status.index')) }}">Order statuses <i class="fas fa-file-alt"></i></a>
                                                 <a href="{{ url(route('shoppingList.index')) }}">Shopping lists <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('product.index')) }}">Products <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('category.index')) }}">Categories <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('producer.index')) }}">Producers <i class="fas fa-file-alt"></i></a>
+                                            s
 
 
                                                 <a href="login.html">Logout <i class="fas fa-sign-out-alt"></i></a>
@@ -69,8 +67,8 @@
                                             <div class="tab-pane fade active show" id="liton_tab_1_1">
                                                 <div class="ltn__myaccount-tab-content-inner">
                                                     <p>Hello <strong>
-                                                            {{ Auth::user()->name }}
-                                                        </strong> (not <strong>UserName</strong>?
+                                                                {{ Auth::user()->name }}
+                                                            </strong> (not <strong>UserName</strong>?
                                                         <small><a href="login-register.html">Log out</a></small> )</p>
                                                     <p>From your account dashboard you can view your
                                                         <span>recent orders</span>, manage your <span>shipping and billing addresses</span>,
