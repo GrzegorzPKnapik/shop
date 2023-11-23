@@ -44,6 +44,7 @@
                     </tr>
                     </thead>
                     <tbody>
+
                     @foreach($statuses as $status)
                         <tr class="align-middle delete_mem{{$status->id}}">
                             <td class="cart-product-info">
