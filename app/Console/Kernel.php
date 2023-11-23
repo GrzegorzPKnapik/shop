@@ -48,11 +48,10 @@ class Kernel extends ConsoleKernel
 
                     //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
                     if ($item->shopping_list->status == 'cart' && $item->shopping_list->active == true) {
-                        $item->status()->associate(Status::where('name',  Status::SKIPPED)->first());
+                        $item->status()->associate(Status::where('name',  Status::SKIPPED)->first())->save();
                         $item->shopping_list->delivery_date = $this->nextDate($item->shopping_list->delivery_date);
-                        $item->shopping_list->end_mod_date = $this->endDate($item->shopping_list->delivery_date);
+                        $item->shopping_list->end_mode_date = $this->endDate($item->shopping_list->delivery_date);
                         $item->shopping_list->mod_available_date = $this->mod_available_date($item->shopping_list->delivery_date);
-
                     }
                 }
 
@@ -63,7 +62,7 @@ class Kernel extends ConsoleKernel
             }
 
 
-        })->at('22:32');
+        })->at('22:14');
 
 
 

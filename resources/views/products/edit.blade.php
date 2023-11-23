@@ -32,14 +32,13 @@
             <div class="container">
 
 
+
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="account-login-inner">
                             <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('product.update', $product->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
-
-
 
                                 <h4 class="pt-4 pb-2">Product:</h4>
                                 <div class="mb-3">
@@ -132,23 +131,6 @@
                                     <strong>{{$message }}</strong>
                                     </span>
                                     @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-item">
-                                        <label>Status:</label>
-                                        <select name="product_status" class="nice-select form-control @error('product_status') is-invalid @enderror">
-                                            <option value="{{ $product->status }}">{{ $product->status }}</option>
-                                            @foreach($statuses as $status)
-                                                @if($status != $product->status)
-                                                    <option value="{{ $status }}">{{ $status }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        @error('product_status')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
                                 </div>
 
 

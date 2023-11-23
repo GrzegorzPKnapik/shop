@@ -7,8 +7,6 @@ use App\Models\Category;
 use App\Models\Description;
 use App\Models\Order;
 use App\Models\Producer;
-use App\Models\Role;
-use App\Models\Status;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +15,6 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 
 use App\Models\Image;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use JsValidator;
@@ -66,10 +63,8 @@ class ProductController extends Controller
             $product->price = $request['product_price'].= '.99';
         }/*else $product->price = number_format($request['product_price'], 2, '.', '');*/
 
-        //$product->CATEGORIES_id = $request['category_select'];
-        //$product->PRODUCERS_id = $request['producer_select'];
-        $product->category()->associate($request['category_select']);
-        $product->producer()->associate($request['producer_select']);
+        $product->CATEGORIES_id = $request['category_select'];
+        $product->PRODUCERS_id = $request['producer_select'];
 
         $description = new Description();
         $description->name = $request['description_name'];
@@ -114,14 +109,11 @@ class ProductController extends Controller
 
     }
 
-
     public function edit(Product $product){
         $producers=Producer::all();
         $categories=Category::all();
-        $statuses = Product::allStatuses();
+        return view('products.edit',['product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
 
-
-        return view('products.edit',['statuses'=>$statuses, 'product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
     }
 
     public function update(StoreProductRequest $request, Product $product): RedirectResponse{
@@ -132,8 +124,6 @@ class ProductController extends Controller
         //$product->fill($request->validated());
         $product->price=$request['product_price'];
         $product->name=$request['product_name'];
-        $product->status=$request['product_status'];
-
 
 
 
@@ -147,11 +137,8 @@ class ProductController extends Controller
             $image->save();
         }
 
-        //$product->CATEGORIES_id = $request['category_select'];
-        //$product->PRODUCERS_id = $request['producer_select'];
-        $product->category()->associate($request['category_select']);
-        $product->producer()->associate($request['producer_select']);
-
+        $product->CATEGORIES_id = $request['category_select'];
+        $product->PRODUCERS_id = $request['producer_select'];
 
         //Trzeba użyć metody update, aby zaktualizować dane w relacji
         $product->description->update([

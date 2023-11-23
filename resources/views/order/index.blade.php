@@ -47,7 +47,7 @@
 
                             <td class="cart-product-name">#{{$item->id}}</td>
                             <td class="cart-product-name">#{{$item->shopping_list->user->id}}</td>
-                            <td class="cart-product-name">{{$item->status}}
+                            <td class="cart-product-name">{{$item->status->name}}
                                 <a href="{{route('order.editStatus', $item->id)}}" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
                                 <button class="icon-edit"></button>
                             </a>

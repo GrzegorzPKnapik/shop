@@ -26,7 +26,6 @@ class StoreProductRequest extends FormRequest
         return [
             'product_name'=>'required',
             'product_price'=>'required|numeric',
-            'product_status'=>'',
             'image_name' => [
                 'image',
                 'mimes:png',
@@ -41,7 +40,6 @@ class StoreProductRequest extends FormRequest
             'description_name'=>'required',
             'description_ingredients'=>'required',
             'description_calories'=>''
-
 
         ];
     }

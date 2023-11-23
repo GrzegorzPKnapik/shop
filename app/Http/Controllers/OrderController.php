@@ -31,21 +31,22 @@ class OrderController extends Controller
 
     public function index()
     {
+        $statuses = Status::all();
         $orders = Order::all();
-        return view('order.index', ['orders' => $orders]);
+        return view('order.index', ['orders' => $orders, 'statuses' => $statuses]);
 
     }
 
     public function updateStatus(Order $order, Request $request)
     {
-        $order->status = $request->status;
+        $order->status->name = $request->name;
         $order->save();
         return redirect(route('order.index'));
     }
 
     public function editStatus(Order $order)
     {
-        $statuses = Order::allStatuses();
+        $statuses = Status::all();
         return view('order.editStatus',['order'=>$order, 'statuses'=>$statuses]);
     }
 

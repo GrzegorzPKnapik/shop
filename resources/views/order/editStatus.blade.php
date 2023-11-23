@@ -52,13 +52,13 @@
                                     <div class="input-item">
                                         <label>Name:</label>
                                         <select name="select" class="nice-select">
-                                            @if(isset($order->status))
-                                            <option value="{{$order->status}}">{{$order->status}}</option>
+                                            @if(isset($order->status->id))
+                                            <option value="{{$order->status->id}}">{{$order->status->name}}</option>
                                             @else
                                                 <option value="0">Wybierz status, teraz pusty</option>
                                                 @endif
                                             @foreach($statuses as $status)
-                                                <option value={{$status}}> {{$status}}
+                                                <option value={{$status->id}}> {{$status->name}}
                                                     @endforeach
                                                 </option>
                                         </select>

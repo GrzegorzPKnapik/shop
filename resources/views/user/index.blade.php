@@ -34,7 +34,6 @@
                     <thead>
                     <tr>
                         <th>Number</th>
-                        <th>Role</th>
                         <th>Name</th>
                         <th>Surname</th>
                         <th>Email</th>
@@ -48,11 +47,6 @@
                         <tr>
 
                             <td class="cart-product-name">#{{$user->id}}</td>
-                            <td class="cart-product-name">{{$user->role->name}}
-                                <a href="{{route('user.editRole', $user->id)}}" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
-                                    <button class="icon-edit"></button>
-                                </a>
-                            </td>
                             <td class="cart-product-name">{{$user->name}}</td>
                             <td class="cart-product-name">{{$user->surname}}</td>
                             <td class="cart-product-name">{{$user->email}}</td>

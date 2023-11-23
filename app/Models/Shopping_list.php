@@ -28,8 +28,6 @@ class Shopping_list extends Model
     const RESUME='resume';
     const STOP='stop';
 
-    const CART='cart';
-
 
 
     public function address() :BelongsTo
