@@ -18,6 +18,19 @@ class Order extends Model
         'SHOPPING_LISTS_id'
     ];
 
+
+    const IN_PROGRESS = 'in_progress';
+    const DELIVERED = 'delivered';
+    const SKIPPED = 'skipped';
+    public static function allStatuses(): array
+    {
+        return [
+            self::IN_PROGRESS,
+            self::DELIVERED,
+            self::SKIPPED,
+        ];
+    }
+
     public function shopping_list() :BelongsTo
     {
         return $this->belongsTo(Shopping_list::class,'SHOPPING_LISTS_id');

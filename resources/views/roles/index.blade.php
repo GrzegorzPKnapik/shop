@@ -10,13 +10,13 @@
                 <div class="col-lg-12">
                     <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                         <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">Orders</h6>
-                            <h1 class="section-title white-color">Orders</h1>
+                            <h6 class="section-subtitle ltn__secondary-color">Role</h6>
+                            <h1 class="section-title white-color">Role</h1>
                         </div>
                         <div class="ltn__breadcrumb-list">
                             <ul>
                                 <li><a href="index.html">Home</a></li>
-                                <li>Orders</li>
+                                <li>Role</li>
                             </ul>
                         </div>
                     </div>
@@ -30,46 +30,48 @@
     <div class="col-lg-6 m-auto">
         <div class="tab-content">
             <div class="table-responsive">
+                <div class="mb-4">
+                    <a href="{{ route('role.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nową role') }}</a>
+                </div>
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
-                        <th>Number</th>
-                        <th>User number</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Price</th>
+                        <th>Id</th>
+                        <th>Name</th>
                         <th>Action</th>
+
+
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($orders as $item)
-                        <tr>
 
-                            <td class="cart-product-name">#{{$item->id}}</td>
-                            <td class="cart-product-name">#{{$item->shopping_list->user->id}}</td>
-                            <td class="cart-product-name">{{$item->status}}
-                                <a href="{{route('order.editStatus', $item->id)}}" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
-                                <button class="icon-edit"></button>
-                            </a>
+                    @foreach($roles as $role)
+                        <tr class="align-middle delete_mem{{$role->id}}">
+                            <td class="cart-product-info">
+                                <h4><a>#{{$role->id}}</a></h4>
                             </td>
-                            <td class="cart-product-name">{{$item->created_at}}</td>
-                            <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+
+                            <td class="cart-product-info">
+                                {{$role->name}}
+                            </td>
+
                             <td>
-                                <a href="{{ route('order.show', $item->id) }}">
-                                    <button class="icon-search"></button>
-                                </a>
-                            </td>
+                                <button class="icon-cancel deleteRole" data-id="{{$role->id}}"></button>
 
+                                <a href="{{ route('role.edit', $role->id) }}">
+                                    <button class="icon-edit"></button>
+                                </a>
+
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
     <!-- LOGIN AREA END -->
-
-
 
     <!-- FEATURE AREA START ( Feature - 3) -->
     <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
@@ -206,6 +208,9 @@
 </div>
 @endsection
 
+@section('javascript')
+ const deleteProductUrl = "{{url('category')}}/";
+@endsection
 
 @section('js-files')
 @endsection

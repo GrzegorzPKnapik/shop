@@ -242,22 +242,14 @@
                                         @can('isEmployee')
                                             <li><a href="{{ route('employeePanel.index') }}">{{ __('Employee panel') }}</a></li>
                                         @endcan
-                                        <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
-                                        <li><a href="{{ route('category.index') }}">{{ __('Wyświetl kategorie') }}</a></li>
-                                        <li><a href="{{ route('category.create') }}">{{ __('Dodaj kategorie') }}</a></li>
 
-                                        <li><a href="{{ route('producer.index') }}">{{ __('Wyświetl producentów') }}</a></li>
-                                        <li><a href="{{ route('producer.create') }}">{{ __('Dodaj producenta') }}</a></li>
+                                        @can('isAdmin')
+                                            <li><a href="{{ route('adminPanel.index') }}">{{ __('Admin panel') }}</a></li>
+                                        @endcan
 
-
-
-                                        @auth
-                                        <li><a href="{{ route('product.index') }}">{{ __('Wyświetl produkty') }}</a></li>
-                                        @endauth
                                         @auth
                                         <li><a href="{{ route('account.index') }}">{{ __('My Account') }}</a></li>
                                         @endauth
-                                        <li><a href="wishlist.html">Wishlist</a></li>
 
 
                                     </ul>

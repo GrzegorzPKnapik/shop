@@ -18,6 +18,20 @@ class Product extends Model
         'status'
     ];
 
+    const ENABLE='enable';
+    const DISABLE='disable';
+    const  SOLD_OUT='sold_out';
+
+    public static function allStatuses(): array
+    {
+        return [
+            self::ENABLE,
+            self::DISABLE,
+            self::SOLD_OUT,
+        ];
+    }
+
+
     //każdy obraz moze byc przypisany tylko do jednego produktu
     public function image() :BelongsTo
     {
