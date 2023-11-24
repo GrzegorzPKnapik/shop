@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProducerStatus;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StoreProducerRequest;
 use App\Http\Requests\StoreProductRequest;
@@ -38,7 +39,7 @@ class ProducerController extends Controller
     public function store(StoreProducerRequest $request): RedirectResponse{
         $producer = new Producer();
         $producer->name = $request['name'];
-        $producer->status = 'enable';
+        $producer->status = ProducerStatus::getEnable();
         $producer->save();
 
         return redirect()->route('producer.index')->with('status',__('shop.product.status.store.success'));

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\RoleName;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Role;
@@ -28,9 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
 
-        $admin_id = Role::where('name', Role::ADMIN)->value('id');
-        $user_id = Role::where('name', Role::USER)->value('id');
-        $employee_id = Role::where('name', Role::EMPLOYEE)->value('id');
+        $admin_id = Role::where('name', RoleName::getAdmin())->value('id');
+        $user_id = Role::where('name', RoleName::getUser())->value('id');
+        $employee_id = Role::where('name', RoleName::getEmployee())->value('id');
 
         $this->defineUserRoleGate('isAdmin', $admin_id);
         $this->defineUserRoleGate('isUser', $user_id);

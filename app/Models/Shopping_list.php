@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ShoppingListMode;
+use App\Enums\ShoppingListStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,10 +27,12 @@ class Shopping_list extends Model
         'ADDRESSES_id'
     ];
 
-    const RESUME='resume';
-    const STOP='stop';
+    protected $casts = [
+        'status' => ShoppingListStatus::class,
+        'mode' => ShoppingListMode::class
+    ];
 
-    const CART='cart';
+
 
 
 

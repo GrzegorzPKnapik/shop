@@ -50,7 +50,7 @@
                         <tr>
                             <td class="cart-product-name">{{$item->title}}</td>
                             @forelse($item->orders as $v => $order)
-                                @if($order->status != 'delivered')
+                                @if(!$order->status->isDelivered())
                                     <td class="cart-product-name">#{{$order->id}}</td>
                                 @endif
                             @empty

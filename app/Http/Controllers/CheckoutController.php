@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Enums\AddressStatus;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
@@ -25,7 +26,7 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
 
-        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', AddressStatus::getNone())->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
 

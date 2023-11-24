@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AddressStatus;
+use App\Enums\ShoppingListStatus;
 use App\Models\Address;
 use App\Models\Contact;
 use App\Models\Order;
@@ -12,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
-x
+
     public function index()
     {
 
@@ -26,7 +28,7 @@ x
             ->where('mode', 'shopping_list')
             ->orderBy('updated_at', 'desc')
             ->where(function(\Illuminate\Database\Eloquent\Builder $query) {
-                $query->where('status', '!=', 'resume')->orWhereNull('status');
+                $query->where('status', '!=', ShoppingListStatus::getResume())->orWhereNull('status');
             })
             /*->orWhereNull('status')*/
             ->get();
@@ -44,7 +46,7 @@ x
         })->get();
 
 
-        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', AddressStatus::getNone())->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
         return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders, 'shopping_lists'=>$shopping_lists]);

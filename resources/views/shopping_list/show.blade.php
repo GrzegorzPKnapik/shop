@@ -289,18 +289,18 @@
 
                                                             <div id="refreshActive">
                                                                 <div class="btn-wrapper">
-                                                                    @if($item->status == 'stop')
+                                                                    @if($item->status->isStop())
                                                                         <button class="theme-btn-1 btn btn-effect-1 "style="opacity: 0.6; cursor: not-allowed;"title="Zamówinie w realizacji" type="submit">
                                                                             {{ __('Dezaktywuj') }}
                                                                             @endif
 
-                                                                            @if($item->active == false && $item->status != 'stop')
+                                                                            @if($item->active == false && !$item->status->isStop())
                                                                                 <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
                                                                                     {{
                                                                                         __('Aktywuj')
                                                                                     }}
                                                                                     @endif
-                                                                                    @if($item->active == true && $item->status != 'stop')
+                                                                                    @if($item->active == true && !$item->status->isStop())
                                                                                         <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
                                                                                             {{
                                                                                             __('Dezaktywuj')
@@ -316,7 +316,7 @@
                                                         </div>
 
                                                         moźliwość nanoszenia zmian i pracowania z lsitą zakupów
-                                                        @if($item->status != 'stop')
+                                                        @if(!$item->status->isStop())
                                                             <div class="btn-wrapper">
                                                                 <a href="{{ route('shoppingList.upload', $item->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
                                                             </div>

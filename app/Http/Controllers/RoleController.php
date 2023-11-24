@@ -39,7 +39,6 @@ class RoleController extends Controller
     public function store(StoreProducerRequest $request): RedirectResponse{
         $role = new Role();
         $role->name = $request['name'];
-        $role->status = 'enable';
         $role->save();
 
         return redirect()->route('role.index')->with('role',__('shop.product.role.store.success'));

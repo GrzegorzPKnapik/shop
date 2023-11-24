@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AddressStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,11 @@ class Address extends Model
         'USERS_id'
 
     ];
+
+    protected $casts = [
+        'status' => AddressStatus::class
+    ];
+
 
     //jeden address należy do jednego użytkownika
     public function user() :BelongsTo
