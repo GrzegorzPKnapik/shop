@@ -76,6 +76,14 @@ class CartController extends Controller
             ]);
         }
 
+        //jeśli jakoś chcil dodac dod koszyka
+        if(!$product->status->isEnable())
+            return response()->json([
+                'status' => 'warning',
+                'title' => 'Produkt niedostępny'
+            ]);
+
+
             $response = $this->cartService->addItem($product);
 
 

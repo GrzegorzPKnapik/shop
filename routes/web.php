@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\EmployeePanelController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\ProductController;
@@ -13,7 +14,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +38,8 @@ Auth::routes();
 Route::get('/home', function () {
     return view('home');
 })->middleware('can:isUser');
+
+Route::get('/send', [MailController::class, 'index']);
 
 Route::group(['middleware' => 'cart'], function (){
 
