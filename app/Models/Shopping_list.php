@@ -25,6 +25,13 @@ class Shopping_list extends Model
         'ADDRESSES_id'
     ];
 
+
+    const RESUME='resume';
+    const STOP='stop';
+
+    const CART='cart';
+
+
     public function address() :BelongsTo
     {
         return $this->belongsTo(Address::class,'ADDRESSES_id');
@@ -33,7 +40,7 @@ class Shopping_list extends Model
     public function shopping_lists_products() :HasMany
     {
         return $this->hasMany(Shopping_lists_product::class,'SHOPPING_LISTS_id');
-    }
+    }\
 
     public function orders() :HasMany
     {

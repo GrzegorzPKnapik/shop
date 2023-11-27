@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\EmployeePanelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\AccountController;
@@ -45,7 +47,10 @@ Route::group(['middleware' => 'cart'], function (){
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
     Route::get('/shop/product/{product}', [ShopController::class, 'product'])->name('shop.product');
 
-
+    //role
+    Route::resource('role', RoleController::class)->only([
+        'create', 'index', 'edit', 'update', 'store'
+    ]);
 
     //category
     Route::resource('category', CategoryController::class)->only([
@@ -93,6 +98,8 @@ Route::group(['middleware' => 'cart'], function (){
 
         //user
         Route::get('/user/index/', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user/editRole/{user}', [UserController::class, 'editRole'])->name('user.editRole');
+        Route::put('/user/updateRole/{user}', [UserController::class, 'updateRole'])->name('user.updateRole');
 
 
         //shopping list
@@ -116,7 +123,11 @@ Route::group(['middleware' => 'cart'], function (){
         Route::get('/account', [AccountController::class, 'index'])->name('account.index');
 
         //employeePanel
-        Route::get('/employeePanel', [EmployeePanelController::class, 'index'])->name('employeePanel.index')->middleware('can:isEmployee');;
+        Route::get('/employeePanel', [EmployeePanelController::class, 'index'])->name('employeePanel.index')->middleware('can:isEmployee');
+
+        //adminPanel
+        Route::get('/adminPanel', [AdminPanelController::class, 'index'])->name('adminPanel.index')->middleware('can:isAdmin');
+
 
         //chceckout
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');

@@ -11,13 +11,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Edycja statusu zamówinia</h6>
-                                <h1 class="section-title white-color">Edycja statusu zamówienia</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">Dodawanie nowej roli</h6>
+                                <h1 class="section-title white-color">Create Roles</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li>Status zamówinia</li>
+                                    <li>Create Roles</li>
                                 </ul>
                             </div>
                         </div>
@@ -44,25 +44,16 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="account-login-inner">
-                            <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('order.updateStatus', $order->id) }}" enctype="multipart/form-data">
+                            <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('role.store') }}" enctype="multipart/form-data">
                                 @csrf
-                                @method('PUT')
-
-                                <div class="col-md-6">
-                                    <div class="input-item">
-                                        <label>Name:</label>
-                                        <select name="select" class="nice-select">
-                                            @if(isset($order->status))
-                                            <option value="{{$order->status}}">{{$order->status}}</option>
-                                            @else
-                                                <option value="0">Wybierz status, teraz pusty</option>
-                                                @endif
-                                            @foreach($statuses as $status)
-                                                <option value={{$status}}> {{$status}}
-                                                    @endforeach
-                                                </option>
-                                        </select>
-                                    </div>
+                                <div class="mb-3">
+                                    <label>Name:</label>
+                                    <input id="name" type="text" placeholder="role" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="btn-wrapper mt-0">
@@ -71,9 +62,11 @@
                                     </button>
                                 </div>
 
-
-
                             </form>
+
+
+
+
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -163,8 +156,13 @@
         <!-- Utilize Mobile Menu Start -->
         <!-- Utilize Mobile Menu End -->
 
+
         <div class="ltn__utilize-overlay"></div>
 
+        <!-- Laravel Javascript Validation -->
+        <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+        {!! JsValidator::formRequest('App\Http\Requests\StoreProductRequest') !!}
     </div>
 @endsection
 

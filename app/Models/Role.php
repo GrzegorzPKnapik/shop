@@ -18,11 +18,21 @@ class Role extends Model
     const USER='user';
     const EMPLOYEE='employee';
 
+    public static function allRoles(): array
+    {
+        return [
+            self::ADMIN,
+            self::USER,
+            self::EMPLOYEE,
+        ];
+    }
+
     //jedna rola ma wiele użytkowników
     public function users() :HasMany
     {
         return $this->hasMany(User::class,'ROLES_id');
     }
+
 
 
 
