@@ -39,6 +39,18 @@ enum ProductStatus: string
     }
 
 
+    public function getStatusText(): string
+    {
+        return match($this) {
+            self::ENABLE => 'Aktywny',
+            self::DISABLE => 'Nieaktywny',
+            self::SOLD_OUT => 'Wyczerpany',
+            // Dodaj inne statusy z ich tekstami
+        };
+    }
+
+
+
 
 
     public static function allStatuses(): array
@@ -49,5 +61,6 @@ enum ProductStatus: string
             self::SOLD_OUT,
         ];
     }
+
 
 }

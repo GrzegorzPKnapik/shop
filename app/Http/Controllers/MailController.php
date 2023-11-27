@@ -14,10 +14,9 @@ class MailController extends Controller
     {
         $data = [
             'subject' => 'Your cart have unavailable product',
-            'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj chuju'
+            'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj'
 
         ];
-        Mail::to('grzegorz.p.knapik@gmail.com')->send(new MailNotify($data));
 
         try {
            Mail::to('grzegorz.p.knapik@gmail.com')->send(new MailNotify($data));
@@ -25,7 +24,6 @@ class MailController extends Controller
         }catch (\Exception $exception)
         {
             return Response()->json(['Shit happend']);
-
         }
 
     }

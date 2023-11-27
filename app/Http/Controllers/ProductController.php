@@ -116,7 +116,6 @@ class ProductController extends Controller
 
     }
 
-
     public function edit(Product $product){
         $producers=Producer::all();
         $categories=Category::all();
