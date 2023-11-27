@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,18 +20,10 @@ class Order extends Model
         'SHOPPING_LISTS_id'
     ];
 
+    protected $casts = [
+        'status' => OrderStatus::class
+    ];
 
-    const IN_PROGRESS = 'in_progress';
-    const DELIVERED = 'delivered';
-    const SKIPPED = 'skipped';
-    public static function allStatuses(): array
-    {
-        return [
-            self::IN_PROGRESS,
-            self::DELIVERED,
-            self::SKIPPED,
-        ];
-    }
 
     public function shopping_list() :BelongsTo
     {

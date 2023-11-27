@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Enums\AddressStatus;
+use App\Enums\ShoppingListStatus;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
@@ -41,7 +43,7 @@ class ShoppingListController extends Controller
     public function show(Shopping_list $shopping_list)
     {
         $user = Auth::user();
-        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', AddressStatus::getNone())->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->orderByDesc('selected')->get();
 
@@ -217,7 +219,7 @@ class ShoppingListController extends Controller
 
 
         $shopping_list->mode = 'shopping_list';
-        $shopping_list->status = null;
+        $shopping_list->status = ShoppingListStatus::getNone();
         $shopping_list->save();
 
         $old_cart = Shopping_list::where('status', 'cart_disable')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
@@ -259,7 +261,7 @@ class ShoppingListController extends Controller
 
 
 
-        if($shopping_list->status == 'stop'){
+        if($shopping_list->status == ShoppingListStatus::getStop()){
             return response()->json([
                 'status' => 'warning',
                 'message' => 'Lista zablokowana, nie powinno cie tu być!'
@@ -303,13 +305,13 @@ class ShoppingListController extends Controller
         //jezeli stare bylo listą zakupów to zmien z cart na shopping_list
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = null;
+            $old_cart_shopping_list->status = ShoppingListStatus::getNone();
             $old_cart_shopping_list->save();
         }
         //nie działa
 
         //jeżeli jest nie zablokowana czyli status nie order
-        if($shopping_list->status == 'resume')
+        if($shopping_list->status == ShoppingListStatus::getResume())
         {
             $this->copy($shopping_list);
 
@@ -360,7 +362,7 @@ class ShoppingListController extends Controller
 
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = null;
+            $old_cart_shopping_list->status = ShoppingListStatus::getNone();
             $old_cart_shopping_list->save();
         }
 

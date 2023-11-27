@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProducerStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,10 @@ class Producer extends Model
         'name',
         'status'
 
+    ];
+
+    protected $casts = [
+        'status' => ProducerStatus::class
     ];
 
     public function products() :HasMany

@@ -13,6 +13,16 @@
             font-size: 0.8rem; /* Dostosuj wielkość czcionki według własnych preferencji */
             padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
         }
+
+         .disabled-link {
+             color: #999; /* Ustaw kolor na szary lub inny kolor sugerujący nieaktywność */
+             pointer-events: none; /* Wyłącz interakcję z linkiem */
+         }
+
+        .disabled-icon {
+            opacity: 0.8;
+        }
+
     </style>
 
 
@@ -120,13 +130,13 @@
                                                     <div class="product-img">
 
                                                         @if(!is_null($product->image->name))
-                                                            <a href="{{route('shop.product', $product->id)}}"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                            <a href="{{route('shop.product', $product->id)}}"><img class="{{$product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
                                                         @else
                                                             <img src="img/product/6.png" alt="Zdjęcie">
                                                         @endif
                                                         <div class="product-badge">
                                                             <ul>
-                                                                <li class="sale-badge">New</li>
+                                                                <li class="sale-badge">{{$product->status->isSoldOut() ? 'sold out' : ''}}</li>
                                                             </ul>
                                                         </div>
                                                         <div class="product-hover-action">
@@ -139,11 +149,10 @@
 
 
                                                                 <li>
-                                                                    <a href="" title="Add to Cart" class="add-to-cart" data-id="{{$product->id}}">
+                                                                    <a href="" title="Add to Cart" class="add-to-cart {{$product->status->isSoldOut() ? 'disabled-icon' : ''}} {{$product->status->isSoldOut() ? 'disabled-link' : ''}}" data-id="{{$product->id}}">
                                                                         <i class="fas fa-shopping-cart"></i>
                                                                     </a>
                                                                 </li>
-
 
 
 
@@ -317,6 +326,12 @@
                                                         <div class="modal-product-meta ltn__product-details-menu-1">
                                                             <ul>
                                                                 <li>
+                                                                    <strong>Dostępność:</strong>
+                                                                    <span>
+                                                            {{$product->status}}
+                                                        </span>
+                                                                </li>
+                                                                <li>
                                                                     <strong>Categories:</strong>
                                                                     <span>
                                                             {{$product->category->name}}
@@ -335,6 +350,7 @@
                                                         </div>
                                                         <div class="ltn__product-details-menu-2">
                                                             <ul>
+
                                                                 <li>
                                                                         <label for="valueQuantity">max 99sztuk:</label>
                                                                         <div class="cart-plus-minus m-auto">
@@ -347,7 +363,7 @@
 
 
                                                                 <li>
-                                                                    <a href="" class="theme-btn-1 btn btn-effect-1 add-to-cart-value" title="Add to Cart" data-id="{{$product->id}}">
+                                                                    <a href="" title="Add to Cart" class="theme-btn-1 btn btn-effect-1 add-to-cart-value  {{$product->status->isSoldOut() ? 'disabled-icon' : ''}} {{$product->status->isSoldOut() ? 'disabled-link' : ''}}" data-id="{{$product->id}}">
                                                                         <i class="fas fa-shopping-cart"></i>
                                                                         <span>ADD TO CART</span>
                                                                     </a>

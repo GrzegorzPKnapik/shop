@@ -340,10 +340,14 @@
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
                         @endif
                     </div>
-                    @if($cart->mode=='normal')
-                    <div class="btn-wrapper">
-                         <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zapisz jako nową listę zakupów') }}</a>
-                    </div>
+
+
+
+
+                    @if($cart->mode->isNormal())
+                        <div class="btn-wrapper">
+                            <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zapisz jako nową listę zakupów') }}</a>
+                        </div>
                     @endif
                     <br>
                     @if($cart->mode=='shopping_list')

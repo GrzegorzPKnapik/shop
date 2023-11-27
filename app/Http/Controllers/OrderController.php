@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Enums\OrderStatus;
+use App\Enums\ShoppingListMode;
+use App\Enums\ShoppingListStatus;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
@@ -85,7 +88,6 @@ class OrderController extends Controller
         return view('order.order_show', ['order' => $order]);
     }
 
-//git
 
 
     public function save_day(Order $order, Request $request)
@@ -186,6 +188,7 @@ class OrderController extends Controller
 
         $order = new Order();
         $order->SHOPPING_LISTS_id = $shopping_list->id;
+        $order->status = OrderStatus::getNone();
 
 
         try {
@@ -226,7 +229,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
 
-        $shopping_list = Shopping_list::where('status', 'cart')->where('USERS_id', $user->id)->first();
+        $shopping_list = Shopping_list::where('status', ShoppingListStatus::getCart())->where('USERS_id', $user->id)->first();
         //najpier kopia potem id do ordera czyli id do shoppoing_list
 
 
@@ -238,7 +241,7 @@ class OrderController extends Controller
         $copiedAddress->zip_code = $address->zip_code;
         $copiedAddress->voivodeship = $address->voivodeship;
         $copiedAddress->phone_number = $address->phone_number;
-        $copiedAddress->status = 'order';
+        $copiedAddress->status = ShoppingListStatus::getOrder();
         $copiedAddress->USERS_id = $address->USERS_id;
         $copiedAddress->save();
 
@@ -254,17 +257,17 @@ class OrderController extends Controller
                 $order->set_delivery_date = $deliveryDayDate;
                 $shopping_list->end_mod_date = null;
                 $shopping_list->mod_available_date = null;
-                $shopping_list->mode = 'normal';
-                $shopping_list->status = 'order';
+                $shopping_list->mode = ShoppingListMode::getNormal();
+                $shopping_list->status = ShoppingListStatus::getOrder();
             }
         else{
             $order->set_delivery_date = $request->select;
 
             $shopping_list->end_mod_date = $this->endDate($request->select);
             $shopping_list->mod_available_date = $this->mod_available_date($request->select);
-            $shopping_list->mode = 'shopping_list';
+            $shopping_list->mode = ShoppingListMode::getNormal();
             //gotowa na zmiane statusu na in_prepare
-            $shopping_list->status = null;
+            $shopping_list->status = ShoppingListStatus::getNone();
         }
 
         $order->SHOPPING_LISTS_id = $shopping_list->id;

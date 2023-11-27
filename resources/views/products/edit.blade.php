@@ -40,7 +40,6 @@
                                 @method('PUT')
 
 
-
                                 <h4 class="pt-4 pb-2">Product:</h4>
                                 <div class="mb-3">
                                     <label>Name:</label>
@@ -134,14 +133,16 @@
                                     @enderror
                                 </div>
 
+
+
                                 <div class="col-md-6">
                                     <div class="input-item">
                                         <label>Status:</label>
                                         <select name="product_status" class="nice-select form-control @error('product_status') is-invalid @enderror">
-                                            <option value="{{ $product->status }}">{{ $product->status }}</option>
-                                            @foreach($statuses as $status)
+                                            <option value="{{ $product->status }}">{{ $product->status->getStatusText() }}</option>
+                                            @foreach($product->status::allStatuses() as $status)
                                                 @if($status != $product->status)
-                                                    <option value="{{ $status }}">{{ $status }}</option>
+                                                    <option value="{{ $status->value }}">{{ $status->getStatusText() }}</option>
                                                 @endif
                                             @endforeach
                                         </select>

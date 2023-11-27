@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
+use App\Enums\ProductStatus;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Description;
@@ -59,7 +61,7 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->name = $request['product_name'];
-        $product->status = 'enable';
+        $product->status = ProductStatus::ENABLE;
 
         $product->price = $request['product_price'];
         if (strpos($request['product_price'], '.') === false) {
@@ -114,14 +116,11 @@ class ProductController extends Controller
 
     }
 
-
     public function edit(Product $product){
         $producers=Producer::all();
         $categories=Category::all();
-        $statuses = Product::allStatuses();
 
-
-        return view('products.edit',['statuses'=>$statuses, 'product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
+        return view('products.edit',['product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
     }
 
     public function update(StoreProductRequest $request, Product $product): RedirectResponse{

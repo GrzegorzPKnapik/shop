@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryStatus;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
@@ -36,7 +37,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): RedirectResponse{
         $category = new Category();
         $category->name = $request['name'];
-        $category->status = 'enable';
+        $category->status = CategoryStatus::getEnable();
         $category->save();
 
         return redirect()->route('category.index')->with('status',__('shop.product.status.store.success'));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\RoleName;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\Role;
@@ -52,7 +53,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'alpha', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:user'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'ROLES_id' => ['nullable'],
         ]);
@@ -68,7 +69,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        $role_id = Role::where('name', Role::USER)->value('id');
+        $role_id = Role::where('name', RoleName::getUser())->value('id');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

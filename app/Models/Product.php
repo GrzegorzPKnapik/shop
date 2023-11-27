@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
+use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,18 +20,10 @@ class Product extends Model
         'status'
     ];
 
-    const ENABLE='enable';
-    const DISABLE='disable';
-    const  SOLD_OUT='sold_out';
+    protected $casts = [
+        'status' => ProductStatus::class
+    ];
 
-    public static function allStatuses(): array
-    {
-        return [
-            self::ENABLE,
-            self::DISABLE,
-            self::SOLD_OUT,
-        ];
-    }
 
 
     //każdy obraz moze byc przypisany tylko do jednego produktu
