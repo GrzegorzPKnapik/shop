@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\AddressStatus;
+use App\Enums\ShoppingListMode;
 use App\Enums\ShoppingListStatus;
 use App\Models\Address;
 use App\Models\Order;
@@ -43,7 +44,7 @@ class ShoppingListController extends Controller
     public function show(Shopping_list $shopping_list)
     {
         $user = Auth::user();
-        $addresses = Address::with('user')->where('status', AddressStatus::getNone())->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', AddressStatus::NONE)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->orderByDesc('selected')->get();
 
@@ -198,7 +199,7 @@ class ShoppingListController extends Controller
 
         $user = Auth::user();
 
-        if($shopping_list->mode == 'normal')
+        if($shopping_list->mode->isNormal())
         {
             $title_number = Shopping_list::where('USERS_id', $user->id)->where('title', 'like', '%Twoja lista zakupów%')->orderBy('id', 'desc')->first();
 
@@ -218,11 +219,11 @@ class ShoppingListController extends Controller
         }
 
 
-        $shopping_list->mode = 'shopping_list';
-        $shopping_list->status = ShoppingListStatus::getNone();
+        $shopping_list->mode = ShoppingListMode::SHOPPING_LIST;
+        $shopping_list->status = ShoppingListStatus::NONE;
         $shopping_list->save();
 
-        $old_cart = Shopping_list::where('status', 'cart_disable')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', ShoppingListStatus::CART_DISABLE)->where('mode', ShoppingListMode::NORMAL)->where('USERS_id', $user->id)->first();
 
         if(isset($old_cart))
         {
@@ -261,7 +262,7 @@ class ShoppingListController extends Controller
 
 
 
-        if($shopping_list->status == ShoppingListStatus::getStop()){
+        if($shopping_list->status->isStop()){
             return response()->json([
                 'status' => 'warning',
                 'message' => 'Lista zablokowana, nie powinno cie tu być!'
@@ -283,15 +284,15 @@ class ShoppingListController extends Controller
 
         $user = Auth::user();
         //stara lista zapupów załadowane cart
-        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'shopping_list')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)->where('mode', ShoppingListMode::SHOPPING_LIST)->where('USERS_id', $user->id)->first();
         //stare zamówienie jednorazowe załadowane cart
-        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', ShoppingListStatus::CART)->where('mode', ShoppingListMode::NORMAL)->where('USERS_id', $user->id)->first();
 
 
 
         if(isset($old_cart))
         {
-            $old_cart->status = 'cart_disable';
+            $old_cart->status = ShoppingListStatus::CART_DISABLE;
             $old_cart->save();
         }
 
@@ -305,13 +306,13 @@ class ShoppingListController extends Controller
         //jezeli stare bylo listą zakupów to zmien z cart na shopping_list
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = ShoppingListStatus::getNone();
+            $old_cart_shopping_list->status = ShoppingListStatus::NONE;
             $old_cart_shopping_list->save();
         }
         //nie działa
 
         //jeżeli jest nie zablokowana czyli status nie order
-        if($shopping_list->status == ShoppingListStatus::getResume())
+        if($shopping_list->status == ShoppingListStatus::RESUME)
         {
             $this->copy($shopping_list);
 
@@ -342,9 +343,9 @@ class ShoppingListController extends Controller
     public function copyToCart(Shopping_list $shopping_list)
     {
         $user = Auth::user();
-        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'shopping_list')->where('USERS_id', $user->id)->first();
-        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
-        $depricated_cart = Shopping_list::where('status', 'cart_disable')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)->where('mode', ShoppingListMode::SHOPPING_LIST)->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', 'cart')->where('mode', ShoppingListMode::NORMAL)->where('USERS_id', $user->id)->first();
+        $depricated_cart = Shopping_list::where('status', ShoppingListStatus::CART_DISABLE)->where('USERS_id', $user->id)->first();
 
         // usuń strary koszyk
         if(isset($depricated_cart))
@@ -356,21 +357,21 @@ class ShoppingListController extends Controller
         //jeżeli istniał wcześniej koszyk normalny to
         if(isset($old_cart))
         {
-            $old_cart->status = 'cart_disable';
+            $old_cart->status = ShoppingListStatus::CART_DISABLE;
             $old_cart->save();
         }
 
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = ShoppingListStatus::getNone();
+            $old_cart_shopping_list->status = ShoppingListStatus::NONE;
             $old_cart_shopping_list->save();
         }
 
         $copiedShoppingList = new Shopping_list();
 
         $copiedShoppingList->total = $shopping_list->total;
-        $copiedShoppingList->mode = 'normal';
-        $copiedShoppingList->status = 'cart';
+        $copiedShoppingList->mode = ShoppingListMode::NORMAL;
+        $copiedShoppingList->status = ShoppingListStatus::CART;
         $copiedShoppingList->end_mod_date = null;
         $copiedShoppingList->mod_available_date = null;
         $copiedShoppingList->USERS_id = $shopping_list->USERS_id;

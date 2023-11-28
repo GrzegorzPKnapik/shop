@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryStatus;
 use App\Models\Category;
 use App\Models\Description;
 use App\Models\Product;
@@ -51,7 +52,7 @@ class ShopController extends Controller
 
         $products = $query->paginate(3)->withQueryString();
 
-        return view('shop.index', ['products'=>$products, 'categories'=>Category::where('status', '!=', 'disable'), 'descriptions'=>Description::all()])->render();
+        return view('shop.index', ['products'=>$products, 'categories'=>Category::where('status', '!=', CategoryStatus::DISABLE), 'descriptions'=>Description::all()])->render();
 
     }
 

@@ -23,22 +23,6 @@ enum ProductStatus: string
         return $this === self::SOLD_OUT;
     }
 
-
-
-    public function getEnable():string
-    {
-        return self::ENABLE->value;
-    }
-    public function getDisable():string
-    {
-        return self::DISABLE->value;
-    }
-    public function getSoldOut():string
-    {
-        return self::SOLD_OUT->value;
-    }
-
-
     public function getStatusText(): string
     {
         return match($this) {
@@ -47,19 +31,6 @@ enum ProductStatus: string
             self::SOLD_OUT => 'Wyczerpany',
             // Dodaj inne statusy z ich tekstami
         };
-    }
-
-
-
-
-
-    public static function allStatuses(): array
-    {
-        return [
-            self::ENABLE,
-            self::DISABLE,
-            self::SOLD_OUT,
-        ];
     }
 
 

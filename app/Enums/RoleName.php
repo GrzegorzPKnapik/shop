@@ -24,30 +24,4 @@ enum RoleName: string
     }
 
 
-    public static function getAdmin():string
-    {
-        return self::ADMIN->value;
-    }
-    public static function getUser():string
-    {
-        return self::USER->value;
-    }
-    public static function getEmployee():string
-    {
-        return self::EMPLOYEE->value;
-    }
-
-
-
-
-
-    public static function allRoles(): array
-    {
-        return [
-            self::ADMIN->value,
-            self::USER->value,
-            self::EMPLOYEE->value,
-        ];
-    }
-
 }

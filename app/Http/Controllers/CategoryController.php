@@ -37,7 +37,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): RedirectResponse{
         $category = new Category();
         $category->name = $request['name'];
-        $category->status = CategoryStatus::getEnable();
+        $category->status = CategoryStatus::ENABLE;
         $category->save();
 
         return redirect()->route('category.index')->with('status',__('shop.product.status.store.success'));

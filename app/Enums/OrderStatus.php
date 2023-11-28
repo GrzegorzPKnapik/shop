@@ -30,34 +30,4 @@ enum OrderStatus: string
         return $this === self::SKIPPED;
     }
 
-
-    public static function getInPrepare():string
-    {
-        return self::IN_PREPARE->value;
-    }
-    public static function getDelivered():string
-    {
-        return self::DELIVERED->value;
-    }
-    public static function getSkipped():string
-    {
-        return self::SKIPPED->value;
-    }
-    public static function getNone():string
-    {
-        return self::NONE->value;
-    }
-
-
-
-    public static function allStatuses(): array
-    {
-        return [
-            self::IN_PREPARE->value,
-            self::DELIVERED->value,
-            self::SKIPPED->value,
-            self::NONE->value,
-        ];
-    }
-
 }

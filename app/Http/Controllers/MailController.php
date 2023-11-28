@@ -14,8 +14,8 @@ class MailController extends Controller
     {
         $data = [
             'subject' => 'Your cart have unavailable product',
-            'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj'
-
+            //'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj'
+            'body' => 'W twojej liście zakupów znajduje się produkt który jest obecnie niedostęny, wymień go na inny, w przeciwnym razie zostanie on pominięty.'
         ];
 
         try {
@@ -23,7 +23,7 @@ class MailController extends Controller
             return Response()->json(['Great']);
         }catch (\Exception $exception)
         {
-            return Response()->json(['Shit happend']);
+            return Response()->json(['Błąd']);
         }
 
     }

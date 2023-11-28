@@ -140,7 +140,7 @@
                                         <label>Status:</label>
                                         <select name="product_status" class="nice-select form-control @error('product_status') is-invalid @enderror">
                                             <option value="{{ $product->status }}">{{ $product->status->getStatusText() }}</option>
-                                            @foreach($product->status::allStatuses() as $status)
+                                            @foreach($product->status::cases() as $status)
                                                 @if($status != $product->status)
                                                     <option value="{{ $status->value }}">{{ $status->getStatusText() }}</option>
                                                 @endif

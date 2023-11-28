@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryStatus;
+use App\Enums\ProducerStatus;
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\Contact;
@@ -25,8 +27,8 @@ class EmployeePanelController extends Controller
         $orders = Order::all();
 
         $products = Product::all();
-        $categories = Category::where('status', '!=', 'disable')->get();
-        $producers = Producer::where('status', '!=', 'disable')->get();
+        $categories = Category::where('status', '!=', CategoryStatus::DISABLE)->get();
+        $producers = Producer::where('status', '!=', ProducerStatus::DISABLE)->get();
 
 
         $users = User::all();

@@ -6,13 +6,12 @@ namespace App\Enums;
 enum ShoppingListStatus: string
 {
     case NONE='none';
-
     case RESUME='resume';
     case STOP='stop';
-
     case CART='cart';
-
     case ORDER='order';
+    case CART_DISABLE='cart_disable';
+
 
 
     public function isResume():bool
@@ -37,38 +36,10 @@ enum ShoppingListStatus: string
         return $this === self::ORDER;
     }
 
-    public static function getResume():string
+    public function isCartDisable():bool
     {
-        return self::RESUME->value;
-    }
-    public static function getStop():string
-    {
-        return self::STOP->value;
-    }
-    public static function getCart():string
-    {
-        return self::CART->value;
+        return $this === self::CART_DISABLE;
     }
 
-    public static function getNone():string
-    {
-        return self::NONE->value;
-    }
-    public static function getOrder():string
-    {
-        return self::ORDER->value;
-    }
-
-
-    public static function allStatuses(): array
-    {
-        return [
-            self::RESUME->value,
-            self::STOP->value,
-            self::CART->value,
-            self::NONE->value,
-            self::ORDER->value,
-        ];
-    }
 
 }

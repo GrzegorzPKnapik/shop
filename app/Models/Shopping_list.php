@@ -32,7 +32,7 @@ class Shopping_list extends Model
 
     protected $casts = [
         'status' => ShoppingListStatus::class,
-        'mode' => ShoppingListMode::class
+        'mode' => ShoppingListMode::class,
     ];
 
 

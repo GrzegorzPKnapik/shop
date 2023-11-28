@@ -28,7 +28,7 @@ class AccountController extends Controller
             ->where('mode', 'shopping_list')
             ->orderBy('updated_at', 'desc')
             ->where(function(\Illuminate\Database\Eloquent\Builder $query) {
-                $query->where('status', '!=', ShoppingListStatus::getResume())->orWhereNull('status');
+                $query->where('status', '!=', ShoppingListStatus::RESUME)->orWhereNull('status');
             })
             /*->orWhereNull('status')*/
             ->get();
@@ -46,7 +46,7 @@ class AccountController extends Controller
         })->get();
 
 
-        $addresses = Address::with('user')->where('status', AddressStatus::getNone())->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', AddressStatus::NONE)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
         return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders, 'shopping_lists'=>$shopping_lists]);

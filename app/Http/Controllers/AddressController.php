@@ -27,7 +27,7 @@ class AddressController extends Controller
         })->get();
 
 
-        $addresses = Address::with('user')->where('status', AddressStatus::getNone())->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', AddressStatus::NONE)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
         return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders]);
@@ -57,7 +57,7 @@ class AddressController extends Controller
 
     public function isAddress(){
         $user = Auth::user();
-        $address = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', AddressStatus::getNone())->first();
+        $address = Address::where('selected', true)->where('USERS_id', $user->id)->where('status', AddressStatus::NONE)->first();
 
         return $address;
 
@@ -135,7 +135,7 @@ class AddressController extends Controller
         $address->zip_code = $request->zip_code;
         $address->voivodeship = $request->voivodeship;
         $address->phone_number = $request->phone_number;
-        $address->status = AddressStatus::getNone();
+        $address->status = AddressStatus::NONE;
         $address->USERS_id=$user->id;
 
         $hasSelectedAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();

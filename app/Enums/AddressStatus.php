@@ -19,22 +19,4 @@ enum AddressStatus: string
     }
 
 
-    public static function getNone():string
-    {
-        return self::NONE->value;
-    }
-    public static function getOrder():string
-    {
-        return self::ORDER->value;
-    }
-
-
-    public static function allStatuses(): array
-    {
-        return [
-            self::NONE->value,
-            self::ORDER->value,
-        ];
-    }
-
 }

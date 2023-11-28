@@ -26,7 +26,7 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
 
-        $addresses = Address::with('user')->where('status', AddressStatus::getNone())->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', AddressStatus::NONE)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
 

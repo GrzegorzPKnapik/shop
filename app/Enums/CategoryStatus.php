@@ -18,26 +18,4 @@ enum CategoryStatus: string
     }
 
 
-
-    public static function getEnable():string
-    {
-        return self::ENABLE->value;
-    }
-    public static function getDisable():string
-    {
-        return self::DISABLE->value;
-    }
-
-
-
-
-
-    public static function allStatuses(): array
-    {
-        return [
-            self::ENABLE->value,
-            self::DISABLE->value,
-        ];
-    }
-
 }

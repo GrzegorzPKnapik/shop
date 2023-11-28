@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\OrderStatus;
+use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListMode;
 use App\Enums\ShoppingListStatus;
 use App\Models\Address;
@@ -171,12 +172,12 @@ class OrderController extends Controller
 
 
 
-        if($shopping_list->active == null)
+        if($shopping_list->active == ShoppingListActive::NULL)
         {
-            $shopping_list->active = true;
+            $shopping_list->active = ShoppingListActive::TRUE;
             $shopping_list->save();
         }else{
-            $shopping_list->active = null;
+            $shopping_list->active = ShoppingListActive::NULL;
             $shopping_list->save();
             return response()->json([
                 'status' => 'deactivated',
@@ -188,7 +189,7 @@ class OrderController extends Controller
 
         $order = new Order();
         $order->SHOPPING_LISTS_id = $shopping_list->id;
-        $order->status = OrderStatus::getNone();
+        $order->status = OrderStatus::NONE;
 
 
         try {
@@ -229,7 +230,7 @@ class OrderController extends Controller
 
         $user = Auth::user();
 
-        $shopping_list = Shopping_list::where('status', ShoppingListStatus::getCart())->where('USERS_id', $user->id)->first();
+        $shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)->where('USERS_id', $user->id)->first();
         //najpier kopia potem id do ordera czyli id do shoppoing_list
 
 
@@ -241,7 +242,7 @@ class OrderController extends Controller
         $copiedAddress->zip_code = $address->zip_code;
         $copiedAddress->voivodeship = $address->voivodeship;
         $copiedAddress->phone_number = $address->phone_number;
-        $copiedAddress->status = ShoppingListStatus::getOrder();
+        $copiedAddress->status = ShoppingListStatus::ORDER;
         $copiedAddress->USERS_id = $address->USERS_id;
         $copiedAddress->save();
 
@@ -257,17 +258,17 @@ class OrderController extends Controller
                 $order->set_delivery_date = $deliveryDayDate;
                 $shopping_list->end_mod_date = null;
                 $shopping_list->mod_available_date = null;
-                $shopping_list->mode = ShoppingListMode::getNormal();
-                $shopping_list->status = ShoppingListStatus::getOrder();
+                $shopping_list->mode = ShoppingListMode::NORMAL;
+                $shopping_list->status = ShoppingListStatus::ORDER;
             }
         else{
             $order->set_delivery_date = $request->select;
 
             $shopping_list->end_mod_date = $this->endDate($request->select);
             $shopping_list->mod_available_date = $this->mod_available_date($request->select);
-            $shopping_list->mode = ShoppingListMode::getNormal();
+            $shopping_list->mode = ShoppingListMode::NORMAL;
             //gotowa na zmiane statusu na in_prepare
-            $shopping_list->status = ShoppingListStatus::getNone();
+            $shopping_list->status = ShoppingListStatus::NONE;
         }
 
         $order->SHOPPING_LISTS_id = $shopping_list->id;

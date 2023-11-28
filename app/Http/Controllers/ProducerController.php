@@ -39,7 +39,7 @@ class ProducerController extends Controller
     public function store(StoreProducerRequest $request): RedirectResponse{
         $producer = new Producer();
         $producer->name = $request['name'];
-        $producer->status = ProducerStatus::getEnable();
+        $producer->status = ProducerStatus::ENABLE;
         $producer->save();
 
         return redirect()->route('producer.index')->with('status',__('shop.product.status.store.success'));

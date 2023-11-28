@@ -4,6 +4,8 @@ namespace App\Services;
 
 
 
+use App\Enums\ShoppingListMode;
+use App\Enums\ShoppingListStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\Product;
@@ -80,8 +82,8 @@ class CartService
         $user = Auth::user();
 
         $shopping_list = new Shopping_list();
-        $shopping_list->status = 'cart';
-        $shopping_list->mode = 'normal';
+        $shopping_list->status = ShoppingListStatus::CART;
+        $shopping_list->mode = ShoppingListMode::NORMAL;
         $shopping_list->total = $product->price * $quantity;
         $shopping_list->USERS_id = $user->id;
         $shopping_list->save();
@@ -201,7 +203,7 @@ class CartService
     {
         $user = Auth::user();
 
-        return Shopping_list::where('status', 'cart')->where('USERS_id', $user->id);
+        return Shopping_list::where('status', ShoppingListStatus::CART)->where('USERS_id', $user->id);
     }
 
     /**

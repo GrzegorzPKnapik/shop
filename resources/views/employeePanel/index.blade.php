@@ -55,7 +55,7 @@
                                                 <a href="{{ url(route('order.index')) }}">Orders <i class="fas fa-file-alt"></i></a>
                                                 <a href="{{ url(route('status.index')) }}">Order statuses <i class="fas fa-file-alt"></i></a>
                                                 <a href="{{ url(route('shoppingList.index')) }}">Shopping lists <i class="fas fa-file-alt"></i></a>
-                                            s
+
 
 
                                                 <a href="login.html">Logout <i class="fas fa-sign-out-alt"></i></a>
