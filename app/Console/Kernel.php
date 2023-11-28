@@ -23,21 +23,26 @@ class Kernel extends ConsoleKernel
             $orders = Order::with('shopping_list')->get();
 
             foreach ($orders as $item) {
-                //$item->shopping_list->active = false;
-                //$item->shopping_list->save();
-                //save musi być
-                //$this->copy($item->shopping_list);
-                //$item->shopping_list->save();
+
+
+                if($item->shopping_list->active && $item->status == 'delivered')
+                {
+                    //stara s_l
+                    $item->shopping_list->status = 'resume';
+                    $item->shopping_list->active = false;
+                    $item->shopping_list->save();
+
+                    $this->copy($item->shopping_list);
+                }
 
                 $end_date = Carbon::parse($item->shopping_list->end_mod_date)->format('Y-m-d');
                 if ($end_date == $currentTime){
 
-//                    wykoanny tylko gdy ta sama data dlatego nie wykona znów zapisanego delivered
 
                     //jeżeli jest wszytko jak nalezy czyli status shopping_list
-                    //to zmiana statsusu na in_prepare
-                    if ($item->shopping_list->status == 'shopping_list') {
+                    if ($item->shopping_list->active && $item->shopping_list->status == 'shopping_list' && $item->status == null) {
                         $item->status = 'in_prepare';
+                        $item->shopping_list->status = 'stop';
                     }
 
                     //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
@@ -48,116 +53,15 @@ class Kernel extends ConsoleKernel
                         $item->shopping_list->mod_available_date = $this->mod_available_date($item->shopping_list->delivery_date);
                     }
                 }
+
+
+                $item->shopping_list->save();
                 $item->save();
-
-
-                //delivered robi sie nie aktywna więc 2 gi raz tu nie wejdzie chyba git
-                if($item->shopping_list->active && $item->status == 'delivered')
-                {
-                    //stara s_l
-                    $item->shopping_list->status = 'resume';
-                    $item->shopping_list->active = false;
-                    $item->shopping_list->save();
-
-                    $this->copy($item->shopping_list);
-
-                    //powinno utworzyć nowe zamówinie z tym orderem  albo z kopią od razu
-                    //tworzy nowe zamówinie i s_l kopia wszystko
-                    //moze wykonać to co wczytaj edycje ale sie nei da bo jest w order i wtedy tworzy nowe
-                    // {{ __('Załaduj listę zakupów do dalszej edycji') }}
-
-
-                    //sprawdzić czy tworzy nowy orde r is_l gdy status delivered
-                        //$shoppingListController = new ShoppingListController();
-                        //nadaje on cart
-                       // $shoppingListController->copy($item->shopping_list);
-                    //$this->copy($item->shopping_list);
-                }
-
-
-
-                /*$end_date = Carbon::parse($item->shopping_list->end_mod_date)->format('Y-m-d');
-                if ($end_date == $currentTime) {
-
-                    //do zmiany
-
-                    //jeżeli jest wszytko jak nalezy czyli status shopping_list
-                    //to zmiana statsusu na in_prepare
-                    if ($item->shopping_list->status == 'shopping_list') {
-                        $item->status = 'in_prepare';
-                        $item->shopping_list->status = 'stop';
-                    }
-
-                    //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
-                    if ($item->shopping_list->status == 'cart' && $item->shopping_list->mode == 'cyclical') {
-                        $item->status = 'skipped';
-                        $item->shopping_list->delivery_date = $this->nextDate($item->shopping_list->delivery_date);
-                        $item->shopping_list->end_mod_date = $this->endDate($item->shopping_list->delivery_date);
-                        $item->shopping_list->mod_available_date = $this->mod_available_date($item->shopping_list->delivery_date);
-                    }
-                }*/
-                //$item->save();
-                //$item->shopping_list->save();
 
             }
 
 
-
-
-
-
-
-
-                //jeżeli delivered to resume przyznaj
-                //uwtórz nowe zamówinie i nową listezakupów
-                //
-
-                //przyznaie resume
-//                if($item->status == 'delivered'){
-//
-//
-//                    $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
-//                    $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
-//                    $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
-//
-//                    $item->status = '';
-//                }
-//
-//
-//
-//
-//
-//                //jeżeli jest dostarczona wyznacz następną datę dostawy cyklicznej
-//                if($item->status == 'delivered'){
-//                    $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
-//                    $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
-//                    $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
-//
-//                    $item->status = '';
-//                }
-//
-//                $end_date = Carbon::parse($item->end_date)->format('Y-m-d');
-//                if ($end_date == $currentTime){
-//
-//                    //jeżeli jest wszytko jak nalezy czyli status shopping_list
-//                    //to zmiana statsusu na in_prepare
-//                    if ($item->shopping_list->status == 'shopping_list') {
-//                        $item->status = 'in_prepare';
-//                    }
-//
-//                    //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
-//                    if ($item->shopping_list->status == 'cart' && $item->shopping_list->mode=='cyclical') {
-//                        $item->status = 'skipped';
-//                        $item->set_delivery_date = $this->nextDate($item->set_delivery_date);
-//                        $item->shopping_list->end_mode_date = $this->endDate($item->set_delivery_date);
-//                        $item->shopping_list->mod_available_date = $this->mod_available_date($item->set_delivery_date);
-//                    }
-//                }
-//                $item->save();
-//            }
-
-
-        })->at('22:37');
+        })->at('22:44');
 
 
 
@@ -172,6 +76,7 @@ class Kernel extends ConsoleKernel
 
         $copiedShoppingList = new Shopping_list();
 
+        $copiedShoppingList->title = $shopping_list->title;
         $copiedShoppingList->total = $shopping_list->total;
         $copiedShoppingList->mode = $shopping_list->mode;
         $copiedShoppingList->status = 'shopping_list';

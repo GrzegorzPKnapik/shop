@@ -30,6 +30,7 @@ class AccountController extends Controller
                   $query->where('id', $user->id);
               })
               ->where("mode", 'cyclical')
+              ->orderBy('updated_at', 'desc')
               ->get();
 
         /*  $shopping_lists = Shopping_list::with(['user'])

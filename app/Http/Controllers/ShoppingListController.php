@@ -115,12 +115,27 @@ class ShoppingListController extends Controller
     //_____do tego save może być
     public function save(Shopping_list $shopping_list){
 
-        //$shopping_list->mode = 'cyclical';
+        //każdy użytkownik no nie musi mieć unikalnych ale zeby program wypluwał nowe mu
+
+        $user = Auth::user();
+        $title_number = Shopping_list::where('USERS_id', $user->id)->where('title', 'like', '%Twoja lista zakupów%')->orderBy('id', 'desc')->first();
+
+        if(!isset($title_number))
+        {
+            //jeżeli nie ma ani jednej takiej listy
+            $number = 1;
+        }else
+        {
+            $pattern = '/#(\d+)/';
+            preg_match($pattern, $title_number, $matches);
+            $number = $matches[1];
+            $number++;
+        }
+
+        $shopping_list->title = 'Twoja lista zakupów #' . $number;
         $shopping_list->mode = 'cyclical';
         $shopping_list->status = 'shopping_list';
         $shopping_list->save();
-
-        $user = Auth::user();
 
         $old_cart = Shopping_list::where('status', 'disable')->where('mode', 'single')->where('USERS_id', $user->id)->first();
 
@@ -164,7 +179,7 @@ class ShoppingListController extends Controller
         if($shopping_list->status == 'stop'){
             return response()->json([
                 'status' => 'warning',
-                'message' => 'Lista zablokowana!'
+                'message' => 'Lista zablokowana, nie powinno cie tu być!'
             ]);
         }
 
@@ -208,6 +223,7 @@ class ShoppingListController extends Controller
             $old_cart_shopping_list->status = 'shopping_list';
             $old_cart_shopping_list->save();
         }
+        //nie działa
 
         //jeżeli jest nie zablokowana czyli status nie order
         if($shopping_list->status == 'resume')
@@ -367,6 +383,7 @@ class ShoppingListController extends Controller
 
         $copiedShoppingList = new Shopping_list();
 
+        $copiedShoppingList->title = $shopping_list->title;
         $copiedShoppingList->total = $shopping_list->total;
         $copiedShoppingList->mode = $shopping_list->mode;
         $copiedShoppingList->status = 'cart';

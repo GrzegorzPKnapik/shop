@@ -13,6 +13,7 @@ class Shopping_list extends Model
     use HasFactory;
 
     protected $fillable = [
+        'title',
         'total',
         'mode',
         'status',

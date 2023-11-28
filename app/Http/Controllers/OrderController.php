@@ -145,7 +145,7 @@ class OrderController extends Controller
             $shopping_list->active = null;
             $shopping_list->save();
             return response()->json([
-                'status' => 'deleted',
+                'status' => 'deactivated',
             ]);
         }
 

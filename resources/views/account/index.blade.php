@@ -100,22 +100,9 @@
                                                             </thead>
                                                             <tbody>
 
-{{--                                                            @foreach($shopping_lists as $item)--}}
-{{--                                                                    <tr>--}}
-{{--                                                                        <td class="cart-product-name">#{{$item->id}}</td>--}}
-{{--                                                                        <td class="cart-product-name">{{$item->updated_at}}</td>--}}
-
-{{--                                                                        <td class="cart-product-name">${{$item->total}}</td>--}}
-{{--                                                                        <td>--}}
-{{--                                                                            <a href="{{ route('shoppingList.show', $item->id) }}">--}}
-{{--                                                                                <button class="icon-search"></button>--}}
-{{--                                                                            </a>--}}
-{{--                                                                        </td>--}}
-
-{{--                                                                    </tr>--}}
-{{--                                                            @endforeach--}}
-
+<!--                                                            //wyswietl tylko te co mają status różny od ordered czyli od resume-->
                                                             @foreach($shopping_lists as $item)
+                                                                @if($item->status != 'resume')
                                                                     <tr>
                                                                     @forelse($item->orders as $v => $order)
                                                                             <td class="cart-product-name">#{{$order->id}}</td>
@@ -123,8 +110,8 @@
                                                                             <td class="cart-product-name"></td>
                                                                         @endforelse
 
-
-                                                                        <td class="cart-product-name">#{{$item->id}}</td>
+                                                                        <td class="cart-product-name">{{$item->title}}</td>
+<!--                                                                        <td class="cart-product-name">#{{$item->id}}</td>-->
                                                                         <td class="cart-product-name">{{$item->updated_at}}</td>
 
                                                                         <td class="cart-product-name">${{$item->total}}</td>
@@ -140,6 +127,7 @@
                                                                         </td>
 
                                                                     </tr>
+                                                                @endif
                                                             @endforeach
                                                             </tbody>
                                                         </table>
