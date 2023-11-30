@@ -237,7 +237,7 @@ class OrderController extends Controller
                 $order->set_delivery_date = $deliveryDayDate;
                 $shopping_list->end_mod_date = null;
                 $shopping_list->mod_available_date = null;
-                $shopping_list->mode = 'single';
+                $shopping_list->mode = 'normal';
                 $shopping_list->status = 'order';
             }
         else{
@@ -245,9 +245,9 @@ class OrderController extends Controller
 
             $shopping_list->end_mod_date = $this->endDate($request->select);
             $shopping_list->mod_available_date = $this->mod_available_date($request->select);
-            $shopping_list->mode = 'cyclical';
+            $shopping_list->mode = 'shopping_list';
             //gotowa na zmiane statusu na in_prepare
-            $shopping_list->status = 'shopping_list';
+            $shopping_list->status = '';
         }
 
         $order->SHOPPING_LISTS_id = $shopping_list->id;

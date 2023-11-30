@@ -133,11 +133,11 @@ class ShoppingListController extends Controller
         }
 
         $shopping_list->title = 'Twoja lista zakupów #' . $number;
-        $shopping_list->mode = 'cyclical';
-        $shopping_list->status = 'shopping_list';
+        $shopping_list->mode = 'shopping_list';
+        $shopping_list->status = '';
         $shopping_list->save();
 
-        $old_cart = Shopping_list::where('status', 'disable')->where('mode', 'single')->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', 'cart_disable')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
 
         if(isset($old_cart))
         {
@@ -198,15 +198,15 @@ class ShoppingListController extends Controller
 
         $user = Auth::user();
         //stara lista zapupów załadowane cart
-        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'cyclical')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'shopping_list')->where('USERS_id', $user->id)->first();
         //stare zamówienie jednorazowe załadowane cart
-        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'single')->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
 
 
 
         if(isset($old_cart))
         {
-            $old_cart->status = 'disable';
+            $old_cart->status = 'cart_disable';
             $old_cart->save();
         }
 
@@ -220,7 +220,7 @@ class ShoppingListController extends Controller
         //jezeli stare bylo listą zakupów to zmien z cart na shopping_list
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = 'shopping_list';
+            $old_cart_shopping_list->status = '';
             $old_cart_shopping_list->save();
         }
         //nie działa
@@ -231,7 +231,7 @@ class ShoppingListController extends Controller
             $this->copy($shopping_list);
 
             //starą ustawiam na shopping_list
-            //$shopping_list->status = 'shopping_list';
+            //$shopping_list->status = '';
             //$shopping_list->save();
 
             return redirect()->route('welcome.index');
@@ -257,9 +257,9 @@ class ShoppingListController extends Controller
     public function copyToCart(Shopping_list $shopping_list)
     {
         $user = Auth::user();
-        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'cyclical')->where('USERS_id', $user->id)->first();
-        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'single')->where('USERS_id', $user->id)->first();
-        $depricated_cart = Shopping_list::where('status', 'disable')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'shopping_list')->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
+        $depricated_cart = Shopping_list::where('status', 'cart_disable')->where('USERS_id', $user->id)->first();
 
         // usuń strary koszyk
         if(isset($depricated_cart))
@@ -271,20 +271,20 @@ class ShoppingListController extends Controller
         //jeżeli istniał wcześniej koszyk normalny to
         if(isset($old_cart))
         {
-            $old_cart->status = 'disable';
+            $old_cart->status = 'cart_disable';
             $old_cart->save();
         }
 
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = 'shopping_list';
+            $old_cart_shopping_list->status = '';
             $old_cart_shopping_list->save();
         }
 
         $copiedShoppingList = new Shopping_list();
 
         $copiedShoppingList->total = $shopping_list->total;
-        $copiedShoppingList->mode = 'single';
+        $copiedShoppingList->mode = 'normal';
         $copiedShoppingList->status = 'cart';
         $copiedShoppingList->end_mod_date = null;
         $copiedShoppingList->mod_available_date = null;
@@ -318,7 +318,7 @@ class ShoppingListController extends Controller
         //stara lista zapupów załadowane cart
         $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'cyclical')->where('USERS_id', $user->id)->first();
         //stare zamówienie jednorazowe załadowane cart
-        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'single')->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
 
 
         //kopia tabeli

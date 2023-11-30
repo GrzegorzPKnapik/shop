@@ -88,15 +88,15 @@
 
                                 <p >
                                     @foreach($order as $item)
-                                        @if($item->shopping_list->mode != 'cyclical')
+                                        @if($item->shopping_list->mode != 'shopping_list')
                                     <label>Dostawa: </label>
                                         @endif
 
-                                    @if($item->shopping_list->mode == 'cyclical')
+                                    @if($item->shopping_list->mode == 'shopping_list')
                                     <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
                                         @endif
                                     {{ \Carbon\Carbon::parse($item->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
-                                        @if($item->shopping_list->mode == 'cyclical')
+                                        @if($item->shopping_list->mode == 'shopping_list')
                                         <label>Najbliższa data cyklicznej dostawy: </label>
                                         @endif
                                             {{ date('Y-m-d', strtotime($item->set_delivery_date)) }}

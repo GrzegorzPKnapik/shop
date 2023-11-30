@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
 
 
                     //jeżeli jest wszytko jak nalezy czyli status shopping_list
-                    if ($item->shopping_list->active && $item->shopping_list->status == 'shopping_list' && $item->status == null) {
+                    if ($item->shopping_list->active && $item->shopping_list->status == '' && $item->status == null) {
                         $item->status = 'in_prepare';
                         $item->shopping_list->status = 'stop';
                     }
@@ -79,7 +79,7 @@ class Kernel extends ConsoleKernel
         $copiedShoppingList->title = $shopping_list->title;
         $copiedShoppingList->total = $shopping_list->total;
         $copiedShoppingList->mode = $shopping_list->mode;
-        $copiedShoppingList->status = 'shopping_list';
+        $copiedShoppingList->status = '';
         $copiedShoppingList->active = true;
         $copiedShoppingList->delivery_date = $this->nextDate($shopping_list->delivery_date);
         $copiedShoppingList->mod_available_date = $this->mod_available_date($shopping_list->delivery_date);
