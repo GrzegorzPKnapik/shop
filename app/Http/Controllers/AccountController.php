@@ -37,7 +37,7 @@ class AccountController extends Controller
               ->whereHas('user', function ($query) use ($user) {
                   $query->where('id', $user->id);
               })
-              ->where("mode", 'cyclical')
+              ->where("mode", 'shopping_list')
               ->get();*/
 
 

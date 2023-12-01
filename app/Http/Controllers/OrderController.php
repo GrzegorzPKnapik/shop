@@ -129,12 +129,12 @@ class OrderController extends Controller
 
 
 
-        if(!isset($shopping_list->delivery_date)){
+        /*if(!isset($shopping_list->delivery_date)){
             return response()->json([
                 'status' => 'warning',
                 'message' => 'Data nie została podana!'
             ]);
-        }
+        }*/
 
 
         if($shopping_list->active == null)
@@ -247,7 +247,7 @@ class OrderController extends Controller
             $shopping_list->mod_available_date = $this->mod_available_date($request->select);
             $shopping_list->mode = 'shopping_list';
             //gotowa na zmiane statusu na in_prepare
-            $shopping_list->status = '';
+            $shopping_list->status = null;
         }
 
         $order->SHOPPING_LISTS_id = $shopping_list->id;

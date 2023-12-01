@@ -91,6 +91,24 @@ class ShoppingListController extends Controller
     }
 
 
+    public function save_title(Shopping_list $shopping_list, Request $request)
+    {
+
+            $shopping_list->title = $request->title;
+
+
+        try {
+            $shopping_list->save();
+            return response()->json([
+                'status' => 'success',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
+            ])->setStatusCode(500);
+        }
+    }
 
     //zapis zmian w sl
 
@@ -118,23 +136,29 @@ class ShoppingListController extends Controller
         //każdy użytkownik no nie musi mieć unikalnych ale zeby program wypluwał nowe mu
 
         $user = Auth::user();
-        $title_number = Shopping_list::where('USERS_id', $user->id)->where('title', 'like', '%Twoja lista zakupów%')->orderBy('id', 'desc')->first();
 
-        if(!isset($title_number))
+        if($shopping_list->mode == 'normal')
         {
-            //jeżeli nie ma ani jednej takiej listy
-            $number = 1;
-        }else
-        {
-            $pattern = '/#(\d+)/';
-            preg_match($pattern, $title_number, $matches);
-            $number = $matches[1];
-            $number++;
+            $title_number = Shopping_list::where('USERS_id', $user->id)->where('title', 'like', '%Twoja lista zakupów%')->orderBy('id', 'desc')->first();
+
+            if(!isset($title_number))
+            {
+                //jeżeli nie ma ani jednej takiej listy
+                $number = 1;
+            }else
+            {
+                $pattern = '/#(\d+)/';
+                preg_match($pattern, $title_number, $matches);
+                $number = $matches[1];
+                $number++;
+            }
+
+            $shopping_list->title = 'Twoja lista zakupów #' . $number;
         }
 
-        $shopping_list->title = 'Twoja lista zakupów #' . $number;
+
         $shopping_list->mode = 'shopping_list';
-        $shopping_list->status = '';
+        $shopping_list->status = null;
         $shopping_list->save();
 
         $old_cart = Shopping_list::where('status', 'cart_disable')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
@@ -151,7 +175,7 @@ class ShoppingListController extends Controller
 
 /*    public function save(Shopping_list $shopping_list){
 
-        //$shopping_list->mode = 'cyclical';
+        //$shopping_list->mode = 'shopping_list';
         $shopping_list->status = 'shopping_list';
         $shopping_list->save();
         $user = Auth::user();
@@ -220,7 +244,7 @@ class ShoppingListController extends Controller
         //jezeli stare bylo listą zakupów to zmien z cart na shopping_list
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = '';
+            $old_cart_shopping_list->status = null;
             $old_cart_shopping_list->save();
         }
         //nie działa
@@ -231,7 +255,7 @@ class ShoppingListController extends Controller
             $this->copy($shopping_list);
 
             //starą ustawiam na shopping_list
-            //$shopping_list->status = '';
+            //$shopping_list->status = null;
             //$shopping_list->save();
 
             return redirect()->route('welcome.index');
@@ -277,7 +301,7 @@ class ShoppingListController extends Controller
 
         if(isset($old_cart_shopping_list))
         {
-            $old_cart_shopping_list->status = '';
+            $old_cart_shopping_list->status = null;
             $old_cart_shopping_list->save();
         }
 
@@ -316,7 +340,7 @@ class ShoppingListController extends Controller
 
         $user = Auth::user();
         //stara lista zapupów załadowane cart
-        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'cyclical')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'shopping_list')->where('USERS_id', $user->id)->first();
         //stare zamówienie jednorazowe załadowane cart
         $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
 

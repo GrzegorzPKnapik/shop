@@ -1513,6 +1513,35 @@
 
 
 
+        $("#title").on('submit', function(){
+            var form = $('.editTitle').serialize();
+            var closeButton = document.getElementById("close");
+            var id = $(this).data("id");
+
+            $.ajax({
+                type: "POST",
+                url: DATA.saveTitleUrl + $(this).data("id"),
+                data: form,
+            })
+                .done(function (response) {
+                    $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
+                    closeButton.click();
+
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
+
+
+
+        });
+
+
+
 
 
             /* --------------------------------------------------------

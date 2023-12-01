@@ -64,6 +64,21 @@
 
                                                             @foreach($shopping_list as $item)
                                                                 <p class="text-center">
+                                                                    <label>Title:</label>
+                                                                <h1 class="text-center">#{{$item->title}}</h1>
+
+                                                                <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                                                  vv  <!--<button class="icon-edit"></button>-->
+                                                                </a>
+
+                                                                <h4><small><a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                                                            Wpisz adres dostawy
+                                                                        </a></small></h4>
+
+
+                                                                </p>
+
+                                                                <p class="text-center">
                                                                     <label>Shopping List ID:</label>
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
                                                                  </p>
@@ -142,7 +157,7 @@
                                                                     @endforeach
                                                                 </div>
 
-                                                                <h4><small><a data-bs-target="#quick_view_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                                                <h4><small><a data-bs-target="#quick_view_add_address" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                             Wpisz adres dostawy
                                                                         </a></small></h4>
 
@@ -348,9 +363,62 @@
     </div>
 
 
+    <div class="ltn__modal-area ltn__quick-view-modal-area">
+        <div class="modal fade" id="quick_view_edit_title" tabindex="-1">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" id="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <!-- <i class="fas fa-times"></i> -->
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="ltn__quick-view-modal-inner">
+                            <div class="modal-product-item">
+                                <div class="row">
+                                    <div class="ltn__form-box">
+                                        <form class="editTitle" id="title" method="POST">
+                                                @csrf
+                                                <div class="row mb-50">
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label>Tytuł:</label>
+                                                            <input id="title" type="text" placeholder="Tytuł" value="{{$item->title}}"
+                                                                   class="form-control  @error('title') is-invalid @enderror"
+                                                                   name="title"
+                                                                   required autocomplete="title" autofocus>
+                                                            @error('title')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="btn-wrapper">
+                                                    <button type="submit"
+                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" data-id="{{$item->id}}>
+                                                        {{__('Zapisz tytuł')}}
+                                                    </button>
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <div class="ltn__modal-area ltn__quick-view-modal-area">
-        <div class="modal fade" id="quick_view_modal" tabindex="-1">
+        <div class="modal fade" id="quick_view_add_address" tabindex="-1">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -504,5 +572,8 @@
     selectAddressUrl: '{{url('address/select')}}/',
     storeAddressUrl: '{{url('address/store')}}',
     storeOrderSLUrl: '{{url('/order/storeSL')}}/',
+    saveTitleUrl: '{{url('/shopping_list/save/title')}}',
+
+
     }
 @endsection
