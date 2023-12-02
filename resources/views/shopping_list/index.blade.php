@@ -63,105 +63,94 @@
                                                         <div class="table-responsive">
 
                                                             @foreach($shopping_list as $item)
+                                                                <div id="refreshTitle">
                                                                 <p class="text-center">
                                                                     <label>Title:</label>
-                                                                <h1 class="text-center">#{{$item->title}}</h1>
-
-                                                                <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
-                                                                  vv  <!--<button class="icon-edit"></button>-->
-                                                                </a>
-
-                                                                <h4><small><a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
-                                                                            Wpisz adres dostawy
-                                                                        </a></small></h4>
-
-
-                                                                </p>
+                                                                    <h1 class="text-center">{{$item->title}}</h1>
+                                                                        <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                                                            <button class="icon-edit"></button>
+                                                                        </a>
+                                                                </div>
 
                                                                 <p class="text-center">
                                                                     <label>Shopping List ID:</label>
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
-                                                                 </p>
+                                                                </p>
 
-                                                                @foreach ($item->orders as $index => $orderItem)
+
+
+                                                               @foreach ($item->orders as $index => $orderItem)
                                                                     <p class="text-center">
                                                                         <label>Order ID:</label>
                                                                     <h1 class="text-center">#{{$orderItem->id}}</h1>
                                                                     </p>
                                                                     <br>
-
-                                                                <td>Address:</td>
-                                                                <p><strong>{{$orderItem->address->name}} {{{$orderItem->address->surname}}}</strong></p>
-                                                                <p>{{$orderItem->address->city}}, {{$orderItem->address->street}}<br>
-                                                                    {{$orderItem->address->zip_code}}, {{$orderItem->address->voivodeship}}</p>
-                                                                <p>Telefon: {{$orderItem->address->phone_number}}</p>
-                                                                @php break;@endphp
+                                                                    @php break;@endphp
                                                                 @endforeach
-                                                            @endforeach
 
                                                                 <div id="refreshAddress">
-                                                                    <p>
-                                                                    <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                                Wybierz inny adres
-                                                                            </a></small></h4>
-                                                                    </p>
-                                                                    <div class="collapse" id="collapseExample">
-                                                                        <div class="card card-body">
-                                                                            @foreach($addresses as $address)
-                                                                                @if($address->selected != true)
-                                                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
+                                                            @if($item->ADDRESSES_id != null)
+                                                                    <td>Przypisany address:</td>
+                                                                    <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
+                                                                    <p>{{$item->address->city}}, {{$item->address->street}}<br>
+                                                                        {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
+                                                                    <p>Telefon: {{$item->address->phone_number}}</p>
+
+                                                                @else
+                                                                    <td>Address:</td>
+                                                                   Nie przypisano adresu!
+
+                                                            @endif
+
+                                                            @endforeach
+
+                                                                <p>
+                                                                <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                            Wybierz inny adres
+                                                                        </a></small></h4>
+                                                                </p>
+                                                                <div class="collapse" id="collapseExample">
+                                                                    <div class="card card-body">
+                                                                        @foreach($addresses as $address)
+
+                                                                                <div class="form-check selectAddress" data-id="{{$address->id}}">
+                                                                                    <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
+                                                                                           @if($address->selected == true)
+                                                                                               checked
+                                                                                        @endif
+                                                                                    >
+
+                                                                                    @if($address->selected == true)
                                                                                         <label class="form-check-label" for="flexRadioDefault2">
                                                                                             Wybrany jako główny
                                                                                         </label>
-                                                                                    </div>
-
-                                                                                    <address>
-                                                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                                        <p>{{$address->city}}, {{$address->street}}<br>
-                                                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                                        <p>Telefon: {{$address->phone_number}}</p>
-                                                                                        _____________________________
-                                                                                    </address>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </div>
-                                                                    </div>
-
-
-                                                                    <h4>Adres dostawy: </h4>
-                                                                    @foreach($addresses as $address)
-                                                                        @if($address->selected == true)
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                                                       @if($address->selected == true)
-                                                                                           checked
                                                                                     @endif
 
-                                                                                >
-                                                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                                                    Wybrany jako główny
-                                                                                </label>
-                                                                            </div>
+                                                                                </div>
 
-                                                                            <address>
-                                                                                <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                                <p>{{$address->city}}, {{$address->street}}<br>
-                                                                                    {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                                <p>Telefon: {{$address->phone_number}}</p>
+                                                                                <address>
+                                                                                    <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                                                    <p>{{$address->city}}, {{$address->street}}<br>
+                                                                                        {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                                                    <p>Telefon: {{$address->phone_number}}</p>
+                                                                                    _____________________________
+                                                                                </address>
 
-                                                                                <hr style="width: 20%; border-top: 3px solid black; background-color: black;">
-
-                                                                            </address>
-                                                                        @endif
-                                                                    @endforeach
+                                                                        @endforeach
+                                                                    </div>
                                                                 </div>
 
-                                                                <h4><small><a data-bs-target="#quick_view_add_address" href="#" data-bs-toggle="modal" role="button" title="Quick View">
-                                                                            Wpisz adres dostawy
-                                                                        </a></small></h4>
+                                                            </div>
+
+                                                            <h4><small><a data-bs-target="#quick_view_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                                                        Wpisz adres dostawy
+                                                                    </a></small></h4>
 
                                                             <br>
+
+                                                                <button class="theme-btn-1 btn btn-effect-1 assign-address" data-id="{{$item->id}}" type="submit">
+                                                                    {{ __('Przypisz address do s_l') }}
+                                                                </button>
 
                                                             <table class="table text-center caption-top table-sm">
                                                                 <caption>Products</caption>
@@ -197,18 +186,18 @@
 
 
 
-                                                                <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
-                                                                <div id="refreshShoppingList">
+                                                            <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
+                                                            <div id="refreshShoppingList">
                                                                 <p>
 
 
                                                                     @foreach($shopping_list as $item)
-                                                                            @if($item->delivery_date == null)
-                                                                                <label>Brak dodanej daty dostawy </label>
-                                                                            @else
-                                                                                <label>Ustawiony dzień realizacji cyklicznych dostaw:
-                                                                                    {{ \Carbon\Carbon::parse($item->delivery_date)->locale('pl')->isoFormat('dddd') }}
-                                                                                </label>
+                                                                        @if($item->delivery_date == null)
+                                                                            <label>Brak dodanej daty dostawy </label>
+                                                                        @else
+                                                                            <label>Ustawiony dzień realizacji cyklicznych dostaw:
+                                                                                {{ \Carbon\Carbon::parse($item->delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                                                            </label>
                                                                             <br>
                                                                             <label>Najbliższa data cyklicznej dostawy:
                                                                                 {{ date('Y-m-d', strtotime($item->delivery_date)) }}
@@ -218,60 +207,60 @@
                                                                                 {{ date('Y-m-d', strtotime($item->mod_available_date)) }}
                                                                             </label>
 
-                                                                            @endif
+                                                                        @endif
 
                                                                     @endforeach
                                                                     <br>
                                                                 </p>
-                                                                            @if($item->delivery_date == null)
-                                                                        <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
-                                                                                    Dodaj dzień dostawy
-                                                                                </a></small></h4>
-                                                                        </p>
-                                                                            @else
-                                                                        <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
-                                                                                    Zmień dzień dostawy
-                                                                                </a></small></h4>
-                                                                        </p>
-                                                                            @endif
-
-                                                                        </a></small></h4>
-                                                                </div>
-
-
-                                                                <div class="collapse" id="collapseDayPicker">
-                                                                    <div class="card card-body">
-                                                                        <form class="custom-form selectDay" method="POST">
-                                                                            @csrf
-                                                                            <div class="col-md-6">
-                                                                                <div class="input-item">
-                                                                                    <label>Dzień cyklicznych dostaw:</label>
-                                                                                    <select name="select" class="nice-select">
-                                                                                        <option value="0"> Wybierz dzień</option>
-                                                                                        @foreach($collectionDates as $date)
-                                                                                            <option value={{$date['date']}}> {{$date['name']}} (dostawa:   {{ $date['date'] }} )
-                                                                                                @endforeach
-                                                                                            </option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                        <div id="refreshDayDelete">
-                                                                        @if($item->delivery_date != null)
-                                                                        <h4><small><a href="" class="deleteDay" data-id="{{$item->id}}"> Usuń adres</a></small>
-                                                                            @endif
-                                                                         </div>
-                                                                        <br>
-                                                                    </div>
-                                                                </div>
-
-                                                                <h4 class="pt-4 pb-2">Status zamówinia:</h4>
-                                                                {{--@if($orderItem->status == null)
-                                                                    Złożone
+                                                                @if($item->delivery_date == null)
+                                                                    <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
+                                                                                Dodaj dzień dostawy
+                                                                            </a></small></h4>
+                                                                    </p>
                                                                 @else
-                                                                {{$orderItem->status}}
-                                                                --}}
-                                                                <br>
+                                                                    <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
+                                                                                Zmień dzień dostawy
+                                                                            </a></small></h4>
+                                                                    </p>
+                                                                    @endif
+
+                                                                    </a></small></h4>
+                                                            </div>
+
+
+                                                            <div class="collapse" id="collapseDayPicker">
+                                                                <div class="card card-body">
+                                                                    <form class="custom-form selectDay" method="POST">
+                                                                        @csrf
+                                                                        <div class="col-md-6">
+                                                                            <div class="input-item">
+                                                                                <label>Dzień cyklicznych dostaw:</label>
+                                                                                <select name="select" class="nice-select">
+                                                                                    <option value="0"> Wybierz dzień</option>
+                                                                                    @foreach($collectionDates as $date)
+                                                                                        <option value={{$date['date']}}> {{$date['name']}} (dostawa:   {{ $date['date'] }} )
+                                                                                            @endforeach
+                                                                                        </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                    <div id="refreshDayDelete">
+                                                                        @if($item->delivery_date != null)
+                                                                            <h4><small><a href="" class="deleteDay" data-id="{{$item->id}}"> Usuń adres</a></small>
+                                                                        @endif
+                                                                    </div>
+                                                                    <br>
+                                                                </div>
+                                                            </div>
+
+                                                            <h4 class="pt-4 pb-2">Status zamówinia:</h4>
+                                                            {{--@if($orderItem->status == null)
+                                                                Złożone
+                                                            @else
+                                                            {{$orderItem->status}}
+                                                            --}}
+                                                            <br>
 
                                                             <div class="shoping-cart-total mt-50">
                                                                 <h4>Cart Totals</h4>
@@ -294,32 +283,32 @@
                                                                 </table>
                                                             </div>
 
-                                                                <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$item->id}}" type="submit">
-                                                                    {{ __('Save changes') }}
-                                                                </button>
+                                                            <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$item->id}}" type="submit">
+                                                                {{ __('Save changes') }}
+                                                            </button>
 
-                                                                <div id="refreshActive">
+                                                            <div id="refreshActive">
                                                                 <div class="btn-wrapper">
                                                                     @if($item->status == 'stop')
                                                                         <button class="theme-btn-1 btn btn-effect-1 "style="opacity: 0.6; cursor: not-allowed;"title="Zamówinie w realizacji" type="submit">
-                                                                {{ __('Dezaktywuj') }}
+                                                                            {{ __('Dezaktywuj') }}
                                                                             @endif
 
-                                                                        @if($item->active == false && $item->status != 'stop')
+                                                                            @if($item->active == false && $item->status != 'stop')
                                                                                 <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
-                                                                            {{
-                                                                                __('Aktywuj')
-                                                                            }}
+                                                                                    {{
+                                                                                        __('Aktywuj')
+                                                                                    }}
                                                                                     @endif
                                                                                     @if($item->active == true && $item->status != 'stop')
                                                                                         <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
-                                                                            {{
-                                                                            __('Dezaktywuj')
-                                                                       }}
-                                                                        @endif
-                                                                        </button>
+                                                                                            {{
+                                                                                            __('Dezaktywuj')
+                                                                                       }}
+                                                                                            @endif
+                                                                                        </button>
                                                                 </div>
-                                                                </div>
+                                                            </div>
 
 
 
@@ -363,62 +352,9 @@
     </div>
 
 
-    <div class="ltn__modal-area ltn__quick-view-modal-area">
-        <div class="modal fade" id="quick_view_edit_title" tabindex="-1">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" id="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <!-- <i class="fas fa-times"></i> -->
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="ltn__quick-view-modal-inner">
-                            <div class="modal-product-item">
-                                <div class="row">
-                                    <div class="ltn__form-box">
-                                        <form class="editTitle" id="title" method="POST">
-                                                @csrf
-                                                <div class="row mb-50">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label>Tytuł:</label>
-                                                            <input id="title" type="text" placeholder="Tytuł" value="{{$item->title}}"
-                                                                   class="form-control  @error('title') is-invalid @enderror"
-                                                                   name="title"
-                                                                   required autocomplete="title" autofocus>
-                                                            @error('title')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="btn-wrapper">
-                                                    <button type="submit"
-                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" data-id="{{$item->id}}>
-                                                        {{__('Zapisz tytuł')}}
-                                                    </button>
-                                                </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 
     <div class="ltn__modal-area ltn__quick-view-modal-area">
-        <div class="modal fade" id="quick_view_add_address" tabindex="-1">
+        <div class="modal fade" id="quick_view_modal" tabindex="-1">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -558,7 +494,62 @@
             </div>
         </div>
     </div>
-    <!-- Body main wrapper end -->
+
+
+
+    <div class="ltn__modal-area ltn__quick-view-modal-area">
+        <div class="modal fade" id="quick_view_edit_title" tabindex="-1">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" id="closeTitle" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <!-- <i class="fas fa-times"></i> -->
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ltn__quick-view-modal-inner">
+                            <div class="modal-product-item">
+                                <div class="row">
+                                    <div class="ltn__form-box">
+                                        <form class="editTitle" id="title" method="POST">
+                                            @csrf
+                                            <div class="row mb-50">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label>Tytuł:</label>
+                                                        <input id="title" type="text" placeholder="Tytuł" value="{{$item->title}}"
+                                                               class="form-control  @error('title') is-invalid @enderror"
+                                                               name="title"
+                                                               required autocomplete="title" autofocus>
+                                                        @error('title')
+                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="btn-wrapper">
+                                                <button type="submit"
+                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase save-title" data-id="{{$item->id}}">
+                                                    {{__('Zapisz adres')}}
+                                                </button>
+                                            </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
 
     </body>
@@ -572,7 +563,7 @@
     selectAddressUrl: '{{url('address/select')}}/',
     storeAddressUrl: '{{url('address/store')}}',
     storeOrderSLUrl: '{{url('/order/storeSL')}}/',
-    saveTitleUrl: '{{url('/shopping_list/save/title')}}',
+    saveTitleUrl: '{{url('/shopping_list/save/title')}}/',
 
 
     }

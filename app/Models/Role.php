@@ -20,7 +20,7 @@ class Role extends Model
     //jedna rola ma wiele użytkowników
     public function users() :HasMany
     {
-        return $this->hasMany(User::class,'ROLE_id');
+        return $this->hasMany(User::class,'ROLES_id');
     }
 
 

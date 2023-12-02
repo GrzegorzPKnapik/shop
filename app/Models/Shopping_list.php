@@ -21,9 +21,14 @@ class Shopping_list extends Model
         'delivery_date',
         'mod_available_date',
         'end_mod_date',
-        'USERS_id'
+        'USERS_id',
+        'ADDRESSES_id'
     ];
 
+    public function address() :BelongsTo
+    {
+        return $this->belongsTo(Address::class,'ADDRESSES_id');
+    }
 
     public function shopping_lists_products() :HasMany
     {

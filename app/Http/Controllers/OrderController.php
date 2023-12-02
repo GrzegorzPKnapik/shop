@@ -116,7 +116,7 @@ class OrderController extends Controller
     public function storeSL(Shopping_list $shopping_list)
     {
 
-        $addressController = new AddressController();
+        /*$addressController = new AddressController();
         $address = $addressController->isAddress();
 
 
@@ -125,16 +125,27 @@ class OrderController extends Controller
                 'status' => 'warning',
                 'message' => 'Adres nie został podany!'
             ]);
+        }*/
+
+        $address = Shopping_list::where('id', $shopping_list->id)->whereNotNull('ADDRESSES_id')->first();
+
+
+        if(!isset($address)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Adres nie został przypisany!'
+            ]);
         }
 
 
 
-        /*if(!isset($shopping_list->delivery_date)){
+        if(!isset($shopping_list->delivery_date)){
             return response()->json([
                 'status' => 'warning',
                 'message' => 'Data nie została podana!'
             ]);
-        }*/
+        }
+
 
 
         if($shopping_list->active == null)

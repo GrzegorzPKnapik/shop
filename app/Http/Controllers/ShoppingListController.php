@@ -35,7 +35,7 @@ class ShoppingListController extends Controller
         $user = Auth::user();
         $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
-        })->get();
+        })->orderByDesc('selected')->get();
 
         $shopping_list = Shopping_list::with(['orders.address', 'user', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->get();
 
@@ -91,7 +91,7 @@ class ShoppingListController extends Controller
     }
 
 
-    public function save_title(Shopping_list $shopping_list, Request $request)
+    public function saveTitle(Shopping_list $shopping_list, Request $request)
     {
 
             $shopping_list->title = $request->title;
@@ -108,6 +108,56 @@ class ShoppingListController extends Controller
                 'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
             ])->setStatusCode(500);
         }
+    }
+
+    public function assignAddress(Shopping_list $shopping_list)
+    {
+
+        //kopia selecta
+
+        $addressController = new AddressController();
+        $address = $addressController->isAddress();
+
+
+        if(!isset($address)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Adres nie został podany!'
+            ]);
+        }
+
+
+
+        $copiedAddress = new Address();
+        $copiedAddress->name = $address->name;
+        $copiedAddress->surname = $address->surname;
+        $copiedAddress->city = $address->city;
+        $copiedAddress->street = $address->street;
+        $copiedAddress->zip_code = $address->zip_code;
+        $copiedAddress->voivodeship = $address->voivodeship;
+        $copiedAddress->phone_number = $address->phone_number;
+        $copiedAddress->status = 'order';
+        $copiedAddress->USERS_id = $address->USERS_id;
+        $copiedAddress->save();
+
+
+
+        $shopping_list->ADDRESSES_id = $copiedAddress->id;
+
+
+        try {
+            $shopping_list->save();
+            return response()->json([
+                'status' => 'success',
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
+            ])->setStatusCode(500);
+        }
+
+
     }
 
     //zapis zmian w sl

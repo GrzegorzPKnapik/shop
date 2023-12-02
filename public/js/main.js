@@ -1513,9 +1513,11 @@
 
 
 
-        $("#title").on('submit', function(){
+
+        $(document).on("click", ".save-title", function () {
+                event.preventDefault();
             var form = $('.editTitle').serialize();
-            var closeButton = document.getElementById("close");
+            var closeButton = document.getElementById("closeTitle");
             var id = $(this).data("id");
 
             $.ajax({
@@ -1524,7 +1526,7 @@
                 data: form,
             })
                 .done(function (response) {
-                    $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
+                    $("#refreshTitle").load(location.href + " #refreshTitle")
                     closeButton.click();
 
                 })
@@ -1540,6 +1542,30 @@
 
         });
 
+
+        $(document).on("click", ".assign-address", function () {
+            event.preventDefault();
+            var id = $(this).data("id");
+
+            $.ajax({
+                type: "POST",
+                url: '/shopping_list/assign/address/' + $(this).data("id"),
+            })
+                .done(function (response) {
+                    $("#refreshAddress").load(location.href + " #refreshAddress")
+                    Swal.fire(response.message, '', response.status);
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
+
+
+
+        });
 
 
 

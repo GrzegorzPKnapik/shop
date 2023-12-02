@@ -13,13 +13,10 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'set_delivery_date',
         'status',
-        'end_date',
         'DELIVERIES_id',
         'PAYMENTS_id',
-        'SHOPPING_LISTS_id',
-        'ADDRESSES_id'
+        'SHOPPING_LISTS_id'
     ];
 
     public function shopping_list() :BelongsTo
@@ -27,10 +24,6 @@ class Order extends Model
         return $this->belongsTo(Shopping_list::class,'SHOPPING_LISTS_id');
     }
 
-    public function address() :BelongsTo
-    {
-        return $this->belongsTo(Address::class,'ADDRESSES_id');
-    }
 
 
 

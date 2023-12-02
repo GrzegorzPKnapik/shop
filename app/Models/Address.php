@@ -31,11 +31,15 @@ class Address extends Model
         return $this->belongsTo(User::class,'USERS_id');
     }
 
-    public function orders() :HasMany
+   /* public function orders() :HasMany
     {
         return $this->hasMany(Order::class,'USERS_id');
-    }
+    }*/
 
+     public function shopping_lists() :HasMany
+        {
+            return $this->hasMany(Shopping_list::class,'ADDRESSES_id');
+        }
 
 
 
