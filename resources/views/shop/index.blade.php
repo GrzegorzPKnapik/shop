@@ -151,7 +151,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                     <div class="ltn__pagination-area text-center" id="refreshPagination">
                         <div class="ltn__pagination">
 
@@ -171,6 +171,7 @@
 {{--                                @endif--}}
                             </ul>
                         </div>
+                    </div>
                     </div>
                 </div>
                 <div class="col-lg-4">

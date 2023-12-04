@@ -25,6 +25,11 @@ class ShopController extends Controller
             return view('shop.index', ['products'=>$products])->render();
 
     }
+    public function pagination(Request $request){
+        $products=Product::paginate(3);
+        return view('shop.pagination', ['products'=>$products])->render();
+    }
+
 
     public function sort(Request $request){
 

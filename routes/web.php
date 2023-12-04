@@ -41,6 +41,8 @@ Route::group(['middleware' => 'cart'], function (){
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
     Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
     Route::post('/shop/sort', [ShopController::class, 'sort'])->name('shop.sort');
+    Route::get('/shop/pagination', [ShopController::class, 'pagination'])->name('shop.pagination');
+
 
 
 

@@ -1622,10 +1622,10 @@
 
         function product(page) {
             $.ajax({
-                url: '/shop?page=' + page,
+                url: '/shop/pagination?page=' + page,
                 success: function (res) {
-                    $('.tab-content').html(res);
-                    /*$("#refreshProducts").load(location.href + " #refreshProducts")*/
+                    $('#refreshProducts').html(res);
+                    //$("#refreshProducts").load(location.href + " #refreshProducts")
                 }
             })
         }
