@@ -44,6 +44,8 @@
                         <td>{{$product->id}}</td>
                         <td>{{$product->name}}</td>
                         <td>{{$product->image->name}}</td>
+
+
                         <td>
                         <button class="icon-cancel deleteProduct" data-id="{{$product->id}}"></button>
 

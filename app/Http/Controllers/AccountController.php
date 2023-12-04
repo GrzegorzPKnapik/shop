@@ -25,13 +25,15 @@ class AccountController extends Controller
         $user = Auth::user();
 
 
-          $shopping_lists = Shopping_list::with(['user', 'orders'])
-              ->whereHas('user', function ($query) use ($user) {
-                  $query->where('id', $user->id);
-              })
-              ->where("mode", 'shopping_list')
-              ->orderBy('updated_at', 'desc')
-              ->get();
+        $shopping_lists = Shopping_list::with(['user', 'orders'])
+            ->whereHas('user', function ($query) use ($user) {
+                $query->where('id', $user->id);
+            })
+            ->where('mode', 'shopping_list')
+            ->orderBy('updated_at', 'desc')
+            ->where('status', '!=', 'resume')
+            ->orWhereNull('status')
+            ->get();
 
         /*  $shopping_lists = Shopping_list::with(['user'])
               ->whereHas('user', function ($query) use ($user) {

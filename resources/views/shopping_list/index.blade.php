@@ -148,7 +148,7 @@
 
                                                             <br>
 
-                                                                <button class="theme-btn-1 btn btn-effect-1 assign-address" data-id="{{$item->id}}" type="submit">
+                                                                <button class="theme-btn-1 btn btn-effect-1 assignAddress" data-id="{{$item->id}}" type="submit">
                                                                     {{ __('Przypisz address do s_l') }}
                                                                 </button>
 
@@ -535,7 +535,7 @@
 
                                             <div class="btn-wrapper">
                                                 <button type="submit"
-                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase save-title" data-id="{{$item->id}}">
+                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase saveTitle" data-id="{{$item->id}}">
                                                     {{__('Zapisz adres')}}
                                                 </button>
                                             </div>

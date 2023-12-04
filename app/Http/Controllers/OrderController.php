@@ -163,23 +163,8 @@ class OrderController extends Controller
 
 
 
-        $copiedAddress = new Address();
-        $copiedAddress->name = $address->name;
-        $copiedAddress->surname = $address->surname;
-        $copiedAddress->city = $address->city;
-        $copiedAddress->street = $address->street;
-        $copiedAddress->zip_code = $address->zip_code;
-        $copiedAddress->voivodeship = $address->voivodeship;
-        $copiedAddress->phone_number = $address->phone_number;
-        $copiedAddress->status = 'order';
-        $copiedAddress->USERS_id = $address->USERS_id;
-        $copiedAddress->save();
-
-
         $order = new Order();
-
         $order->SHOPPING_LISTS_id = $shopping_list->id;
-        $order->ADDRESSES_id = $copiedAddress->id;
 
 
         try {

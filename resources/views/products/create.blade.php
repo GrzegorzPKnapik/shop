@@ -47,8 +47,8 @@
                             <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <input id="name" type="text" placeholder="nazwa" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
-                                    @error('name')
+                                    <input id="product_name" type="text" placeholder="nazwa" class="form-control @error('product_name') is-invalid @enderror" name="product_name" required autocomplete="name" autofocus>
+                                    @error('product_name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>
@@ -56,8 +56,8 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <input id="price" type="text" placeholder="cena" class="form-control @error('price') is-invalid @enderror" name="price" required autocomplete="price" autofocus>
-                                    @error('price')
+                                    <input id="category_name" type="text" placeholder="kategoria" class="form-control @error('category_name') is-invalid @enderror" name="category_name" required autocomplete="category_name" autofocus>
+                                    @error('category_name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>
@@ -65,10 +65,29 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"  autofocus onchange="loadFile(event)">
+                                    <textarea id="description_name" type="text" placeholder="opis" class="form-control @error('description_name') is-invalid @enderror" name="description_name" rows="5" cols="40" required autocomplete="description_name" autofocus></textarea>
+                                    @error('description_name')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <input id="product_price" type="text" placeholder="cena" class="form-control @error('product_price') is-invalid @enderror" name="product_price" required autocomplete="product_price" autofocus>
+                                    @error('product_price')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <input id="image_name" type="file" class="form-control @error('image_name') is-invalid @enderror" name="image_name"  autofocus onchange="loadFile(event)">
                                     .png
                                 </div>
-                                @error('image')
+                                @error('image_name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

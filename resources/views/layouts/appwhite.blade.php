@@ -147,15 +147,8 @@
                                             <ul>
                                             </ul>
                                         </li>
-                                        <li class="menu-icon"><a href="#">Shop</a>
-                                            <ul>
 
-                                                    <ul>
-
-                                                    </ul>
-
-                                            </ul>
-                                        </li>
+                                        <li><a href="{{ route('shop.index') }}">{{__('Shop site') }}</a></li>
                                         <li class="menu-icon"><a href="#">News</a>
                                             <ul>
 

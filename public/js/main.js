@@ -1451,8 +1451,8 @@
             })
                 .done(function (response) {
                     $("#refreshActive").load(location.href + " #refreshActive")
-                    /*if(response.status != 'deactivated')
-                        Swal.fire(response.message, '', response.status);*/
+                    if(response.status != 'deactivated')
+                        Swal.fire(response.message, '', response.status);
                     if(response.status == 'success') {
                         Swal.fire('Złożono zamówienie', 'nr:' + response.order, 'success');
                     }
@@ -1514,7 +1514,7 @@
 
 
 
-        $(document).on("click", ".save-title", function () {
+        $(document).on("click", ".saveTitle", function () {
                 event.preventDefault();
             var form = $('.editTitle').serialize();
             var closeButton = document.getElementById("closeTitle");
@@ -1543,7 +1543,7 @@
         });
 
 
-        $(document).on("click", ".assign-address", function () {
+        $(document).on("click", ".assignAddress", function () {
             event.preventDefault();
             var id = $(this).data("id");
 
@@ -1562,6 +1562,30 @@
                 });
 
 
+        });
+
+
+        $(document).on("click", ".saveDay", function () {
+            event.preventDefault();
+            var form = $('.selectDay').serialize();
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: DATA.saveDayUrl + $(this).data("id"),
+                data: form,
+            })
+                .done(function (response) {
+                    $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
+                    $("#refreshDayDelete").load(location.href + " #refreshDayDelete")
+                    $('.collapse').collapse('hide');
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
 
 
 
@@ -1570,9 +1594,36 @@
 
 
 
-            /* --------------------------------------------------------
-                34. scrollUp active
-            -------------------------------------------------------- */
+        $("#sortId").on('submit', function(){
+            event.preventDefault();
+            var form = $('.sort').serialize();
+            $.ajax({
+                type: "POST",
+                url: '/shop/sort/',
+                data: form,
+            })
+                .done(function (response) {
+                    $("#refreshProducts").load(location.href + " #refreshProducts")
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
+
+
+
+        });
+
+
+
+
+
+        /* --------------------------------------------------------
+            34. scrollUp active
+        -------------------------------------------------------- */
         $.scrollUp({
             scrollText: '<i class="fa fa-angle-up"></i>',
             easingType: 'linear',

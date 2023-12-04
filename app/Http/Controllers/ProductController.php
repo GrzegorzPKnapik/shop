@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
+use App\Models\Category;
+use App\Models\Description;
 use App\Models\Order;
 use Exception;
 use http\Env\Response;
@@ -20,7 +22,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products=Product::with('image')->get();
+        $products=Product::with('image', 'category')->get();
         return view('products.index',['products'=>$products]);
     }
 
@@ -33,19 +35,31 @@ class ProductController extends Controller
     }
 
     public function store(StoreProductRequest $request): RedirectResponse{
-
-        $image = new Image($request->validated());
-        if($request->hasFile('image'))
+        $image = new Image();
+        if($request->hasFile('image_name'))
         {
-            $image->name=$request->file('image')->store('products');
+            $image->name = $request->file('image_name')->store('products');
         }
         $image->save();
 
-        //przypusuje tylko zwalidowane dane
-        $product = new Product($request->validated());
-        $product->IMAGES_id=$image->id;;
+        $product = new Product();
+        $product->name = $request['product_name'];
+        $product->price = $request['product_price'];
 
+
+        $category = new Category();
+        $category->name = $request['category_name'];
+        $category->save();
+
+        $description = new Description();
+        $description->name = $request['description_name'];
+        $description->save();
+
+        $product->image()->associate($image);
+        $product->category()->associate($category);
+        $product->description()->associate($description);
         $product->save();
+
 
         return redirect()->route('product.index')->with('status',__('shop.product.status.store.success'));
     }
@@ -89,22 +103,23 @@ class ProductController extends Controller
         $image = Image::find($product->IMAGES_id);
         $oldPath = $image->name;
         //$product->fill($request->validated());
-        $product->price=$request->price;
-        $product->name=$request->name;
+        $product->price=$request['product_price'];
+        $product->name=$request['product_name'];
 
 
-
-        if ($request->hasFile('image') && $request->validated()) {
+        if ($request->hasFile('image_name') && $request->validated()) {
             //delete images from products
             if (Storage::exists($oldPath)) {
                 Storage::delete($oldPath);
             }
-            $image->name = $request->file('image')->store('products');
+            $image->name = $request->file('image_name')->store('products');
             //save only for changed image
             $image->save();
         }
 
-
+        $category = Category::find($product->CATEGORIES_id);
+        $category->name = $request['category_name'];
+        $category->save();
 
 
         $product->save();

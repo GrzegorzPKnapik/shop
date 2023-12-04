@@ -37,7 +37,7 @@ class ShoppingListController extends Controller
             $query->where('id', $user->id);
         })->orderByDesc('selected')->get();
 
-        $shopping_list = Shopping_list::with(['orders.address', 'user', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->get();
+        $shopping_list = Shopping_list::with(['orders', 'user', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->get();
 
         $checkoutController = new CheckoutController();
         $collectionDates = $checkoutController->date();
@@ -149,6 +149,7 @@ class ShoppingListController extends Controller
             $shopping_list->save();
             return response()->json([
                 'status' => 'success',
+                'message' => 'Adres został przypisany'
             ]);
         } catch (Exception $e) {
             return response()->json([

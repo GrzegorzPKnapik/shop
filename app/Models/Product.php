@@ -28,4 +28,15 @@ class Product extends Model
     {
         return $this->hasMany(Shopping_lists_product::class, 'PRODUCTS_id');
     }
+
+    public function category() :BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'CATEGORIES_id');
+    }
+
+    public function description() :BelongsTo
+    {
+        return $this->belongsTo(Description::class, 'DESCRIPTIONS_id');
+    }
+
 }

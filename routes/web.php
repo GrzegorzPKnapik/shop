@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Shopping_list;
@@ -36,6 +37,13 @@ Route::group(['middleware' => 'cart'], function (){
 
 
     Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
+    //shop
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
+    Route::post('/shop/sort', [ShopController::class, 'sort'])->name('shop.sort');
+
+
+
     Route::delete('/product/{product}', [ProductController::class, 'destroy']);
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
     Route::resource('product', ProductController::class)->only([
@@ -63,6 +71,7 @@ Route::group(['middleware' => 'cart'], function (){
         Route::post('/shopping_list/save_day/{shopping_list}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
         Route::get('/shopping_list/upload/{shopping_list}', [ShoppingListController::class, 'upload'])->name('shoppingList.upload');
         Route::get('/shopping_list/copyToCart/{shopping_list}', [ShoppingListController::class, 'copyToCart'])->name('shoppingList.copyToCart');
+
 
 
         Route::post('/shopping_list/assign/address/{shopping_list}', [ShoppingListController::class, 'assignAddress'])->name('shoppingList.assignAddress');

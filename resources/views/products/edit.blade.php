@@ -49,8 +49,8 @@
                                 @method('PUT')
 
                                 <div class="mb-3">
-                                    <input id="name" type="text" placeholder="imie" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $product->name }}" required autocomplete="name" autofocus>
-                                @error('name')
+                                    <input id="product_name" type="text" placeholder="nazwa" class="form-control @error('product_name') is-invalid @enderror" name="product_name" value="{{ $product->name }}" required autocomplete="product_name" autofocus>
+                                @error('product_name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>
@@ -58,8 +58,8 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <input id="price" type="text" placeholder="cena" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ $product->price }}" required autocomplete="price" autofocus>
-                                    @error('price')
+                                    <input id="category_name" type="text" placeholder="kategoria" class="form-control @error('category_name') is-invalid @enderror" name="category_name" value="{{ $product->category->name }}" required autocomplete="category_name" autofocus>
+                                    @error('category_name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>
@@ -67,10 +67,19 @@
                                 </div>
 
                                 <div class="mb-3">
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" autofocus onchange="loadFile(event)">
+                                    <input id="product_price" type="text" placeholder="cena" class="form-control @error('product_price') is-invalid @enderror" name="product_price" value="{{ $product->price }}" required autocomplete="product_price" autofocus>
+                                    @error('product_price')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                <input id="image_name" type="file" class="form-control @error('image_name') is-invalid @enderror" name="image_name" autofocus onchange="loadFile(event)">
                                 .png
                                 </div>
-                                @error('image')
+                                @error('image_name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

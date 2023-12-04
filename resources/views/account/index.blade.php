@@ -90,6 +90,7 @@
                                                         <table class="table text-center table-sm">
                                                             <thead>
                                                             <tr>
+                                                                <th>Title</th>
                                                                 <th>Newest order number</th>
                                                                 <th>Shopping list number</th>
                                                                 <th>Update date</th>
@@ -102,16 +103,18 @@
 
 <!--                                                            //wyswietl tylko te co mają status różny od ordered czyli od resume-->
                                                             @foreach($shopping_lists as $item)
-                                                                @if($item->status != 'resume')
+
                                                                     <tr>
+                                                                        <td class="cart-product-name">{{$item->title}}</td>
                                                                     @forelse($item->orders as $v => $order)
+                                                                        @if($order->status != 'delivered')
                                                                             <td class="cart-product-name">#{{$order->id}}</td>
+                                                                            @endif
                                                                         @empty
                                                                             <td class="cart-product-name"></td>
                                                                         @endforelse
 
-                                                                        <td class="cart-product-name">{{$item->title}}</td>
-<!--                                                                        <td class="cart-product-name">#{{$item->id}}</td>-->
+                                                                      <td class="cart-product-name">#{{$item->id}}</td>
                                                                         <td class="cart-product-name">{{$item->updated_at}}</td>
 
                                                                         <td class="cart-product-name">${{$item->total}}</td>
@@ -127,7 +130,6 @@
                                                                         </td>
 
                                                                     </tr>
-                                                                @endif
                                                             @endforeach
                                                             </tbody>
                                                         </table>
@@ -223,7 +225,6 @@
                                                                     <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
                                                                     <button class="icon-cancel deleteAddress" data-id="{{$address->id}}"></button></h4>
                                                                     <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
                                                                         <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
                                                                                @if($address->selected == true)
                                                                                    checked
