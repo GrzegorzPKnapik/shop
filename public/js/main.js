@@ -1611,11 +1611,24 @@
                     Swal.fire('Błąd', errorMessage, 'error');
                 });
 
+        });
 
-
-
+        $(document).on("click", ".pag a", function () {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1]
+            product(page)
 
         });
+
+        function product(page) {
+            $.ajax({
+                url: '/shop?page=' + page,
+                success: function (res) {
+                    $('.tab-content').html(res);
+                    /*$("#refreshProducts").load(location.href + " #refreshProducts")*/
+                }
+            })
+        }
 
 
 

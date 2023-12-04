@@ -152,14 +152,26 @@
                             </div>
                         </div>
                     </div>
-<!--                    <div class="ltn__pagination-area text-center" id="refreshPagination">
+                    <div class="ltn__pagination-area text-center" id="refreshPagination">
                         <div class="ltn__pagination">
 
-                            <ul>
+                            <ul class="pag">
+{{--                                @if ($products->currentPage() > 1)--}}
+{{--                                    <li><a href="{{ $products->previousPageUrl() }}" rel="prev"><i class="fas fa-angle-double-left leftArrow" data-id="{{$products->previousPageUrl()}}"></i></a></li>--}}
+{{--                                @endif--}}
 
+                                @for ($i = 1; $i <= $products->lastPage(); $i++)
+                                    <li class="{{ ($i == $products->currentPage()) ? 'active' : '' }}">
+                                        <a href="{{ $products->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+{{--                                @if ($products->currentPage() < $products->lastPage())--}}
+{{--                                    <li><a href="{{ $products->nextPageUrl() }}" rel="next"><i class="fas fa-angle-double-right"></i></a></li>--}}
+{{--                                @endif--}}
                             </ul>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
