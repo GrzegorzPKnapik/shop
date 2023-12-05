@@ -205,7 +205,7 @@
                         <!-- Search Widget -->
                         <div class="widget ltn__search-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
-                            <form action="{{ route('shop.search') }}" method="GET">
+                            <form action="{{ route('shop.index') }}" method="GET">
                                 @csrf
                                 <input type="text" name="search" placeholder="Search your keyword...">
                                 <button type="submit" class="search"><i class="fas fa-search"></i></button>
