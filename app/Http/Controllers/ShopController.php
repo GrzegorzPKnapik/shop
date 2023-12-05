@@ -47,8 +47,11 @@ class ShopController extends Controller
 //dd($request->search);
 
         $filters = $request->query('filter');
+        $sort = $request->query('sort');
 
         $query = Product::query();
+
+
         if(!is_null($filters))
         {
             if(array_key_exists('categories', $filters))
@@ -58,9 +61,16 @@ class ShopController extends Controller
             if(!is_null($filters['price_max']))
                 $query->where('price', '<=', $filters['price_max']);
 
-
-
         }
+        if(!is_null($sort))
+        {
+            if($sort['select'] == 1);
+            else if ($sort['select'] == 3)
+                $query->orderBy('price', 'asc');
+            elseif ($sort['select'] == 4)
+                $query->orderBy('price', 'desc');
+        }
+
 
         $products = $query->paginate(1)->withQueryString();
 
