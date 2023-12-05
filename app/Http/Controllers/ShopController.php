@@ -13,22 +13,22 @@ class ShopController extends Controller
     public function index(){
 
 
-            $products = Session::get('sort_atribute');
+            $products = Session::get('sort_atributes');
             //wypluwa posortowane
-
+        $s=Session::get('sort_select');
 
             if(is_null($products))
             {
                $products=Product::paginate(3);
             }
 
-            return view('shop.index', ['products'=>$products])->render();
+            return view('shop.index', ['products'=>$products, 'sort_select'=>$s])->render();
 
     }
-    public function pagination(Request $request){
+   /* public function pagination(Request $request){
         $products=Product::paginate(3);
         return view('shop.pagination', ['products'=>$products])->render();
-    }
+    }*/
 
 
     public function sort(Request $request){
@@ -38,11 +38,12 @@ class ShopController extends Controller
         if($request->select == 0)
             $products =  Product::paginate(3);
         if($request->select == 2)
-            $products =  Product::orderBy('price', 'asc')->paginate(2);
+            $products =  Product::orderBy('price', 'asc')->paginate(3);
         if($request->select == 3)
-            $products =  Product::orderBy('price', 'desc')->paginate(2);
+            $products =  Product::orderBy('price', 'desc')->paginate(3);
 
-        Session::put('sort_atribute', $products);
+        Session::put('sort_atributes', $products);
+        Session::put('sort_select', $request->select);
 
         return redirect()->action([ShopController::class, 'index']);
     }

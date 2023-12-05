@@ -40,7 +40,7 @@ Route::group(['middleware' => 'cart'], function (){
     //shop
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
     Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
-    Route::post('/shop/sort', [ShopController::class, 'sort'])->name('shop.sort');
+    Route::any('/shop/sort', [ShopController::class, 'sort'])->name('shop.sort');
     Route::get('/shop/pagination', [ShopController::class, 'pagination'])->name('shop.pagination');
 
 

@@ -60,16 +60,16 @@
                                 </div>
                             </li>
                             <li>
-
                                <div class="short-by text-center">
                                    <form id='sortId' class="sort">
                                        @csrf
-                                    <select name="select" class="nice-select">
-                                        <option value="0">Default Sorting</option>
-                                        <option value="1">Sort by new arrivals</option>
-                                        <option value="2">Sort by price: low to high</option>
-                                        <option value="3">Sort by price: high to low</option>
-                                    </select>
+                                       <select name="select" class="nice-select">
+
+                                           <option value="0" {{ $sort_select == 0 ? 'selected' : '' }}>Default Sorting</option>
+                                           <option value="1" {{ $sort_select == 1 ? 'selected' : '' }}>Sort by new arrivals</option>
+                                           <option value="2" {{ $sort_select == 2 ? 'selected' : '' }}>Sort by price: low to high</option>
+                                           <option value="3" {{ $sort_select == 3 ? 'selected' : '' }}>Sort by price: high to low</option>
+                                       </select>
 
                                        <button class="theme-btn-1 btn btn-effect-1 saveFil" type="submit">
                                            {{ __('Save changes') }}
@@ -86,13 +86,13 @@
                                 <div class="row">
                                     <!-- ltn__product-item -->
                                     @foreach($products as $product)
+                                        {{ $sort_select}}
+                                                                            <div class="col-xl-4 col-sm-6 col-6">
+                                                                                <div class="ltn__product-item ltn__product-item-3 text-center">
+                                                                                    <div class="product-img">
 
-                                    <div class="col-xl-4 col-sm-6 col-6">
-                                        <div class="ltn__product-item ltn__product-item-3 text-center">
-                                            <div class="product-img">
-
-                                                @if(!is_null($product->image->name))
-                                                    <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                                                        @if(!is_null($product->image->name))
+                                                                                            <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
                                                 @else
                                                     <img src="img/product/6.png" alt="Zdjęcie">
                                                 @endif
@@ -155,7 +155,8 @@
                     <div class="ltn__pagination-area text-center" id="refreshPagination">
                         <div class="ltn__pagination">
 
-                            <ul class="pag">
+<!--                            <ul class="pag">-->
+                                <ul>
 {{--                                @if ($products->currentPage() > 1)--}}
 {{--                                    <li><a href="{{ $products->previousPageUrl() }}" rel="prev"><i class="fas fa-angle-double-left leftArrow" data-id="{{$products->previousPageUrl()}}"></i></a></li>--}}
 {{--                                @endif--}}
