@@ -1631,7 +1631,7 @@
         }
 
 
-        $("#filter_button").on('click', function(){
+        /*$("#filter_button").on('click', function(){
             event.preventDefault();
             var form = $('form.filter').serialize();
             //console.log(form);
@@ -1714,7 +1714,7 @@
                 });
 
         });
-
+*/
 
 
 

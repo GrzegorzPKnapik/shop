@@ -14,13 +14,10 @@ class ShopController extends Controller
     public function index(Request $request){
 
 
-        //dd($request->search);
-        //$products = Product::paginate(2);
 
-        //$categories = Category::all();
 
-        $filters = $request->query('filter');
-        //dd($filters);
+        /*$filters = $request->query('filter');
+
         $query = Product::query();
 
         if(!is_null($filters))
@@ -38,24 +35,42 @@ class ShopController extends Controller
 
             ]);
 
-            /*return view('shop.index', [
-                'products'=>$query->get(),
-                'categories'=>Category::all(),
-                'sort_select'=> 2
-            ]);*/
-
         }
 
         return view('shop.index', [
             'products'=>$query->paginate(3),
             'categories'=>Category::all(),
             'sort_select'=> 2
-        ])->render();
+        ])->render();*/
+
+
+//dd($request->search);
+
+        $filters = $request->query('filter');
+
+        $query = Product::query();
+        if(!is_null($filters))
+        {
+            if(array_key_exists('categories', $filters))
+                $query->whereIn('CATEGORIES_id', $filters['categories']);
+            if(!is_null($filters['price_min']))
+                $query->where('price', '>=', $filters['price_min']);
+            if(!is_null($filters['price_max']))
+                $query->where('price', '<=', $filters['price_max']);
 
 
 
-       /* //dd(Session::get('search'));
-        if(!is_null($request->search) || !is_null(Session::get('search')))
+        }
+
+        $products = $query->paginate(1)->withQueryString();
+
+        return view('shop.index', ['products'=>$products, 'categories'=>Category::all(),'sort_select'=> Session::get('sort_select')])->render();
+
+
+
+
+        //dd(Session::get('search'));
+        /*if(!is_null($request->search) || !is_null(Session::get('search')))
         {
             //dd(Session::get('search'));
             //dd($request->search);
@@ -63,15 +78,16 @@ class ShopController extends Controller
                 Session::put('search', $request->search);
 
             $search = Session::get('search');
-c                return $query->where('name', 'like', "%$search%");
+            $products = Product::when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%$search%");
             })->paginate(1);
 
-            return view('shop.index', ['products'=>$products, 'categories'=>$categories,'sort_select'=> Session::get('sort_select')])->render();
+            return view('shop.index', ['products'=>$products, 'sort_select'=> Session::get('sort_select'), 'categories'=>Category::all()])->render();
 
-        }
+        }*/
 
 
-        $selected = $request->select;
+        /*$selected = $request->select;
         //Session::forget('sort_select');
         if ($selected == null) {
             $selected =  Session::get('sort_select');
@@ -90,6 +106,13 @@ c                return $query->where('name', 'like', "%$search%");
             $products = Product::orderBy('price', 'desc')->paginate(2);
             Session::put('sort_select', 4);
         }*/
+
+
+
+
+
+
+
 
 
 

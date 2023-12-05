@@ -173,6 +173,7 @@
 {{--                                    <li><a href="{{ $products->previousPageUrl() }}" rel="prev"><i class="fas fa-angle-double-left leftArrow" data-id="{{$products->previousPageUrl()}}"></i></a></li>--}}
 {{--                                @endif--}}
 
+
                                 @for ($i = 1; $i <= $products->lastPage(); $i++)
                                     <li class="{{ ($i == $products->currentPage()) ? 'active' : '' }}">
                                         <a href="{{ $products->url($i) }}">{{ $i }}</a>
@@ -189,7 +190,7 @@
                 </div>
                 <div class="col-lg-4">
                     <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
-                        <form class="filter">
+                        <form  action="{{route('shop.index')}}" method="GET">
                         <!-- Category Widget -->
                         <div class="widget ltn__menu-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
@@ -208,9 +209,9 @@
                             <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
                             <div class="price_filter">
 
-                                <input type="text" name="filter[price_min]"  placeholder="Add Your Price" />
+                                <input type="text" name="filter[price_min]" value="{{request()->input('filter.price_min')}}" placeholder="Add Your Price" />
 
-                                <input type="text" name="filter[price_max]"  placeholder="Add Your Price" />
+                                <input type="text" name="filter[price_max]" value="{{request()->input('filter.price_max')}}" placeholder="Add Your Price" />
 
                             </div>
                         </div>
@@ -231,7 +232,7 @@
                                     @foreach($categories as $category)
                                     <li>
                                         <label>
-                                            <input type="checkbox" name="filter[categories][]" id="category-{{$category->id}}" value="{{$category->id}}" class="tag-checkbox">
+                                            <input type="checkbox" name="filter[categories][]" id="category-{{$category->id}}" value="{{$category->id}}" {{ in_array($category->id, (array)request()->input('filter.categories', [])) ? 'checked' : '' }}>
                                             <label class="tag-label">{{$category->name}}</label>
                                         </label>
                                     </li>
