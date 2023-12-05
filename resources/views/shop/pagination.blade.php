@@ -5,7 +5,7 @@
                                 <div class="row">
                                     <!-- ltn__product-item -->
                                     @foreach($products as $product)
-
+                                        {{ $sort_select}}
                                     <div class="col-xl-4 col-sm-6 col-6">
                                         <div class="ltn__product-item ltn__product-item-3 text-center">
                                             <div class="product-img">

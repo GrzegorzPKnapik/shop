@@ -61,14 +61,14 @@
                             </li>
                             <li>
                                <div class="short-by text-center">
-                                   <form id='sortId' class="sort">
+                                   <form action="{{route('shop.index')}}" method="GET">
                                        @csrf
                                        <select name="select" class="nice-select">
 
-                                           <option value="0" {{ $sort_select == 0 ? 'selected' : '' }}>Default Sorting</option>
-                                           <option value="1" {{ $sort_select == 1 ? 'selected' : '' }}>Sort by new arrivals</option>
-                                           <option value="2" {{ $sort_select == 2 ? 'selected' : '' }}>Sort by price: low to high</option>
-                                           <option value="3" {{ $sort_select == 3 ? 'selected' : '' }}>Sort by price: high to low</option>
+                                           <option value="1" {{ $sort_select == 1 ? 'selected' : '' }}>Default Sorting</option>
+                                           <option value="2" {{ $sort_select == 2 ? 'selected' : '' }}>Sort by new arrivals</option>
+                                           <option value="3" {{ $sort_select == 3 ? 'selected' : '' }}>Sort by price: low to high</option>
+                                           <option value="4" {{ $sort_select == 4 ? 'selected' : '' }}>Sort by price: high to low</option>
                                        </select>
 
                                        <button class="theme-btn-1 btn btn-effect-1 saveFil" type="submit">

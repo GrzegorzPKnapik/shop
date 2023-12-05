@@ -1599,7 +1599,7 @@
             var form = $('.sort').serialize();
             $.ajax({
                 type: "POST",
-                url: '/shop/sort/',
+                url: '/shop/sort',
                 data: form,
             })
                 .done(function (response) {
