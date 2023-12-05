@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
@@ -14,8 +15,46 @@ class ShopController extends Controller
 
 
         //dd($request->search);
+        //$products = Product::paginate(2);
 
-        //dd(Session::get('search'));
+        //$categories = Category::all();
+
+        $filters = $request->query('filter');
+        //dd($filters);
+        $query = Product::query();
+
+        if(!is_null($filters))
+        {
+            if(array_key_exists('categories', $filters))
+            $query->whereIn('CATEGORIES_id', $filters['categories']);
+            if(!is_null($filters['price_min']))
+            $query->where('price', '>=', $filters['price_min']);
+            if(!is_null($filters['price_max']))
+            $query->where('price', '<=', $filters['price_max']);
+
+
+            return response()->json([
+                'data' => $query->get(),
+
+            ]);
+
+            /*return view('shop.index', [
+                'products'=>$query->get(),
+                'categories'=>Category::all(),
+                'sort_select'=> 2
+            ]);*/
+
+        }
+
+        return view('shop.index', [
+            'products'=>$query->paginate(3),
+            'categories'=>Category::all(),
+            'sort_select'=> 2
+        ])->render();
+
+
+
+       /* //dd(Session::get('search'));
         if(!is_null($request->search) || !is_null(Session::get('search')))
         {
             //dd(Session::get('search'));
@@ -24,11 +63,10 @@ class ShopController extends Controller
                 Session::put('search', $request->search);
 
             $search = Session::get('search');
-            $products = Product::when($search, function ($query, $search) {
-                return $query->where('name', 'like', "%$search%");
+c                return $query->where('name', 'like', "%$search%");
             })->paginate(1);
 
-            return view('shop.index', ['products'=>$products, 'sort_select'=> Session::get('sort_select')])->render();
+            return view('shop.index', ['products'=>$products, 'categories'=>$categories,'sort_select'=> Session::get('sort_select')])->render();
 
         }
 
@@ -51,7 +89,7 @@ class ShopController extends Controller
         if ($selected == 4) {
             $products = Product::orderBy('price', 'desc')->paginate(2);
             Session::put('sort_select', 4);
-        }
+        }*/
 
 
 
@@ -59,7 +97,7 @@ class ShopController extends Controller
 
 
 
-        return view('shop.index', ['products'=>$products, 'sort_select'=> Session::get('sort_select')])->render();
+        //return view('shop.index', ['products'=>$products, 'categories'=>$categories,'sort_select'=> Session::get('sort_select')])->render();
 
     }
     //przesłac ajaxowow wartosc sort

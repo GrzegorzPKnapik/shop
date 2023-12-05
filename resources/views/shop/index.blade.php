@@ -1,7 +1,19 @@
 @extends('layouts.appwhite')
 
 @section('content')
+    <style>
+        /* Dostosuj rozmiar checkboxa */
+        .btn-check {
+            width: 1rem;
+            height: 1rem;
+        }
 
+        /* Dostosuj rozmiar etykiety */
+        .btn-outline-secondary {
+            font-size: 0.8rem; /* Dostosuj wielkość czcionki według własnych preferencji */
+            padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
+        }
+    </style>
     <body>
 
 
@@ -83,7 +95,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="liton_product_grid">
                             <div class="ltn__product-tab-content-inner ltn__product-grid-view">
-                                <div class="row">
+                                <div class="row" id="roww">
                                     <!-- ltn__product-item -->
                                     @foreach($products as $product)
                                         {{ $sort_select}}
@@ -177,6 +189,7 @@
                 </div>
                 <div class="col-lg-4">
                     <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
+                        <form class="filter">
                         <!-- Category Widget -->
                         <div class="widget ltn__menu-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
@@ -194,48 +207,43 @@
                         <div class="widget ltn__price-filter-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
                             <div class="price_filter">
-                                <div class="price_slider_amount">
-                                    <input type="submit"  value="Your range:"/>
-                                    <input type="text" class="amount" name="price"  placeholder="Add Your Price" />
-                                </div>
-                                <div class="slider-range"></div>
+
+                                <input type="text" name="filter[price_min]"  placeholder="Add Your Price" />
+
+                                <input type="text" name="filter[price_max]"  placeholder="Add Your Price" />
+
                             </div>
                         </div>
 
                         <!-- Search Widget -->
-                        <div class="widget ltn__search-widget">
+<!--                        <div class="widget ltn__search-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
                             <form action="{{ route('shop.index') }}" method="GET">
                                 @csrf
                                 <input type="text" name="search" placeholder="Search your keyword...">
                                 <button type="submit" class="search"><i class="fas fa-search"></i></button>
                             </form>
-                        </div>
+                        </div>-->
                         <!-- Tagcloud Widget -->
-                        <div class="widget ltn__tagcloud-widget">
-                            <h4 class="ltn__widget-title ltn__widget-title-border">Popular Tags</h4>
-                            <ul>
-                                <li><a href="#">Popular</a></li>
-                                <li><a href="#">desgin</a></li>
-                                <li><a href="#">ux</a></li>
-                                <li><a href="#">usability</a></li>
-                                <li><a href="#">develop</a></li>
-                                <li><a href="#">icon</a></li>
-                                <li><a href="#">Car</a></li>
-                                <li><a href="#">Service</a></li>
-                                <li><a href="#">Repairs</a></li>
-                                <li><a href="#">Auto Parts</a></li>
-                                <li><a href="#">Oil</a></li>
-                                <li><a href="#">Dealer</a></li>
-                                <li><a href="#">Oil Change</a></li>
-                                <li><a href="#">Body Color</a></li>
-                            </ul>
-                        </div>
+                            <div class="widget ltn__tagcloud-widget">
+                                <h4 class="ltn__widget-title ltn__widget-title-border">Popular Tags</h4>
+                                <ul>
+                                    @foreach($categories as $category)
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" name="filter[categories][]" id="category-{{$category->id}}" value="{{$category->id}}" class="tag-checkbox">
+                                            <label class="tag-label">{{$category->name}}</label>
+                                        </label>
+                                    </li>
+                                    @endforeach
+                                    <!-- Dodaj resztę checkboxów zgodnie z powyższym wzorcem -->
+                                </ul>
+                            </div>
+
                         <!-- Size Widget -->
                         <div class="widget ltn__tagcloud-widget ltn__size-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Product Size</h4>
                             <ul>
-                                <li><a href="#">S</a></li>
                                 <li><a href="#">M</a></li>
                                 <li><a href="#">L</a></li>
                                 <li><a href="#">XL</a></li>
@@ -275,6 +283,10 @@
                             <a href="shop.html"><img src="img/banner/banner-2.jpg" alt="#"></a>
                         </div>
 
+                        <button class="theme-btn-1 btn btn-effect-1" id="filter_button" type="submit">
+                            {{ __('Filtruj') }}
+                        </button>
+                        </form>
                     </aside>
                 </div>
             </div>

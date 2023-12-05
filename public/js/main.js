@@ -1631,6 +1631,92 @@
         }
 
 
+        $("#filter_button").on('click', function(){
+            event.preventDefault();
+            var form = $('form.filter').serialize();
+            //console.log(form);
+            $.ajax({
+                type: "GET",
+                url: '/shop',
+                data: form,
+            })
+                .done(function (response) {
+                    $('div#roww').empty();
+
+                    $.each(response.data, function (index, products)
+                    {
+                        const html='<div class="col-xl-4 col-sm-6 col-6">\n' +
+                            '                                                                                <div class="ltn__product-item ltn__product-item-3 text-center">\n' +
+                            '                                                                                    <div class="product-img">\n' +
+                            '\n' +
+                            '                                                                                        @if(!is_null($product->image->name))\n' +
+                            '                                                                                            <a href="product-details.html"><img src="{{asset(\'storage/\' . $product->image->name)}}" alt="Zdjęcie"></a>\n' +
+                            '                                                @else\n' +
+                            '                                                    <img src="img/product/6.png" alt="Zdjęcie">\n' +
+                            '                                                @endif\n' +
+                            '                                                <div class="product-badge">\n' +
+                            '                                                    <ul>\n' +
+                            '                                                        <li class="sale-badge">New</li>\n' +
+                            '                                                    </ul>\n' +
+                            '                                                </div>\n' +
+                            '                                                <div class="product-hover-action">\n' +
+                            '                                                    <ul>\n' +
+                            '                                                        <li>\n' +
+                            '                                                            <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">\n' +
+                            '                                                                <i class="far fa-eye"></i>\n' +
+                            '                                                            </a>\n' +
+                            '                                                        </li>\n' +
+                            '\n' +
+                            '\n' +
+                            '                                                        <li>\n' +
+                            '                                                            <a href="" title="Add to Cart" class="add-to-cart" data-id="{{$product->id}}">\n' +
+                            '                                                                <i class="fas fa-shopping-cart"></i>\n' +
+                            '                                                            </a>\n' +
+                            '                                                        </li>\n' +
+                            '\n' +
+                            '\n' +
+                            '\n' +
+                            '\n' +
+                            '                                                        <li>\n' +
+                            '                                                            <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">\n' +
+                            '                                                                <i class="far fa-heart"></i></a>\n' +
+                            '                                                        </li>\n' +
+                            '                                                    </ul>\n' +
+                            '                                                </div>\n' +
+                            '                                            </div>\n' +
+                            '                                            <div class="product-info">\n' +
+                            '                                                <div class="product-ratting">\n' +
+                            '                                                    <ul>\n' +
+                            '                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>\n' +
+                            '                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>\n' +
+                            '                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>\n' +
+                            '                                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>\n' +
+                            '                                                        <li><a href="#"><i class="far fa-star"></i></a></li>\n' +
+                            '                                                    </ul>\n' +
+                            '                                                </div>\n' +
+                            '                                                <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>\n' +
+                            '                                                <div class="product-price">\n' +
+                            '                                                    <span>${{$product->price}}.00</span>\n' +
+                            '                                                    <del>$35.00</del>\n' +
+                            '                                                </div>\n' +
+                            '                                            </div>\n' +
+                            '                                        </div>\n' +
+                            '                                    </div>'
+                        $('div#roww').append(html);
+
+
+                    })
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+        });
+
+
+
 
 
 
