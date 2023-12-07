@@ -240,6 +240,9 @@
                                         @endauth
 
                                         <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
+                                        <li><a href="{{ route('category.index') }}">{{ __('Wyświetl kategorie') }}</a></li>
+                                        <li><a href="{{ route('category.create') }}">{{ __('Dodaj kategorie') }}</a></li>
+
 
 
                                         @auth

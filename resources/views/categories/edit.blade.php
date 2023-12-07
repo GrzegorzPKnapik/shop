@@ -11,13 +11,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Edycja kategori</h6>
-                                <h1 class="section-title white-color">Create Category</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">Edycja produktu</h6>
+                                <h1 class="section-title white-color">Create Product</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li>Category</li>
+                                    <li>Product</li>
                                 </ul>
                             </div>
                         </div>
@@ -44,76 +44,18 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="account-login-inner">
-                            <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('product.update', $product->id) }}" enctype="multipart/form-data">
+                            <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('category.update', $category->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="mb-3">
-                                    <input id="product_name" type="text" placeholder="nazwa" class="form-control @error('product_name') is-invalid @enderror" name="product_name" value="{{ $product->name }}" required autocomplete="product_name" autofocus>
-                                @error('product_name')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{$message }}</strong>
-                                    </span>
-                                @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-item">
-                                        <label>Kategoria:</label>
-                                        <select name="category_select" class="nice-select form-control @error('category_select') is-invalid @enderror">
-                                            @foreach($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('category_select')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <input id="product_price" type="text" placeholder="cena" class="form-control @error('product_price') is-invalid @enderror" name="product_price" value="{{ $product->price }}" required autocomplete="product_price" autofocus>
-                                    @error('product_price')
+                                    <input id="name" type="text" placeholder="kategoria" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $category->name }}" required autocomplete="name" autofocus>
+                                    @error('name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-
-                                <div class="mb-3">
-                                <input id="image_name" type="file" class="form-control @error('image_name') is-invalid @enderror" name="image_name" autofocus onchange="loadFile(event)">
-                                .png
-                                </div>
-                                @error('image_name')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
-
-
-
-                                <table class="table table-bordered text-center">
-                                    <thead>
-                                    <tr>
-                                        <th width="50%" >Stare zdjęcie</th>
-                                        <th width="50%">Nowe zdjęcie</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>@if(!is_null($product->image->name))
-                                                    <img src="{{ asset('storage/' . $product->image->name) }}" width="200" height="200">
-                                                @endif</td>
-                                            <td><img id="output" alt="Product image" width="200" height="200" style="display: none"/></td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-
-
-
 
                                 <div class="btn-wrapper mt-0">
                                     <button class="theme-btn-1 btn btn-block" type="submit">

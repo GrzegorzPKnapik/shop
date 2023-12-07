@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -39,9 +40,14 @@ Route::group(['middleware' => 'cart'], function (){
     Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
     //shop
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/shop/search', [ShopController::class, 'search'])->name('shop.search');
-    Route::any('/shop/sort', [ShopController::class, 'sort'])->name('shop.sort');
-    Route::get('/shop/pagination', [ShopController::class, 'pagination'])->name('shop.pagination');
+
+
+    //category
+    Route::resource('category', CategoryController::class)->only([
+        'create', 'index', 'edit', 'update', 'store'
+    ]);
+    Route::delete('/category/delete/{category}', [CategoryController::class, 'destroy']);
+
 
 
 

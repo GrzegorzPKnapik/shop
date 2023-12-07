@@ -72,26 +72,29 @@
                                 </div>
                             </li>
                             <li>
-                               <div class="short-by text-center">
-                                   <form action="{{route('shop.index')}}" method="GET">
-                                       @csrf
-                                       <select name="sort[select]" class="nice-select">
 
-                                           <option value="1" {{ request()->input('sort.select') == 1 ? 'selected' : '' }}>Default Sorting</option>
-                                           <option value="2" {{ request()->input('sort.select') == 2 ? 'selected' : '' }}>Sort by new arrivals</option>
-                                           <option value="3" {{ request()->input('sort.select') == 3 ? 'selected' : '' }}>Sort by price: low to high</option>
-                                           <option value="4" {{ request()->input('sort.select') == 4 ? 'selected' : '' }}>Sort by price: high to low</option>
+
+
+                               <div class="short-by text-center">
+                                       <form id="filterForm" action="{{route('shop.index')}}" method="GET" onchange="SubmitForm('filterForm');">
+                                       @csrf
+                                       <select name="sort" class="nice-select">
+                                           <option value="1" {{ request('sort') == 1 ? 'selected' : '' }}>Default Sorting</option>
+                                           <option value="2" {{ request('sort') == 2 ? 'selected' : '' }}>Sort by new arrivals</option>
+                                           <option value="3" {{ request('sort') == 3 ? 'selected' : '' }}>Sort by price: low to high</option>
+                                           <option value="4" {{ request('sort') == 4 ? 'selected' : '' }}>Sort by price: high to low</option>
                                        </select>
 
-                                       <button class="theme-btn-1 btn btn-effect-1 saveFil" type="submit">
-                                           {{ __('Save changes') }}
-                                       </button>
-                                   </form>
+
+
+
+
+
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div id="refreshProducts">
+<!--                    <div id="refreshProducts">-->
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="liton_product_grid">
                             <div class="ltn__product-tab-content-inner ltn__product-grid-view">
@@ -186,11 +189,14 @@
                             </ul>
                         </div>
                     </div>
-                    </div>
+<!--                    </div>-->
                 </div>
                 <div class="col-lg-4">
+
+
+
                     <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
-                        <form  action="{{route('shop.index')}}" method="GET">
+
                         <!-- Category Widget -->
                         <div class="widget ltn__menu-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
@@ -209,22 +215,24 @@
                             <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
                             <div class="price_filter">
 
-                                <input type="text" name="filter[price_min]" value="{{request()->input('filter.price_min')}}" placeholder="Add Your Price" />
+                                <input type="text" name="filter[price_min]" value="{{request('filter.price_min')}}" placeholder="Add Your Price" />
 
-                                <input type="text" name="filter[price_max]" value="{{request()->input('filter.price_max')}}" placeholder="Add Your Price" />
+                                <input type="text" name="filter[price_max]" value="{{request('filter.price_max')}}" placeholder="Add Your Price" />
 
                             </div>
                         </div>
 
-                        <!-- Search Widget -->
-<!--                        <div class="widget ltn__search-widget">
+                        <div class="widget ">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
-                            <form action="{{ route('shop.index') }}" method="GET">
-                                @csrf
-                                <input type="text" name="search" placeholder="Search your keyword...">
-                                <button type="submit" class="search"><i class="fas fa-search"></i></button>
-                            </form>
-                        </div>-->
+<!--                        <form id="searchForm" action="{{route('shop.index')}}" method="GET">-->
+                            {{--@csrf--}}
+                                <input type="text" name="search" value="{{request('search')}}" placeholder="Search your keyword...">
+                            <button class="theme-btn-1 btn btn-effect-1"  id="filter_button" type="submit">
+                                <i class="fas fa-search"></i> {{ __('Szukaj') }}
+                            </button>
+<!--                            </form>-->
+                        </div>
+
                         <!-- Tagcloud Widget -->
                             <div class="widget ltn__tagcloud-widget">
                                 <h4 class="ltn__widget-title ltn__widget-title-border">Popular Tags</h4>
@@ -232,7 +240,7 @@
                                     @foreach($categories as $category)
                                     <li>
                                         <label>
-                                            <input type="checkbox" name="filter[categories][]" id="category-{{$category->id}}" value="{{$category->id}}" {{ in_array($category->id, (array)request()->input('filter.categories', [])) ? 'checked' : '' }}>
+                                            <input type="checkbox" name="filter[categories][]" id="category-{{$category->id}}" value="{{$category->id}}" {{ in_array($category->id, (array)request('filter.categories', [])) ? 'checked' : '' }}>
                                             <label class="tag-label">{{$category->name}}</label>
                                         </label>
                                     </li>
@@ -287,7 +295,15 @@
                         <button class="theme-btn-1 btn btn-effect-1" id="filter_button" type="submit">
                             {{ __('Filtruj') }}
                         </button>
+
+                        <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Wyczyść filtry</a>
                         </form>
+
+                            <button class="theme-btn-1 btn btn-effect-1" onclick="clearFilters()">
+                                {{ __('Wyczyść filtry') }}
+                            </button>
+
+
                     </aside>
                 </div>
             </div>
@@ -402,7 +418,28 @@
     <!-- MODAL AREA END -->
 
 
+        <script>
+            function clearFilters() {
+                // Pobierz aktualny adres URL
+                var currentUrl = window.location.href;
 
+                // Usuń parametry z adresu URL
+                var cleanUrl = currentUrl.split('?')[0];
+
+                // Zaktualizuj adres URL
+                window.location.href = cleanUrl;
+            }
+
+            function SubmitForm(formId) {
+                var oForm = document.getElementById(formId);
+                if (oForm) {
+                    oForm.submit();
+                }
+                else {
+                    alert("DEBUG - could not find element " + formId);
+                }
+            }
+        </script>
         @endsection
 
         @section('javascript')

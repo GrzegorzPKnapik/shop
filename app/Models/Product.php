@@ -14,8 +14,7 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'price',
-
+        'price'
     ];
 
     //każdy obraz moze byc przypisany tylko do jednego produktu

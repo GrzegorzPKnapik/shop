@@ -29,8 +29,9 @@ class ProductController extends Controller
 
     public function create()
     {
+        $categories=Category::all();
         $product=Product::with('image')->get();
-        return view('products.create',['product'=>$product]);
+        return view('products.create',['product'=>$product, 'categories'=>$categories]);
 
     }
 
@@ -46,17 +47,13 @@ class ProductController extends Controller
         $product->name = $request['product_name'];
         $product->price = $request['product_price'];
 
-
-        $category = new Category();
-        $category->name = $request['category_name'];
-        $category->save();
+        $product->CATEGORIES_id = $request['category_select'];
 
         $description = new Description();
         $description->name = $request['description_name'];
         $description->save();
 
         $product->image()->associate($image);
-        $product->category()->associate($category);
         $product->description()->associate($description);
         $product->save();
 
@@ -94,11 +91,12 @@ class ProductController extends Controller
     }
 
     public function edit(Product $product){
-        //Product::with('image')->get();
-        return view('products.edit',['product'=>$product]);
+        $categories=Category::all();
+        return view('products.edit',['product'=>$product, 'categories'=>$categories]);
     }
 
     public function update(StoreProductRequest $request, Product $product): RedirectResponse{
+
 
         $image = Image::find($product->IMAGES_id);
         $oldPath = $image->name;
@@ -117,13 +115,9 @@ class ProductController extends Controller
             $image->save();
         }
 
-        $category = Category::find($product->CATEGORIES_id);
-        $category->name = $request['category_name'];
-        $category->save();
-
+        $product->CATEGORIES_id = $request['category_select'];
 
         $product->save();
-
         return redirect()->route('product.index');
     }
 
