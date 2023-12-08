@@ -92,8 +92,26 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <textarea id="description_name" type="text" placeholder="opis" class="form-control @error('description_name') is-invalid @enderror" name="description_name" rows="5" cols="40" required autocomplete="description_name" autofocus></textarea>
+                                    <textarea id="description_name" type="text" placeholder="opis" class="form-control @error('description_name') is-invalid @enderror" name="description_name"  rows="5" cols="40" required autocomplete="description_name" autofocus>{{ $product->description->name }}</textarea>
                                     @error('description_name')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <textarea id="description_ingredients" type="text" placeholder="składniki" class="form-control @error('description_ingredients') is-invalid @enderror" name="description_ingredients" rows="5" cols="40" required autocomplete="description_ingredients" autofocus>{{ $product->description->ingredients }}</textarea>
+                                    @error('description_ingredients')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <input id="description_calories" type="text" placeholder="kalorie" class="form-control @error('description_calories') is-invalid @enderror" name="description_calories" value="{{ $product->description->calories }}" required autocomplete="description_calories" autofocus>
+                                    @error('description_calories')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>

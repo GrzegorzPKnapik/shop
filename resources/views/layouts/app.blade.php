@@ -360,7 +360,7 @@
                                 </div>
                                 <div class="mini-cart-info">
                                     <h6><a href="#">{{$item->product->name}}</a></h6>
-                                    <span class="mini-cart-quantity">${{$item->quantity}}x${{$item->product->price}}=${{$item->sub_total}}</span>
+                                    <span class="mini-cart-quantity">{{$item->quantity}} x ${{$item->product->price}}</span>
                                 </div>
                             </div>
                         @endforeach

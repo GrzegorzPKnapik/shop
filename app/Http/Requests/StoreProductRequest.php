@@ -37,7 +37,10 @@ class StoreProductRequest extends FormRequest
             'producer_select' => [
                 'required',
             ],
-            'description_name'=>'required'
+            'description_name'=>'required',
+            'description_ingredients'=>'required',
+            'description_calories'=>''
+
         ];
     }
 }

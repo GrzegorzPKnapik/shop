@@ -14,7 +14,7 @@ class Description extends Model
     protected $fillable = [
         'name',
         'ingredients',
-        'kcal'
+        'calories'
     ];
 
     //każdy obraz może być przypisany tylko do jednego produktu

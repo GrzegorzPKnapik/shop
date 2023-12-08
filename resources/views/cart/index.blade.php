@@ -141,10 +141,14 @@
 
                                                 <td class="cart-product-subtotal">${{$item->product->price}}</td>
 
+
+                                                //
+                                                <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
+                                                //
                                                 <td class="cart-product-quantity">
                                                     <div class="cart-plus-minus m-auto">
                                                         <div class="dec qtybutton" data-id="{{$item->PRODUCTS_id}}">-</div>
-                                                        <input type="button" value="{{$item->quantity}}" class="cart-plus-minus-box cart_update">
+                                                        <input type="text" value="{{$item->quantity}}" class="cart-plus-minus-box cart_update" data-id="{{$item->PRODUCTS_id}}">
                                                         <div class="inc qtybutton" data-id="{{$item->PRODUCTS_id}}">+</div>
                                                     </div>
                                                 </td>

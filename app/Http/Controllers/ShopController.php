@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Description;
 use App\Models\Product;
 use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Session;
 class ShopController extends Controller
 {
     public function index(Request $request){
-
 
         $filters = $request->query('filter');
         $sort = $request->sort;
@@ -48,9 +48,9 @@ class ShopController extends Controller
         }
 
 
-        $products = $query->paginate(1)->withQueryString();
+        $products = $query->paginate(3)->withQueryString();
 
-        return view('shop.index', ['products'=>$products, 'categories'=>Category::all()])->render();
+        return view('shop.index', ['products'=>$products, 'categories'=>Category::all(), 'descriptions'=>Description::all()])->render();
 
 
 

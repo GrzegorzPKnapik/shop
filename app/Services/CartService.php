@@ -143,6 +143,26 @@ class CartService
         ]);
     }
 
+    public function value(Product $product): JsonResponse
+    {
+        $this->shopping_list = $this->findShoppingList()->first();
+        $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
+        if($shopping_lists_product->quantity <= 98) {
+            $this->findShoppingListsProduct($product, $this->shopping_list)
+                ->update([
+                    'quantity' => DB::raw('quantity + 1'),
+                    'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
+                    'PRODUCTS_id' => $product->id
+                ]);
+            $this->updateTotal($this->shopping_list);
+        }
+
+
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
+
 
     public function deleteProductFromShoppingList(Product $product)
     {

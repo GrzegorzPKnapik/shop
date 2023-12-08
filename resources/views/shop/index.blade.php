@@ -26,7 +26,7 @@
 
 
 
-    <div class="ltn__utilize-overlay"></div>
+<!--    <div class="ltn__utilize-overlay"></div>-->
 
     <!-- BREADCRUMB AREA START -->
     <div class="ltn__breadcrumb-area ltn__breadcrumb-area-3 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image plr--9---" data-bg="img/bg/9.jpg">
@@ -118,7 +118,7 @@
                                                 <div class="product-hover-action">
                                                     <ul>
                                                         <li>
-                                                            <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
+                                                            <a href="" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal_{{ $product->id }}">
                                                                 <i class="far fa-eye"></i>
                                                             </a>
                                                         </li>
@@ -152,12 +152,13 @@
                                                 </div>
                                                 <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                 <div class="product-price">
-                                                    <span>${{$product->price}}.00</span>
+                                                    <span>${{$product->price}}</span>
                                                     <del>$35.00</del>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
 
                                     @endforeach
                                 </div>
@@ -196,19 +197,18 @@
 
                     <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
 
-                        <!-- Category Widget -->
-                        <div class="widget ltn__menu-widget">
-                            <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
-                            <ul>
-                                <li><a href="#">Body <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a href="#">Interior <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a href="#">Lights <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a href="#">Parts <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a href="#">Tires <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a href="#">Uncategorized <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a href="#">Wheel <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                            </ul>
+                        <div class="widget ">
+                            <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
+                            <!--                        <form id="searchForm" action="{{route('shop.index')}}" method="GET">-->
+                            {{--@csrf--}}
+                            <input type="text" name="search" value="{{request('search')}}" placeholder="Search your keyword...">
+                            <button class="theme-btn-1 btn btn-effect-1"  id="filter_button" type="submit">
+                                <i class="fas fa-search"></i> {{ __('Szukaj') }}
+                            </button>
+                            <!--                            </form>-->
                         </div>
+
+
                         <!-- Price Filter Widget -->
                         <div class="widget ltn__price-filter-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
@@ -221,20 +221,9 @@
                             </div>
                         </div>
 
-                        <div class="widget ">
-                            <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
-<!--                        <form id="searchForm" action="{{route('shop.index')}}" method="GET">-->
-                            {{--@csrf--}}
-                                <input type="text" name="search" value="{{request('search')}}" placeholder="Search your keyword...">
-                            <button class="theme-btn-1 btn btn-effect-1"  id="filter_button" type="submit">
-                                <i class="fas fa-search"></i> {{ __('Szukaj') }}
-                            </button>
-<!--                            </form>-->
-                        </div>
-
-                        <!-- Tagcloud Widget -->
+                        <!-- Categories Widget -->
                             <div class="widget ltn__tagcloud-widget">
-                                <h4 class="ltn__widget-title ltn__widget-title-border">Popular Tags</h4>
+                                <h4 class="ltn__widget-title ltn__widget-title-border">Categories</h4>
                                 <ul>
                                     @foreach($categories as $category)
                                     <li>
@@ -248,48 +237,7 @@
                                 </ul>
                             </div>
 
-                        <!-- Size Widget -->
-                        <div class="widget ltn__tagcloud-widget ltn__size-widget">
-                            <h4 class="ltn__widget-title ltn__widget-title-border">Product Size</h4>
-                            <ul>
-                                <li><a href="#">M</a></li>
-                                <li><a href="#">L</a></li>
-                                <li><a href="#">XL</a></li>
-                                <li><a href="#">XXL</a></li>
-                            </ul>
-                        </div>
-                        <!-- Color Widget -->
-                        <div class="widget ltn__color-widget">
-                            <h4 class="ltn__widget-title ltn__widget-title-border">Product Color</h4>
-                            <ul>
-                                <li class="black"><a href="#"></a></li>
-                                <li class="white"><a href="#"></a></li>
-                                <li class="red"><a href="#"></a></li>
-                                <li class="silver"><a href="#"></a></li>
-                                <li class="gray"><a href="#"></a></li>
-                                <li class="maroon"><a href="#"></a></li>
-                                <li class="yellow"><a href="#"></a></li>
-                                <li class="olive"><a href="#"></a></li>
-                                <li class="lime"><a href="#"></a></li>
-                                <li class="green"><a href="#"></a></li>
-                                <li class="aqua"><a href="#"></a></li>
-                                <li class="teal"><a href="#"></a></li>
-                                <li class="blue"><a href="#"></a></li>
-                                <li class="navy"><a href="#"></a></li>
-                                <li class="fuchsia"><a href="#"></a></li>
-                                <li class="purple"><a href="#"></a></li>
-                                <li class="pink"><a href="#"></a></li>
-                                <li class="nude"><a href="#"></a></li>
-                                <li class="orange"><a href="#"></a></li>
 
-                                <li><a href="#" class="orange"></a></li>
-                                <li><a href="#" class="orange"></a></li>
-                            </ul>
-                        </div>
-                        <!-- Banner Widget -->
-                        <div class="widget ltn__banner-widget">
-                            <a href="shop.html"><img src="img/banner/banner-2.jpg" alt="#"></a>
-                        </div>
 
                         <button class="theme-btn-1 btn btn-effect-1" id="filter_button" type="submit">
                             {{ __('Filtruj') }}
@@ -310,111 +258,122 @@
     <!-- PRODUCT DETAILS AREA END -->
 
 
-
-    <!-- MODAL AREA START (Quick View Modal) -->
-    <div class="ltn__modal-area ltn__quick-view-modal-area">
-        <div class="modal fade" id="quick_view_modal" tabindex="-1">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <!-- <i class="fas fa-times"></i> -->
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                         <div class="ltn__quick-view-modal-inner">
-                             <div class="modal-product-item">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <div class="modal-product-img">
-                                            <img src="img/product/4.png" alt="#">
+        @foreach($products as $product)
+        <!-- MODAL AREA START (Quick View Modal) -->
+        <div class="ltn__modal-area ltn__quick-view-modal-area">
+            <div class="modal fade" id="quick_view_modal_{{ $product->id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" id="closeQV_{{ $product->id }}" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ltn__quick-view-modal-inner">
+                                <div class="modal-product-item">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <div class="modal-product-img">
+                                                @if(!is_null($product->image->name))
+                                                    <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                @else
+                                                    <img src="img/product/6.png" alt="Zdjęcie">
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="modal-product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                    <li class="review-total"> <a href="#"> ( 95 Reviews )</a></li>
-                                                </ul>
-                                            </div>
-                                            <h3>Vegetables Juices</h3>
-                                            <div class="product-price">
-                                                <span>$149.00</span>
-                                                <del>$165.00</del>
-                                            </div>
-                                            <div class="modal-product-meta ltn__product-details-menu-1">
-                                                <ul>
-                                                    <li>
-                                                        <strong>Categories:</strong>
-                                                        <span>
-                                                            <a href="#">Parts</a>
-                                                            <a href="#">Car</a>
-                                                            <a href="#">Seat</a>
-                                                            <a href="#">Cover</a>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="modal-product-info">
+                                                <div class="product-ratting">
+                                                    <ul>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                                        <li class="review-total"> <a href="#"> ( 95 Reviews )</a></li>
+                                                    </ul>
+                                                </div>
+                                                <h3>{{$product->name}}</h3>
+                                                <div class="product-price">
+                                                    <span>${{$product->price}}</span>
+                                                    <del>$35.00</del>
+                                                </div>
+                                                <div class="modal-product-meta ltn__product-details-menu-1">
+                                                    <ul>
+                                                        <li>
+                                                            <strong>Categories:</strong>
+                                                            <span>
+                                                            {{$product->category->name}}
                                                         </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="ltn__product-details-menu-2">
-                                                <ul>
-                                                    <li>
-                                                        <div class="cart-plus-minus">
-                                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="theme-btn-1 btn btn-effect-1" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                            <span>ADD TO CART</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="ltn__product-details-menu-3">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" class="" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i>
-                                                            <span>Add to Wishlist</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="" title="Compare" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="fas fa-exchange-alt"></i>
-                                                            <span>Compare</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <hr>
-                                            <div class="ltn__social-media">
-                                                <ul>
-                                                    <li>Share:</li>
-                                                    <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                                    <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                                                    <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
-                                                    <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                                        </li>
 
-                                                </ul>
+                                                        @if(isset($product->description->calories))
+                                                        <li>
+                                                            <strong>Calories:</strong>
+                                                            <span>
+                                                            {{$product->description->calories}}
+                                                        </span>
+                                                        </li>
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                                <div class="ltn__product-details-menu-2">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="cart-plus-minus">
+                                                                <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="" class="theme-btn-1 btn btn-effect-1 add-to-cart" title="Add to Cart" data-id="{{$product->id}}">
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                                <span>ADD TO CART</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="ltn__product-details-menu-3">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" class="" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
+                                                                <i class="far fa-heart"></i>
+                                                                <span>Add to Wishlist</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="" title="Compare" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
+                                                                <i class="fas fa-exchange-alt"></i>
+                                                                <span>Compare</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <hr>
+                                                <div class="ltn__social-media">
+                                                    <ul>
+                                                        <li>Share:</li>
+                                                        <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                                        <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                                        <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
+                                                        <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                             </div>
-                         </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- MODAL AREA END -->
-
+        <!-- MODAL AREA END -->
+        @endforeach
 
         <script>
             function clearFilters() {
@@ -437,6 +396,8 @@
                     alert("DEBUG - could not find element " + formId);
                 }
             }
+
+
         </script>
         @endsection
 

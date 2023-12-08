@@ -1263,12 +1263,13 @@
         loadMiniQuantity();
         $(document).on("click", ".add-to-cart", function (event) {
             event.preventDefault();
+            var closeButton = document.getElementById(`closeQV_${this.dataset.id}`);
             $.ajax({
                 type: "POST",
                 url: DATA.addToCartUrl + $(this).data('id'),
                 success: function (response) {
                     if (response.status != 'warning') {
-                        loadMiniCart()
+                        loadMiniCart();
                     }
                 }
 
@@ -1288,8 +1289,12 @@
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location = DATA.cart;
+                            }else
+                            if (closeButton) {
+                                closeButton.click();
                             }
                         })
+
                 })
                 .fail(function () {
                     Swal.fire('Oops...', 'Wystąpił błąd', 'error');
@@ -1350,6 +1355,35 @@
 
 
         });
+
+        $(document).ready(function () {
+            var inputActive = $('.cart_update');
+
+            inputActive.blur(function () {
+                var id = $(this).data("id");
+                var data = $(this).prev('.cart_update');
+                updateQuantity();
+                $.ajax({
+                    type: "POST",
+                    url:  '/cart/value/' + id,
+                    data: data,
+                    success: function () {
+                        $("#refreshSC").load(location.href + " #refreshSC");
+                        $("#refresh").load(location.href + " #refresh");
+                    }
+
+                });
+            });
+
+            // Funkcja aktualizująca ilość (możesz dostosować do swoich potrzeb)
+            function updateQuantity() {
+                var newQuantity = 11;
+                // Tutaj możesz dodać kod do natychmiastowego zastosowania zmian (np. aktualizacja interfejsu)
+                console.log('Aktualizacja ilości na ' + newQuantity);
+            }
+        });
+
+
 
         $(document).on("click", ".selectAddress", function () {
             var id = $(this).data("id");

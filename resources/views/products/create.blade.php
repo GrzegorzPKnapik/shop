@@ -56,7 +56,7 @@
                                 </div>
 
 
-<!--
+
                                 <div class="col-md-6">
                                     <div class="input-item">
                                         <label>Kategoria:</label>
@@ -80,16 +80,43 @@
                                                 <option value="{{ $producer->id }}">{{ $producer->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('category_select')
+                                        @error('producer_select')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
--->
+
 
                                 <div class="mb-3">
                                     <textarea id="description_name" type="text" placeholder="opis" class="form-control @error('description_name') is-invalid @enderror" name="description_name" rows="5" cols="40" required autocomplete="description_name" autofocus></textarea>
                                     @error('description_name')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+<!--                                <div class="mb-3">
+                                    <input id="description_ingredients" type="text" placeholder="składniki" class="form-control @error('description_ingredients') is-invalid @enderror" name="description_ingredients" required autocomplete="description_ingredients" autofocus>
+                                    @error('description_ingredients')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>-->
+
+                                <div class="mb-3">
+                                    <textarea id="description_ingredients" type="text" placeholder="składniki" class="form-control @error('description_ingredients') is-invalid @enderror" name="description_ingredients" rows="5" cols="40" required autocomplete="description_ingredients" autofocus></textarea>
+                                    @error('description_ingredients')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <input id="description_calories" type="text" placeholder="kalorie" class="form-control @error('description_calories') is-invalid @enderror" name="description_calories" required autocomplete="description_calories" autofocus>
+                                    @error('description_calories')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>
                                     </span>

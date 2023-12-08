@@ -102,7 +102,8 @@ class ShoppingList
      * @return void
      */
     private function updateTotal(): void
-    {$shopping_list = $this->findShoppingList();
+    {
+        $shopping_list = $this->findShoppingList();
         $total = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
             ->sum('sub_total');
         $shopping_list->total = $total;

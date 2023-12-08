@@ -32,8 +32,9 @@ class ProductController extends Controller
     {
         $producers=Producer::all();
         $categories=Category::all();
-        $product=Product::with('image')->get();
-        return view('products.create',['product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
+        //chyba nie trzeba product przesyłać
+        //$product=Product::with('image')->get();
+        return view('products.create',['categories'=>$categories, 'producers'=>$producers]);
 
     }
 
@@ -47,13 +48,19 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->name = $request['product_name'];
+
         $product->price = $request['product_price'];
+        if (strpos($request['product_price'], '.') === false) {
+            $product->price = $request['product_price'].= '.99';
+        }/*else $product->price = number_format($request['product_price'], 2, '.', '');*/
 
         $product->CATEGORIES_id = $request['category_select'];
         $product->PRODUCERS_id = $request['producer_select'];
 
         $description = new Description();
         $description->name = $request['description_name'];
+        $description->ingredients = $request['description_ingredients'];
+        $description->calories = $request['description_calories'];
         $description->save();
 
         $product->image()->associate($image);
@@ -102,12 +109,13 @@ class ProductController extends Controller
 
     public function update(StoreProductRequest $request, Product $product): RedirectResponse{
 
-
+        //dd($request['description_name']);
         $image = Image::find($product->IMAGES_id);
         $oldPath = $image->name;
         //$product->fill($request->validated());
         $product->price=$request['product_price'];
         $product->name=$request['product_name'];
+
 
 
         if ($request->hasFile('image_name') && $request->validated()) {
@@ -123,8 +131,16 @@ class ProductController extends Controller
         $product->CATEGORIES_id = $request['category_select'];
         $product->PRODUCERS_id = $request['producer_select'];
 
+        //Trzeba użyć metody update, aby zaktualizować dane w relacji
+        $product->description->update([
+            'name' => $request['description_name'],
+            'ingredients' => $request['description_ingredients'],
+            'calories' => $request['description_calories'],
+
+        ]);
 
         $product->save();
+
         return redirect()->route('product.index');
     }
 

@@ -13,6 +13,7 @@ use App\Services\ShoppingList;
 use App\ValueObjects\Cart;
 use App\ValueObjects\CartItem;
 use Exception;
+use http\Env\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -115,6 +116,15 @@ class CartController extends Controller
     public function decrement(Product $product): JsonResponse
     {
        $this->cartService->decrement($product);
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
+
+    public function value(Product $product, Request $request): JsonResponse
+    {
+        dd($product);
+        $this->cartService->value($product);
         return response()->json([
             'status' => 'success',
         ]);
