@@ -32,6 +32,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'CATEGORIES_id');
     }
+    public function producer() :BelongsTo
+    {
+        return $this->belongsTo(Producer::class, 'PRODUCERS_id');
+    }
 
     public function description() :BelongsTo
     {

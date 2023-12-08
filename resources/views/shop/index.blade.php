@@ -101,7 +101,6 @@
                                 <div class="row" id="roww">
                                     <!-- ltn__product-item -->
                                     @foreach($products as $product)
-                                        {{ $sort_select}}
                                                                             <div class="col-xl-4 col-sm-6 col-6">
                                                                                 <div class="ltn__product-item ltn__product-item-3 text-center">
                                                                                     <div class="product-img">
@@ -296,10 +295,9 @@
                             {{ __('Filtruj') }}
                         </button>
 
-                        <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Wyczyść filtry</a>
                         </form>
 
-                            <button class="theme-btn-1 btn btn-effect-1" onclick="clearFilters()">
+                            <button class="theme-btn-2 btn btn-effect-2" onclick="clearFilters()">
                                 {{ __('Wyczyść filtry') }}
                             </button>
 

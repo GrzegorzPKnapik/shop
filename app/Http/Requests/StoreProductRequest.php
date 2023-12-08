@@ -34,6 +34,9 @@ class StoreProductRequest extends FormRequest
             'category_select' => [
                 'required',
             ],
+            'producer_select' => [
+                'required',
+            ],
             'description_name'=>'required'
         ];
     }

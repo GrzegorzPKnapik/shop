@@ -11,13 +11,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Edycja kategori</h6>
-                                <h1 class="section-title white-color">Create Category</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">Edycja produktu</h6>
+                                <h1 class="section-title white-color">Edit Product</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li>Category</li>
+                                    <li>Product</li>
                                 </ul>
                             </div>
                         </div>
@@ -61,14 +61,43 @@
                                     <div class="input-item">
                                         <label>Kategoria:</label>
                                         <select name="category_select" class="nice-select form-control @error('category_select') is-invalid @enderror">
+                                            <option value="{{ $product->category->id }}">{{ $product->category->name }}</option>
                                             @foreach($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @if($category->id != $product->category->id)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('category_select')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-item">
+                                        <label>Kategoria:</label>
+                                        <select name="producer_select" class="nice-select form-control @error('producer_select') is-invalid @enderror">
+                                            <option value="{{ $product->producer->id }}">{{ $product->producer->name }}</option>
+                                            @foreach($producers as $producer)
+                                                @if($producer->id != $product->producer->id)
+                                                <option value="{{ $producer->id }}">{{ $producer->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        @error('producer_select')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <textarea id="description_name" type="text" placeholder="opis" class="form-control @error('description_name') is-invalid @enderror" name="description_name" rows="5" cols="40" required autocomplete="description_name" autofocus></textarea>
+                                    @error('description_name')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3">

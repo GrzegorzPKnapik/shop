@@ -243,6 +243,9 @@
                                         <li><a href="{{ route('category.index') }}">{{ __('Wyświetl kategorie') }}</a></li>
                                         <li><a href="{{ route('category.create') }}">{{ __('Dodaj kategorie') }}</a></li>
 
+                                        <li><a href="{{ route('producer.index') }}">{{ __('Wyświetl producentów') }}</a></li>
+                                        <li><a href="{{ route('producer.create') }}">{{ __('Dodaj producenta') }}</a></li>
+
 
 
                                         @auth

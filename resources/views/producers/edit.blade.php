@@ -11,13 +11,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Edycja kategori</h6>
-                                <h1 class="section-title white-color">Create Category</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">Edycja producenta</h6>
+                                <h1 class="section-title white-color">Create Producer</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li>Category</li>
+                                    <li>Producer</li>
                                 </ul>
                             </div>
                         </div>
@@ -44,12 +44,12 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="account-login-inner">
-                            <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('category.update', $category->id) }}" enctype="multipart/form-data">
+                            <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('producer.update', $producer->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="mb-3">
-                                    <input id="name" type="text" placeholder="kategoria" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $category->name }}" required autocomplete="name" autofocus>
+                                    <input id="name" type="text" placeholder="producent" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $producer->name }}" required autocomplete="name" autofocus>
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{$message }}</strong>

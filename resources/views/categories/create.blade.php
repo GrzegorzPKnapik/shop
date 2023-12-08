@@ -11,13 +11,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Dodawanie produktu</h6>
-                                <h1 class="section-title white-color">Create Product</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">Dodawanie kategori</h6>
+                                <h1 class="section-title white-color">Create Category</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
-                                    <li>Product</li>
+                                    <li>Category</li>
                                 </ul>
                             </div>
                         </div>

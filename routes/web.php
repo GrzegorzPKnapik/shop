@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
@@ -47,6 +48,12 @@ Route::group(['middleware' => 'cart'], function (){
         'create', 'index', 'edit', 'update', 'store'
     ]);
     Route::delete('/category/delete/{category}', [CategoryController::class, 'destroy']);
+
+    //producer
+    Route::resource('producer', ProducerController::class)->only([
+        'create', 'index', 'edit', 'update', 'store'
+    ]);
+    Route::delete('/producer/delete/{category}', [ProducerController::class, 'destroy']);
 
 
 

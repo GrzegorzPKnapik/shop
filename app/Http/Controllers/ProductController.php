@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Description;
 use App\Models\Order;
+use App\Models\Producer;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
@@ -29,9 +30,10 @@ class ProductController extends Controller
 
     public function create()
     {
+        $producers=Producer::all();
         $categories=Category::all();
         $product=Product::with('image')->get();
-        return view('products.create',['product'=>$product, 'categories'=>$categories]);
+        return view('products.create',['product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
 
     }
 
@@ -48,6 +50,7 @@ class ProductController extends Controller
         $product->price = $request['product_price'];
 
         $product->CATEGORIES_id = $request['category_select'];
+        $product->PRODUCERS_id = $request['producer_select'];
 
         $description = new Description();
         $description->name = $request['description_name'];
@@ -91,8 +94,10 @@ class ProductController extends Controller
     }
 
     public function edit(Product $product){
+        $producers=Producer::all();
         $categories=Category::all();
-        return view('products.edit',['product'=>$product, 'categories'=>$categories]);
+        return view('products.edit',['product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
+
     }
 
     public function update(StoreProductRequest $request, Product $product): RedirectResponse{
@@ -116,6 +121,8 @@ class ProductController extends Controller
         }
 
         $product->CATEGORIES_id = $request['category_select'];
+        $product->PRODUCERS_id = $request['producer_select'];
+
 
         $product->save();
         return redirect()->route('product.index');
