@@ -83,9 +83,9 @@
 
 
 
-                                                <tr class="align-middle">
+                                            <tr class="align-middle">
 
-                                                </tr>
+                                            </tr>
 
 
                                             <tr class="cart-coupon-row">
@@ -131,104 +131,104 @@
                                     <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
                                 </div>
                             </div>
-                                        @endif
-
-
-
-                                        @if(isset($cart))
-                                        <h4><a> Liczba produktów w koszyku: {{$items->count()}}</a></h4>
-
-                                        @foreach($items as $item)
-                                            <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
-                                                <td>
-                                                    <button class="icon-cancel delete" data-id="{{$item->PRODUCTS_id}}"></button>
-                                                </td>
-                                                <td class="cart-product-image">
-                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
-                                                </td>
-                                                <td class="cart-product-info">
-                                                    <h4><a>{{$item->product->name}}</a></h4>
-                                                </td>
-
-                                                <td class="cart-product-subtotal">${{$item->product->price}}</td>
-
-
-
-                                                <td class="cart-product-quantity">
-                                                    <label for="valueQuantity">max 99sztuk:</label>
-                                                    <div class="cart-plus-minus m-auto">
-                                                        <div class="dec qtybutton" data-id="{{$item->PRODUCTS_id}}">-</div>
-                                                        <input type="number" value="{{$item->quantity}}" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_update" data-id="{{$item->PRODUCTS_id}}">
-                                                        <div class="inc qtybutton" data-id="{{$item->PRODUCTS_id}}">+</div>
-                                                    </div>
-                                                </td>
-
-
-
-                                                <td class="cart-product-subtotal">${{$item->sub_total}}</td>
-                                            </tr>
-
-                                        @endforeach
-
-
-                                        <tr class="cart-coupon-row">
-                                            <td colspan="5">
-                                                <div class="cart-coupon">
-                                                    <input type="text" name="cart-coupon" placeholder="Coupon code">
-                                                    <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="shoping-cart-total mt-50">
-                                <h4>Cart Totals</h4>
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <td>Cart Subtotal</td>
-                                        <td>$618.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shipping and Handing</td>
-                                        <td>$15.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vat</td>
-                                        <td>$00.00</td>
-                                    </tr>
-                                    <td><strong>Order Total</strong></td>
-                                    <td><strong>
-
-                                            ${{$cart->total}}
-                                        </strong></td>
-                                    </tbody>
-                                </table>
-                                <div class="btn-wrapper text-right text-end">
-                                    <a href="{{ route('checkout.index') }}" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
-                                </div>
-                            </div>
                             @endif
+
+
+
+                            @if(isset($cart))
+                                <h4><a> Liczba produktów w koszyku: {{$items->count()}}</a></h4>
+
+                                @foreach($items as $item)
+                                    <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
+                                        <td>
+                                            <button class="icon-cancel delete" data-id="{{$item->PRODUCTS_id}}"></button>
+                                        </td>
+                                        <td class="cart-product-image">
+                                            <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
+                                        </td>
+                                        <td class="cart-product-info">
+                                            <h4><a>{{$item->product->name}}</a></h4>
+                                        </td>
+
+                                        <td class="cart-product-subtotal">${{$item->product->price}}</td>
+
+
+
+                                        <td class="cart-product-quantity">
+                                            <label for="valueQuantity">max 99sztuk:</label>
+                                            <div class="cart-plus-minus m-auto">
+                                                <div class="dec qtybutton" data-id="{{$item->PRODUCTS_id}}">-</div>
+                                                <input type="number" value="{{$item->quantity}}" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_quantity_input" data-id="{{$item->PRODUCTS_id}}">
+                                                <div class="inc qtybutton" data-id="{{$item->PRODUCTS_id}}">+</div>
+                                            </div>
+                                        </td>
+
+
+
+                                        <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                    </tr>
+
+                                @endforeach
+
+
+                                <tr class="cart-coupon-row">
+                                    <td colspan="5">
+                                        <div class="cart-coupon">
+                                            <input type="text" name="cart-coupon" placeholder="Coupon code">
+                                            <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                </table>
                         </div>
                     </div>
+
+                    <div class="shoping-cart-total mt-50">
+                        <h4>Cart Totals</h4>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>Cart Subtotal</td>
+                                <td>$618.00</td>
+                            </tr>
+                            <tr>
+                                <td>Shipping and Handing</td>
+                                <td>$15.00</td>
+                            </tr>
+                            <tr>
+                                <td>Vat</td>
+                                <td>$00.00</td>
+                            </tr>
+                            <td><strong>Order Total</strong></td>
+                            <td><strong>
+
+                                    ${{$cart->total}}
+                                </strong></td>
+                            </tbody>
+                        </table>
+                        <div class="btn-wrapper text-right text-end">
+                            <a href="{{ route('checkout.index') }}" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                        </div>
+                    </div>
+                    @endif
                 </div>
-                <!-- SHOPING CART AREA END -->
             </div>
         </div>
+        <!-- SHOPING CART AREA END -->
+    </div>
+    </div>
 
 
 
 
-        @endsection
-        @section('javascript')
-            const incUrl = "{{url('cart/increment')}}/";
-            const decUrl = "{{url('cart/decrement')}}/";
-        @endsection
-        @section('js-files')
+    @endsection
+    @section('javascript')
+        const incUrl = "{{url('cart/increment')}}/";
+        const decUrl = "{{url('cart/decrement')}}/";
+@endsection
+@section('js-files')
 @endsection

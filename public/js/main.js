@@ -1356,9 +1356,9 @@
 
         });
 
-        $(document).on("click", ".cart_value_update", function (event) {
+        $(document).on("click", ".cart_quantity_input", function (event) {
             event.preventDefault();
-            $('.cart_update').blur(function () {
+            $('.cart_quantity_input').blur(function () {
                 var id = $(this).data("id");
                 var data = $('#valueQuantity');
                 $.ajax({
@@ -1366,15 +1366,15 @@
                     url:  '/cart/value/' + id,
                     data: data,
                 })
-                 .done(function (response) {
-                     $("#refreshSC").load(location.href + " #refreshSC");
-                     $("#refresh").load(location.href + " #refresh");
-                     if(response.status == 'error')
-                     {
-                         Swal.fire(response.message, '', response.status);
-                     }
+                    .done(function (response) {
+                        $("#refreshSC").load(location.href + " #refreshSC");
+                        $("#refresh").load(location.href + " #refresh");
+                        if(response.status == 'error')
+                        {
+                            Swal.fire(response.message, '', response.status);
+                        }
 
-                })
+                    })
 
 
 

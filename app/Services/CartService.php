@@ -149,15 +149,15 @@ class CartService
         $this->shopping_list = $this->findShoppingList()->first();
         $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
 
-            if ($shopping_lists_product->quantity <= 99) {
-                $this->findShoppingListsProduct($product, $this->shopping_list)
-                    ->update([
-                        'quantity' => $request->valueQuantity,
-                        'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
-                        'PRODUCTS_id' => $product->id
-                    ]);
-                $this->updateTotal($this->shopping_list);
-            }
+        if ($shopping_lists_product->quantity <= 99) {
+            $this->findShoppingListsProduct($product, $this->shopping_list)
+                ->update([
+                    'quantity' => $request->valueQuantity,
+                    'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
+                    'PRODUCTS_id' => $product->id
+                ]);
+            $this->updateTotal($this->shopping_list);
+        }
 
 
 
@@ -166,10 +166,8 @@ class CartService
 
     public function addValue(Product $product, Request $request)
     {
+        //stwórz obiekt
 
-        //przesyłam 22
-        //jest już 2
-        //musze zsumować
         $this->shopping_list = $this->findShoppingList()->first();
         $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
 

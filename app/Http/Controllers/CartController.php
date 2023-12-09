@@ -37,11 +37,11 @@ class CartController extends Controller
     {
         //$shopping_list = Shopping_list::where('status', 'lista_a')->first();
         //if($shopping_list != null)
-            //$shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
+        //$shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
         //$cart = new ShoppingList($shopping_lists_product);
 
         //$cart =$shopping_list;
-            //$item = $shopping_lists_product;
+        //$item = $shopping_lists_product;
 
 
         return view('cart.index',[
@@ -72,12 +72,12 @@ class CartController extends Controller
         if(Auth::check())
         {
 
-        $this->cartService->addItem($product);
+            $this->cartService->addItem($product);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => (__('shop.cart.status.store.success'))
-        ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => (__('shop.cart.status.store.success'))
+            ]);
         }else
             return response()->json([
                 'status' => 'warning',
@@ -107,7 +107,7 @@ class CartController extends Controller
 
     public function increment(Product $product): JsonResponse
     {
-       $this->cartService->increment($product);
+        $this->cartService->increment($product);
         return response()->json([
             'status' => 'success',
         ]);
@@ -115,7 +115,7 @@ class CartController extends Controller
 
     public function decrement(Product $product): JsonResponse
     {
-       $this->cartService->decrement($product);
+        $this->cartService->decrement($product);
         return response()->json([
             'status' => 'success',
         ]);
@@ -157,12 +157,12 @@ class CartController extends Controller
                     'message' => 'Nieprawidłowa liczba'
                 ]);
             }else if($this->cartService->addValue($product, $request) == false)
-                {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Zabyt duża wartość sumaryczna'
-                    ]);
-                }else
+            {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Zabyt duża wartość sumaryczna'
+                ]);
+            }else
                 return response()->json([
                     'status' => 'success',
                     'title' => 'Brawo!',
