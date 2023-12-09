@@ -1275,8 +1275,8 @@
 
             })
                 .done(function (response) {
-                    if (response.status == 'warning') {
-                        Swal.fire('Jesteś niezalogowany', 'Zaloguj się', 'warning');
+                    if (response.status != 'success') {
+                        Swal.fire(response.title, response.message, response.status);
                     }else
 
                         Swal.fire({

@@ -72,7 +72,14 @@ class CartController extends Controller
         if(Auth::check())
         {
 
-            $this->cartService->addItem($product);
+
+            if($this->cartService->addItem($product)===false)
+            {
+                return response()->json([
+                    'status' => 'warning',
+                    'message' => 'produkt jest już w koszyku'
+                ]);
+            }else
 
             return response()->json([
                 'status' => 'success',
@@ -156,11 +163,12 @@ class CartController extends Controller
                     'status' => 'error',
                     'message' => 'Nieprawidłowa liczba'
                 ]);
-            }else if($this->cartService->addValue($product, $request) == false)
+            }else if($this->cartService->addItem($product, $request->valueQuantity) === false)
             {
+                //zbyt duza liczba error dać sumaryczna
                 return response()->json([
-                    'status' => 'error',
-                    'message' => 'Zabyt duża wartość sumaryczna'
+                    'status' => 'warning',
+                    'message' => 'produkt jest już w koszyku'
                 ]);
             }else
                 return response()->json([

@@ -41,7 +41,7 @@ class CartService
 
     }
 
-    public function addItem(Product $product)
+    public function addItem(Product $product, $quantity = 1)
     {
         $this->shopping_list = $this->findShoppingList()->first();
         if(!is_null($this->shopping_list))
@@ -50,14 +50,14 @@ class CartService
         //bez this->shopping_lists_product nadpisywal sie pustym obiektem dla pierwszego produktu
         //jest koszyk i produkt był w koszyku dziala
         if (!is_null($this->shopping_list) && !is_null($shopping_Lists_Product)) {
-            $this->increment($product);
+            return false;
             //nie ma produktu i koszyka1 dziala
         }else if(is_null($this->shopping_list)) {
-            $this->shopping_list = $this->newShoppingList($product);
-            $this->newShoppingListsProduct($product, $this->shopping_list);
+            $this->shopping_list = $this->newShoppingList($product, $quantity);
+            $this->newShoppingListsProduct($product, $this->shopping_list, $quantity);
             //koszyk jest nie ma produktu dziala
         }else if(!is_null($this->shopping_list) && is_null($shopping_Lists_Product)){
-            $this->newShoppingListsProduct($product, $this->shopping_list);
+            $this->newShoppingListsProduct($product, $this->shopping_list, $quantity);
         }
 
 
@@ -65,14 +65,14 @@ class CartService
     }
 
 
-    private function newShoppingList(Product $product)
+    private function newShoppingList(Product $product, $quantity)
     {
         $user = Auth::user();
 
         $shopping_list = new Shopping_list();
         $shopping_list->status = 'cart';
         $shopping_list->mode = 'normal';
-        $shopping_list->total = $product->price;
+        $shopping_list->total = $product->price * $quantity;
         $shopping_list->USERS_id = $user->id;
         $shopping_list->save();
         return $shopping_list;
@@ -83,11 +83,11 @@ class CartService
      * @param $shopping_list
      * @return void
      */
-    private function newShoppingListsProduct(Product $product, $shopping_list): void
+    private function newShoppingListsProduct(Product $product, $shopping_list, $quantity): void
     {
         $shopping_lists_product = new Shopping_lists_product();
-        $shopping_lists_product->sub_total = $product->price;
-        $shopping_lists_product->quantity = 1;
+        $shopping_lists_product->sub_total = $product->price * $quantity;
+        $shopping_lists_product->quantity = $quantity;
         $shopping_lists_product->PRODUCTS_id = $product->id;
         $shopping_lists_product->SHOPPING_LISTS_id = $shopping_list->id;
         $shopping_lists_product->save();
