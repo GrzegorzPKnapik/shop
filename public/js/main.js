@@ -1346,7 +1346,7 @@
             $.ajax({
                 type: "POST",
                 url: decUrl + id,
-                success: function () {
+                success: function (response) {
                     $("#refreshSC").load(location.href + " #refreshSC");
                     $("#refresh").load(location.href + " #refresh");
                 }
@@ -1356,31 +1356,73 @@
 
         });
 
-        $(document).ready(function () {
-            var inputActive = $('.cart_update');
-
-            inputActive.blur(function () {
+        $(document).on("click", ".cart_value_update", function (event) {
+            event.preventDefault();
+            $('.cart_update').blur(function () {
                 var id = $(this).data("id");
-                var data = $(this).prev('.cart_update');
-                updateQuantity();
+                var data = $('#valueQuantity');
                 $.ajax({
                     type: "POST",
                     url:  '/cart/value/' + id,
                     data: data,
-                    success: function () {
-                        $("#refreshSC").load(location.href + " #refreshSC");
-                        $("#refresh").load(location.href + " #refresh");
-                    }
+                })
+                 .done(function (response) {
+                     $("#refreshSC").load(location.href + " #refreshSC");
+                     $("#refresh").load(location.href + " #refresh");
+                     if(response.status == 'error')
+                     {
+                         Swal.fire(response.message, '', response.status);
+                     }
 
-                });
+                })
+
+
+
+
+
             });
+        });
 
-            // Funkcja aktualizująca ilość (możesz dostosować do swoich potrzeb)
-            function updateQuantity() {
-                var newQuantity = 11;
-                // Tutaj możesz dodać kod do natychmiastowego zastosowania zmian (np. aktualizacja interfejsu)
-                console.log('Aktualizacja ilości na ' + newQuantity);
-            }
+        $(document).on("click", ".add-to-cart-value", function (event) {
+            event.preventDefault();
+            var closeButton = document.getElementById(`closeQV_${this.dataset.id}`);
+            var data = $('#valueQuantity');
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url:  '/cart/addValue/' + id,
+                data: data,
+                success: function (response) {
+                    if (response.status != 'warning') {
+                        loadMiniCart();
+                    }
+                }
+
+            })
+                .done(function (response) {
+                    if (response.status != 'success') {
+                        Swal.fire(response.title, response.message, response.status);
+                    }else {
+                        Swal.fire({
+                            title: response.title,
+                            text: response.message,
+                            icon: response.status,
+                            showCancelButton: true,
+                            confirmButtonText: '<i class="fas fa-cart-plus"></i> Przejdź do koszyka',
+                            cancelButtonText: '<i class="fas fa-shopping-bag"></i> Kontynuuj zakupy'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = DATA.cart;
+                            } else if (closeButton) {
+                                $("#refreshQV").load(location.href + " #refreshQV");
+                                closeButton.click();
+                            }
+                        })
+                    }
+                })
+                .fail(function () {
+                    Swal.fire('Oops...', 'Wystąpił błąd', 'error');
+                });
         });
 
 

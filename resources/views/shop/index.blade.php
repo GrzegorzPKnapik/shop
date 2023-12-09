@@ -14,6 +14,20 @@
             padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
         }
     </style>
+
+
+    <style>
+        /* Ukryj przyciski zwiększania i zmniejszania dla input typu "number" */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
     <body>
 
 
@@ -257,7 +271,7 @@
     </div>
     <!-- PRODUCT DETAILS AREA END -->
 
-
+<div id="refreshQV">
         @foreach($products as $product)
         <!-- MODAL AREA START (Quick View Modal) -->
         <div class="ltn__modal-area ltn__quick-view-modal-area">
@@ -321,14 +335,17 @@
                                                 </div>
                                                 <div class="ltn__product-details-menu-2">
                                                     <ul>
-                                                        <li>
+                                                        <li><label for="valueQuantity">max 99sztuk:</label>
                                                             <div class="cart-plus-minus">
-                                                                <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
+<!--                                                                <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">-->
+                                                                <input type="number" value="1" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_value_update" data-id="{{$product->id}}">
+
                                                             </div>
                                                         </li>
 
+
                                                         <li>
-                                                            <a href="" class="theme-btn-1 btn btn-effect-1 add-to-cart" title="Add to Cart" data-id="{{$product->id}}">
+                                                            <a href="" class="theme-btn-1 btn btn-effect-1 add-to-cart-value" title="Add to Cart" data-id="{{$product->id}}">
                                                                 <i class="fas fa-shopping-cart"></i>
                                                                 <span>ADD TO CART</span>
                                                             </a>
@@ -374,6 +391,7 @@
         </div>
         <!-- MODAL AREA END -->
         @endforeach
+</div>
 
         <script>
             function clearFilters() {

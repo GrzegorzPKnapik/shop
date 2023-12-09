@@ -17,6 +17,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -143,25 +144,49 @@ class CartService
         ]);
     }
 
-    public function value(Product $product): JsonResponse
+    public function value(Product $product, Request $request)
     {
         $this->shopping_list = $this->findShoppingList()->first();
         $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
-        if($shopping_lists_product->quantity <= 98) {
+
+            if ($shopping_lists_product->quantity <= 99) {
+                $this->findShoppingListsProduct($product, $this->shopping_list)
+                    ->update([
+                        'quantity' => $request->valueQuantity,
+                        'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
+                        'PRODUCTS_id' => $product->id
+                    ]);
+                $this->updateTotal($this->shopping_list);
+            }
+
+
+
+    }
+
+
+    public function addValue(Product $product, Request $request)
+    {
+
+        //przesyłam 22
+        //jest już 2
+        //musze zsumować
+        $this->shopping_list = $this->findShoppingList()->first();
+        $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
+
+        if ($shopping_lists_product->quantity <= 99 && $shopping_lists_product->quantity + $request->valueQuantity<99) {
             $this->findShoppingListsProduct($product, $this->shopping_list)
                 ->update([
-                    'quantity' => DB::raw('quantity + 1'),
+                    'quantity' => $shopping_lists_product->quantity + $request->valueQuantity,
                     'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
                     'PRODUCTS_id' => $product->id
                 ]);
             $this->updateTotal($this->shopping_list);
-        }
+            return true;
+        }else
+            return false;
 
-
-        return response()->json([
-            'status' => 'success',
-        ]);
     }
+
 
 
     public function deleteProductFromShoppingList(Product $product)

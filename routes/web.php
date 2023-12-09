@@ -107,6 +107,7 @@ Route::group(['middleware' => 'cart'], function (){
 
     Route::post('/load-cart-data', [CartController::class, 'cartCount']);
     Route::post('/cart/value/{product}', [CartController::class, 'value']);
+    Route::post('/cart/addValue/{product}', [CartController::class, 'addValue']);
     Route::post('/cart/decrement/{product}', [CartController::class, 'decrement']);
     Route::post('/cart/increment/{product}', [CartController::class, 'increment']);
     Route::delete('/cart/{product}', [CartController::class, 'destroy']);

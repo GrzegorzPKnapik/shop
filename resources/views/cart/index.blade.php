@@ -11,6 +11,19 @@
 
     <!-- Add your site or application content here -->
 
+    <style>
+        /* Ukryj przyciski zwiększania i zmniejszania dla input typu "number" */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+
     <!-- Body main wrapper start -->
     <div class="body-wrapper">
         @include('helpers.responses')
@@ -125,8 +138,6 @@
                                         @if(isset($cart))
                                         <h4><a> Liczba produktów w koszyku: {{$items->count()}}</a></h4>
 
-
-
                                         @foreach($items as $item)
                                             <tr class="align-middle delete_mem{{$item->PRODUCTS_id}}">
                                                 <td>
@@ -142,13 +153,12 @@
                                                 <td class="cart-product-subtotal">${{$item->product->price}}</td>
 
 
-                                                //
-                                                <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                                //
+
                                                 <td class="cart-product-quantity">
+                                                    <label for="valueQuantity">max 99sztuk:</label>
                                                     <div class="cart-plus-minus m-auto">
                                                         <div class="dec qtybutton" data-id="{{$item->PRODUCTS_id}}">-</div>
-                                                        <input type="text" value="{{$item->quantity}}" class="cart-plus-minus-box cart_update" data-id="{{$item->PRODUCTS_id}}">
+                                                        <input type="number" value="{{$item->quantity}}" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_update" data-id="{{$item->PRODUCTS_id}}">
                                                         <div class="inc qtybutton" data-id="{{$item->PRODUCTS_id}}">+</div>
                                                     </div>
                                                 </td>

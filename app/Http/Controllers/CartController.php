@@ -13,7 +13,7 @@ use App\Services\ShoppingList;
 use App\ValueObjects\Cart;
 use App\ValueObjects\CartItem;
 use Exception;
-use http\Env\Request;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -121,18 +121,61 @@ class CartController extends Controller
         ]);
     }
 
-    public function value(Product $product, Request $request): JsonResponse
+    public function value(Product $product, Request $request)
     {
-        dd($product);
-        $this->cartService->value($product);
-        return response()->json([
-            'status' => 'success',
-        ]);
+        if (is_numeric($request->valueQuantity)) {
+            if ($request->valueQuantity <= 0 || $request->valueQuantity > 99) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Nieprawidłowa liczba'
+                ]);
+            }else
+                $this->cartService->value($product, $request);
+        }else
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nieprawidłowa wartość'
+            ]);
+
+
     }
 
 
+    public function addValue(Product $product, Request $request)
+    {
+        if(!Auth::check())
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Zaloguj się',
+                'title' => 'Jesteś niezalogowany'
+            ]);
+
+        if (is_numeric($request->valueQuantity)) {
+            if ($request->valueQuantity <= 0 || $request->valueQuantity > 99) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Nieprawidłowa liczba'
+                ]);
+            }else if($this->cartService->addValue($product, $request) == false)
+                {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Zabyt duża wartość sumaryczna'
+                    ]);
+                }else
+                return response()->json([
+                    'status' => 'success',
+                    'title' => 'Brawo!',
+                    'message' => 'Poprawnie dodano produkt do koszyka'
+                ]);
+        }else
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nieprawidłowa wartość'
+            ]);
 
 
+    }
 
 
 }
