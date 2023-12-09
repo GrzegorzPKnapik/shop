@@ -50,7 +50,11 @@ class CartService
         //bez this->shopping_lists_product nadpisywal sie pustym obiektem dla pierwszego produktu
         //jest koszyk i produkt był w koszyku dziala
         if (!is_null($this->shopping_list) && !is_null($shopping_Lists_Product)) {
-            return false;
+            return response()->json([
+                'status' => 'warning',
+                'title' => 'Produkt jest już w koszyku',
+                'message' => ''
+            ]);
             //nie ma produktu i koszyka1 dziala
         }else if(is_null($this->shopping_list)) {
             $this->shopping_list = $this->newShoppingList($product, $quantity);
@@ -62,6 +66,12 @@ class CartService
 
 
         $this->updateTotal($this->shopping_list);
+
+        return response()->json([
+            'status' => 'success',
+            'title' => 'Brawo!',
+            'message' => 'Poprawnie dodano produkt do koszyka'
+        ]);
     }
 
 
@@ -164,25 +174,15 @@ class CartService
     }
 
 
-    public function addValue(Product $product, Request $request)
+    public function addValue(Product $product, $quantity)
     {
-        //stwórz obiekt
 
-        $this->shopping_list = $this->findShoppingList()->first();
-        $shopping_lists_product = $this->findShoppingListsProduct($product, $this->shopping_list)->first();
-
-        if ($shopping_lists_product->quantity <= 99 && $shopping_lists_product->quantity + $request->valueQuantity<99) {
-            $this->findShoppingListsProduct($product, $this->shopping_list)
-                ->update([
-                    'quantity' => $shopping_lists_product->quantity + $request->valueQuantity,
-                    'sub_total' => DB::raw('(' . $product->price . ' * (quantity))'),
-                    'PRODUCTS_id' => $product->id
+            $response = $this->addItem($product, $quantity);
+                return response()->json([
+                    'status' => $response->original['status'],
+                    'title' => $response->original['title'],
+                    'message' => $response->original['message']
                 ]);
-            $this->updateTotal($this->shopping_list);
-            return true;
-        }else
-            return false;
-
     }
 
 

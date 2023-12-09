@@ -67,13 +67,24 @@ class CartController extends Controller
     }
 
 
-    public function store(Product $product): JsonResponse
+    public function store(Product $product)
     {
-        if(Auth::check())
-        {
+        if(!Auth::check()) {
+            return response()->json([
+                'status' => 'warning',
+                'title' => 'prosze sie zalogować'
+            ]);
+        }
+
+            $response = $this->cartService->addItem($product);
 
 
-            if($this->cartService->addItem($product)===false)
+
+
+                //zwróc wartości z prby dodania produktu moze być
+            //jest juz w koszyku lub poprawnie dodano do koszyka
+            //dd($response->original['status']);
+            /*if($this->cartService->addItem($product)===false)
             {
                 return response()->json([
                     'status' => 'warning',
@@ -84,11 +95,15 @@ class CartController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => (__('shop.cart.status.store.success'))
-            ]);
-        }else
-            return response()->json([
-                'status' => 'warning',
-            ]);
+            ]);*/
+
+
+             return response()->json([
+                 'status' => $response->original['status'],
+                 'title' => $response->original['title'],
+                 'message' => $response->original['message']
+             ]);
+
 
     }
 
@@ -150,37 +165,39 @@ class CartController extends Controller
 
     public function addValue(Product $product, Request $request)
     {
+/*        dd($request->valueQuantity);*/
         if(!Auth::check())
+        {
             return response()->json([
                 'status' => 'warning',
                 'message' => 'Zaloguj się',
                 'title' => 'Jesteś niezalogowany'
             ]);
+        }
 
-        if (is_numeric($request->valueQuantity)) {
+
+        if (!is_numeric($request->valueQuantity)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nieprawidłowa wartość'
+            ]);
+        }
+
+
             if ($request->valueQuantity <= 0 || $request->valueQuantity > 99) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Nieprawidłowa liczba'
                 ]);
-            }else if($this->cartService->addItem($product, $request->valueQuantity) === false)
-            {
-                //zbyt duza liczba error dać sumaryczna
-                return response()->json([
-                    'status' => 'warning',
-                    'message' => 'produkt jest już w koszyku'
-                ]);
-            }else
-                return response()->json([
-                    'status' => 'success',
-                    'title' => 'Brawo!',
-                    'message' => 'Poprawnie dodano produkt do koszyka'
-                ]);
-        }else
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Nieprawidłowa wartość'
-            ]);
+            }
+        $response = $this->cartService->addValue($product, $request->valueQuantity);
+
+        return response()->json([
+            'status' => $response->original['status'],
+            'title' => $response->original['title'],
+            'message' => $response->original['message']
+        ]);
+
 
 
     }
