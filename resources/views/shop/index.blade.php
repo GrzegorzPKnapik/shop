@@ -328,7 +328,7 @@
                                                                 <li>
                                                                     <strong>Dostępność:</strong>
                                                                     <span>
-                                                            {{$product->status}}
+                                                            {{$product->status->getStatusText()}}
                                                         </span>
                                                                 </li>
                                                                 <li>
