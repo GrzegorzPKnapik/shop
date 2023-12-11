@@ -95,11 +95,11 @@
                                     @if($item->shopping_list->mode == 'shopping_list')
                                     <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
                                         @endif
-                                    {{ \Carbon\Carbon::parse($item->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                    {{ \Carbon\Carbon::parse($item->shopping_list->delivery_date)->locale('pl')->isoFormat('dddd') . ', '}}
                                         @if($item->shopping_list->mode == 'shopping_list')
                                         <label>Najbliższa data cyklicznej dostawy: </label>
                                         @endif
-                                            {{ date('Y-m-d', strtotime($item->set_delivery_date)) }}
+                                            {{ date('Y-m-d', strtotime($item->shopping_list->delivery_date)) }}
                                     @php break;@endphp
                                     @endforeach
                                     <br>
@@ -107,10 +107,10 @@
 
                                 @foreach($order as $item)
                                     <td>Address:</td>
-                                    <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
-                                    <p>{{$item->address->city}}, {{$item->address->street}}<br>
-                                        {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
-                                    <p>Telefon: {{$item->address->phone_number}}</p>
+                                    <p><strong>{{$item->shopping_list->address->name}} {{{$item->shopping_list->address->surname}}}</strong></p>
+                                    <p>{{$item->shopping_list->address->city}}, {{$item->shopping_list->address->street}}<br>
+                                        {{$item->shopping_list->address->zip_code}}, {{$item->shopping_list->address->voivodeship}}</p>
+                                    <p>Telefon: {{$item->shopping_list->address->phone_number}}</p>
                                     @php break;@endphp
                                 @endforeach
 

@@ -472,12 +472,13 @@ class ShoppingListController extends Controller
         $copiedShoppingList->title = $shopping_list->title;
         $copiedShoppingList->total = $shopping_list->total;
         $copiedShoppingList->mode = $shopping_list->mode;
-        $copiedShoppingList->status = 'cart';
+        $copiedShoppingList->status = ShoppingListStatus::CART;
         $copiedShoppingList->delivery_date = $shopping_list->delivery_date;
         $copiedShoppingList->mod_available_date = $shopping_list->mod_available_date;
         $copiedShoppingList->end_mod_date = $shopping_list->end_mod_date;
         $copiedShoppingList->created_at = $shopping_list->created_at;
         $copiedShoppingList->updated_at = $shopping_list->updated_at;
+        $copiedShoppingList->ADDRESSES_id = $shopping_list->ADDRESSES_id;
         $copiedShoppingList->USERS_id = $shopping_list->USERS_id;
 
         $copiedShoppingList->save();
@@ -501,13 +502,10 @@ class ShoppingListController extends Controller
         //orde też musze skopiować tworze order z tymi samymi danymi ale zminia sie id shopping_list na skopiowaną
 
         $copiedOrder = new Order();
-        $copiedOrder->set_delivery_date = $shopping_list->set_delivery_date;
-        $copiedOrder->create_date = $order->create_date;
         $copiedOrder->created_at = $order->created_at;
         $copiedOrder->updated_at = $order->updated_at;
         $copiedOrder->DELIVERIES_id = $order->DELIVERIES_id;
         $copiedOrder->PAYMENTS_id = $order->PAYMENTS_id;
-        $copiedOrder->ADDRESSES_id = $order->ADDRESSES_id;
         $copiedOrder->SHOPPING_LISTS_id = $copiedShoppingList->id;
 
 

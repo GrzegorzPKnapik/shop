@@ -162,17 +162,17 @@
                                     Wpisz adres dostawy
                                 </a></small></h4>
 
-                        <h4><small><a data-bs-target="#quick_view_cycle_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
-                                    Wybierz cykliczne dostawy
-                                </a></small></h4>
 
                         <h4 class="pt-4 pb-2">Dostawa:</h4>
-                        @foreach($deliveryDate as $date)
-                          {{$date['name'] }}, {{$date['date']}}
+
+                        <span id="deliveryDate">
+                        @foreach($deliveryDate as $dDate)
+
+                          {{$dDate['name'] }}, {{$dDate['date']}}
                                 @endforeach
+                        </span>
 
-
-                        <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
+                        <h4 class="pt-4 pb-2">Wybierz date dostawy:</h4>
 
 
                             <form class="selectDay" method="POST">
@@ -182,11 +182,17 @@
 
                                 <div class="col-md-6">
                                     <div class="input-item">
-                                        <label>Dzień cyklicznych dostaw:</label>
-                                        <select name="select" class="nice-select">
-                                            <option value="0"> Wybierz dzień</option>
+                                        <select name="select" class="nice-select" id="deliveryDateSelect">
                                                 @foreach($collectionDates as $date)
-                                                <option value={{$date['date']}}> {{$date['name']}} (najbliższa dostawa:   {{ $date['date'] }} )
+                                                <option value={{$date['date']}} {{ $date['date'] == $dDate['date'] ? 'selected' : '' }}> {{$date['name']}} ({{ $date['date'] }})
+                                                    @php
+                                                        $now = \Carbon\Carbon::now();
+                                                        $daysRemaining = $now->diffInDays($date['date']);
+                                                        $daysLabel = trans_choice('shop.days', $daysRemaining);
+                                                    @endphp
+                                                    za {{$daysRemaining}} {{$daysLabel}}
+
+
                                                 @endforeach
                                             </option>
                                         </select>

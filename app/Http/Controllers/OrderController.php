@@ -65,7 +65,7 @@ class OrderController extends Controller
             ->select('orders.id as order_id', 'orders.*', 'shopping_lists_products.*', 'shopping_lists.*', 'products.name as product_name', 'products.*', 'images.name')->where('orders.id', $order->id)
             ->get();
 
-        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+        $order = Order::with(['shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
         return view('order.order_summary', ['items' => $items, 'order' => $order]);
     }
@@ -111,8 +111,8 @@ class OrderController extends Controller
 
         if($request->select!=0)
         {
-            $order->set_delivery_date = $request->select;
-            $s_l->end_mode_date = $this->endDate($request->select);
+            $order->delivery_date = $request->select;
+            $s_l->end_mod_date = $this->endDate($request->select);
             $s_l->mod_available_date = $this->mod_available_date($request->select);
 
         }
@@ -195,6 +195,7 @@ class OrderController extends Controller
         try {
             $order->save();
             return response()->json([
+               // event(new \App\Events\PurchaseSuccesful($purchase)),
                 'status' => 'success',
                 'order' => $order->id
             ]);
@@ -255,14 +256,15 @@ class OrderController extends Controller
 
         if($request->select==0)
             {
-                $order->set_delivery_date = $deliveryDayDate;
+                $shopping_list->delivery_date = $deliveryDayDate;
                 $shopping_list->end_mod_date = null;
                 $shopping_list->mod_available_date = null;
                 $shopping_list->mode = ShoppingListMode::NORMAL;
                 $shopping_list->status = ShoppingListStatus::ORDER;
             }
         else{
-            $order->set_delivery_date = $request->select;
+            $shopping_list->delivery_date = $request->select;
+
 
             $shopping_list->end_mod_date = $this->endDate($request->select);
             $shopping_list->mod_available_date = $this->mod_available_date($request->select);
@@ -272,7 +274,7 @@ class OrderController extends Controller
         }
 
         $order->SHOPPING_LISTS_id = $shopping_list->id;
-        $order->ADDRESSES_id = $copiedAddress->id;
+        $shopping_list->ADDRESSES_id = $copiedAddress->id;
 
 
         try {

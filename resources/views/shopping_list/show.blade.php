@@ -66,10 +66,13 @@
                                                                 <div id="refreshTitle">
                                                                 <p class="text-center">
                                                                     <label>Title:</label>
-                                                                    <h1 class="text-center">{{$item->title}}</h1>
-                                                                        <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
-                                                                            <button class="icon-edit"></button>
+                                                                    <h1 class="text-center">{{$item->title}}
+                                                                        <span style="font-size: smaller;">
+                                                                            <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
+                                                                            <button class="icon-edit" style="font-size: 1rem;"></button>
                                                                         </a>
+                                                                        </span>
+                                                                    </h1>
                                                                 </div>
 
                                                                 <p class="text-center">
@@ -106,7 +109,11 @@
 
                                                                 <p>
                                                                 <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                            Wybierz inny adres
+                                                                            @if($item->ADDRESSES_id != null)
+                                                                                Wybierz inny adres
+                                                                            @else
+                                                                            Wybierz adres
+                                                                            @endif
                                                                         </a></small></h4>
                                                                 </p>
                                                                 <div class="collapse" id="collapseExample">
@@ -137,6 +144,9 @@
                                                                                 </address>
 
                                                                         @endforeach
+                                                                            <button class="theme-btn-1 btn btn-effect-1 assignAddress" data-id="{{$item->id}}" type="submit">
+                                                                                {{ __('Przypisz address do s_l') }}
+                                                                            </button>
                                                                     </div>
                                                                 </div>
 
@@ -148,9 +158,6 @@
 
                                                             <br>
 
-                                                                <button class="theme-btn-1 btn btn-effect-1 assignAddress" data-id="{{$item->id}}" type="submit">
-                                                                    {{ __('Przypisz address do s_l') }}
-                                                                </button>
 
                                                             <table class="table text-center caption-top table-sm">
                                                                 <caption>Products</caption>
@@ -236,9 +243,16 @@
                                                                             <div class="input-item">
                                                                                 <label>Dzień cyklicznych dostaw:</label>
                                                                                 <select name="select" class="nice-select">
-                                                                                    <option value="0"> Wybierz dzień</option>
                                                                                     @foreach($collectionDates as $date)
-                                                                                        <option value={{$date['date']}}> {{$date['name']}} (dostawa:   {{ $date['date'] }} )
+                                                                                        <option value={{$date['date']}}> {{$date['name']}} ({{ $date['date'] }})
+
+                                                                                            @php
+                                                                                                $now = \Carbon\Carbon::now();
+                                                                                                $daysRemaining = $now->diffInDays($date['date']);
+                                                                                                $daysLabel = trans_choice('shop.days', $daysRemaining);
+                                                                                            @endphp
+                                                                                            za {{$daysRemaining}} {{$daysLabel}}
+
                                                                                             @endforeach
                                                                                         </option>
                                                                                 </select>
@@ -250,6 +264,9 @@
                                                                             <h4><small><a href="" class="deleteDay" data-id="{{$item->id}}"> Usuń adres</a></small>
                                                                         @endif
                                                                     </div>
+                                                                    <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$item->id}}" type="submit">
+                                                                        {{ __('Save delivery date') }}
+                                                                    </button>
                                                                     <br>
                                                                 </div>
                                                             </div>
@@ -283,9 +300,7 @@
                                                                 </table>
                                                             </div>
 
-                                                            <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$item->id}}" type="submit">
-                                                                {{ __('Save changes') }}
-                                                            </button>
+
 
                                                             <div id="refreshActive">
                                                                 <div class="btn-wrapper">

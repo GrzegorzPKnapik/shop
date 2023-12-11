@@ -67,11 +67,11 @@
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
                                                                 <br>
                                                                 </p>
-                                                                <td>Address:</td>
-                                                                <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
-                                                                <p>{{$item->address->city}}, {{$item->address->street}}<br>
-                                                                    {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
-                                                                <p>Telefon: {{$item->address->phone_number}}</p>
+                                                                Address:</td>
+                                                                <p><strong>{{$item->shopping_list->address->name}} {{{$item->shopping_list->address->surname}}}</strong></p>
+                                                                <p>{{$item->shopping_list->address->city}}, {{$item->shopping_list->address->street}}<br>
+                                                                    {{$item->shopping_list->address->zip_code}}, {{$item->shopping_list->address->voivodeship}}</p>
+                                                                <p>Telefon: {{$item->shopping_list->address->phone_number}}</p>
                                                                 @php break;@endphp
                                                             @endforeach
 
@@ -107,9 +107,8 @@
 
                                                                 <p >
                                                                     <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
-                                                                    @foreach($order as $item){{ \Carbon\Carbon::parse($item->set_delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                                                    @foreach($order as $item){{ \Carbon\Carbon::parse($item->shopping_list->delivery_date)->locale('pl')->isoFormat('dddd') }}
                                                                     <br>
-                                                                    <label>Najbliższa data cyklicznej dostawy: {{ date('Y-m-d', strtotime($item->set_delivery_date)) }}</label>
                                                                     @php break;@endphp
                                                                     @endforeach
                                                                     <br>

@@ -48,6 +48,6 @@ return [
 
         ],
 
-
+    'days' => '{0} dni|{1} dzień|[2,4] dni|[5,Inf] dni',
 
 ];

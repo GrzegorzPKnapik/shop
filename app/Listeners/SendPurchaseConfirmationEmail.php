@@ -21,7 +21,11 @@ class SendPurchaseConfirmationEmail
      */
     public function handle(object $event): void
     {
-        $purchase = $event->purchase;
-        Mail::to($user->email)->send(new \App\Mail\PurchaseConfirmation($event->purchase));
+        //$purchase = $event->purchase;
+        //Mail::to($user->email)->send(new \App\Mail\MailNotify($event->purchase));
+
+        $purchase =
+
+        Mail::to('grzegorz.p.knapik@gmail.com')->send(new MailNotify($event->purchase));
     }
 }

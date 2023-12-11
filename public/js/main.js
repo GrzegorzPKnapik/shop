@@ -1708,6 +1708,20 @@
 
 
 
+            // Obsługa zmiany wartości w polu wyboru daty
+            $('#deliveryDateSelect').change(function() {
+                // Pobierz wybraną wartość
+                var selectedDate = $(this).val();
+                var parsedDate = new Date(selectedDate);
+
+                var formatter = new Intl.DateTimeFormat('pl', { weekday: 'long' });
+
+                var nameDay = formatter.format(parsedDate);
+                var newContent  = nameDay + ', ' + selectedDate;
+                $("#deliveryDate").html(newContent)
+            });
+
+
 
         /* --------------------------------------------------------
             34. scrollUp active
