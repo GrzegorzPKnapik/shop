@@ -186,7 +186,7 @@ $(document).on("click", ".deleteCategory", function () {
         if (result.value) {
             $.ajax({
                 type: "DELETE",
-                url: '/category/delete/' + $(this).data("id"),
+                url: '/category/' + $(this).data("id"),
                 data: ({
                     id: id
                 }),
@@ -240,7 +240,7 @@ $(document).on("click", ".deleteProducer", function () {
         if (result.value) {
             $.ajax({
                 type: "DELETE",
-                url: '/producer/delete/' + $(this).data("id"),
+                url: '/producer/' + $(this).data("id"),
                 data: ({
                     id: id
                 }),

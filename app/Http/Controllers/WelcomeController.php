@@ -16,7 +16,7 @@ class WelcomeController extends Controller
            // $cart = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->with('product.image','shopping_list')->get();
 
 
-        $products=Product::all();
+        $products=Product::where('status', '!=', 'disable')->get();
         return view('welcome', ['products'=>$products]);
     }
 }

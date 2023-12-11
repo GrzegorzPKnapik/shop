@@ -28,6 +28,11 @@ class ProductController extends Controller
     }
 
 
+    public function show(Product $product){
+        return view('products.show',['product'=>$product]);
+
+    }
+
     public function create()
     {
         $producers=Producer::all();
@@ -37,6 +42,8 @@ class ProductController extends Controller
         return view('products.create',['categories'=>$categories, 'producers'=>$producers]);
 
     }
+
+
 
     public function store(StoreProductRequest $request): RedirectResponse{
         $image = new Image();
@@ -48,6 +55,7 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->name = $request['product_name'];
+        $product->status = 'enable';
 
         $product->price = $request['product_price'];
         if (strpos($request['product_price'], '.') === false) {
@@ -68,22 +76,22 @@ class ProductController extends Controller
         $product->save();
 
 
-        return redirect()->route('product.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('employeePanel.index')->with('status',__('shop.product.status.store.success'));
     }
 
 
 
     public function destroy(Product $product): JsonResponse{
-        $image = Image::find($product->IMAGES_id);
-        $oldPath = $image->name;
+        //$image = Image::find($product->IMAGES_id);
+        //$oldPath = $image->name;
 
         try {
-            // $product = Product::find($id);
-            if (Storage::exists($oldPath)) {
-                Storage::delete($oldPath);
-            }
+          //  if (Storage::exists($oldPath)) {
+            //     Storage::delete($oldPath);
+          //  }
             //$image->delete();
-            $product->delete();
+            $product->status = 'disable';
+            $product->save();
 
             //jednorazowe wyświetlenie wiadomości
             //Session::flash('status', __('shop.product.status.delete.success'));
@@ -141,7 +149,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('product.index');
+        return redirect()->route('employeePanel.index');
     }
 
 

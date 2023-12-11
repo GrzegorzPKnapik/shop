@@ -157,9 +157,9 @@
                                         <td class="cart-product-quantity">
                                             <label for="valueQuantity">max 99sztuk:</label>
                                             <div class="cart-plus-minus m-auto">
-                                                <div class="dec qtybutton" data-id="{{$item->PRODUCTS_id}}">-</div>
+                                                <div class="dec qtybutton decrement" data-id="{{$item->PRODUCTS_id}}">-</div>
                                                 <input type="number" value="{{$item->quantity}}" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_quantity_input" data-id="{{$item->PRODUCTS_id}}">
-                                                <div class="inc qtybutton" data-id="{{$item->PRODUCTS_id}}">+</div>
+                                                <div class="inc qtybutton increment" data-id="{{$item->PRODUCTS_id}}">+</div>
                                             </div>
                                         </td>
 

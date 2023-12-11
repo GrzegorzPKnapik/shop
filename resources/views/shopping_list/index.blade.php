@@ -1,490 +1,139 @@
-@extends('layouts.appwhite')
+@extends('layouts.app')
 
 @section('content')
-
-    <body>
-
-
-    <!-- Add your site or application content here -->
-
-    <!-- Body main wrapper start -->
-    <div class="body-wrapper">
-
-        <!-- BREADCRUMB AREA START -->
-        <div
-            class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image"
-            data-bg="{{asset('img/bg/9.jpg')}}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
-                            <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">// Welcome to our company</h6>
-                                <h1 class="section-title white-color">Shopping list preview</h1>
-                            </div>
-                            <div class="ltn__breadcrumb-list">
-                                <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Shopping list</li>
-                                </ul>
-                            </div>
+<div class="body-wrapper">
+    @include('helpers.responses')
+    <!-- BREADCRUMB AREA START -->
+    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="img/bg/9.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
+                        <div class="section-title-area ltn__section-title-2">
+                            <h6 class="section-subtitle ltn__secondary-color">Shopping lists</h6>
+                            <h1 class="section-title white-color">Shopping lists</h1>
+                        </div>
+                        <div class="ltn__breadcrumb-list">
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li>Shopping lists</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- BREADCRUMB AREA END -->
 
+    <!-- LOGIN AREA START -->
+    <div class="col-lg-6 m-auto">
+        <div class="tab-content">
+            <div class="table-responsive">
+                <table class="table text-center table-sm">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Newest order number</th>
+                        <th>Shopping list number</th>
+                        <th>Update date</th>
+                        <th>Price</th>
+                        <th>Active</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-        <!-- WISHLIST AREA START -->
-        <div class="liton__wishlist-area pb-70">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <!-- PRODUCT TAB AREA START -->
-                        <div class="ltn__product-tab-area">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="ltn__tab-menu-list mb-50">
-                                            <div class="nav">
-                                                <a class="active show" data-bs-toggle="tab">Shopping list<i
-                                                        class="fas fa-file-alt"></i></a>
-                                            </div>
-                                        </div>
+                    <!--                                                            //wyswietl tylko te co mają status różny od ordered czyli od resume-->
+                    @foreach($shopping_lists as $item)
+
+                        <tr>
+                            <td class="cart-product-name">{{$item->title}}</td>
+                            @forelse($item->orders as $v => $order)
+                                @if($order->status != 'delivered')
+                                    <td class="cart-product-name">#{{$order->id}}</td>
+                                @endif
+                            @empty
+                                <td class="cart-product-name"></td>
+                            @endforelse
+
+                            <td class="cart-product-name">#{{$item->id}}</td>
+                            <td class="cart-product-name">{{$item->updated_at}}</td>
+
+                            <td class="cart-product-name">${{$item->total}}</td>
+                            <td class="cart-product-name">
+                                @if($item->active==true)
+                                    {{__('YES')}}
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('shoppingList.show', $item->id) }}">
+                                    <button class="icon-search"></button>
+                                </a>
+                            </td>
+
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!-- LOGIN AREA END -->
+
+    <!-- FEATURE AREA START ( Feature - 3) -->
+    <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__feature-item-box-wrap ltn__border-between-column white-bg">
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 col-12">
+                                <div class="ltn__feature-item ltn__feature-item-8">
+                                    <div class="ltn__feature-icon">
+                                        <img src="img/icons/icon-img/11.png" alt="#">
                                     </div>
-
-                                    <div class="col-lg-8">
-                                        <div class="tab-content">
-
-                                            <div class="ltn__myaccount-tab-content-inner">
-                                                <p>Lista zakupów</p>
-                                                <div class="ltn__form-box">
-                                                    <div class="ltn__myaccount-tab-content-inner">
-                                                        <div class="table-responsive">
-
-                                                            @foreach($shopping_list as $item)
-                                                                <div id="refreshTitle">
-                                                                <p class="text-center">
-                                                                    <label>Title:</label>
-                                                                    <h1 class="text-center">{{$item->title}}</h1>
-                                                                        <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
-                                                                            <button class="icon-edit"></button>
-                                                                        </a>
-                                                                </div>
-
-                                                                <p class="text-center">
-                                                                    <label>Shopping List ID:</label>
-                                                                <h1 class="text-center">#{{$item->id}}</h1>
-                                                                </p>
-
-
-
-                                                               @foreach ($item->orders as $index => $orderItem)
-                                                                    <p class="text-center">
-                                                                        <label>Order ID:</label>
-                                                                    <h1 class="text-center">#{{$orderItem->id}}</h1>
-                                                                    </p>
-                                                                    <br>
-                                                                    @php break;@endphp
-                                                                @endforeach
-
-                                                                <div id="refreshAddress">
-                                                            @if($item->ADDRESSES_id != null)
-                                                                    <td>Przypisany address:</td>
-                                                                    <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
-                                                                    <p>{{$item->address->city}}, {{$item->address->street}}<br>
-                                                                        {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
-                                                                    <p>Telefon: {{$item->address->phone_number}}</p>
-
-                                                                @else
-                                                                    <td>Address:</td>
-                                                                   Nie przypisano adresu!
-
-                                                            @endif
-
-                                                            @endforeach
-
-                                                                <p>
-                                                                <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                            Wybierz inny adres
-                                                                        </a></small></h4>
-                                                                </p>
-                                                                <div class="collapse" id="collapseExample">
-                                                                    <div class="card card-body">
-                                                                        @foreach($addresses as $address)
-
-                                                                                <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                                                    <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                                                           @if($address->selected == true)
-                                                                                               checked
-                                                                                        @endif
-                                                                                    >
-
-                                                                                    @if($address->selected == true)
-                                                                                        <label class="form-check-label" for="flexRadioDefault2">
-                                                                                            Wybrany jako główny
-                                                                                        </label>
-                                                                                    @endif
-
-                                                                                </div>
-
-                                                                                <address>
-                                                                                    <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                                    <p>{{$address->city}}, {{$address->street}}<br>
-                                                                                        {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                                    <p>Telefon: {{$address->phone_number}}</p>
-                                                                                    _____________________________
-                                                                                </address>
-
-                                                                        @endforeach
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <h4><small><a data-bs-target="#quick_view_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
-                                                                        Wpisz adres dostawy
-                                                                    </a></small></h4>
-
-                                                            <br>
-
-                                                                <button class="theme-btn-1 btn btn-effect-1 assignAddress" data-id="{{$item->id}}" type="submit">
-                                                                    {{ __('Przypisz address do s_l') }}
-                                                                </button>
-
-                                                            <table class="table text-center caption-top table-sm">
-                                                                <caption>Products</caption>
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Number</th>
-                                                                    <th>Image</th>
-                                                                    <th>Name</th>
-                                                                    <th>Price</th>
-                                                                    <th>Quantity</th>
-                                                                    <th>SubTotal</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach($shopping_list as $index => $item)
-                                                                    @foreach ($item->shopping_lists_products as $index => $item)
-                                                                        <tr>
-                                                                            <td class="cart-product-name">{{ $index+1}}.</td>
-                                                                            <td class="cart-product-image"> <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a></td>
-                                                                            <td class="cart-product-name">{{$item->product->name}}</td>
-                                                                            <td class="cart-product-name">${{$item->product->price}}</td>
-                                                                            <td class="cart-product-name">x{{$item->quantity}}</td>
-                                                                            <td class="cart-product-subtotal">${{$item->sub_total}}</td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-
-
-
-
-
-
-
-                                                            <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
-                                                            <div id="refreshShoppingList">
-                                                                <p>
-
-
-                                                                    @foreach($shopping_list as $item)
-                                                                        @if($item->delivery_date == null)
-                                                                            <label>Brak dodanej daty dostawy </label>
-                                                                        @else
-                                                                            <label>Ustawiony dzień realizacji cyklicznych dostaw:
-                                                                                {{ \Carbon\Carbon::parse($item->delivery_date)->locale('pl')->isoFormat('dddd') }}
-                                                                            </label>
-                                                                            <br>
-                                                                            <label>Najbliższa data cyklicznej dostawy:
-                                                                                {{ date('Y-m-d', strtotime($item->delivery_date)) }}
-                                                                            </label>
-                                                                            <br>
-                                                                            <label>Data ostatniej możliwej edycji listy w przypadku złożenia zamówinia:
-                                                                                {{ date('Y-m-d', strtotime($item->mod_available_date)) }}
-                                                                            </label>
-
-                                                                        @endif
-
-                                                                    @endforeach
-                                                                    <br>
-                                                                </p>
-                                                                @if($item->delivery_date == null)
-                                                                    <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
-                                                                                Dodaj dzień dostawy
-                                                                            </a></small></h4>
-                                                                    </p>
-                                                                @else
-                                                                    <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
-                                                                                Zmień dzień dostawy
-                                                                            </a></small></h4>
-                                                                    </p>
-                                                                    @endif
-
-                                                                    </a></small></h4>
-                                                            </div>
-
-
-                                                            <div class="collapse" id="collapseDayPicker">
-                                                                <div class="card card-body">
-                                                                    <form class="custom-form selectDay" method="POST">
-                                                                        @csrf
-                                                                        <div class="col-md-6">
-                                                                            <div class="input-item">
-                                                                                <label>Dzień cyklicznych dostaw:</label>
-                                                                                <select name="select" class="nice-select">
-                                                                                    <option value="0"> Wybierz dzień</option>
-                                                                                    @foreach($collectionDates as $date)
-                                                                                        <option value={{$date['date']}}> {{$date['name']}} (dostawa:   {{ $date['date'] }} )
-                                                                                            @endforeach
-                                                                                        </option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                    <div id="refreshDayDelete">
-                                                                        @if($item->delivery_date != null)
-                                                                            <h4><small><a href="" class="deleteDay" data-id="{{$item->id}}"> Usuń adres</a></small>
-                                                                        @endif
-                                                                    </div>
-                                                                    <br>
-                                                                </div>
-                                                            </div>
-
-                                                            <h4 class="pt-4 pb-2">Status zamówinia:</h4>
-                                                            {{--@if($orderItem->status == null)
-                                                                Złożone
-                                                            @else
-                                                            {{$orderItem->status}}
-                                                            --}}
-                                                            <br>
-
-                                                            <div class="shoping-cart-total mt-50">
-                                                                <h4>Cart Totals</h4>
-                                                                <table class="table text-center table-sm">
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td>Vat</td>
-                                                                        <td>$00.00</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><strong>Order Total</strong></td>
-                                                                        <td><strong>$
-                                                                                @foreach($shopping_list as $item)
-                                                                                    {{$item->total}}
-                                                                                    @php break;@endphp
-                                                                                @endforeach
-                                                                            </strong></td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-
-                                                            <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$item->id}}" type="submit">
-                                                                {{ __('Save changes') }}
-                                                            </button>
-
-                                                            <div id="refreshActive">
-                                                                <div class="btn-wrapper">
-                                                                    @if($item->status == 'stop')
-                                                                        <button class="theme-btn-1 btn btn-effect-1 "style="opacity: 0.6; cursor: not-allowed;"title="Zamówinie w realizacji" type="submit">
-                                                                            {{ __('Dezaktywuj') }}
-                                                                            @endif
-
-                                                                            @if($item->active == false && $item->status != 'stop')
-                                                                                <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
-                                                                                    {{
-                                                                                        __('Aktywuj')
-                                                                                    }}
-                                                                                    @endif
-                                                                                    @if($item->active == true && $item->status != 'stop')
-                                                                                        <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
-                                                                                            {{
-                                                                                            __('Dezaktywuj')
-                                                                                       }}
-                                                                                            @endif
-                                                                                        </button>
-                                                                </div>
-                                                            </div>
-
-
-
-
-                                                        </div>
-
-                                                        moźliwość nanoszenia zmian i pracowania z lsitą zakupów
-                                                        @if($item->status != 'stop')
-                                                            <div class="btn-wrapper">
-                                                                <a href="{{ route('shoppingList.upload', $item->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
-                                                            </div>
-                                                        @else
-                                                            <div class="btn-wrapper">
-                                                                    <span class="theme-btn-2 btn btn-effect-2" style="opacity: 0.6; cursor: not-allowed;"title="Edycja zablokowana">
-                                                                {{ __('Załaduj listę zakupów do dalszej edycji') }}
-                                                            </span>
-                                                            </div>
-                                                        @endif
-
-
-                                                        <br>
-                                                        tylko kopiuje produkty do koszyka i pracujemy jakby nie istniała lista zakupów, tworzy nowy koszyk w bazie
-                                                        <div class="btn-wrapper">
-                                                            <a href="{{ route('shoppingList.copyToCart', $item->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Skopiuj zawartość listy zakupów do koszyka') }}</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="ltn__feature-info">
+                                        <h4>Curated Products</h4>
+                                        <p>Provide Curated Products for
+                                            all product over $100</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- PRODUCT TAB AREA END -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    </div>
-
-
-
-    <div class="ltn__modal-area ltn__quick-view-modal-area">
-        <div class="modal fade" id="quick_view_modal" tabindex="-1">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" id="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <!-- <i class="fas fa-times"></i> -->
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="ltn__quick-view-modal-inner">
-                            <div class="modal-product-item">
-                                <div class="row">
-                                    <div class="ltn__form-box">
-                                        <form class="addAddress" id="address" method="POST">
-                                            <div id="refreshForm">
-                                                @csrf
-                                                <div class="row mb-50">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label>Imie:</label>
-                                                            <input id="name" type="text" placeholder="Imie"
-                                                                   class="form-control @error('name') is-invalid @enderror"
-                                                                   name="name"
-                                                                   required autocomplete="name" autofocus>
-                                                            @error('name')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label>Nazwisko:</label>
-                                                            <input id="surname" type="text" placeholder="Nazwisko"
-                                                                   class="form-control @error('surname') is-invalid @enderror"
-                                                                   name="surname"
-                                                                   required autocomplete="surname" autofocus>
-                                                            @error('surname')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label>Miasto:</label>
-                                                            <input id="city" type="text" placeholder="Miasto"
-                                                                   class="form-control @error('city') is-invalid @enderror"
-                                                                   name="city" value="{{ old('city') }}"
-                                                                   required autocomplete="city" autofocus>
-                                                            @error('city')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Ulica:</label>
-                                                            <input id="street" type="text" placeholder="Ulica"
-                                                                   class="form-control @error('street') is-invalid @enderror"
-                                                                   name="street" value="{{ old('street') }}"
-                                                                   required autocomplete="street" autofocus>
-                                                            @error('street')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Kod pocztowy:</label>
-                                                            <input id="zip_code" type="text" placeholder="Kod pocztowy"
-                                                                   class="form-control @error('zip_code') is-invalid @enderror"
-                                                                   name="zip_code" value="{{ old('zip_code') }}"
-                                                                   required autocomplete="zip_code" autofocus>
-                                                            @error('zip_code')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Województwo:</label>
-                                                            <input id="voivodeship" type="text" placeholder="Województwo"
-                                                                   class="form-control @error('voivodeship') is-invalid @enderror"
-                                                                   name="voivodeship" value="{{ old('voivodeship') }}"
-                                                                   required autocomplete="voivodeship" autofocus>
-                                                            @error('voivodeship')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Numer telefonu:</label>
-                                                            <input id="phone_number" type="text" placeholder="Numer telefonu"
-                                                                   class="form-control @error('phone_number') is-invalid @enderror"
-                                                                   name="phone_number" value="{{ old('phone_number') }}"
-                                                                   required autocomplete="phone_number" autofocus>
-                                                            @error('phone_number')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="btn-wrapper">
-                                                    <button type="submit"
-                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" >
-                                                        {{__('Zapisz adres')}}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                            <div class="col-xl-3 col-md-6 col-12">
+                                <div class="ltn__feature-item ltn__feature-item-8">
+                                    <div class="ltn__feature-icon">
+                                        <img src="img/icons/icon-img/12.png" alt="#">
+                                    </div>
+                                    <div class="ltn__feature-info">
+                                        <h4>Handmade</h4>
+                                        <p>We ensure the product quality
+                                            that is our main goal</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6 col-12">
+                                <div class="ltn__feature-item ltn__feature-item-8">
+                                    <div class="ltn__feature-icon">
+                                        <img src="img/icons/icon-img/13.png" alt="#">
+                                    </div>
+                                    <div class="ltn__feature-info">
+                                        <h4>Natural Food</h4>
+                                        <p>Return product within 3 days
+                                            for any product you buy</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6 col-12">
+                                <div class="ltn__feature-item ltn__feature-item-8">
+                                    <div class="ltn__feature-icon">
+                                        <img src="img/icons/icon-img/14.png" alt="#">
+                                    </div>
+                                    <div class="ltn__feature-info">
+                                        <h4>Free home delivery</h4>
+                                        <p>We ensure the product quality
+                                            that you can trust easily</p>
                                     </div>
                                 </div>
                             </div>
@@ -494,77 +143,80 @@
             </div>
         </div>
     </div>
+    <!-- FEATURE AREA END -->
 
-
-
-    <div class="ltn__modal-area ltn__quick-view-modal-area">
-        <div class="modal fade" id="quick_view_edit_title" tabindex="-1">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" id="closeTitle" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            <!-- <i class="fas fa-times"></i> -->
-                        </button>
+    <!-- Utilize Cart Menu Start -->
+    <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
+        <div class="ltn__utilize-menu-inner ltn__scrollbar">
+            <div class="ltn__utilize-menu-head">
+                <span class="ltn__utilize-menu-title">Cart</span>
+                <button class="ltn__utilize-close">×</button>
+            </div>
+            <div class="mini-cart-product-area ltn__scrollbar">
+                <div class="mini-cart-item clearfix">
+                    <div class="mini-cart-img">
+                        <a href="#"><img src="img/product/1.png" alt="Image"></a>
+                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                     </div>
-                    <div class="modal-body">
-                        <div class="ltn__quick-view-modal-inner">
-                            <div class="modal-product-item">
-                                <div class="row">
-                                    <div class="ltn__form-box">
-                                        <form class="editTitle" id="title" method="POST">
-                                            @csrf
-                                            <div class="row mb-50">
-                                                <div class="col-md-6">
-                                                    <div class="mb-3">
-                                                        <label>Tytuł:</label>
-                                                        <input id="title" type="text" placeholder="Tytuł" value="{{$item->title}}"
-                                                               class="form-control  @error('title') is-invalid @enderror"
-                                                               name="title"
-                                                               required autocomplete="title" autofocus>
-                                                        @error('title')
-                                                        <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="btn-wrapper">
-                                                <button type="submit"
-                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase saveTitle" data-id="{{$item->id}}">
-                                                    {{__('Zapisz adres')}}
-                                                </button>
-                                            </div>
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mini-cart-info">
+                        <h6><a href="#">Red Hot Tomato</a></h6>
+                        <span class="mini-cart-quantity">1 x $65.00</span>
+                    </div>
+                </div>
+                <div class="mini-cart-item clearfix">
+                    <div class="mini-cart-img">
+                        <a href="#"><img src="img/product/2.png" alt="Image"></a>
+                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                    </div>
+                    <div class="mini-cart-info">
+                        <h6><a href="#">Vegetables Juices</a></h6>
+                        <span class="mini-cart-quantity">1 x $85.00</span>
+                    </div>
+                </div>
+                <div class="mini-cart-item clearfix">
+                    <div class="mini-cart-img">
+                        <a href="#"><img src="img/product/3.png" alt="Image"></a>
+                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                    </div>
+                    <div class="mini-cart-info">
+                        <h6><a href="#">Orange Sliced Mix</a></h6>
+                        <span class="mini-cart-quantity">1 x $92.00</span>
+                    </div>
+                </div>
+                <div class="mini-cart-item clearfix">
+                    <div class="mini-cart-img">
+                        <a href="#"><img src="img/product/4.png" alt="Image"></a>
+                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
+                    </div>
+                    <div class="mini-cart-info">
+                        <h6><a href="#">Orange Fresh Juice</a></h6>
+                        <span class="mini-cart-quantity">1 x $68.00</span>
                     </div>
                 </div>
             </div>
+            <div class="mini-cart-footer">
+                <div class="mini-cart-sub-total">
+                    <h5>Subtotal: <span>$310.00</span></h5>
+                </div>
+                <div class="btn-wrapper">
+                    <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                    <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                </div>
+                <p>Free Shipping on All Orders Over $100!</p>
+            </div>
+
         </div>
     </div>
-    </div>
+    <!-- Utilize Cart Menu End -->
 
+    <!-- Utilize Mobile Menu Start -->
+    <!-- Utilize Mobile Menu End -->
 
-    </body>
+    <div class="ltn__utilize-overlay"></div>
 
+</div>
 @endsection
 
-@section('javascript')
-    const DATA = {
-    saveDayUrl: '{{url('/shopping_list/save_day')}}/',
-    deleteDayUrl: '{{url('/shopping_list/delete_day')}}/',
-    selectAddressUrl: '{{url('address/select')}}/',
-    storeAddressUrl: '{{url('address/store')}}',
-    storeOrderSLUrl: '{{url('/order/storeSL')}}/',
-    saveTitleUrl: '{{url('/shopping_list/save/title')}}/',
 
-
-    }
+@section('js-files')
 @endsection

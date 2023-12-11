@@ -30,38 +30,52 @@
     <div class="col-lg-6 m-auto">
         <div class="tab-content">
             <div class="table-responsive">
+                <div class="mb-4">
+                    <a href="{{ route('category.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nową kategorie') }}</a>
+                </div>
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Nazwa</th>
-                        <th>Akcje</th>
+                        <th>Name</th>
+                        <th>Create date</th>
+                        <th>Update date</th>
+                        <th>Action</th>
+
+
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($categories as $category)
-                    <tr class="delete_mem{{$category->id}}">
-                        <td>{{$category->id}}</td>
-                        <td>{{$category->name}}</td>
+                        <tr class="align-middle delete_mem{{$category->id}}">
+                            <td class="cart-product-info">
+                                <h4><a>#{{$category->id}}</a></h4>
+                            </td>
 
-                        <td>
-                        <button class="icon-cancel deleteCategory" data-id="{{$category->id}}"></button>
+                            <td class="cart-product-info">
+                                {{$category->name}}
+                            </td>
 
-                            <a href="{{ route('category.edit', $category->id) }}">
-                                <button class="icon-edit"></button>
-                            </a>
+                            <td class="cart-product-info">
+                                {{$category->created_at}}
+                            </td>
+                            <td class="cart-product-info">
+                                {{$category->updated_at}}
+                            </td>
+                            <td>
+                                <button class="icon-cancel deleteCategory" data-id="{{$category->id}}"></button>
 
-                            <a href="https://www.freecodecamp.org/">
-                                <button class="icon-search"></button>
-                            </a>
+                                <a href="{{ route('category.edit', $category->id) }}">
+                                    <button class="icon-edit"></button>
+                                </a>
 
-                        <td><a href="cart.html">Quickview</a>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
     <!-- LOGIN AREA END -->
@@ -202,7 +216,7 @@
 @endsection
 
 @section('javascript')
- const deleteProductUrl = "{{url('product')}}/";
+ const deleteProductUrl = "{{url('category')}}/";
 @endsection
 
 @section('js-files')

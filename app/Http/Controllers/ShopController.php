@@ -18,7 +18,8 @@ class ShopController extends Controller
         $sort = $request->sort;
         $search = $request->search;
 
-        $query = Product::query();
+        $query = Product::query()->where('status', '!=', 'disable');
+
 
 
         if(!is_null($filters))
@@ -50,10 +51,16 @@ class ShopController extends Controller
 
         $products = $query->paginate(3)->withQueryString();
 
-        return view('shop.index', ['products'=>$products, 'categories'=>Category::all(), 'descriptions'=>Description::all()])->render();
+        return view('shop.index', ['products'=>$products, 'categories'=>Category::where('status', '!=', 'disable'), 'descriptions'=>Description::all()])->render();
+
+    }
 
 
+    public function product(Product $product)
+    {
 
+
+        return view('shop.product', ['product'=>$product])->render();
 
     }
 

@@ -47,6 +47,7 @@
                             <form class="ltn__form-box contact-form-box" method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
+                                    <label>Name:</label>
                                     <input id="name" type="text" placeholder="kategoria" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">

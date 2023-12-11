@@ -30,40 +30,69 @@
     <div class="col-lg-6 m-auto">
         <div class="tab-content">
             <div class="table-responsive">
+                <div class="mb-4">
+                    <a href="{{ route('product.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nowy produkt') }}</a>
+                </div>
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Nazwa</th>
-                        <th>Akcje</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Create date</th>
+                        <th>Update date</th>
+                        <th>Action</th>
+
+
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($products as $product)
-                    <tr class="delete_mem{{$product->id}}">
-                        <td>{{$product->id}}</td>
-                        <td>{{$product->name}}</td>
-                        <td>{{$product->image->name}}</td>
+                        <tr class="align-middle delete_mem{{$product->id}}">
+                            <td class="cart-product-info">
+                                <h4><a>#{{$product->id}}</a></h4>
+                            </td>
+
+                            <td class="cart-product-image">
+                                <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                            </td>
+
+                            <td class="cart-product-info">
+                                {{$product->name}}
+                            </td>
+                            <td>
+                                {{$product->category->name}}
+                            </td>
 
 
-                        <td>
-                        <button class="icon-cancel deleteProduct" data-id="{{$product->id}}"></button>
+                            <td class="cart-product-info">
+                                {{$product->price}}
+                            </td>
+                            <td class="cart-product-info">
+                                {{$product->created_at}}
+                            </td>
+                            <td class="cart-product-info">
+                                {{$product->updated_at}}
+                            </td>
+                            <td>
+                                <button class="icon-cancel deleteProduct" data-id="{{$product->id}}"></button>
 
-                            <a href="{{ route('product.edit', $product->id) }}">
-                                <button class="icon-edit"></button>
-                            </a>
+                                <a href="{{ route('product.edit', $product->id) }}">
+                                    <button class="icon-edit"></button>
+                                </a>
 
-                            <a href="https://www.freecodecamp.org/">
-                                <button class="icon-search"></button>
-                            </a>
-
-                        <td><a href="cart.html">Quickview</a>
-                        </td>
-                    </tr>
+                                <a href="{{ route('product.show', $product->id) }}">
+                                    <button class="icon-search"></button>
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
     <!-- LOGIN AREA END -->

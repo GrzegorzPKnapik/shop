@@ -38,18 +38,20 @@ class ProducerController extends Controller
     public function store(StoreProducerRequest $request): RedirectResponse{
         $producer = new Producer();
         $producer->name = $request['name'];
+        $producer->status = 'enable';
         $producer->save();
 
-        return redirect()->route('producer.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('employeePanel.index')->with('status',__('shop.product.status.store.success'));
     }
 
 
 
     public function destroy(Producer $producer): JsonResponse{
-
         try {
 
-            $producer->delete();
+            //$producer->delete();
+            $producer->status = 'disable';
+            $producer->save();
 
             return response()->json([
                 'status' => 'success',
@@ -72,7 +74,7 @@ class ProducerController extends Controller
 
         $producer->name=$request['name'];
         $producer->save();
-        return redirect()->route('producer.index');
+        return redirect()->route('employeePanel.index');
     }
 
 

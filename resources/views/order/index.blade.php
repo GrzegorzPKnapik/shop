@@ -10,13 +10,13 @@
                 <div class="col-lg-12">
                     <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                         <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">Producenci</h6>
-                            <h1 class="section-title white-color">Producenci</h1>
+                            <h6 class="section-subtitle ltn__secondary-color">Orders</h6>
+                            <h1 class="section-title white-color">Orders</h1>
                         </div>
                         <div class="ltn__breadcrumb-list">
                             <ul>
                                 <li><a href="index.html">Home</a></li>
-                                <li>Producers</li>
+                                <li>Orders</li>
                             </ul>
                         </div>
                     </div>
@@ -30,46 +30,30 @@
     <div class="col-lg-6 m-auto">
         <div class="tab-content">
             <div class="table-responsive">
-                <div class="mb-4">
-                    <a href="{{ route('producer.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nowego producenta') }}</a>
-                </div>
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Create date</th>
-                        <th>Update date</th>
+                        <th>Number</th>
+                        <th>User number</th>
+                        <th>Date</th>
+                        <th>Price</th>
                         <th>Action</th>
-
-
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($producers as $producer)
-                        <tr class="align-middle delete_mem{{$producer->id}}">
-                            <td class="cart-product-info">
-                                <h4><a>#{{$producer->id}}</a></h4>
-                            </td>
+                    @foreach($orders as $item)
+                        <tr>
 
-                            <td class="cart-product-info">
-                                {{$producer->name}}
-                            </td>
-
-                            <td class="cart-product-info">
-                                {{$producer->created_at}}
-                            </td>
-                            <td class="cart-product-info">
-                                {{$producer->updated_at}}
-                            </td>
+                            <td class="cart-product-name">#{{$item->id}}</td>
+                            <td class="cart-product-name">#{{$item->shopping_list->user->id}}</td>
+                            <td class="cart-product-name">{{$item->created_at}}</td>
+                            <td class="cart-product-name">${{$item->shopping_list->total}}</td>
                             <td>
-                                <button class="icon-cancel deleteProducer" data-id="{{$producer->id}}"></button>
-
-                                <a href="{{ route('producer.edit', $producer->id) }}">
-                                    <button class="icon-edit"></button>
+                                <a href="{{ route('order.show', $item->id) }}">
+                                    <button class="icon-search"></button>
                                 </a>
-
                             </td>
+
                         </tr>
                     @endforeach
                     </tbody>

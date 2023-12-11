@@ -120,7 +120,7 @@
                                                     <div class="product-img">
 
                                                         @if(!is_null($product->image->name))
-                                                            <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                            <a href="{{route('shop.product', $product->id)}}"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
                                                         @else
                                                             <img src="img/product/6.png" alt="Zdjęcie">
                                                         @endif
@@ -291,7 +291,7 @@
                                                 <div class="col-lg-6 col-12">
                                                     <div class="modal-product-img">
                                                         @if(!is_null($product->image->name))
-                                                            <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                            <a href="{{route('shop.product', $product->id)}}"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
                                                         @else
                                                             <img src="img/product/6.png" alt="Zdjęcie">
                                                         @endif
@@ -335,13 +335,15 @@
                                                         </div>
                                                         <div class="ltn__product-details-menu-2">
                                                             <ul>
-                                                                <li><label for="valueQuantity">max 99sztuk:</label>
-                                                                    <div class="cart-plus-minus">
-                                                                        <!--                                                                <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">-->
-                                                                        <input type="number" value="1" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box" data-id="{{$product->id}}">
-
-                                                                    </div>
+                                                                <li>
+                                                                        <label for="valueQuantity">max 99sztuk:</label>
+                                                                        <div class="cart-plus-minus m-auto">
+                                                                            <div class="dec qtybutton" onclick="decrement()">-</div>
+                                                                            <input type="number" value="1" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_quantity_input">
+                                                                            <div class="inc qtybutton" onclick="increment()">+</div>
+                                                                        </div>
                                                                 </li>
+
 
 
                                                                 <li>
@@ -415,6 +417,23 @@
                 }
             }
 
+                function increment() {
+                var inputElement = document.getElementById('valueQuantity');
+                var currentValue = parseInt(inputElement.value, 10);
+
+                if (currentValue < 99) {
+                inputElement.value = currentValue + 1;
+            }
+            }
+
+                function decrement() {
+                var inputElement = document.getElementById('valueQuantity');
+                var currentValue = parseInt(inputElement.value, 10);
+
+                if (currentValue > 1) {
+                inputElement.value = currentValue - 1;
+            }
+            }
 
         </script>
         @endsection

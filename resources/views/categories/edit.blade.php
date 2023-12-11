@@ -49,6 +49,7 @@
                                 @method('PUT')
 
                                 <div class="mb-3">
+                                    <label>Name:</label>
                                     <input id="name" type="text" placeholder="kategoria" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $category->name }}" required autocomplete="name" autofocus>
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">

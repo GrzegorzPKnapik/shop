@@ -273,7 +273,7 @@
                                 </form>
                             </div>
                         </div>
-                        <!-- user-menu -->
+                        <!-- users-menu -->
                         <div class="ltn__drop-menu">
                             <ul>
                                 <li>

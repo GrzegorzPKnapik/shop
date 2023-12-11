@@ -30,9 +30,12 @@ class AuthServiceProvider extends ServiceProvider
 
         $admin_id = Role::where('name', Role::ADMIN)->value('id');
         $user_id = Role::where('name', Role::USER)->value('id');
+        $employee_id = Role::where('name', Role::EMPLOYEE)->value('id');
 
         $this->defineUserRoleGate('isAdmin', $admin_id);
         $this->defineUserRoleGate('isUser', $user_id);
+        $this->defineUserRoleGate('isEmployee', $employee_id);
+
     }
 
 

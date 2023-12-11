@@ -30,15 +30,7 @@
         <!-- LOGIN AREA START -->
         <div class="ltn__login-area pb-65">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title-area text-center">
-                            <h1 class="section-title">Sign In <br>To  Your Account</h1>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-                                Sit aliquid,  Non distinctio vel iste.</p>
-                        </div>
-                    </div>
-                </div>
+
 
 
                 <div class="row">
@@ -48,7 +40,9 @@
                                 @csrf
                                 @method('PUT')
 
+                                <h4 class="pt-4 pb-2">Product:</h4>
                                 <div class="mb-3">
+                                    <label>Name:</label>
                                     <input id="product_name" type="text" placeholder="nazwa" class="form-control @error('product_name') is-invalid @enderror" name="product_name" value="{{ $product->name }}" required autocomplete="product_name" autofocus>
                                 @error('product_name')
                                     <span class="invalid-feedback" role="alert">
@@ -56,6 +50,18 @@
                                     </span>
                                 @enderror
                                 </div>
+
+                                <div class="mb-3">
+                                    <label>Cena:</label>
+                                    <input id="product_price" type="text" placeholder="cena" class="form-control @error('product_price') is-invalid @enderror" name="product_price" value="{{ $product->price }}" required autocomplete="product_price" autofocus>
+                                    @error('product_price')
+                                    <span class="invalid-feedback" role="alert">
+                                    <strong>{{$message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <h4 class="pt-4 pb-2">Category:</h4>
 
                                 <div class="col-md-6">
                                     <div class="input-item">
@@ -74,9 +80,12 @@
                                     </div>
                                 </div>
 
+
+                                <h4 class="pt-4 pb-2">Producer:</h4>
+
                                 <div class="col-md-6">
                                     <div class="input-item">
-                                        <label>Kategoria:</label>
+                                        <label>Producent:</label>
                                         <select name="producer_select" class="nice-select form-control @error('producer_select') is-invalid @enderror">
                                             <option value="{{ $product->producer->id }}">{{ $product->producer->name }}</option>
                                             @foreach($producers as $producer)
@@ -91,7 +100,11 @@
                                     </div>
                                 </div>
 
+                                <h4 class="pt-4 pb-2">Description:</h4>
+
+
                                 <div class="mb-3">
+                                    <label>Opis:</label>
                                     <textarea id="description_name" type="text" placeholder="opis" class="form-control @error('description_name') is-invalid @enderror" name="description_name"  rows="5" cols="40" required autocomplete="description_name" autofocus>{{ $product->description->name }}</textarea>
                                     @error('description_name')
                                     <span class="invalid-feedback" role="alert">
@@ -101,6 +114,7 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label>Składniki:</label>
                                     <textarea id="description_ingredients" type="text" placeholder="składniki" class="form-control @error('description_ingredients') is-invalid @enderror" name="description_ingredients" rows="5" cols="40" required autocomplete="description_ingredients" autofocus>{{ $product->description->ingredients }}</textarea>
                                     @error('description_ingredients')
                                     <span class="invalid-feedback" role="alert">
@@ -110,6 +124,7 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label>Kalorie:</label>
                                     <input id="description_calories" type="text" placeholder="kalorie" class="form-control @error('description_calories') is-invalid @enderror" name="description_calories" value="{{ $product->description->calories }}" required autocomplete="description_calories" autofocus>
                                     @error('description_calories')
                                     <span class="invalid-feedback" role="alert">
@@ -118,16 +133,11 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
-                                    <input id="product_price" type="text" placeholder="cena" class="form-control @error('product_price') is-invalid @enderror" name="product_price" value="{{ $product->price }}" required autocomplete="product_price" autofocus>
-                                    @error('product_price')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{$message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+
+                                <h4 class="pt-4 pb-2">Image:</h4>
 
                                 <div class="mb-3">
+                                    <label>Zdjęcie:</label>
                                 <input id="image_name" type="file" class="form-control @error('image_name') is-invalid @enderror" name="image_name" autofocus onchange="loadFile(event)">
                                 .png
                                 </div>
@@ -173,16 +183,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="account-create text-center pt-50">
-                            <h4>DON'T HAVE AN ACCOUNT?</h4>
-                            <p>Add items to your wishlistget personalised recommendations <br>
-                                check out more quickly track your orders register</p>
-                            <div class="btn-wrapper">
-                                <a href="{{ route('register') }}" class="theme-btn-1 btn black-btn">{{ __('Rejestracja') }}</a>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

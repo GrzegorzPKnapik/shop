@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\EmployeePanelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\WelcomeController;
-use App\Models\Shopping_list;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,19 +41,21 @@ Route::group(['middleware' => 'cart'], function (){
     Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
     //shop
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/shop/product/{product}', [ShopController::class, 'product'])->name('shop.product');
+
 
 
     //category
     Route::resource('category', CategoryController::class)->only([
         'create', 'index', 'edit', 'update', 'store'
     ]);
-    Route::delete('/category/delete/{category}', [CategoryController::class, 'destroy']);
+    Route::delete('/category/{category}', [CategoryController::class, 'destroy']);
 
     //producer
     Route::resource('producer', ProducerController::class)->only([
         'create', 'index', 'edit', 'update', 'store'
     ]);
-    Route::delete('/producer/delete/{category}', [ProducerController::class, 'destroy']);
+    Route::delete('/producer/{producer}', [ProducerController::class, 'destroy']);
 
 
 
@@ -62,7 +64,7 @@ Route::group(['middleware' => 'cart'], function (){
     Route::delete('/product/{product}', [ProductController::class, 'destroy']);
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
     Route::resource('product', ProductController::class)->only([
-        'create', 'index', 'edit', 'update'
+        'create', 'index', 'edit', 'update', 'show'
     ]);
     Route::group(['middleware' => 'logged'], function () {
 
@@ -79,15 +81,18 @@ Route::group(['middleware' => 'cart'], function (){
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
 
 
+        //users
+       // Route::get('/users/index/', [UserController::class, 'index'])->name('users.index');
+
 
         //shopping list
         Route::get('/shopping_list/show/{shopping_list}', [ShoppingListController::class, 'show'])->name('shoppingList.show');
+       // Route::get('/shopping_list/index/', [ShoppingListController::class, 'index'])->name('shoppingList.index');
+
         Route::post('/shopping_list/delete_day/{shopping_list}', [ShoppingListController::class, 'delete_day'])->name('shoppingList.delete_day');
         Route::post('/shopping_list/save_day/{shopping_list}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
         Route::get('/shopping_list/upload/{shopping_list}', [ShoppingListController::class, 'upload'])->name('shoppingList.upload');
         Route::get('/shopping_list/copyToCart/{shopping_list}', [ShoppingListController::class, 'copyToCart'])->name('shoppingList.copyToCart');
-
-
 
         Route::post('/shopping_list/assign/address/{shopping_list}', [ShoppingListController::class, 'assignAddress'])->name('shoppingList.assignAddress');
         Route::post('/shopping_list/save/title/{shopping_list}', [ShoppingListController::class, 'saveTitle'])->name('shoppingList.saveTitle');
@@ -99,6 +104,9 @@ Route::group(['middleware' => 'cart'], function (){
 
         //account
         Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+
+        //employeePanel
+        Route::get('/employeePanel', [EmployeePanelController::class, 'index'])->name('employeePanel.index')->middleware('can:isEmployee');;
 
         //chceckout
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');

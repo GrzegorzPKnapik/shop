@@ -40,7 +40,7 @@ class OrderController extends Controller
             ->select('orders.id as order_id', 'orders.*', 'shopping_lists_products.*', 'shopping_lists.*', 'products.name as product_name', 'products.*', 'images.name')->where('orders.id', $order->id)
             ->get();
 
-        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+        $order = Order::with(['address', 'shopping_list.users', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
         return view('order.order_summary', ['items' => $items, 'order' => $order]);
     }
@@ -58,7 +58,7 @@ class OrderController extends Controller
 //            ->select('orders.id as order_id', 'users.*', 'addresses.*','shopping_lists_products.*', 'shopping_list.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
 //            ->get();
 
-        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+        $order = Order::with(['shopping_list.address', 'shopping_list.users', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
         //dd($order);
         return view('order.order_show', ['order' => $order]);
@@ -75,9 +75,9 @@ class OrderController extends Controller
 //
 //        $deliveryDayDate = $object[0]->date;
 
-       // $user = Auth::user();
+       // $users = Auth::users();
 
-            //$shopping_list = Shopping_list::where('status', 'shopping_list')->where('USERS_id', $user->id)->first();
+            //$shopping_list = Shopping_list::where('status', 'shopping_list')->where('USERS_id', $users->id)->first();
             //najpier kopia potem id do ordera czyli id do shoppoing_list
 
         $s_l = Shopping_list::where('id', $order->SHOPPING_LISTS_id)->first();

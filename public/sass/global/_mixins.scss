@@ -65,7 +65,7 @@
     border-radius: $radius;
 }
 
-/* user select */
+/* users select */
 @mixin userSelect($user) {
     -webkit-user-select: $user;
     -moz-user-select: $user;

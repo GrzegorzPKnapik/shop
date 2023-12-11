@@ -51,20 +51,14 @@
                                             <div class="nav">
                                                 <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dashboard
                                                     <i class="fas fa-home"></i></a>
-                                                @can('isUser')
-                                                    <a data-bs-toggle="tab" href="#liton_tab_1_2">Orders <i
-                                                            class="fas fa-file-alt"></i></a>
-                                                    <a data-bs-toggle="tab" href="#liton_tab_1_7">Shopping lists<i
-                                                            class="fas fa-file-alt"></i></a>
-                                                    <a data-bs-toggle="tab" href="#liton_tab_1_3">Downloads <i
-                                                            class="fas fa-arrow-down"></i></a>
-                                                    @endcan
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_4">Address <i
-                                                        class="fas fa-map-marker-alt"></i></a>
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_5">Account details <i
-                                                        class="fas fa-user"></i></a>
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_6">Address create <i
-                                                        class="fas fa-map-marker-alt"></i></a>
+                                                <a href="{{ url(route('users.index')) }}">Users <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('order.index')) }}">Orders <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('shopping_list.index')) }}">Shopping lists <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('product.index')) }}">Products <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('categorie.index')) }}">Categories <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('producer.index')) }}">Categories <i class="fas fa-file-alt"></i></a>
+
+
                                                 <a href="login.html">Logout <i class="fas fa-sign-out-alt"></i></a>
                                             </div>
                                         </div>
@@ -83,39 +77,38 @@
                                                 </div>
                                             </div>
 
-                                            @can('isUser')
-                                                <div class="tab-pane fade" id="liton_tab_1_7">
-                                                    <div class="ltn__myaccount-tab-content-inner">
-                                                        <p>Aktywne cykliczne dostawy(cykliczna lista zakupów).</p>
-                                                        <div class="table-responsive">
-                                                            <table class="table text-center table-sm">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Title</th>
-                                                                    <th>Newest order number</th>
-                                                                    <th>Shopping list number</th>
-                                                                    <th>Update date</th>
-                                                                    <th>Price</th>
-                                                                    <th>Active</th>
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
+                                            <div class="tab-pane fade" id="liton_tab_1_7">
+                                                <div class="ltn__myaccount-tab-content-inner">
+                                                    <p>Aktywne cykliczne dostawy(cykliczna lista zakupów).</p>
+                                                    <div class="table-responsive">
+                                                        <table class="table text-center table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Title</th>
+                                                                <th>Newest order number</th>
+                                                                <th>Shopping list number</th>
+                                                                <th>Update date</th>
+                                                                <th>Price</th>
+                                                                <th>Active</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
 
-                                                                <!--                                                            //wyswietl tylko te co mają status różny od ordered czyli od resume-->
-                                                                @foreach($shopping_lists as $item)
+<!--                                                            //wyswietl tylko te co mają status różny od ordered czyli od resume-->
+                                                            @foreach($shopping_lists as $item)
 
                                                                     <tr>
                                                                         <td class="cart-product-name">{{$item->title}}</td>
-                                                                        @forelse($item->orders as $v => $order)
-                                                                            @if($order->status != 'delivered')
-                                                                                <td class="cart-product-name">#{{$order->id}}</td>
+                                                                    @forelse($item->orders as $v => $order)
+                                                                        @if($order->status != 'delivered')
+                                                                            <td class="cart-product-name">#{{$order->id}}</td>
                                                                             @endif
                                                                         @empty
                                                                             <td class="cart-product-name"></td>
                                                                         @endforelse
 
-                                                                        <td class="cart-product-name">#{{$item->id}}</td>
+                                                                      <td class="cart-product-name">#{{$item->id}}</td>
                                                                         <td class="cart-product-name">{{$item->updated_at}}</td>
 
                                                                         <td class="cart-product-name">${{$item->total}}</td>
@@ -131,161 +124,252 @@
                                                                         </td>
 
                                                                     </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="tab-pane fade" id="liton_tab_1_2">
-                                                    <div class="ltn__myaccount-tab-content-inner">
-                                                        <div class="table-responsive">
-                                                            <table class="table text-center table-sm">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Number</th>
-                                                                    <th>Date</th>
-                                                                    <th>Price</th>
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach($orders as $item)
-                                                                    <tr>
-
-                                                                        <td class="cart-product-name">#{{$item->id}}</td>
-                                                                        <td class="cart-product-name">{{$item->created_at}}</td>
-
-                                                                        <td class="cart-product-name">${{$item->shopping_list->total}}</td>
-                                                                        <td>
-                                                                            <a href="{{ route('order.show', $item->id) }}">
-                                                                                <button class="icon-search"></button>
-                                                                            </a>
-                                                                        </td>
-
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="liton_tab_1_3">
-                                                    <div class="ltn__myaccount-tab-content-inner">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Product</th>
-                                                                    <th>Date</th>
-                                                                    <th>Expire</th>
-                                                                    <th>Download</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>Carsafe - Car Service PSD Template</td>
-                                                                    <td>Nov 22, 2020</td>
-                                                                    <td>Yes</td>
-                                                                    <td><a href="#"><i
-                                                                                class="far fa-arrow-to-bottom mr-1"></i>
-                                                                            Download File</a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Carsafe - Car Service HTML Template</td>
-                                                                    <td>Nov 10, 2020</td>
-                                                                    <td>Yes</td>
-                                                                    <td><a href="#"><i
-                                                                                class="far fa-arrow-to-bottom mr-1"></i>
-                                                                            Download File</a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Carsafe - Car Service WordPress Theme</td>
-                                                                    <td>Nov 12, 2020</td>
-                                                                    <td>Yes</td>
-                                                                    <td><a href="#"><i
-                                                                                class="far fa-arrow-to-bottom mr-1"></i>
-                                                                            Download File</a></td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                @endcan
-
-                                            <div class="tab-pane fade" id="liton_tab_1_4">
-                                                <div class="ltn__myaccount-tab-content-inner">
-                                                    <div id="refreshAddress">
-                                                        <p>Zapisane adresy
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-12 learts-mb-30">
-                                                                <h4>Adres dostawy: <small></small></h4>
-
-                                                                @can('isUser')
-                                                                    @foreach($addresses as $address)
-                                                                            <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
-                                                                                <button class="icon-cancel deleteAddress" data-id="{{$address->id}}"></button></h4>
-                                                                            <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                                                <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                                                       @if($address->selected == true)
-                                                                                           checked
-                                                                                    @endif
-
-                                                                                >
-
-                                                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                                                    Wybrany jako główny
-                                                                                </label>
-                                                                            </div>
-
-                                                                            <address>
-                                                                                <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                                <p>{{$address->city}}, {{$address->street}}<br>
-                                                                                    {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                                <p>Telefon: {{$address->phone_number}}</p>
-                                                                                <hr style="width: 60%; border-top: 3px solid black; background-color: black;">
-                                                                            </address>
-                                                                    @endforeach
-                                                                @endcan
-
-
-                                                                @can('isEmployee')
-                                                                @foreach($addresses as $address)
-                                                                    @if($address->selected == true)
-                                                                    <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
-                                                                    <button class="icon-cancel deleteAddress" data-id="{{$address->id}}"></button></h4>
-                                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                                               @if($address->selected == true)
-                                                                                   checked
-                                                                            @endif
-
-                                                                        >
-
-                                                                        <label class="form-check-label" for="flexRadioDefault2">
-                                                                            Wybrany jako główny
-                                                                        </label>
-                                                                    </div>
-
-                                                                    <address>
-                                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                        <p>{{$address->city}}, {{$address->street}}<br>
-                                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                        <p>Telefon: {{$address->phone_number}}</p>
-                                                                        <hr style="width: 60%; border-top: 3px solid black; background-color: black;">
-                                                                    </address>
-                                                                    @endif
-                                                                @endforeach
-                                                                @endcan
-                                                            </div>
-                                                        </div>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="tab-pane fade" id="liton_tab_1_8">
+                                                <div class="ltn__myaccount-tab-content-inner">
+                                                    <div class="table-responsive">
+                                                        <div class="mb-4">
+                                                        <a href="{{ route('product.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nowy produkt') }}</a>
+                                                        </div>
+                                                        <table class="table text-center table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Image</th>
+                                                                <th>Name</th>
+                                                                <th>Category</th>
+                                                                <th>Price</th>
+                                                                <th>Create date</th>
+                                                                <th>Update date</th>
+                                                                <th>Action</th>
+
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($products as $product)
+                                                                <tr class="align-middle delete_mem{{$product->id}}">
+                                                                    <td class="cart-product-info">
+                                                                        <h4><a>#{{$product->id}}</a></h4>
+                                                                    </td>
+
+                                                                    <td class="cart-product-image">
+                                                                        <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                                    </td>
+
+                                                                    <td class="cart-product-info">
+                                                                        {{$product->name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{$product->category->name}}
+                                                                    </td>
+
+
+                                                                    <td class="cart-product-info">
+                                                                        {{$product->price}}
+                                                                    </td>
+                                                                    <td class="cart-product-info">
+                                                                        {{$product->created_at}}
+                                                                    </td>
+                                                                    <td class="cart-product-info">
+                                                                        {{$product->updated_at}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="icon-cancel deleteProduct" data-id="{{$product->id}}"></button>
+
+                                                                        <a href="{{ route('product.edit', $product->id) }}">
+                                                                            <button class="icon-edit"></button>
+                                                                        </a>
+
+                                                                        <a href="{{ route('product.show', $product->id) }}">
+                                                                            <button class="icon-search"></button>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="liton_tab_1_9">
+                                                <div class="ltn__myaccount-tab-content-inner">
+                                                    <div class="table-responsive">
+                                                        <div class="mb-4">
+                                                            <a href="{{ route('category.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nową kategorie') }}</a>
+                                                        </div>
+                                                        <table class="table text-center table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Name</th>
+                                                                <th>Create date</th>
+                                                                <th>Update date</th>
+                                                                <th>Action</th>
+
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($categories as $category)
+                                                                <tr class="align-middle delete_mem{{$category->id}}">
+                                                                    <td class="cart-product-info">
+                                                                        <h4><a>#{{$category->id}}</a></h4>
+                                                                    </td>
+
+                                                                    <td class="cart-product-info">
+                                                                        {{$category->name}}
+                                                                    </td>
+
+                                                                    <td class="cart-product-info">
+                                                                        {{$category->created_at}}
+                                                                    </td>
+                                                                    <td class="cart-product-info">
+                                                                        {{$category->updated_at}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="icon-cancel deleteCategory" data-id="{{$category->id}}"></button>
+
+                                                                        <a href="{{ route('category.edit', $category->id) }}">
+                                                                            <button class="icon-edit"></button>
+                                                                        </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="tab-pane fade" id="liton_tab_1_10">
+                                                <div class="ltn__myaccount-tab-content-inner">
+                                                    <div class="table-responsive">
+                                                        <div class="mb-4">
+                                                            <a href="{{ route('producer.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nowego producenta') }}</a>
+                                                        </div>
+                                                        <table class="table text-center table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Name</th>
+                                                                <th>Create date</th>
+                                                                <th>Update date</th>
+                                                                <th>Action</th>
+
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($producers as $producer)
+                                                                <tr class="align-middle delete_mem{{$producer->id}}">
+                                                                    <td class="cart-product-info">
+                                                                        <h4><a>#{{$producer->id}}</a></h4>
+                                                                    </td>
+
+                                                                    <td class="cart-product-info">
+                                                                        {{$producer->name}}
+                                                                    </td>
+
+                                                                    <td class="cart-product-info">
+                                                                        {{$producer->created_at}}
+                                                                    </td>
+                                                                    <td class="cart-product-info">
+                                                                        {{$producer->updated_at}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="icon-cancel deleteProducer" data-id="{{$producer->id}}"></button>
+
+                                                                        <a href="{{ route('producer.edit', $producer->id) }}">
+                                                                            <button class="icon-edit"></button>
+                                                                        </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="liton_tab_1_2">
+                                                <div class="ltn__myaccount-tab-content-inner">
+                                                    <div class="table-responsive">
+                                                        <table class="table text-center table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Number</th>
+                                                                <th>User number</th>
+                                                                <th>Date</th>
+                                                                <th>Price</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($orders as $item)
+                                                                <tr>
+
+                                                                    <td class="cart-product-name">#{{$item->id}}</td>
+                                                                    <td class="cart-product-name">#{{$item->shopping_list->user->id}}</td>
+                                                                    <td class="cart-product-name">{{$item->created_at}}</td>
+                                                                    <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+                                                                    <td>
+                                                                        <a href="{{ route('order.show', $item->id) }}">
+                                                                            <button class="icon-search"></button>
+                                                                        </a>
+                                                                    </td>
+
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="liton_tab_1_3">
+                                                <div class="ltn__myaccount-tab-content-inner">
+                                                    <div class="table-responsive">
+                                                        <table class="table text-center table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Number</th>
+                                                                <th>Name</th>
+                                                                <th>Surname</th>
+                                                                <th>Email</th>
+                                                                <th>Create date</th>
+                                                                <th>Update date</th>
+
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($users as $user)
+                                                                <tr>
+
+                                                                    <td class="cart-product-name">#{{$user->id}}</td>
+                                                                    <td class="cart-product-name">{{$user->name}}</td>
+                                                                    <td class="cart-product-name">{{$user->surname}}</td>
+                                                                    <td class="cart-product-name">{{$user->email}}</td>
+                                                                    <td class="cart-product-name">{{$user->created_at}}</td>
+                                                                    <td class="cart-product-name">{{$user->updated_at}}</td>
+
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="tab-pane fade" id="liton_tab_1_6">
                                                 <div class="ltn__myaccount-tab-content-inner">
                                                     <p>The following addresses will be used on the checkout page by
@@ -418,32 +502,21 @@
                                                     <p>The following addresses will be used on the checkout page by
                                                         default.</p>
                                                     <div class="ltn__form-box">
+                                                        <form action="#">
                                                             <div class="row mb-50">
                                                                 <div class="col-md-6">
-                                                                    <label>Name:</label>
-                                                                    <input type="text" value="{{ Auth::user()->name }}" name="ltn__lastname"
-                                                                           readonly>
+
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <label>Surname:</label>
-                                                                    <input type="text" value="{{ Auth::user()->surname }}" name="ltn__lastname"
-                                                                           readonly>
+                                                                    <label>Display Name:</label>
+                                                                    <input type="text" name="ltn__lastname"
+                                                                           placeholder="Ethan">
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <label>Email:</label>
-                                                                    <input type="email" value="{{ Auth::user()->email }}" name="ltn__lastname"
-                                                                           readonly>
+                                                                    <label>Display Email:</label>
+                                                                    <input type="email" name="ltn__lastname"
+                                                                           placeholder="example@example.com">
                                                                 </div>
-                                                                @can('isEmployee')
-                                                                    <div class="col-md-6">
-                                                                        <label>Pesel:</label>
-                                                                        <input type="text" value="{{ Auth::user()->pesel }}" name="ltn__lastname"
-                                                                               readonly>
-                                                                    </div>
-                                                                    @endcan
-
-
-
                                                             </div>
                                                             <fieldset>
                                                                 <legend>Password change</legend>
@@ -466,7 +539,7 @@
                                                                     Save Changes
                                                                 </button>
                                                             </div>
-
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

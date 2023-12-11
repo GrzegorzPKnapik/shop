@@ -29,15 +29,23 @@ class ShoppingListController extends Controller
 //    }
 
 
+    public function index()
+    {
+
+        $shopping_list = Shopping_list::all();
+        return view('shopping_list.index', ['shopping_list' => $shopping_list]);
+
+    }
+
 
     public function show(Shopping_list $shopping_list)
     {
         $user = Auth::user();
-        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
+        $addresses = Address::with('users')->where('status', null)->whereHas('users', function ($query) use ($user){
             $query->where('id', $user->id);
         })->orderByDesc('selected')->get();
 
-        $shopping_list = Shopping_list::with(['orders', 'user', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->get();
+        $shopping_list = Shopping_list::with(['orders', 'users', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->get();
 
         $checkoutController = new CheckoutController();
         $collectionDates = $checkoutController->date();
@@ -229,9 +237,9 @@ class ShoppingListController extends Controller
         //$shopping_list->mode = 'shopping_list';
         $shopping_list->status = 'shopping_list';
         $shopping_list->save();
-        $user = Auth::user();
+        $users = Auth::users();
 
-        $old_cart_shopping_list = Shopping_list::where('status', 'disable')->whereNull('mode')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', 'disable')->whereNull('mode')->where('USERS_id', $users->id)->first();
 
         if(isset($old_cart_shopping_list))
         {
@@ -389,11 +397,11 @@ class ShoppingListController extends Controller
     {
         //$shopping_list = Shopping_list::where('id', $shopping_list->id)->first();
 
-        $user = Auth::user();
+        $users = Auth::users();
         //stara lista zapupów załadowane cart
-        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'shopping_list')->where('USERS_id', $user->id)->first();
+        $old_cart_shopping_list = Shopping_list::where('status', 'cart')->where('mode', 'shopping_list')->where('USERS_id', $users->id)->first();
         //stare zamówienie jednorazowe załadowane cart
-        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $user->id)->first();
+        $old_cart = Shopping_list::where('status', 'cart')->where('mode', 'normal')->where('USERS_id', $users->id)->first();
 
 
         //kopia tabeli

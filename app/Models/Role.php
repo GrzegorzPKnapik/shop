@@ -15,7 +15,8 @@ class Role extends Model
         'name'
     ];
     const  ADMIN='admin';
-    const USER='user';
+    const USER='users';
+    const EMPLOYEE='employee';
 
     //jedna rola ma wiele użytkowników
     public function users() :HasMany

@@ -202,7 +202,7 @@
                                 </form>
                             </div>
                         </div>
-                        <!-- user-menu -->
+                        <!-- users-menu -->
                         <div class="ltn__drop-menu">
                             <ul>
                                 <li>
@@ -239,6 +239,9 @@
                                         <li><a href="{{ route('cart.index') }}">{{ __('Koszyk') }}</a></li>
                                         @endauth
 
+                                        @can('isEmployee')
+                                            <li><a href="{{ route('employeePanel.index') }}">{{ __('Employee panel') }}</a></li>
+                                        @endcan
                                         <li><a href="{{ route('product.create') }}">{{ __('Dodaj produkt') }}</a></li>
                                         <li><a href="{{ route('category.index') }}">{{ __('Wyświetl kategorie') }}</a></li>
                                         <li><a href="{{ route('category.create') }}">{{ __('Dodaj kategorie') }}</a></li>

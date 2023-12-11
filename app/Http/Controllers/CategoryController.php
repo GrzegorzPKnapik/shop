@@ -36,9 +36,10 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): RedirectResponse{
         $category = new Category();
         $category->name = $request['name'];
+        $category->status = 'enable';
         $category->save();
 
-        return redirect()->route('category.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('employeePanel.index')->with('status',__('shop.product.status.store.success'));
     }
 
 
@@ -47,7 +48,9 @@ class CategoryController extends Controller
 
         try {
 
-            $category->delete();
+            //$category->delete();
+            $category->status = 'disable';
+            $category->save();
 
             return response()->json([
                 'status' => 'success',
@@ -70,7 +73,7 @@ class CategoryController extends Controller
 
         $category->name=$request['name'];
         $category->save();
-        return redirect()->route('category.index');
+        return redirect()->route('employeePanel.index');
     }
 
 
