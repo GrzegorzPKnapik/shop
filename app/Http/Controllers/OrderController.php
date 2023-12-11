@@ -7,6 +7,7 @@ use App\Enums\OrderStatus;
 use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListMode;
 use App\Enums\ShoppingListStatus;
+use App\Events\PurchaseSuccesful;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
@@ -282,7 +283,8 @@ class OrderController extends Controller
             $order->save();
             return response()->json([
                 'status' => 'success',
-                'order' => $order->id
+                'order' => $order->id,
+                event(new PurchaseSuccesful($order))
             ]);
         } catch (Exception $e) {
             return response()->json([

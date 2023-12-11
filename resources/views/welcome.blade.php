@@ -3,6 +3,24 @@
 
 @section('content')
 
+    <style>
+        /* Dostosuj rozmiar etykiety */
+        .btn-outline-secondary {
+            font-size: 0.8rem; /* Dostosuj wielkość czcionki według własnych preferencji */
+            padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
+        }
+
+        .disabled-link {
+            color: #999; /* Ustaw kolor na szary lub inny kolor sugerujący nieaktywność */
+            pointer-events: none; /* Wyłącz interakcję z linkiem */
+        }
+
+        .disabled-icon {
+            opacity: 0.8;
+        }
+
+    </style>
+
     <!-- Body main wrapper start -->
     <div class="body-wrapper">
         <!-- Utilize Cart Menu Start -->
@@ -284,15 +302,17 @@
                                             <div class="ltn__product-item ltn__product-item-3 text-center">
                                                 <div class="product-img">
                                                     @if(!is_null($product->image->name))
-                                                        <a href="product-details.html"><img src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                        <a href="{{route('shop.product', $product->id)}}"><img class="{{$product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
                                                     @else
                                                         <img src="img/product/6.png" alt="Zdjęcie">
                                                     @endif
-                                                    <div class="product-badge">
-                                                        <ul>
-                                                            <li class="sale-badge">New</li>
-                                                        </ul>
-                                                    </div>
+                                                    @if(!$product->status->isEnable())
+                                                            <div class="product-badge">
+                                                                <ul>
+                                                                    <li class="sale-badge">{{$product->status->isSoldOut() ? $product->status->getStatusText() : \App\Enums\ProductStatus::DISABLE}}</li>
+                                                                </ul>
+                                                            </div>
+                                                    @endif
                                                     <div class="product-hover-action">
                                                         <ul>
                                                             <li>
@@ -303,8 +323,8 @@
 
 
                                                             <li>
-                                                                <a href="" title="Add to Cart" class="add-to-cart" data-id="{{$product->id}}">
-                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                <a href="" title="Add to Cart" class="add-to-cart {{$product->status->isSoldOut() ? 'disabled-icon' : ''}} {{$product->status->isSoldOut() ? 'disabled-link' : ''}}" data-id="{{$product->id}}">
+                                                                <i class="fas fa-shopping-cart"></i>
                                                                 </a>
                                                             </li>
 

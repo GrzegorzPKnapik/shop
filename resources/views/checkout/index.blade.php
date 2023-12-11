@@ -187,7 +187,7 @@
                                                 <option value={{$date['date']}} {{ $date['date'] == $dDate['date'] ? 'selected' : '' }}> {{$date['name']}} ({{ $date['date'] }})
                                                     @php
                                                         $now = \Carbon\Carbon::now();
-                                                        $daysRemaining = $now->diffInDays($date['date']);
+                                                        $daysRemaining = $now->diffInDays($date['date'])+1;
                                                         $daysLabel = trans_choice('shop.days', $daysRemaining);
                                                     @endphp
                                                     za {{$daysRemaining}} {{$daysLabel}}

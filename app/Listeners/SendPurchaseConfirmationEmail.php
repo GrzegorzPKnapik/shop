@@ -2,6 +2,8 @@
 
 namespace App\Listeners;
 
+use App\Mail\MailNotify;
+use App\Mail\PurchaseConfirmation;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -21,11 +23,9 @@ class SendPurchaseConfirmationEmail
      */
     public function handle(object $event): void
     {
-        //$purchase = $event->purchase;
-        //Mail::to($user->email)->send(new \App\Mail\MailNotify($event->purchase));
+        $order = $event->order;
 
-        $purchase =
-
-        Mail::to('grzegorz.p.knapik@gmail.com')->send(new MailNotify($event->purchase));
+        //Mail::to('grzegorz.p.knapik@gmail.com')->send(new PurchaseConfirmation($order));
+        Mail::to('grzegorz.p.knapik@gmail.com')->queue(new PurchaseConfirmation($order));
     }
 }

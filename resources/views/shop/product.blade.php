@@ -2,16 +2,14 @@
 
 @section('content')
     <style>
-        /* Dostosuj rozmiar checkboxa */
-        .btn-check {
-            width: 1rem;
-            height: 1rem;
+
+        .disabled-link {
+            color: #999; /* Ustaw kolor na szary lub inny kolor sugerujący nieaktywność */
+            pointer-events: none; /* Wyłącz interakcję z linkiem */
         }
 
-        /* Dostosuj rozmiar etykiety */
-        .btn-outline-secondary {
-            font-size: 0.8rem; /* Dostosuj wielkość czcionki według własnych preferencji */
-            padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
+        .disabled-icon {
+            opacity: 0.8;
         }
     </style>
 
@@ -109,13 +107,19 @@
                                         <div class="modal-product-meta ltn__product-details-menu-1">
                                             <ul>
                                                 <li>
+                                                    <strong>Dostępność:</strong>
+                                                    <span>
+                                                            {{$product->status->getStatusText()}}
+                                                        </span>
+                                                </li>
+                                                <li>
                                                     <strong>Categories:</strong>
                                                     <span>
                                                             {{$product->category->name}}
                                                         </span>
                                                 </li>
 
-                                                @if($product->description->calories!=null)
+                                                @if(isset($product->description->calories))
                                                     <li>
                                                         <strong>Calories:</strong>
                                                         <span>
@@ -127,16 +131,20 @@
                                         </div>
                                         <div class="ltn__product-details-menu-2">
                                             <ul>
+
                                                 <li>
-                                                        <label for="valueQuantity">max 99sztuk:</label>
-                                                        <div class="cart-plus-minus m-auto">
-                                                            <div class="dec qtybutton" onclick="decrement()">-</div>
-                                                            <input type="number" value="1" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_quantity_input">
-                                                            <div class="inc qtybutton" onclick="increment()">+</div>
-                                                        </div>
+                                                    <label for="valueQuantity">max 99sztuk:</label>
+                                                    <div class="cart-plus-minus m-auto">
+                                                        <div class="dec qtybutton" onclick="decrement()">-</div>
+                                                        <input type="number" value="1" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_quantity_input">
+                                                        <div class="inc qtybutton" onclick="increment()">+</div>
+                                                    </div>
                                                 </li>
+
+
+
                                                 <li>
-                                                    <a href="" class="theme-btn-1 btn btn-effect-1 add-to-cart-value" title="Add to Cart" data-id="{{$product->id}}">
+                                                    <a href="" title="Add to Cart" class="theme-btn-1 btn btn-effect-1 add-to-cart-value  {{$product->status->isSoldOut() ? 'disabled-icon' : ''}} {{$product->status->isSoldOut() ? 'disabled-link' : ''}}" data-id="{{$product->id}}">
                                                         <i class="fas fa-shopping-cart"></i>
                                                         <span>ADD TO CART</span>
                                                     </a>

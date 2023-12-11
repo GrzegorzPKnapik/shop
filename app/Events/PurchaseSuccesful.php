@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,14 +15,14 @@ class PurchaseSuccesful
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $purchase;
+    public $order;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Purchase $purchase)
+    public function __construct(Order $order)
     {
-        $this->purchase = $purchase;
+        $this->order = $order;
     }
 
 
