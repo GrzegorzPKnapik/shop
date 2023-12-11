@@ -39,7 +39,7 @@ class CategoryController extends Controller
         $category->status = 'enable';
         $category->save();
 
-        return redirect()->route('employeePanel.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('category.index')->with('status',__('shop.product.status.store.success'));
     }
 
 
@@ -73,7 +73,7 @@ class CategoryController extends Controller
 
         $category->name=$request['name'];
         $category->save();
-        return redirect()->route('employeePanel.index');
+        return redirect()->route('category.index');
     }
 
 

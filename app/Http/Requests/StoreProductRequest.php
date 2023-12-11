@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 class StoreProductRequest extends FormRequest
 {
     /**
-     * Determine if the users is authorized to make this request.
+     * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {

@@ -8,7 +8,7 @@ use Illuminate\Http\File;
 class StoreCategoryRequest extends FormRequest
 {
     /**
-     * Determine if the users is authorized to make this request.
+     * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {

@@ -15,7 +15,7 @@ class Role extends Model
         'name'
     ];
     const  ADMIN='admin';
-    const USER='users';
+    const USER='user';
     const EMPLOYEE='employee';
 
     //jedna rola ma wiele użytkowników

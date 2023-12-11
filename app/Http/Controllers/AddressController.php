@@ -21,12 +21,12 @@ class AddressController extends Controller
 
 
 
-        $orders = Order::with('shopping_list.users')->whereHas('shopping_list.users', function ($query) use ($user){
+        $orders = Order::with('shopping_list.user')->whereHas('shopping_list.user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
 
 
-        $addresses = Address::with('users')->where('status', null)->whereHas('users', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
         return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders]);
@@ -40,10 +40,10 @@ class AddressController extends Controller
 //            ->join('shopping_lists_products', 'shopping_list.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
 //            ->join('products', 'shopping_lists_products.PRODUCTS_id', '=', 'products.id')
 //            ->join('images', 'products.IMAGES_id', '=', 'images.id')
-//            ->select('orders.id as order_id', 'users.*', 'addresses.*','shopping_lists_products.*', 'shopping_list.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
+//            ->select('orders.id as order_id', 'user.*', 'addresses.*','shopping_lists_products.*', 'shopping_list.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
 //            ->get();
 
-        $order = Order::with(['address', 'shopping_list.users', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+        $order = Order::with(['address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
         //dd($order);
         return view('account.order-preview',['order'=>$order]);

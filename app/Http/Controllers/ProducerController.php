@@ -41,7 +41,7 @@ class ProducerController extends Controller
         $producer->status = 'enable';
         $producer->save();
 
-        return redirect()->route('employeePanel.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('producer.index')->with('status',__('shop.product.status.store.success'));
     }
 
 
@@ -74,7 +74,7 @@ class ProducerController extends Controller
 
         $producer->name=$request['name'];
         $producer->save();
-        return redirect()->route('employeePanel.index');
+        return redirect()->route('producer.index');
     }
 
 

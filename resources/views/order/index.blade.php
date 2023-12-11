@@ -35,6 +35,7 @@
                     <tr>
                         <th>Number</th>
                         <th>User number</th>
+                        <th>Status</th>
                         <th>Date</th>
                         <th>Price</th>
                         <th>Action</th>
@@ -46,6 +47,12 @@
 
                             <td class="cart-product-name">#{{$item->id}}</td>
                             <td class="cart-product-name">#{{$item->shopping_list->user->id}}</td>
+                            <td class="cart-product-name">{{$item->status}}
+                                <a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
+                                <button class="icon-edit"></button>
+                            </a>
+
+                            </td>
                             <td class="cart-product-name">{{$item->created_at}}</td>
                             <td class="cart-product-name">${{$item->shopping_list->total}}</td>
                             <td>
@@ -62,6 +69,35 @@
         </div>
     </div>
     <!-- LOGIN AREA END -->
+
+    //
+    <div class="collapse" id="collapseDayPicker">
+        <div class="card card-body">
+            <form class="custom-form selectDay" method="POST">
+                @csrf
+                <div class="col-md-6">
+                    <div class="input-item">
+                        <label>Dzień cyklicznych dostaw:</label>
+                        <select name="select" class="nice-select">
+                            <option value="0"> Wybierz dzień</option>
+                            @foreach($collectionDates as $date)
+                                <option value={{$date['date']}}> {{$date['name']}} (dostawa:   {{ $date['date'] }} )
+                                    @endforeach
+                                </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div id="refreshDayDelete">
+                @if($item->delivery_date != null)
+                    <h4><small><a href="" class="deleteDay" data-id="{{$item->id}}"> Usuń adres</a></small>
+                @endif
+            </div>
+            <br>
+        </div>
+    </div>
+    //
+
 
     <!-- FEATURE AREA START ( Feature - 3) -->
     <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">

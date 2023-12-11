@@ -30,7 +30,7 @@ class EmployeePanelController extends Controller
 
 
         $users = User::all();
-        return view('employeePanel.index', ['producers'=>$producers, 'categories'=>$categories, 'users'=>$users, 'products'=>$products, 'orders'=>$orders, 'shopping_lists'=>$shopping_lists]);
+        return view('employeePanel.index', ['producers'=>$producers, 'categories'=>$categories, 'user'=>$users, 'products'=>$products, 'orders'=>$orders, 'shopping_lists'=>$shopping_lists]);
     }
 
 

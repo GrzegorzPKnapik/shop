@@ -19,8 +19,8 @@ class AccountController extends Controller
         $user = Auth::user();
 
 
-        $shopping_lists = Shopping_list::with(['users', 'orders'])
-            ->whereHas('users', function ($query) use ($user) {
+        $shopping_lists = Shopping_list::with(['user', 'orders'])
+            ->whereHas('user', function ($query) use ($user) {
                 $query->where('id', $user->id);
             })
             ->where('mode', 'shopping_list')
@@ -31,20 +31,20 @@ class AccountController extends Controller
             /*->orWhereNull('status')*/
             ->get();
 
-        /*  $shopping_lists = Shopping_list::with(['users'])
-              ->whereHas('users', function ($query) use ($users) {
-                  $query->where('id', $users->id);
+        /*  $shopping_lists = Shopping_list::with(['user'])
+              ->whereHas('user', function ($query) use ($user) {
+                  $query->where('id', $user->id);
               })
               ->where("mode", 'shopping_list')
               ->get();*/
 
 
-        $orders = Order::with('shopping_list.users')->whereHas('shopping_list.users', function ($query) use ($user){
+        $orders = Order::with('shopping_list.user')->whereHas('shopping_list.user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
 
 
-        $addresses = Address::with('users')->where('status', null)->whereHas('users', function ($query) use ($user){
+        $addresses = Address::with('user')->where('status', null)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->get();
         return view('account.index', ['addresses'=>$addresses, 'orders'=>$orders, 'shopping_lists'=>$shopping_lists]);

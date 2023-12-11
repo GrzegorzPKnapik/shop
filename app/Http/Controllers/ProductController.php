@@ -23,7 +23,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products=Product::with('image', 'category')->get();
+        $products=Product::with('image', 'category')->paginate(10);
+
         return view('products.index',['products'=>$products]);
     }
 
@@ -76,7 +77,7 @@ class ProductController extends Controller
         $product->save();
 
 
-        return redirect()->route('employeePanel.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('product.index')->with('status',__('shop.product.status.store.success'));
     }
 
 
@@ -149,7 +150,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('employeePanel.index');
+        return redirect()->route('product.index');
     }
 
 

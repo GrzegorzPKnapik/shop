@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -75,19 +76,20 @@ Route::group(['middleware' => 'cart'], function (){
         Route::delete('/address/{address}', [AddressController::class, 'destroy'])->name('address.delete');
         Route::post('/address/select/{address}', [AddressController::class, 'selectAddress'])->name('address.selectAddress');
         //order
+        Route::get('/order/index/', [OrderController::class, 'index'])->name('order.index');
         Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
         Route::post('/order/storeSL/{shopping_list}', [OrderController::class, 'storeSL'])->name('order.storeSL');
         Route::get('/order/show/{order}', [OrderController::class, 'show'])->name('order.show');
         Route::get('/order/summary/{order}', [OrderController::class, 'summary'])->name('order.summary');
 
 
-        //users
-       // Route::get('/users/index/', [UserController::class, 'index'])->name('users.index');
+        //user
+        Route::get('/user/index/', [UserController::class, 'index'])->name('user.index');
 
 
         //shopping list
         Route::get('/shopping_list/show/{shopping_list}', [ShoppingListController::class, 'show'])->name('shoppingList.show');
-       // Route::get('/shopping_list/index/', [ShoppingListController::class, 'index'])->name('shoppingList.index');
+        Route::get('/shopping_list/index/', [ShoppingListController::class, 'index'])->name('shoppingList.index');
 
         Route::post('/shopping_list/delete_day/{shopping_list}', [ShoppingListController::class, 'delete_day'])->name('shoppingList.delete_day');
         Route::post('/shopping_list/save_day/{shopping_list}', [ShoppingListController::class, 'save_day'])->name('shoppingList.save_day');
