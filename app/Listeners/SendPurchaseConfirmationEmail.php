@@ -4,12 +4,15 @@ namespace App\Listeners;
 
 use App\Mail\MailNotify;
 use App\Mail\PurchaseConfirmation;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendPurchaseConfirmationEmail
+class SendPurchaseConfirmationEmail implements ShouldQueue
 {
+
+    use Queueable;
     /**
      * Create the event listener.
      */
@@ -25,7 +28,11 @@ class SendPurchaseConfirmationEmail
     {
         $order = $event->order;
 
-        //Mail::to('grzegorz.p.knapik@gmail.com')->send(new PurchaseConfirmation($order));
-        Mail::to('grzegorz.p.knapik@gmail.com')->queue(new PurchaseConfirmation($order));
+        /*$data = [
+            'subject' => 'Your cart have unavailable product',
+            //'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj'
+            'body' => 'W twojej liście zakupów znajduje się produkt który jest obecnie niedostęny, wymień go na inny, w przeciwnym razie zostanie on pominięty.'
+        ];*/
+        Mail::to($order->shopping_list->user->email)->queue(new PurchaseConfirmation($order));
     }
 }

@@ -1503,10 +1503,10 @@
                 data: form,
             })
                 .done(function (response) {
-                    Swal.fire(response.message, '', response.status);
                    if(response.status == 'success') {
                         window.location = DATA.summaryUrl + response.order
-                    }
+                    }else
+                       Swal.fire(response.message, '', response.status);
                 })
 
                  .fail(function (xhr) {

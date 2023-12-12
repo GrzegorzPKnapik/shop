@@ -39,7 +39,6 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('can:isUser');
 
-Route::get('/send', [MailController::class, 'index']);
 
 Route::group(['middleware' => 'cart'], function (){
 

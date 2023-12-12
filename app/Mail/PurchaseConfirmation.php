@@ -30,8 +30,7 @@ class PurchaseConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('groceryshop@gmail.com', 'Grocery Shop'),
-
+            from: new Address('groceryshop@gmail.com', 'Grocery Shop')
         );
     }
 
@@ -43,7 +42,7 @@ class PurchaseConfirmation extends Mailable
         return new Content(
             view: 'emails.purchase-confirmation',
             with: [
-                'data' => $this->data,
+                'data' => $this->data
             ],
         );
     }
