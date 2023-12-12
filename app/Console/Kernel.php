@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Enums\OrderStatus;
 use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListStatus;
+use App\Events\PurchaseSuccesful;
 use App\Http\Controllers\ShoppingListController;
 use App\Models\Order;
 use App\Models\Shopping_list;
@@ -48,6 +49,7 @@ class Kernel extends ConsoleKernel
                     if ($item->shopping_list->active && $item->shopping_list->status->isNone() && $item->status->isNone()) {
                         $item->status = OrderStatus::IN_PREPARE;
                         $item->shopping_list->status = ShoppingListStatus::STOP;
+                        //event(new PurchaseSuccesful($item));
                     }
 
                     //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy

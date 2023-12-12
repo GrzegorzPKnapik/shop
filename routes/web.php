@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShoppingListController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Auth;

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Events\PurchaseSuccesful;
+use App\Events\ShoppingListActivated;
+use App\Listeners\SendActivatedConfirmationEmail;
 use App\Listeners\SendPurchaseConfirmationEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PurchaseSuccesful::class => [
             SendPurchaseConfirmationEmail::class,
+        ],
+        ShoppingListActivated::class => [
+            SendActivatedConfirmationEmail::class,
         ],
     ];
 
