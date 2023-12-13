@@ -1572,6 +1572,7 @@
             })
                 .done(function () {
                     $("#refreshForm").load(location.href + " #refreshForm");
+
                     Swal.fire('Dodano nowy adres', '', 'success');
                 $("#refreshAddress").load(location.href + " #refreshAddress");
 
@@ -1579,6 +1580,59 @@
                         closeButton.click();
                     }
             });
+
+            if(responseStatus === false){
+                return false;
+            } else {
+                return true;
+            }
+        });
+
+
+        $("#newAddressSL").on('submit', function(){
+            var id = $(this).data("id");
+            var responseStatus = false;
+            var form = $('.addAddressSL').serialize();
+            var closeButton = document.getElementById("close");
+            $.ajax({
+                type: 'POST',
+                url: DATA.storeAddressUrl,
+                async: false,
+                data: form,
+                success: function(result){
+                    if(result.status === true){
+                        responseStatus = true;
+                    } else {
+                        responseStatus = false;
+                        return false;
+                    }
+                },
+
+
+                error: function () {
+                    return false;
+                }
+            })
+                .done(function () {
+                    $("#refreshForm").load(location.href + " #refreshForm");
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: '/shopping_list/assign/address/' + id,
+                    })
+                        .done(function (response) {
+                            $("#refreshAddress").load(location.href + " #refreshAddress")
+                            //Swal.fire(response.message, '', response.status);
+                        })
+                    Swal.fire('Dodano nowy adres', '', 'success');
+
+                    $("#refreshAddress").load(location.href + " #refreshAddress");
+
+                    if (closeButton) {
+                        closeButton.click();
+                    }
+                });
 
             if(responseStatus === false){
                 return false;

@@ -14,14 +14,14 @@ class ShoppingListActivated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $shopping_list=[];
+    protected $data=[];
 
     /**
      * Create a new message instance.
      */
-    public function __construct($shopping_list)
+    public function __construct($data)
     {
-       $this->shopping_list = $shopping_list;
+       $this->data = $data;
     }
 
     /**
@@ -42,7 +42,7 @@ class ShoppingListActivated extends Mailable
         return new Content(
             view: 'emails.shoppingList.active-confirmation',
             with: [
-                'shopping_list' => $this->shopping_list
+                'data' => $this->data
             ],
         );
     }

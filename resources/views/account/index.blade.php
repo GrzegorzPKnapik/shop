@@ -107,13 +107,15 @@
 
                                                                     <tr>
                                                                         <td class="cart-product-name">{{$item->title}}</td>
-                                                                        @forelse($item->orders as $v => $order)
-                                                                            @if(!$order->status->isDelivered())
-                                                                                <td class="cart-product-name">#{{$order->id}}</td>
-                                                                            @endif
-                                                                        @empty
+                                                                        @php
+                                                                            $latestOrder = $item->orders->sortByDesc('created_at')->first();
+                                                                        @endphp
+
+                                                                        @if($latestOrder && !$latestOrder->status->isDelivered())
+                                                                            <td class="cart-product-name">#{{ $latestOrder->id }}</td>
+                                                                        @else
                                                                             <td class="cart-product-name"></td>
-                                                                        @endforelse
+                                                                        @endif
 
                                                                         <td class="cart-product-name">#{{$item->id}}</td>
                                                                         <td class="cart-product-name">{{$item->updated_at}}</td>

@@ -384,7 +384,7 @@
                             <div class="modal-product-item">
                                 <div class="row">
                                     <div class="ltn__form-box">
-                                        <form class="addAddress" id="address" method="POST">
+                                        <form class="addAddressSL" id="newAddressSL" data-id="{{$item->id}} method="POST">
                                             <div id="refreshForm">
                                                 @csrf
                                                 <div class="row mb-50">
@@ -494,7 +494,7 @@
 
                                                 <div class="btn-wrapper">
                                                     <button type="submit"
-                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" >
+                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
                                                         {{__('Zapisz adres')}}
                                                     </button>
                                                 </div>
@@ -551,7 +551,7 @@
                                             <div class="btn-wrapper">
                                                 <button type="submit"
                                                         class="btn theme-btn-1 btn-effect-1 text-uppercase saveTitle" data-id="{{$item->id}}">
-                                                    {{__('Zapisz adres')}}
+                                                    {{__('Zapisz tytuł')}}
                                                 </button>
                                             </div>
                                     </div>

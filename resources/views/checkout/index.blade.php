@@ -98,40 +98,15 @@
 
 
                                 <div id="refreshAddress">
-                                    <p>
-                                    <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                Wybierz inny adres
-                                            </a></small></h4>
-                                    </p>
-                                    <div class="collapse" id="collapseExample">
-                                        <div class="card card-body">
-                                            @foreach($addresses as $address)
-                                                @if($address->selected != true)
-                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2">
-                                                        <label class="form-check-label" for="flexRadioDefault2">
-                                                            Wybrany jako główny
-                                                        </label>
-                                                    </div>
 
-                                                    <address>
-                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                        <p>{{$address->city}}, {{$address->street}}<br>
-                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                        <p>Telefon: {{$address->phone_number}}</p>
-                                                        _____________________________
-                                                    </address>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+
 
 
                                     <h4>Adres dostawy: </h4>
                                     @foreach($addresses as $address)
                                         @if($address->selected == true)
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
+                                                <input class="form-check-input" type="radio" name="selected1" id="flexRadioDefault2"
                                                        @if($address->selected == true)
                                                            checked
                                                     @endif
@@ -153,6 +128,41 @@
                                             </address>
                                         @endif
                                     @endforeach
+                                    <p>
+                                    <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                Wybierz inny adres
+                                            </a></small></h4>
+                                    </p>
+
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            @foreach($addresses as $address)
+
+                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
+                                                        <input class="form-check-input" type="radio" name="selected2" id="flexRadioDefault2"
+                                                               @if($address->selected == true)
+                                                                   checked
+                                                            @endif
+                                                        >
+
+                                                        @if($address->selected == true)
+                                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                                Wybrany jako główny
+                                                            </label>
+                                                        @endif
+
+                                                    </div>
+
+                                                    <address>
+                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                        <p>{{$address->city}}, {{$address->street}}<br>
+                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                        <p>Telefon: {{$address->phone_number}}</p>
+                                                        _____________________________
+                                                    </address>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -244,56 +254,6 @@
     </div>
 
 
-{{--    <div class="ltn__modal-area ltn__quick-view-modal-area">--}}
-{{--        <div class="modal fade" id="quick_view_cycle_modal" tabindex="-1">--}}
-{{--            <div class="modal-dialog modal-lg" role="document">--}}
-{{--                <div class="modal-content">--}}
-{{--                    <div class="modal-header">--}}
-{{--                        <button type="button" class="close" id="close" data-bs-dismiss="modal" aria-label="Close">--}}
-{{--                            <span aria-hidden="true">&times;</span>--}}
-{{--                            <!-- <i class="fas fa-times"></i> -->--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                    <div class="modal-body">--}}
-{{--                        <div class="ltn__quick-view-modal-inner">--}}
-{{--                            <div class="modal-product-item">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="ltn__form-box">--}}
-
-{{--                                        <h3 class="pt-4 pb-2">Cykliczne dostawy</h3>--}}
-{{--                                            <div class="row mb-50">--}}
-
-
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="input-item">--}}
-{{--                                                        <label>Dzień cyklicznych dostaw:</label>--}}
-{{--                                                        <select class="nice-select">--}}
-{{--                                                            <option>Wybierz dzień</option>--}}
-{{--                                                            <option value="1">Poniedziałek</option>--}}
-{{--                                                            <option value="2">Wtorek</option>--}}
-{{--                                                            <option value="3">Środa</option>--}}
-{{--                                                            <option value="4">Czwartek</option>--}}
-{{--                                                            <option value="5">Piątek</option>--}}
-{{--                                                            <option value="6">Sobota</option>--}}
-{{--                                                        </select>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-
-
-
-{{--                                            </div>--}}
-
-
-
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
 
     <div class="ltn__modal-area ltn__quick-view-modal-area">
@@ -421,10 +381,18 @@
                                             </div>
 
                                             <div class="btn-wrapper">
+
                                                 <button type="submit"
                                                         class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" >
                                                     {{__('Zapisz adres')}}
                                                 </button>
+
+
+
+                                                    <label>
+                                                        <input class="form-check-input" name="checkboxSaveAddres" type="checkbox">
+                                                        <label class="tag-label">zapisz adres w ksiażce adresów</label>
+                                                    </label>
                                             </div>
                                             </div>
                                         </form>

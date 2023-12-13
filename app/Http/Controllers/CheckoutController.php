@@ -28,7 +28,7 @@ class CheckoutController extends Controller
 
         $addresses = Address::with('user')->where('status', AddressStatus::NONE)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
-        })->get();
+        })->orderByDesc('selected')->get();
 
         $deliveryDate = $this->deliveryDate();
 

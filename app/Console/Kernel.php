@@ -31,8 +31,7 @@ class Kernel extends ConsoleKernel
             foreach ($orders as $item) {
 
 
-                if($item->shopping_list->active && $item->status->isDelivered())
-                {
+                if ($item->shopping_list->active && $item->status->isDelivered()) {
                     //stara s_l
                     $item->shopping_list->status = ShoppingListStatus::RESUME;
                     $item->shopping_list->active = ShoppingListActive::FALSE;
@@ -42,14 +41,14 @@ class Kernel extends ConsoleKernel
                 }
 
                 $end_date = Carbon::parse($item->shopping_list->end_mod_date)->format('Y-m-d');
-                if ($end_date == $currentTime){
+                if ($end_date == $currentTime) {
 
 
                     //jeżeli jest wszytko jak nalezy czyli status shopping_list
                     if ($item->shopping_list->active && $item->shopping_list->status->isNone() && $item->status->isNone()) {
                         $item->status = OrderStatus::IN_PREPARE;
                         $item->shopping_list->status = ShoppingListStatus::STOP;
-                        //event(new PurchaseSuccesful($item));
+                        event(new PurchaseSuccesful($item));
                     }
 
                     //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
@@ -69,7 +68,8 @@ class Kernel extends ConsoleKernel
             }
 
 
-        })->daily();
+            })->daily();
+
 
 
 

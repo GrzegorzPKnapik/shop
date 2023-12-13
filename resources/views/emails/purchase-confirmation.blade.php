@@ -1,50 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Purchase confirmation#</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Confirmation</title>
 </head>
 <body>
+<h2>Order#{{$data->id}} Confirmation</h2>
 
-The order was successfully placed.
+<p>Thank you for your purchase. Below are the details of your order:</p>
 
-Order details
-
-<p class="text-center">
-    <label>Order ID:</label>
-<h1 class="text-center">#{{$data->id}}</h1>
-</p>
-
-
-<br>
-dddddddddddddddddddd
-Address:<br>
-<p><strong>{{$data->shopping_list->address->name}} {{$data->shopping_list->address->surname}}</strong></p>
-<p>{{$data->shopping_list->address->city}}, {{$data->shopping_list->address->street}}<br>
-    {{$data->shopping_list->address->zip_code}}, {{$data->shopping_list->address->zip_code}}</p>
-<p>Telefon: {{$data->shopping_list->address->phone_number}}</p>
-
-Items:
-@foreach($data->shopping_list->shopping_lists_products as $index => $item)
+<table style="width: 100%; border-collapse: collapse; margin: 0 auto;">
+    <thead>
     <tr>
-        <td class="cart-product-name">{{ $index+1}}.</td>
-        <td class="cart-product-image"> <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a></td>
-        <td class="cart-product-image">
-            <a href="product-details.html">
-                <img src="{{ $message->embed(public_path('storage/' . $item->product->image->name)) }}" alt="Zdjęcie">
-            </a>
-        </td>
-        <td class="cart-product-name">{{$item->product->name}}</td>
-        <td class="cart-product-name">${{$item->product->price}}</td>
-        <td class="cart-product-name">x{{$item->quantity}}</td>
-        <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+        <th style="border: 1px solid #ddd; padding: 8px;">#</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Product Image</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Product Name</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Price</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>
+        <th style="border: 1px solid #ddd; padding: 8px;">Subtotal</th>
     </tr>
-@endforeach
+    </thead>
+    <tbody>
+    @foreach($data->shopping_list->shopping_lists_products as $index => $item)
+        <tr>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ $index+1 }}.</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
+                <a href="product-details.html" style="display: inline-block; vertical-align: middle;">
+                    <img src="{{ $message->embed(public_path('storage/' . $item->product->image->name)) }}" alt="Product Image" width="100" height="100" style="display: block; margin: 0 auto;">
+                </a>
+            </td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ $item->product->name }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${{ $item->product->price }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">x{{ $item->quantity }}</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${{ $item->sub_total }}</td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
 
 
 
+<!-- Tabela z "Total" -->
+<table style="width: 15%; margin: 20px 0; float: right; text-align: center;">
+    <tbody>
+    <tr>
+        <td colspan="2" style="border: 1px solid #ddd; padding: 8px;">Total: ${{ $data->shopping_list->total }}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<p>Thank you for choosing our store. If you have any questions, please contact us.</p>
 </body>
 </html>

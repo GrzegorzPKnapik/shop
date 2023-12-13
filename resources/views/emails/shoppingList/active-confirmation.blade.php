@@ -8,7 +8,8 @@
 <body>
 <h2>Shopping list activated</h2>
 
-<p>Your shopping list #{{$shopping_list->id}} has been activated!</p>
+<p>Your shopping list#{{$data->id}} has been activated!</p>
+<h1>Title: {{$data->title}}</h1>
 
 
 <table style="width: 100%; border-collapse: collapse; margin: 0 auto;">
@@ -23,7 +24,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($shopping_list->shopping_lists_products as $index => $item)
+    @foreach($data->shopping_lists_products as $index => $item)
         <tr>
             <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ $index+1 }}.</td>
             <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
@@ -46,7 +47,7 @@
 <table style="width: 15%; margin: 20px 0; float: right; text-align: center;">
     <tbody>
     <tr>
-        <td colspan="2" style="border: 1px solid #ddd; padding: 8px;">Total: ${{ $shopping_list->total }}</td>
+        <td colspan="2" style="border: 1px solid #ddd; padding: 8px;">Total: ${{$data->total}}</td>
     </tr>
     </tbody>
 </table>
