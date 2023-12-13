@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\AddressStatus;
+use App\Enums\ShoppingListStatus;
+use App\Http\Requests\StoreAddressRequest;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
@@ -16,6 +18,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\ValueObjects\Cart;
+use Illuminate\View\View;
 use function PHPUnit\Framework\isNull;
 
 class CheckoutController extends Controller
@@ -26,15 +29,45 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
 
+
+        //przypisanie adresu wybranego domyslnie
+        $selectedAddress = Address::where('status', AddressStatus::NONE)->where('selected', true)->first();
+        $cart = \Illuminate\Support\Facades\View::getShared('cart');
+        if($selectedAddress)
+        {
+            $requestData = [
+                'name' => $selectedAddress->name,
+                'surname' => $selectedAddress->surname,
+                'city' => $selectedAddress->city,
+                'street' => $selectedAddress->street,
+                'zip_code' => $selectedAddress->zip_code,
+                'voivodeship' => $selectedAddress->voivodeship,
+                'phone_number' => $selectedAddress->phone_number,
+                'id' => $cart['cart']->id
+            ];
+
+            $storeAddressRequest = new StoreAddressRequest($requestData);
+            $shoppingListController = new ShoppingListController();
+            $shoppingListController->assignNewAddress($storeAddressRequest);
+        }
+        //end
+
+
+
+
         $addresses = Address::with('user')->where('status', AddressStatus::NONE)->whereHas('user', function ($query) use ($user){
             $query->where('id', $user->id);
         })->orderByDesc('selected')->get();
+
+        $sl = Shopping_list::where('id', $cart['cart']->id)->first();
 
         $deliveryDate = $this->deliveryDate();
 
         $collectionDates = $this->date();
 
-        return view('checkout.index',['addresses'=>$addresses, 'collectionDates'=>$collectionDates, 'deliveryDate'=>$deliveryDate]);
+
+
+        return view('checkout.index',['sl'=>$sl,'addresses'=>$addresses, 'collectionDates'=>$collectionDates, 'deliveryDate'=>$deliveryDate]);
     }
 
 

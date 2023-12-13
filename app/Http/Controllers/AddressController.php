@@ -136,7 +136,7 @@ class AddressController extends Controller
         $address->voivodeship = $request->voivodeship;
         $address->phone_number = $request->phone_number;
         $address->status = AddressStatus::NONE;
-        $address->USERS_id=$user->id;
+        $address->USERS_id = $user->id;
 
         $hasSelectedAddress = Address::where('selected', true)->where('USERS_id', $user->id)->first();
 

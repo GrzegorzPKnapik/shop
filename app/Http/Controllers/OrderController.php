@@ -220,21 +220,22 @@ class OrderController extends Controller
         $deliveryDayName = $object[0]->name;
         $deliveryDayDate = $object[0]->date;
 
+        $user = Auth::user();
 
-        $addressController = new AddressController();
-        $address = $addressController->isAddress();
+        $shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)->where('USERS_id', $user->id)->first();
+
+
+        $address = Shopping_list::where('id', $shopping_list->id)->whereNotNull('ADDRESSES_id')->first();
+
 
         if(!isset($address)){
             return response()->json([
                 'status' => 'warning',
-                'message' => 'Adres nie został podany!'
+                'message' => 'Adres nie został przypisany!'
             ]);
         }
 
 
-        $user = Auth::user();
-
-        $shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)->where('USERS_id', $user->id)->first();
         //najpier kopia potem id do ordera czyli id do shoppoing_list
 
 
@@ -298,6 +299,8 @@ class OrderController extends Controller
 
 
     }
+
+
 
     public function nextDate()
     {

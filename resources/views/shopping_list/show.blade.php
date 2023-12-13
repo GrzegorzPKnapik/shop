@@ -384,7 +384,7 @@
                             <div class="modal-product-item">
                                 <div class="row">
                                     <div class="ltn__form-box">
-                                        <form class="addAddressSL" id="newAddressSL" data-id="{{$item->id}} method="POST">
+                                        <form id="assignNewAddress" data-id="{{$item->id}} method="POST">
                                             <div id="refreshForm">
                                                 @csrf
                                                 <div class="row mb-50">
@@ -497,6 +497,11 @@
                                                             class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
                                                         {{__('Zapisz adres')}}
                                                     </button>
+
+                                                    <label>
+                                                        <input class="form-check-input" name="checkboxSaveAddres" type="checkbox">
+                                                        <label class="tag-label">zapisz adres w ksiażce adresów</label>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </form>

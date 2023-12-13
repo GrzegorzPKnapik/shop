@@ -1499,7 +1499,7 @@
             var form = $('.selectDay').serialize();
             $.ajax({
                 type: "POST",
-                url: DATA.storeOrderUrl,
+                url: '/order/store',
                 data: form,
             })
                 .done(function (response) {
@@ -1546,7 +1546,7 @@
 
 
 
-
+        //nowy address w account dodany do książki
         $("#address").on('submit', function(){
             var responseStatus = false;
             var form = $('.addAddress').serialize();
@@ -1588,15 +1588,60 @@
             }
         });
 
-
-        $("#newAddressSL").on('submit', function(){
-            var id = $(this).data("id");
+        //adres wpisany do zamówinia jednorazowy/ i w tym sprawdze czy checked to wtedy dodam do listy
+        $("#assignNewAddress").on('submit', function(){
             var responseStatus = false;
-            var form = $('.addAddressSL').serialize();
+            var form = $('#assignNewAddress').serialize();
+            var id = $(this).data("id");
+            var data = form + '&id=' + id;
             var closeButton = document.getElementById("close");
             $.ajax({
                 type: 'POST',
-                url: DATA.storeAddressUrl,
+                url: '/shopping_list/assignNew/address/' + id,
+                async: false,
+                data: data,
+                success: function(result){
+                    if(result.status === true){
+                        responseStatus = true;
+                    } else {
+                        responseStatus = false;
+                        return false;
+                    }
+                },
+
+
+                error: function () {
+                    return false;
+                }
+            })
+                .done(function (response) {
+                    $("#refreshForm").load(location.href + " #refreshForm");
+
+                    Swal.fire(response.message, response.title, response.status);
+
+                    $("#refreshAddress").load(location.href + " #refreshAddress");
+
+                    if (closeButton) {
+                        closeButton.click();
+                    }
+                });
+
+            if(responseStatus === false){
+                return false;
+            } else {
+                return true;
+            }
+        });
+
+        //do wywalenia bedzie
+        $("#assignAddressToOrder").on('submit', function(){
+            var id = $(this).data("id");
+            var responseStatus = false;
+            var form = $('#assignAddressToOrder').serialize();
+            var closeButton = document.getElementById("close");
+            $.ajax({
+                type: 'POST',
+                url: '/shopping_list/assign/address/' + id,
                 async: false,
                 data: form,
                 success: function(result){

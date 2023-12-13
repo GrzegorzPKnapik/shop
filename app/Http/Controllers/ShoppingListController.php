@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Enums\AddressStatus;
 use App\Enums\ShoppingListMode;
 use App\Enums\ShoppingListStatus;
+use App\Http\Requests\StoreAddressRequest;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Shopping_list;
@@ -124,8 +125,6 @@ class ShoppingListController extends Controller
     public function assignAddress(Shopping_list $shopping_list)
     {
 
-        //kopia selecta
-
         $addressController = new AddressController();
         $address = $addressController->isAddress();
 
@@ -133,7 +132,7 @@ class ShoppingListController extends Controller
         if(!isset($address)){
             return response()->json([
                 'status' => 'warning',
-                'message' => 'Adres nie został podany!'
+                'message' => 'Brak adresów do przypisania!'
             ]);
         }
 
@@ -154,6 +153,66 @@ class ShoppingListController extends Controller
 
 
         $shopping_list->ADDRESSES_id = $copiedAddress->id;
+
+
+        try {
+            $shopping_list->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Adres został przypisany'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
+            ])->setStatusCode(500);
+        }
+
+
+    }
+
+    public function assignNewAddress(StoreAddressRequest $request)
+    {
+        $user = Auth::user();
+
+        $copiedAddress = new Address();
+        $copiedAddress->name = $request->name;
+        $copiedAddress->surname = $request->surname;
+        $copiedAddress->city = $request->city;
+        $copiedAddress->street = $request->street;
+        $copiedAddress->zip_code = $request->zip_code;
+        $copiedAddress->voivodeship = $request->voivodeship;
+        $copiedAddress->phone_number = $request->phone_number;
+        $copiedAddress->status = 'order';
+        $copiedAddress->USERS_id = $user->id;
+        $copiedAddress->save();
+
+
+
+        $shopping_list = Shopping_list::find($request->id);
+
+        $shopping_list->ADDRESSES_id = $copiedAddress->id;
+
+        //jeżeli jest zaznaczony to zapisz adres
+        if ($request->checkboxSaveAddres)
+        {
+            $addressController = new AddressController();
+            $addressController->store($request);
+
+            try {
+                $shopping_list->save();
+                return response()->json([
+                    'status' => 'success',
+                    'title' => 'Adres został dodany do adresów',
+                    'message' => 'Adres został przypisany'
+                ]);
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
+                ])->setStatusCode(500);
+            }
+        }
 
 
         try {
@@ -218,6 +277,10 @@ class ShoppingListController extends Controller
             $shopping_list->title = 'Twoja lista zakupów #' . $number;
         }
 
+
+        //przypisanie
+         $this->assignAddress($shopping_list);
+        //
 
         $shopping_list->mode = ShoppingListMode::SHOPPING_LIST;
         $shopping_list->status = ShoppingListStatus::NONE;

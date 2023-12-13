@@ -103,31 +103,19 @@
 
 
                                     <h4>Adres dostawy: </h4>
-                                    @foreach($addresses as $address)
-                                        @if($address->selected == true)
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="selected1" id="flexRadioDefault2"
-                                                       @if($address->selected == true)
-                                                           checked
-                                                    @endif
 
-                                                >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Wybrany jako główny
-                                                </label>
-                                            </div>
+                                    @if($sl->ADDRESSES_id != null)
+                                        <td>Przypisany address:</td>
+                                        <p><strong>{{$sl->address->name}} {{{$sl->address->surname}}}</strong></p>
+                                        <p>{{$sl->address->city}}, {{$sl->address->street}}<br>
+                                            {{$sl->address->zip_code}}, {{$sl->address->voivodeship}}</p>
+                                        <p>Telefon: {{$sl->address->phone_number}}</p>
 
-                                            <address>
-                                                <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                <p>{{$address->city}}, {{$address->street}}<br>
-                                                    {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                <p>Telefon: {{$address->phone_number}}</p>
+                                    @else
+                                        <td>Address:</td>
+                                        Nie przypisano adresu!
 
-                                                <hr style="width: 20%; border-top: 3px solid black; background-color: black;">
-
-                                            </address>
-                                        @endif
-                                    @endforeach
+                                    @endif
                                     <p>
                                     <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                 Wybierz inny adres
@@ -161,6 +149,9 @@
                                                         _____________________________
                                                     </address>
                                             @endforeach
+                                                <button class="theme-btn-1 btn btn-effect-1 assignAddress" data-id="{{$item->id}}" type="submit">
+                                                    {{ __('Przypisz address do s_l') }}
+                                                </button>
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +263,7 @@
                             <div class="modal-product-item">
                                 <div class="row">
                                     <div class="ltn__form-box">
-                                        <form class="addAddress" id="address" method="POST">
+                                        <form id="assignNewAddress" data-id="{{$sl->id}}" method="POST">
                                             <div id="refreshForm">
                                             @csrf
                                             <div class="row mb-50">
@@ -384,7 +375,7 @@
 
                                                 <button type="submit"
                                                         class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" >
-                                                    {{__('Zapisz adres')}}
+                                                    {{__('Przypisz adres')}}
                                                 </button>
 
 
