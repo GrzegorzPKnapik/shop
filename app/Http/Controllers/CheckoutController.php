@@ -31,24 +31,12 @@ class CheckoutController extends Controller
 
 
         //przypisanie adresu wybranego domyslnie
-        $selectedAddress = Address::where('status', AddressStatus::NONE)->where('selected', true)->first();
         $cart = \Illuminate\Support\Facades\View::getShared('cart');
-        if($selectedAddress)
+        $shopping_list = Shopping_list::where('id', $cart['cart']->id)->first();
+        if(!isset($shopping_list->address->id))
         {
-            $requestData = [
-                'name' => $selectedAddress->name,
-                'surname' => $selectedAddress->surname,
-                'city' => $selectedAddress->city,
-                'street' => $selectedAddress->street,
-                'zip_code' => $selectedAddress->zip_code,
-                'voivodeship' => $selectedAddress->voivodeship,
-                'phone_number' => $selectedAddress->phone_number,
-                'id' => $cart['cart']->id
-            ];
-
-            $storeAddressRequest = new StoreAddressRequest($requestData);
             $shoppingListController = new ShoppingListController();
-            $shoppingListController->assignNewAddress($storeAddressRequest);
+            $shoppingListController->firstAssignAddress($shopping_list);
         }
         //end
 

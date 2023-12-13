@@ -113,8 +113,9 @@ Route::group(['middleware' => 'cart'], function (){
         Route::get('/shopping_list/upload/{shopping_list}', [ShoppingListController::class, 'upload'])->name('shoppingList.upload');
         Route::get('/shopping_list/copyToCart/{shopping_list}', [ShoppingListController::class, 'copyToCart'])->name('shoppingList.copyToCart');
 
+        Route::post('/shopping_list/assign/address/', [ShoppingListController::class, 'assignAddress'])->name('shoppingList.assignAddress');
         Route::post('/shopping_list/assignNew/address/{shopping_list}', [ShoppingListController::class, 'assignNewAddress'])->name('shoppingList.assignNewAddress');
-        Route::post('/shopping_list/assign/address/{shopping_list}', [ShoppingListController::class, 'assignAddress'])->name('shoppingList.assignAddress');
+        Route::post('/shopping_list/firstAssign/address/{shopping_list}', [ShoppingListController::class, 'firstAssignAddress'])->name('shoppingList.firstAssignAddress');
         Route::post('/shopping_list/save/title/{shopping_list}', [ShoppingListController::class, 'saveTitle'])->name('shoppingList.saveTitle');
         Route::get('/shopping_list/save/{shopping_list}', [ShoppingListController::class, 'save'])->name('shoppingList.save');
         Route::get('/shopping_list/active/{shopping_list}', [ShoppingListController::class, 'active'])->name('shoppingList.active');

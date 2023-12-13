@@ -1633,59 +1633,6 @@
             }
         });
 
-        //do wywalenia bedzie
-        $("#assignAddressToOrder").on('submit', function(){
-            var id = $(this).data("id");
-            var responseStatus = false;
-            var form = $('#assignAddressToOrder').serialize();
-            var closeButton = document.getElementById("close");
-            $.ajax({
-                type: 'POST',
-                url: '/shopping_list/assign/address/' + id,
-                async: false,
-                data: form,
-                success: function(result){
-                    if(result.status === true){
-                        responseStatus = true;
-                    } else {
-                        responseStatus = false;
-                        return false;
-                    }
-                },
-
-
-                error: function () {
-                    return false;
-                }
-            })
-                .done(function () {
-                    $("#refreshForm").load(location.href + " #refreshForm");
-
-
-                    $.ajax({
-                        type: "POST",
-                        url: '/shopping_list/assign/address/' + id,
-                    })
-                        .done(function (response) {
-                            $("#refreshAddress").load(location.href + " #refreshAddress")
-                            //Swal.fire(response.message, '', response.status);
-                        })
-                    Swal.fire('Dodano nowy adres', '', 'success');
-
-                    $("#refreshAddress").load(location.href + " #refreshAddress");
-
-                    if (closeButton) {
-                        closeButton.click();
-                    }
-                });
-
-            if(responseStatus === false){
-                return false;
-            } else {
-                return true;
-            }
-        });
-
 
 
 
@@ -1718,13 +1665,36 @@
         });
 
 
-        $(document).on("click", ".assignAddress", function () {
+        $("#assignAddress").on('submit', function(){
+            event.preventDefault();
+            var form = $('#assignAddress').serialize();
+            var id = $(this).data("id");
+            var data = form + '&id=' + id;
+            $.ajax({
+                type: "POST",
+                url: '/shopping_list/assign/address/',
+                data: data,
+            })
+                .done(function (response) {
+                    $("#refreshAddress").load(location.href + " #refreshAddress")
+                    Swal.fire(response.message, '', response.status);
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
+        });
+
+        $(document).on("click", ".firstAssignAddress", function () {
             event.preventDefault();
             var id = $(this).data("id");
 
             $.ajax({
                 type: "POST",
-                url: '/shopping_list/assign/address/' + $(this).data("id"),
+                url: '/shopping_list/firstAssign/address/' + $(this).data("id"),
             })
                 .done(function (response) {
                     $("#refreshAddress").load(location.href + " #refreshAddress")

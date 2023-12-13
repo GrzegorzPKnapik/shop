@@ -124,10 +124,11 @@
 
                                     <div class="collapse" id="collapseExample">
                                         <div class="card card-body">
+                                            <form id="assignAddress" data-id="{{$sl->id}}">
+                                                @csrf
                                             @foreach($addresses as $address)
-
-                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                        <input class="form-check-input" type="radio" name="selected2" id="flexRadioDefault2"
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" value={{$address->id}} name="selectAddress" id="flexRadioDefault2"
                                                                @if($address->selected == true)
                                                                    checked
                                                             @endif
@@ -149,9 +150,10 @@
                                                         _____________________________
                                                     </address>
                                             @endforeach
-                                                <button class="theme-btn-1 btn btn-effect-1 assignAddress" data-id="{{$item->id}}" type="submit">
+                                                <button class="theme-btn-1 btn btn-effect-1" type="submit">
                                                     {{ __('Przypisz address do s_l') }}
                                                 </button>
+                                                </form>
                                         </div>
                                     </div>
                                 </div>

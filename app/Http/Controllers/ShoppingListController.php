@@ -122,7 +122,59 @@ class ShoppingListController extends Controller
         }
     }
 
-    public function assignAddress(Shopping_list $shopping_list)
+
+    public function assignAddress(Request $request)
+    {
+        $addressController = new AddressController();
+        $address = $addressController->isAddress();
+
+
+        if(!isset($address)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Brak adresów do przypisania!'
+            ]);
+        }
+
+
+        //znajdź jaki to address
+        $address = Address::where('id', $request->selectAddress)->first();
+
+
+        $copiedAddress = new Address();
+        $copiedAddress->name = $address->name;
+        $copiedAddress->surname = $address->surname;
+        $copiedAddress->city = $address->city;
+        $copiedAddress->street = $address->street;
+        $copiedAddress->zip_code = $address->zip_code;
+        $copiedAddress->voivodeship = $address->voivodeship;
+        $copiedAddress->phone_number = $address->phone_number;
+        $copiedAddress->status = 'order';
+        $copiedAddress->USERS_id = $address->USERS_id;
+        $copiedAddress->save();
+
+
+        $shopping_list = Shopping_list::where('id', $request->id)->first();
+        $shopping_list->ADDRESSES_id = $copiedAddress->id;
+
+
+        try {
+            $shopping_list->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Adres został przypisany'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Błąd zapisu w bazie! ' . $e->getMessage()
+            ])->setStatusCode(500);
+        }
+
+
+    }
+
+    public function firstAssignAddress(Shopping_list $shopping_list)
     {
 
         $addressController = new AddressController();
@@ -279,7 +331,8 @@ class ShoppingListController extends Controller
 
 
         //przypisanie
-         $this->assignAddress($shopping_list);
+        if(!isset($shopping_list->address->id))
+         $this->firstAssignAddress($shopping_list);
         //
 
         $shopping_list->mode = ShoppingListMode::SHOPPING_LIST;
