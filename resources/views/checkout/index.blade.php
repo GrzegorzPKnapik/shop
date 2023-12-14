@@ -97,7 +97,7 @@
 
 
 
-                                <div id="refreshAddress">
+
 
 
 
@@ -116,6 +116,8 @@
                                         Nie przypisano adresu!
 
                                     @endif
+
+
                                     <p>
                                     <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                 Wybierz inny adres
@@ -124,7 +126,8 @@
 
                                     <div class="collapse" id="collapseExample">
                                         <div class="card card-body">
-                                            <form id="assignAddress" data-id="{{$sl->id}}">
+                                            <form id="assignAddress" data-id="{{$sl->id}}" method="POST">
+                                                <div id="refreshAddress">
                                                 @csrf
                                             @foreach($addresses as $address)
                                                     <div class="form-check">
@@ -150,14 +153,13 @@
                                                         _____________________________
                                                     </address>
                                             @endforeach
+                                                </div>
                                                 <button class="theme-btn-1 btn btn-effect-1" type="submit">
                                                     {{ __('Przypisz address do s_l') }}
                                                 </button>
                                                 </form>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
                         </div>
 
 
