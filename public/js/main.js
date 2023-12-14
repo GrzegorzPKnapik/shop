@@ -1618,7 +1618,7 @@
                     $("#refreshForm").load(location.href + " #refreshForm");
 
                     Swal.fire(response.message, response.title, response.status);
-
+                    $("#refreshAssignAddress").load(location.href + " #refreshAssignAddress");
                     $("#refreshAddress").load(location.href + " #refreshAddress");
 
                     if (closeButton) {

@@ -62,11 +62,10 @@
                                                     <div class="ltn__myaccount-tab-content-inner">
                                                         <div class="table-responsive">
 
-                                                            @foreach($shopping_list as $item)
                                                                 <div id="refreshTitle">
                                                                 <p class="text-center">
                                                                     <label>Title:</label>
-                                                                    <h1 class="text-center">{{$item->title}}
+                                                                    <h1 class="text-center">{{$shopping_list->title}}
                                                                         <span style="font-size: smaller;">
                                                                             <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                             <button class="icon-edit" style="font-size: 1rem;"></button>
@@ -77,12 +76,11 @@
 
                                                                 <p class="text-center">
                                                                     <label>Shopping List ID:</label>
-                                                                <h1 class="text-center">#{{$item->id}}</h1>
+                                                                <h1 class="text-center">#{{$shopping_list->id}}</h1>
                                                                 </p>
 
-                                                            @endforeach
 
-                                                               @foreach ($item->orders as $index => $orderItem)
+                                                               @foreach ($shopping_list->orders as $index => $orderItem)
                                                                     <p class="text-center">
                                                                         <label>Order ID:</label>
                                                                     <h1 class="text-center">#{{$orderItem->id}}</h1>
@@ -95,12 +93,12 @@
 
                                                                     <h4>Adres dostawy: </h4>
 
-                                                                    @if($item->ADDRESSES_id != null)
+                                                                    @if($shopping_list->ADDRESSES_id != null)
                                                                         <td>Przypisany address:</td>
-                                                                        <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
-                                                                        <p>{{$item->address->city}}, {{$item->address->street}}<br>
-                                                                            {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
-                                                                        <p>Telefon: {{$item->address->phone_number}}</p>
+                                                                        <p><strong>{{$shopping_list->address->name}} {{{$shopping_list->address->surname}}}</strong></p>
+                                                                        <p>{{$shopping_list->address->city}}, {{$shopping_list->address->street}}<br>
+                                                                            {{$shopping_list->address->zip_code}}, {{$shopping_list->address->voivodeship}}</p>
+                                                                        <p>Telefon: {{$shopping_list->address->phone_number}}</p>
 
                                                                     @else
                                                                         <td>Address:</td>
@@ -117,7 +115,7 @@
                                                                 </div>
                                                                 <div class="collapse" id="collapseExample">
                                                                     <div class="card card-body">
-                                                                        <form id="assignAddress" data-id="{{$item->id}}" method="POST">
+                                                                        <form id="assignAddress" data-id="{{$shopping_list->id}}" method="POST">
                                                                             <div id="refreshAddress">
                                                                                 @csrf
                                                                                 @foreach($addresses as $address)
@@ -174,8 +172,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($shopping_list as $index => $item)
-                                                                    @foreach ($item->shopping_lists_products as $index => $item)
+                                                                    @foreach ($shopping_list->shopping_lists_products as $index => $item)
                                                                         <tr>
                                                                             <td class="cart-product-name">{{ $index+1}}.</td>
                                                                             <td class="cart-product-image"> <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a></td>
@@ -185,7 +182,6 @@
                                                                             <td class="cart-product-subtotal">${{$item->sub_total}}</td>
                                                                         </tr>
                                                                     @endforeach
-                                                                @endforeach
                                                                 </tbody>
                                                             </table>
 
@@ -200,28 +196,26 @@
                                                                 <p>
 
 
-                                                                    @foreach($shopping_list as $item)
-                                                                        @if($item->delivery_date == null)
+                                                                        @if($shopping_list->delivery_date == null)
                                                                             <label>Brak dodanej daty dostawy </label>
                                                                         @else
                                                                             <label>Ustawiony dzień realizacji cyklicznych dostaw:
-                                                                                {{ \Carbon\Carbon::parse($item->delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                                                                {{ \Carbon\Carbon::parse($shopping_list->delivery_date)->locale('pl')->isoFormat('dddd') }}
                                                                             </label>
                                                                             <br>
                                                                             <label>Najbliższa data cyklicznej dostawy:
-                                                                                {{ date('Y-m-d', strtotime($item->delivery_date)) }}
+                                                                                {{ date('Y-m-d', strtotime($shopping_list->delivery_date)) }}
                                                                             </label>
                                                                             <br>
                                                                             <label>Data ostatniej możliwej edycji listy w przypadku złożenia zamówinia:
-                                                                                {{ date('Y-m-d', strtotime($item->mod_available_date)) }}
+                                                                                {{ date('Y-m-d', strtotime($shopping_list->mod_available_date)) }}
                                                                             </label>
 
                                                                         @endif
 
-                                                                    @endforeach
                                                                     <br>
                                                                 </p>
-                                                                @if($item->delivery_date == null)
+                                                                @if($shopping_list->delivery_date == null)
                                                                     <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
                                                                                 Dodaj dzień dostawy
                                                                             </a></small></h4>
@@ -262,11 +256,11 @@
                                                                         </div>
                                                                     </form>
                                                                     <div id="refreshDayDelete">
-                                                                        @if($item->delivery_date != null)
-                                                                            <h4><small><a href="" class="deleteDay" data-id="{{$item->id}}"> Usuń adres</a></small>
+                                                                        @if($shopping_list->delivery_date != null)
+                                                                            <h4><small><a href="" class="deleteDay" data-id="{{$shopping_list->id}}"> Usuń adres</a></small>
                                                                         @endif
                                                                     </div>
-                                                                    <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$item->id}}" type="submit">
+                                                                    <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$shopping_list->id}}" type="submit">
                                                                         {{ __('Save delivery date') }}
                                                                     </button>
                                                                     <br>
@@ -292,10 +286,7 @@
                                                                     <tr>
                                                                         <td><strong>Order Total</strong></td>
                                                                         <td><strong>$
-                                                                                @foreach($shopping_list as $item)
-                                                                                    {{$item->total}}
-                                                                                    @php break;@endphp
-                                                                                @endforeach
+                                                                                    {{$shopping_list->total}}
                                                                             </strong></td>
                                                                     </tr>
                                                                     </tbody>
@@ -306,19 +297,19 @@
 
                                                             <div id="refreshActive">
                                                                 <div class="btn-wrapper">
-                                                                    @if($item->status->isStop())
+                                                                    @if($shopping_list->status->isStop())
                                                                         <button class="theme-btn-1 btn btn-effect-1 "style="opacity: 0.6; cursor: not-allowed;"title="Zamówinie w realizacji" type="submit">
                                                                             {{ __('Dezaktywuj') }}
                                                                             @endif
 
-                                                                            @if($item->active == false && !$item->status->isStop())
-                                                                                <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
+                                                                            @if($shopping_list->active == false && !$shopping_list->status->isStop())
+                                                                                <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$shopping_list->id}}" type="submit">
                                                                                     {{
                                                                                         __('Aktywuj')
                                                                                     }}
                                                                                     @endif
-                                                                                    @if($item->active == true && !$item->status->isStop())
-                                                                                        <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$item->id}}" type="submit">
+                                                                                    @if($shopping_list->active == true && !$shopping_list->status->isStop())
+                                                                                        <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$shopping_list->id}}" type="submit">
                                                                                             {{
                                                                                             __('Dezaktywuj')
                                                                                        }}
@@ -333,9 +324,9 @@
                                                         </div>
 
                                                         moźliwość nanoszenia zmian i pracowania z lsitą zakupów
-                                                        @if(!$item->status->isStop())
+                                                        @if(!$shopping_list->status->isStop())
                                                             <div class="btn-wrapper">
-                                                                <a href="{{ route('shoppingList.upload', $item->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
+                                                                <a href="{{ route('shoppingList.upload', $shopping_list->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
                                                             </div>
                                                         @else
                                                             <div class="btn-wrapper">
@@ -349,7 +340,7 @@
                                                         <br>
                                                         tylko kopiuje produkty do koszyka i pracujemy jakby nie istniała lista zakupów, tworzy nowy koszyk w bazie
                                                         <div class="btn-wrapper">
-                                                            <a href="{{ route('shoppingList.copyToCart', $item->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Skopiuj zawartość listy zakupów do koszyka') }}</a>
+                                                            <a href="{{ route('shoppingList.copyToCart', $shopping_list->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Skopiuj zawartość listy zakupów do koszyka') }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -386,7 +377,7 @@
                             <div class="modal-product-item">
                                 <div class="row">
                                     <div class="ltn__form-box">
-                                        <form id="assignNewAddress" data-id="{{$item->id}} method="POST">
+                                        <form id="assignNewAddress" data-id="{{$shopping_list->id}} method="POST">
                                             <div id="refreshForm">
                                                 @csrf
                                                 <div class="row mb-50">
@@ -540,7 +531,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label>Tytuł:</label>
-                                                        <input id="title" type="text" placeholder="Tytuł" value="{{$item->title}}"
+                                                        <input id="title" type="text" placeholder="Tytuł" value="{{$shopping_list->title}}"
                                                                class="form-control  @error('title') is-invalid @enderror"
                                                                name="title"
                                                                required autocomplete="title" autofocus>
@@ -557,7 +548,7 @@
 
                                             <div class="btn-wrapper">
                                                 <button type="submit"
-                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase saveTitle" data-id="{{$item->id}}">
+                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase saveTitle" data-id="{{$shopping_list->id}}">
                                                     {{__('Zapisz tytuł')}}
                                                 </button>
                                             </div>
