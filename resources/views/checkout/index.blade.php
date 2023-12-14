@@ -102,6 +102,7 @@
 
 
 
+                                <div id="refreshAssignAddress">
                                     <h4>Adres dostawy: </h4>
 
                                     @if($sl->ADDRESSES_id != null)
@@ -123,6 +124,7 @@
                                                 Wybierz inny adres
                                             </a></small></h4>
                                     </p>
+                                </div>
 
                                     <div class="collapse" id="collapseExample">
                                         <div class="card card-body">

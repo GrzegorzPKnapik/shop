@@ -80,7 +80,7 @@
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
                                                                 </p>
 
-
+                                                            @endforeach
 
                                                                @foreach ($item->orders as $index => $orderItem)
                                                                     <p class="text-center">
@@ -91,66 +91,68 @@
                                                                     @php break;@endphp
                                                                 @endforeach
 
-                                                                <div id="refreshAddress">
-                                                            @if($item->ADDRESSES_id != null)
-                                                                    <td>Przypisany address:</td>
-                                                                    <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
-                                                                    <p>{{$item->address->city}}, {{$item->address->street}}<br>
-                                                                        {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
-                                                                    <p>Telefon: {{$item->address->phone_number}}</p>
+                                                                <div id="refreshAssignAddress">
 
-                                                                @else
-                                                                    <td>Address:</td>
-                                                                   Nie przypisano adresu!
+                                                                    <h4>Adres dostawy: </h4>
 
-                                                            @endif
+                                                                    @if($item->ADDRESSES_id != null)
+                                                                        <td>Przypisany address:</td>
+                                                                        <p><strong>{{$item->address->name}} {{{$item->address->surname}}}</strong></p>
+                                                                        <p>{{$item->address->city}}, {{$item->address->street}}<br>
+                                                                            {{$item->address->zip_code}}, {{$item->address->voivodeship}}</p>
+                                                                        <p>Telefon: {{$item->address->phone_number}}</p>
 
-                                                            @endforeach
+                                                                    @else
+                                                                        <td>Address:</td>
+                                                                        Nie przypisano adresu!
 
-                                                                <p>
-                                                                <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                            @if($item->ADDRESSES_id != null)
+                                                                    @endif
+
+
+                                                                    <p>
+                                                                    <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                                                 Wybierz inny adres
-                                                                            @else
-                                                                            Wybierz adres
-                                                                            @endif
-                                                                        </a></small></h4>
-                                                                </p>
+                                                                            </a></small></h4>
+                                                                    </p>
+                                                                </div>
                                                                 <div class="collapse" id="collapseExample">
                                                                     <div class="card card-body">
-                                                                        @foreach($addresses as $address)
+                                                                        <form id="assignAddress" data-id="{{$item->id}}" method="POST">
+                                                                            <div id="refreshAddress">
+                                                                                @csrf
+                                                                                @foreach($addresses as $address)
+                                                                                    <div class="form-check">
+                                                                                        <input class="form-check-input" type="radio" value={{$address->id}} name="selectAddress" id="flexRadioDefault2"
+                                                                                               @if($address->selected == true)
+                                                                                                   checked
+                                                                                            @endif
+                                                                                        >
 
-                                                                                <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                                                    <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                                                           @if($address->selected == true)
-                                                                                               checked
+                                                                                        @if($address->selected == true)
+                                                                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                                                                Wybrany jako główny
+                                                                                            </label>
                                                                                         @endif
-                                                                                    >
 
-                                                                                    @if($address->selected == true)
-                                                                                        <label class="form-check-label" for="flexRadioDefault2">
-                                                                                            Wybrany jako główny
-                                                                                        </label>
-                                                                                    @endif
+                                                                                    </div>
 
-                                                                                </div>
-
-                                                                                <address>
-                                                                                    <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                                    <p>{{$address->city}}, {{$address->street}}<br>
-                                                                                        {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                                    <p>Telefon: {{$address->phone_number}}</p>
-                                                                                    _____________________________
-                                                                                </address>
-
-                                                                        @endforeach
-                                                                            <button class="theme-btn-1 btn btn-effect-1 assignAddress" data-id="{{$item->id}}" type="submit">
+                                                                                    <address>
+                                                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                                                        <p>{{$address->city}}, {{$address->street}}<br>
+                                                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                                                        <p>Telefon: {{$address->phone_number}}</p>
+                                                                                        _____________________________
+                                                                                    </address>
+                                                                                @endforeach
+                                                                            </div>
+                                                                            <button class="theme-btn-1 btn btn-effect-1" type="submit">
                                                                                 {{ __('Przypisz address do s_l') }}
                                                                             </button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
 
-                                                            </div>
+
 
                                                             <h4><small><a data-bs-target="#quick_view_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                         Wpisz adres dostawy

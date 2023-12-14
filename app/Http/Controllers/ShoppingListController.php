@@ -50,7 +50,6 @@ class ShoppingListController extends Controller
         })->orderByDesc('selected')->get();
 
         $shopping_list = Shopping_list::with(['orders', 'user', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->get();
-
         $checkoutController = new CheckoutController();
         $collectionDates = $checkoutController->date();
         //$collectionDates = $this->checkoutController->date();

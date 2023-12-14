@@ -1677,6 +1677,8 @@
             })
                 .done(function (response) {
                     $("#refreshAddress").load(location.href + " #refreshAddress")
+                    $("#refreshAssignAddress").load(location.href + " #refreshAssignAddress")
+                    $('.collapse').collapse('hide');
                     Swal.fire(response.message, '', response.status);
                 })
 
