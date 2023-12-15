@@ -315,7 +315,6 @@
                                                                                        }}
                                                                                             @endif
                                                                                         </button>
-
                                                                 </div>
                                                             </div>
 
@@ -576,7 +575,6 @@
     deleteDayUrl: '{{url('/shopping_list/delete_day')}}/',
     selectAddressUrl: '{{url('address/select')}}/',
     storeAddressUrl: '{{url('address/store')}}',
-    storeOrderSLUrl: '{{url('/order/storeSL')}}/',
     saveTitleUrl: '{{url('/shopping_list/save/title')}}/',
 
 

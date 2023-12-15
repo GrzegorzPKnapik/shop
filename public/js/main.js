@@ -1521,9 +1521,10 @@
             event.preventDefault();
             var id = $(this).data("id");
 
+
             $.ajax({
                 type: "POST",
-                url: DATA.storeOrderSLUrl + $(this).data("id")
+                url: '/order/storeSL/' + id
             })
                 .done(function (response) {
                     $("#refreshActive").load(location.href + " #refreshActive")
