@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Mail\MailNotify;
 use App\Mail\PurchaseConfirmation;
-use App\Mail\ShoppingListActivated;
+use App\Mail\ShoppingListActivatedConfirmation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -34,6 +34,6 @@ class SendActivatedConfirmationEmail implements ShouldQueue
             //'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj'
             'body' => 'W twojej liście zakupów znajduje się produkt który jest obecnie niedostęny, wymień go na inny, w przeciwnym razie zostanie on pominięty.'
         ];*/
-        Mail::to($shopping_list->user->email)->queue(new ShoppingListActivated($shopping_list));
+        Mail::to($shopping_list->user->email)->queue(new ShoppingListActivatedConfirmation($shopping_list));
     }
 }

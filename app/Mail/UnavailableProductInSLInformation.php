@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ShoppingListActivated extends Mailable
+class UnavailableProductInSLInformation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,7 +31,7 @@ class ShoppingListActivated extends Mailable
     {
         return new Envelope(
             from: new Address('groceryshop@gmail.com', 'Grocery Shop'),
-            subject: $this->data->active ? 'Shopping List Activated!' : 'Shopping List Deactivated!'
+            subject: 'You have shopping lists with unavailable products in!'
         );
     }
 
@@ -41,7 +41,7 @@ class ShoppingListActivated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.shoppingList.active-confirmation',
+            view: 'emails.shoppingList.unavailableProduct-confirmation',
             with: [
                 'data' => $this->data
             ],

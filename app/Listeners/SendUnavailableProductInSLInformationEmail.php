@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Mail\MailNotify;
 use App\Mail\PurchaseConfirmation;
+use App\Mail\UnavailableProductInSLInformation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -28,18 +29,21 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
     {
         $users = $event->user;
 
+
+
+        /*$data = [
+            'subject' => 'Your cart have unavailable product',
+            //'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj'
+            'body' => 'W twojej liście zakupów znajduje się produkt który jest obecnie niedostęny, wymień go na inny, w przeciwnym razie zostanie on pominięty.'
+        ];*/
+
         foreach ($users as $user)
         {
-            foreach ($user->shopping_lists as $shopping_list)
-            {
+            Mail::to($user->email)->queue(new UnavailableProductInSLInformation($user));
 
-
-            }
         }
 
 
 
-        //Mail::to($order->shopping_list->user->email)->queue(new PurchaseConfirmation($order));
-        Mail::to('grzegorz.p.knapik@gmail.com')->queue(new PurchaseConfirmation($order));
     }
 }
