@@ -17,6 +17,7 @@ use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
 use App\Models\Status;
 use App\Models\User;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
@@ -36,7 +37,16 @@ class ProductController extends Controller
     {
         $products=Product::with('image', 'category')->paginate(10);
 
-        return view('products.index',['products'=>$products]);
+        $user = User::with(['shopping_lists' => function ($query) {
+            $query->where('status', ShoppingListStatus::NONE)
+                ->where('active', ShoppingListActive::TRUE)
+                ->with(['shopping_lists_products.product' => function ($query) {
+                    $query->where('status', ProductStatus::SOLD_OUT);
+                }]);
+        }])
+            ->get();
+
+        return view('products.index',['products'=>$products, 'data'=>$user]);
     }
 
 
@@ -172,17 +182,27 @@ class ProductController extends Controller
 
 
 
-        /*$user = User::with(['shopping_lists' => function ($query) {
-            $query->where('id', '533');
-        }])->get();;*/
-        $user = User::with(['shopping_lists' => function ($query) {
-            $query->where('status', ShoppingListStatus::NONE)
-                ->where('active', ShoppingListActive::TRUE)
-                ->with(['shopping_lists_products.product' => function ($query) {
-                    $query->where('status', ProductStatus::SOLD_OUT);
+
+        $this->soldOutAction($request['product_status'], $old_product_status);
+
+        return redirect()->route('product.index');
+    }
+
+
+    public function soldOutAction($product_status, $old_product_status)
+    {
+        if ($old_product_status != $product_status && $product_status == ProductStatus::SOLD_OUT->value) {
+
+            $user = User::with(['shopping_lists' => function ($query) {
+                $query->where('status', ShoppingListStatus::NONE)
+                    ->where('active', ShoppingListActive::TRUE)
+                    ->with(['shopping_lists_products.product' => function ($query) {
+                        $query->where('status', ProductStatus::SOLD_OUT);
                     }]);
-                }])
+            }])
                 ->get();
+
+
 
 
 
@@ -191,6 +211,7 @@ class ProductController extends Controller
             $allObjects = [];
 
             foreach ($user as $s) {
+                $allObjects[] = $s;
 
                 foreach($s->shopping_lists as $sl){
                     $allObjects[] = $sl;
@@ -198,57 +219,10 @@ class ProductController extends Controller
                 }
             }
 
-            dd($allObjects);
+            //dd($allObjects);
+            event(new UnavailableProductInSL($user));
 
-        //$this->soldOutAction($request['product_status'], $old_product_status);
 
-        return redirect()->route('product.index');
-    }
-
-    /**
-     * @param $product_status
-     * @param $old_product_status
-     * @return void
-     */
-    private function soldOutAction($product_status, $old_product_status): void
-    {
-        if ($old_product_status != $product_status && $product_status == ProductStatus::SOLD_OUT->value) {
-
-            $users_shopping_lists = User::whereHas('shopping_lists', function ($query) {
-                $query->where('active', true)
-                    ->where('status', 'none')
-                    ->whereHas('shopping_lists_products.product', function ($query) {
-                        $query->where('status', 'sold_out');
-                    });
-            })/*->with(['shopping_lists' => function ($query) {
-                $query->where('active', ShoppingListActive::TRUE)
-                    ->where('status', ShoppingListStatus::NONE)
-                    ->whereHas('shopping_lists_products.product', function ($query) {
-                        $query->where('status', ProductStatus::SOLD_OUT);
-                    });
-            }])*/->get();
-
-           /* $shopping_lists = Shopping_list::with(['user', 'orders'])
-                ->whereHas('user', function ($query) use ($user) {
-                    $query->where('id', $user->id);
-                })*/
-
-            /*$users_shopping_lists = User::with(['shopping_lists'])->whereHas('shopping_lists', function ($query) {
-                $query->where('status', ShoppingListStatus::NONE);
-            })->get();*/
-
-            $allObjects = [];
-
-            foreach ($users_shopping_lists as $s) {
-
-                foreach($s->shopping_lists as $sl){
-                    $allObjects[] = $sl;
-
-                }
-            }
-
-            dd($allObjects);
-            event(new UnavailableProductInSL($users_shopping_lists));
         }
     }
 

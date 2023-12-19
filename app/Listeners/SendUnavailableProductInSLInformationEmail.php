@@ -2,9 +2,14 @@
 
 namespace App\Listeners;
 
+use App\Enums\ProductStatus;
+use App\Enums\ShoppingListActive;
+use App\Enums\ShoppingListStatus;
 use App\Mail\MailNotify;
 use App\Mail\PurchaseConfirmation;
 use App\Mail\UnavailableProductInSLInformation;
+use App\Models\Shopping_list;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -27,23 +32,29 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
      */
     public function handle(object $event): void
     {
-        $users = $event->user;
 
 
 
-        /*$data = [
-            'subject' => 'Your cart have unavailable product',
-            //'body' => 'Jutro kończy się czas edycji twojego koszyka pamiętaj'
-            'body' => 'W twojej liście zakupów znajduje się produkt który jest obecnie niedostęny, wymień go na inny, w przeciwnym razie zostanie on pominięty.'
-        ];*/
+        /*$user = Shopping_list::where(['shopping_lists' => function ($query) {
+            $query->where('status', ShoppingListStatus::NONE)
+                ->where('active', ShoppingListActive::TRUE)
+                ->with(['shopping_lists_products.product' => function ($query) {
+                    $query->where('status', ProductStatus::SOLD_OUT);
+                }]);
+        }])
+            ->get();*/
 
-        foreach ($users as $user)
-        {
-            Mail::to($user->email)->queue(new UnavailableProductInSLInformation($user));
+        $users = $event->users;
 
+        foreach ($users as $user) {
+            $user;
+            // Przeglądanie relacji dla każdego użytkownika
+            $user->load(['shopping_lists.shopping_lists_products.product']);
+
+
+            // Przesyłanie e-maila z informacją o niedostępnym produkcie w koszyku
+            Mail::to($user->email)->queue(new UnavailableProductInSLInformation($user->shopping_lists));
         }
-
-
-
     }
+
 }

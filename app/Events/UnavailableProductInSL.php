@@ -5,6 +5,7 @@ namespace App\Events;
 use App\Models\Order;
 use App\Models\Shopping_list;
 use App\Models\User;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -18,14 +19,17 @@ class UnavailableProductInSL
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public $users;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Collection $user)
+    public function __construct(Collection $users)
     {
-        $this->user = $user;
+        Debugbar::info($users);
+        $this->users = $users;
+
+
     }
 
 

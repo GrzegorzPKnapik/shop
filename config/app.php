@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => $_ENV['APP_NAME'] ?? 'Laravel',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => $_ENV['APP_NAME'] ?? 'production',
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) $_ENV['APP_DEBUG'] ?? true,
 
     /*
     |--------------------------------------------------------------------------
@@ -55,9 +55,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => $_ENV['APP_URL'] ?? 'http://localhost',
 
-    'asset_url' => env('ASSET_URL'),
+    'asset_url' => $_ENV['ASSET_URL'] ?? null,
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +122,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => $_ENV['APP_KEY'] ?? '',
 
     'cipher' => 'AES-256-CBC',
 

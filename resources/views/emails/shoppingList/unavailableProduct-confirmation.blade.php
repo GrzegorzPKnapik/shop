@@ -8,13 +8,10 @@
 <body>
 <h2>You have shopping lists with unavailable products in</h2>
 
-
-
-
-@foreach($data->shopping_lists as $shopping_list)
+@foreach($data as $index => $shopping_list)
 
 <h1>Title: {{$shopping_list->title}}</h1>
-
+{{$index +1}}
 
 
 

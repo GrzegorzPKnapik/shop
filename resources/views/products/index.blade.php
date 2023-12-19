@@ -33,6 +33,60 @@
                 <div class="mb-4">
                     <a href="{{ route('product.create') }}" class="theme-btn-1 btn btn-effect-1">{{ __('Dodaj nowy produkt') }}</a>
                 </div>
+
+
+                @foreach($data as $user)
+
+                    {{$user->email}}
+
+                    @foreach($user->shopping_lists as $index => $shopping_list)
+
+                        <h1>Title: {{$shopping_list->title}}</h1>
+                        {{$index +1}}
+
+
+
+                        <table style="width: 100%; border-collapse: collapse; margin: 0 auto;">
+                            <thead>
+                            <tr>
+                                <th style="border: 1px solid #ddd; padding: 8px;">#</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Product Image</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Product Name</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Price</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Subtotal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+
+
+
+
+
+
+
+
+                            </tbody>
+                        </table>
+
+
+
+                        <!-- Tabela z "Total" -->
+                        <table style="width: 15%; margin: 20px 0; float: right; text-align: center;">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" style="border: 1px solid #ddd; padding: 8px;">Total: ${{$shopping_list->total}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    @endforeach
+
+                @endforeach
+
+
+
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
