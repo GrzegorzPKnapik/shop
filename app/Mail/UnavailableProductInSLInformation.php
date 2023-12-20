@@ -2,26 +2,31 @@
 
 namespace App\Mail;
 
+use App\Models\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
 class UnavailableProductInSLInformation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $data=[];
+    public $data;
+    public $shopping_list;
 
     /**
      * Create a new message instance.
      */
     public function __construct($data)
     {
-       $this->data = $data;
+        $this->data = $data;
+        $this->shopping_list = $data->shopping_lists;
     }
 
     /**
@@ -43,7 +48,8 @@ class UnavailableProductInSLInformation extends Mailable
         return new Content(
             view: 'emails.shoppingList.unavailableProduct-confirmation',
             with: [
-                'data' => $this->data
+                'user' => $this->data,
+                'shopping_lists' => $this->shopping_list
             ],
         );
     }

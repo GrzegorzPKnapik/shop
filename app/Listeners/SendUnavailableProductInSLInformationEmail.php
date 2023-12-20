@@ -35,7 +35,7 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
 
 
 
-        /*$user = Shopping_list::where(['shopping_lists' => function ($query) {
+       /* $user = Shopping_list::where(['shopping_lists' => function ($query) {
             $query->where('status', ShoppingListStatus::NONE)
                 ->where('active', ShoppingListActive::TRUE)
                 ->with(['shopping_lists_products.product' => function ($query) {
@@ -44,16 +44,41 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
         }])
             ->get();*/
 
+
+
         $users = $event->users;
 
-        foreach ($users as $user) {
-            $user;
-            // Przeglądanie relacji dla każdego użytkownika
-            $user->load(['shopping_lists.shopping_lists_products.product']);
 
+
+        foreach ($users as $user) {
+            /*$re = Shopping_list::where('status', ShoppingListStatus::NONE)
+                ->where('active', ShoppingListActive::TRUE)->with(['user' => function ($query) use ($user) {
+                $query->where('id', $user->id)
+                    ->with(['shopping_lists_products.product' => function ($query) {
+                        $query->where('status', ProductStatus::SOLD_OUT);
+                    }]);
+            }]);
+
+            $data = [
+            'data' => $re
+            ];*/
+
+            $userr = User::where('id', $user->id)->whereHas('shopping_lists', function ($query) {
+                $query->where('status', ShoppingListStatus::NONE)
+                    ->where('active', ShoppingListActive::TRUE)
+                    ->whereHas('shopping_lists_products.product', function ($query) {
+                        $query->where('status', ProductStatus::SOLD_OUT);
+                    });
+            })->with(['shopping_lists' => function ($query) {
+                $query->where('status', ShoppingListStatus::NONE)
+                    ->where('active', ShoppingListActive::TRUE)
+                    ->with(['shopping_lists_products.product' => function ($query) {
+                        $query->where('status', ProductStatus::SOLD_OUT);
+                    }]);
+            }])->first();
 
             // Przesyłanie e-maila z informacją o niedostępnym produkcie w koszyku
-            Mail::to($user->email)->queue(new UnavailableProductInSLInformation($user->shopping_lists));
+            Mail::to($user->email)->queue(new UnavailableProductInSLInformation($userr));
         }
     }
 

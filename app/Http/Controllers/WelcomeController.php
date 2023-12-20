@@ -8,7 +8,7 @@ use App\Models\Shopping_list;
 use App\Models\Shopping_lists_product;
 use Illuminate\Http\Request;
 
-class WelcomeController extends Controller
+class WelcomeController extends controller
 {
     public function index(){
         //$products=Product::with('image')->get();

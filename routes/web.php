@@ -41,6 +41,9 @@ Route::get('/home', function () {
 })->middleware('can:isUser');
 
 
+
+
+
 Route::group(['middleware' => 'cart'], function (){
 
 
