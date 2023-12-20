@@ -18,16 +18,15 @@ class UnavailableProductInSLInformation extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
-    public $shopping_list;
+    public $shopping_lists;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($data, $shopping_list)
+    public function __construct($data)
     {
         $this->data = $data;
-        $this->shopping_list = $shopping_list;
-        dd($shopping_list);
+        $this->shopping_lists = $data->shopping_lists;
     }
 
     /**
@@ -49,8 +48,8 @@ class UnavailableProductInSLInformation extends Mailable
         return new Content(
             view: 'emails.shoppingList.unavailableProduct-confirmation',
             with: [
-                'user' => $this->data,
-                'shopping_lists' => $this->shopping_list
+                'data' => $this->data,
+                'shopping_lists' => $this->shopping_lists,
             ],
         );
     }

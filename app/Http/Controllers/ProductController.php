@@ -28,41 +28,6 @@ class ProductController extends controller
     {
         $products=Product::with('image', 'category')->paginate(10);
 
-        /*$user = User::with(['shopping_lists' => function ($query) {
-            $query->where('status', ShoppingListStatus::NONE)
-                ->where('active', ShoppingListActive::TRUE)
-                ->with(['shopping_lists_products.product' => function ($query) {
-                    $query->where('status', ProductStatus::SOLD_OUT);
-                }]);
-        }])
-            ->get();*/
-
-       /* $user = User::whereHas('shopping_lists', function ($query) {
-            $query->where('status', ShoppingListStatus::NONE)
-                ->where('active', ShoppingListActive::TRUE)
-                ->whereHas('shopping_lists_products.product', function ($query) {
-                    $query->where('status', ProductStatus::SOLD_OUT);
-                });
-        })->with(['shopping_lists' => function ($query) {
-            $query->where('status', ShoppingListStatus::NONE)
-                ->where('active', ShoppingListActive::TRUE)
-                ->with(['shopping_lists_products.product' => function ($query) {
-                    $query->where('status', ProductStatus::SOLD_OUT);
-                }]);
-        }])->get();*/
-        /*$user = User::whereHas('shopping_lists', function ($query) {
-            $query->where('status', ShoppingListStatus::NONE)
-                ->where('active', ShoppingListActive::TRUE)
-                ->whereHas('shopping_lists_products.product', function ($query) {
-                    $query->where('status', ProductStatus::SOLD_OUT);
-                });
-        })->with(['shopping_lists' => function ($query) {
-            $query->where('status', ShoppingListStatus::NONE)
-                ->where('active', ShoppingListActive::TRUE)
-                ->with(['shopping_lists_products.product' => function ($query) {
-                    $query->where('status', ProductStatus::SOLD_OUT);
-                }]);
-        }])->get();*/
 
         $user = User::whereHas('shopping_lists', function ($query) {
             $query->where('status', ShoppingListStatus::NONE)
@@ -142,9 +107,9 @@ class ProductController extends controller
         //$oldPath = $image->name;
 
         try {
-          //  if (Storage::exists($oldPath)) {
+            //  if (Storage::exists($oldPath)) {
             //     Storage::delete($oldPath);
-          //  }
+            //  }
             //$image->delete();
             $product->status = 'disable';
             $product->save();
@@ -213,8 +178,6 @@ class ProductController extends controller
 
 
 
-
-
         $this->soldOutAction($request['product_status'], $old_product_status);
 
         return redirect()->route('product.index');
@@ -225,18 +188,7 @@ class ProductController extends controller
     {
         if ($old_product_status != $product_status && $product_status == ProductStatus::SOLD_OUT->value) {
 
-            /*$user = User::with(['shopping_lists' => function ($query) {
-                $query->where('status', ShoppingListStatus::NONE)
-                    ->where('active', ShoppingListActive::TRUE)
-                    ->with(['shopping_lists_products.product' => function ($query) {
-                        $query->where('status', ProductStatus::SOLD_OUT);
-                    }]);
-            }])
-                ->get();*/
-
-
-
-            $user = User::whereHas('shopping_lists', function ($query) {
+            $users = User::whereHas('shopping_lists', function ($query) {
                 $query->where('status', ShoppingListStatus::NONE)
                     ->where('active', ShoppingListActive::TRUE)
                     ->whereHas('shopping_lists_products.product', function ($query) {
@@ -251,23 +203,9 @@ class ProductController extends controller
             }])->get();
 
 
+            $collectWithRelations = collect($users);
 
-
-
-
-            $allObjects = [];
-
-            foreach ($user as $s) {
-                $allObjects[] = $s;
-
-                foreach($s->shopping_lists as $sl){
-                    $allObjects[] = $sl;
-
-                }
-            }
-
-            //dd($allObjects);
-            event(new UnavailableProductInSL($user));
+            event(new UnavailableProductInSL($collectWithRelations));
 
 
         }

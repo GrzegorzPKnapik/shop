@@ -29,21 +29,7 @@ class UnavailableProductInSL
      */
     public function __construct(Collection $users)
     {
-
-        /*$re = Shopping_list::where('status', ShoppingListStatus::NONE)
-            ->where('active', ShoppingListActive::TRUE)->with(['user' => function ($query){
-                $query->where('id', 73);
-                     }])
-
-           ->get();
-
-        dd($re);*/
-
         $this->users = $users;
-
-        //dd($this->users);
-
-
     }
 
 
