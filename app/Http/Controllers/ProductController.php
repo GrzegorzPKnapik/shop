@@ -64,7 +64,7 @@ class ProductController extends controller
                 }]);
         }])->get();*/
 
-        $user = User::where('id', 72)->whereHas('shopping_lists', function ($query) {
+        $user = User::whereHas('shopping_lists', function ($query) {
             $query->where('status', ShoppingListStatus::NONE)
                 ->where('active', ShoppingListActive::TRUE)
                 ->whereHas('shopping_lists_products.product', function ($query) {
@@ -249,6 +249,7 @@ class ProductController extends controller
                         $query->where('status', ProductStatus::SOLD_OUT);
                     }]);
             }])->get();
+
 
 
 

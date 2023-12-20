@@ -8,12 +8,9 @@
 <body>
 <h2>You have shopping lists with unavailable products in</h2>
 
-{{$user->email}}
+{{$user}}
 
-@foreach ($shopping_lists as $item)
-    {{$item->title}}
-@endforeach
-
+{{$shopping_lists}}
 
 
 

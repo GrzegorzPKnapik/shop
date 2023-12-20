@@ -23,10 +23,11 @@ class UnavailableProductInSLInformation extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct($data, $shopping_list)
     {
         $this->data = $data;
-        $this->shopping_list = $data->shopping_lists;
+        $this->shopping_list = $shopping_list;
+        dd($shopping_list);
     }
 
     /**

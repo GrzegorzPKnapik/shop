@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Enums\ProductStatus;
 use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListStatus;
+use App\Events\UnavailableProductInSL;
 use App\Mail\MailNotify;
 use App\Mail\PurchaseConfirmation;
 use App\Mail\UnavailableProductInSLInformation;
@@ -12,6 +13,7 @@ use App\Models\Shopping_list;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
@@ -30,7 +32,7 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(UnavailableProductInSL $event): void
     {
 
 
@@ -63,7 +65,7 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
             'data' => $re
             ];*/
 
-            $userr = User::where('id', $user->id)->whereHas('shopping_lists', function ($query) {
+            /*$userr = User::where('id', $user->id)->whereHas('shopping_lists', function ($query) {
                 $query->where('status', ShoppingListStatus::NONE)
                     ->where('active', ShoppingListActive::TRUE)
                     ->whereHas('shopping_lists_products.product', function ($query) {
@@ -75,10 +77,20 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
                     ->with(['shopping_lists_products.product' => function ($query) {
                         $query->where('status', ProductStatus::SOLD_OUT);
                     }]);
-            }])->first();
+            }])->first();*/
+
+            $shopping_list = $user->load(['shopping_lists' => function ($query) {
+                $query->where('status', ShoppingListStatus::NONE)
+                    ->where('active', ShoppingListActive::TRUE)
+                    ->with(['shopping_lists_products.product' => function ($query) {
+                        $query->where('status', ProductStatus::SOLD_OUT);
+                    }]);
+            }]);
+
+            $shopping_list = $user;
 
             // Przesyłanie e-maila z informacją o niedostępnym produkcie w koszyku
-            Mail::to($user->email)->queue(new UnavailableProductInSLInformation($userr));
+            Mail::to($user->email)->queue(new UnavailableProductInSLInformation($user,$shopping_list));
         }
     }
 
