@@ -21,7 +21,7 @@ class AccountController extends Controller
         $user = Auth::user();
 
 
-        $shopping_lists = Shopping_list::with(['user', 'orders'])
+        /*$shopping_lists = Shopping_list::with(['user'])
             ->whereHas('user', function ($query) use ($user) {
                 $query->where('id', $user->id);
             })
@@ -29,20 +29,65 @@ class AccountController extends Controller
             ->orderBy('updated_at', 'desc')
             ->where(function(\Illuminate\Database\Eloquent\Builder $query) {
                 $query->where('status', '!=', ShoppingListStatus::ORDER)->orWhereNull('status');
+            })->get();*/
+
+        /*$shopping_lists = Shopping_list::with(['user'])
+            ->whereHas('user', function ($query) use ($user) {
+                $query->where('id', $user->id);
             })
-            /*->orWhereNull('status')*/
-            ->get();
+            ->where('mode', 'shopping_list')``
+            ->orderBy('updated_at', 'desc')
+            ->where(function(\Illuminate\Database\Eloquent\Builder $query) {
+                $query->where('status', '!=', ShoppingListStatus::ORDER)->orWhereNull('status');
+            })->get();*/
 
-        /*$titleHasOrder = Order::with('shopping_list')->whereHas('shopping_list', function ($query) {
-            $query->where('title', $user->id);
-        })->get();*/
 
-        /*  $shopping_lists = Shopping_list::with(['user'])
-              ->whereHas('user', function ($query) use ($user) {
-                  $query->where('id', $user->id);
-              })
-              ->where("mode", 'shopping_list')
-              ->get();*/
+        /*$latest_orders = collect();
+
+        foreach ($shopping_lists as $shopping_list) {
+            $latest_order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)
+                ->orderByDesc('created_at')
+                ->skip(1) // Pominięcie ostatniego rekordu, aby uzyskać przedostatni
+                ->first();
+
+            if ($latest_order) {
+                $latest_orders->push($latest_order);
+            }
+        }
+
+        $shopping_lists = $shopping_lists->with($latest_orders)->get();*/
+
+        /*$shopping_lists = Shopping_list::with(['user'])
+            ->whereHas('user', function ($query) use ($user) {
+                $query->where('id', $user->id);
+            })
+            ->where('mode', 'shopping_list')
+            ->orderBy('updated_at', 'desc')
+            ->where(function(\Illuminate\Database\Eloquent\Builder $query) {
+                $query->where('status', '!=', ShoppingListStatus::ORDER)->orWhereNull('status');
+            })->get();
+
+        $s_l_title = $shopping_lists->title;
+        $order = Order::whereHas('shopping_list', function ($query) use ($s_l_title) {
+            $query->where('title', $s_l_title)
+            ->orderBy('created_at', 'desc')
+                ->skip(1) // Pomijamy najnowszy element
+                ->take(1);
+        })
+            ->first();
+
+        $shopping_lists = Shopping_list::with(['user'])
+            ->whereHas('user', function ($query) use ($user) {
+                $query->where('id', $user->id);
+            })
+            ->where('mode', 'shopping_list')
+            ->orderBy('updated_at', 'desc')
+            ->where(function(\Illuminate\Database\Eloquent\Builder $query) {
+                $query->where('status', '!=', ShoppingListStatus::ORDER)->orWhereNull('status');
+            })->with($order)->get();*/
+
+
+
 
 
         $orders = Order::with('shopping_list.user')->whereHas('shopping_list.user', function ($query) use ($user){

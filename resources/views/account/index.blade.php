@@ -105,6 +105,7 @@
                                                                 <!--                                                            //wyswietl tylko te co mają status różny od ordered czyli od resume-->
                                                                 @foreach($shopping_lists as $item)
 
+
                                                                     <tr>
                                                                         <td class="cart-product-name">{{$item->title}}</td>
                                                                         @php

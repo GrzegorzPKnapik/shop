@@ -67,8 +67,8 @@ class OrderController extends Controller
             ->select('orders.id as order_id', 'orders.*', 'shopping_lists_products.*', 'shopping_lists.*', 'products.name as product_name', 'products.*', 'images.name')->where('orders.id', $order->id)
             ->get();
 
-        $order = Order::with(['shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
-
+        $order = Order::with(['shopping_list.user', 'shopping_list.address', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->first();
+        //dd($order->shopping_list);
         return view('order.order_summary', ['items' => $items, 'order' => $order]);
     }
 
@@ -77,17 +77,9 @@ class OrderController extends Controller
     //git
     public function show(Order $order)
     {
-        //join działa
-//        $order = Order::join('shopping_list', 'orders.SHOPPING_LISTS_id', '=', 'shopping_list.id')
-//            ->join('shopping_lists_products', 'shopping_list.id', '=', 'shopping_lists_products.SHOPPING_LISTS_id')
-//            ->join('products', 'shopping_lists_products.PRODUCTS_id', '=', 'products.id')
-//            ->join('images', 'products.IMAGES_id', '=', 'images.id')
-//            ->select('orders.id as order_id', 'user.*', 'addresses.*','shopping_lists_products.*', 'shopping_list.*','products.name as product_name','products.*', 'images.name as image_name', 'products.price as product_price')->where('orders.id', $order->id)
-//            ->get();
 
         $order = Order::with(['shopping_list.address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
 
-        //dd($order);
         return view('order.order_show', ['order' => $order]);
     }
 
@@ -167,72 +159,24 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-
-        $object = json_decode($request->deliveryDate);
-
-        $deliveryDayName = $object[0]->name;
-        $deliveryDayDate = $object[0]->date;
-
         $user = Auth::user();
-
         $shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)->where('USERS_id', $user->id)->first();
 
-
-        $address = Shopping_list::where('id', $shopping_list->id)->whereNotNull('ADDRESSES_id')->first();
-
-
-        if(!isset($address)){
+        if(!isset($shopping_list->address)){
             return response()->json([
                 'status' => 'warning',
                 'message' => 'Adres nie został przypisany!'
             ]);
         }
 
-
-        //najpier kopia potem id do ordera czyli id do shoppoing_list
-
-
-        $copiedAddress = new Address();
-        $copiedAddress->name = $address->name;
-        $copiedAddress->surname = $address->surname;
-        $copiedAddress->city = $address->city;
-        $copiedAddress->street = $address->street;
-        $copiedAddress->zip_code = $address->zip_code;
-        $copiedAddress->voivodeship = $address->voivodeship;
-        $copiedAddress->phone_number = $address->phone_number;
-        $copiedAddress->status = ShoppingListStatus::ORDER;
-        $copiedAddress->USERS_id = $address->USERS_id;
-        $copiedAddress->save();
-
-
-        //zapis dnia w bazie danych czyli nie zpisy=uje dnia tylko date tego dnia i poźniej sie bedą n
-
-
         $order = new Order();
-
-
-        if($request->select==0)
-            {
-                $shopping_list->delivery_date = $deliveryDayDate;
-                $shopping_list->end_mod_date = null;
-                $shopping_list->mod_available_date = null;
-                $shopping_list->mode = ShoppingListMode::NORMAL;
-                $shopping_list->status = ShoppingListStatus::ORDER;
-            }
-        else{
-            $shopping_list->delivery_date = $request->select;
-
-
-            $shopping_list->end_mod_date = $this->endDate($request->select);
-            $shopping_list->mod_available_date = $this->mod_available_date($request->select);
-            $shopping_list->mode = ShoppingListMode::NORMAL;
-            //gotowa na zmiane statusu na in_prepare
-            $shopping_list->status = ShoppingListStatus::NONE;
-        }
-
         $order->SHOPPING_LISTS_id = $shopping_list->id;
-        $shopping_list->ADDRESSES_id = $copiedAddress->id;
+        $order->status = OrderStatus::NONE;
 
+        $shopping_list->delivery_date = $request->selectDate;
+        $shopping_list->end_mod_date = null;
+        $shopping_list->mod_available_date = null;
+        $shopping_list->status = ShoppingListStatus::ORDER;
 
         try {
             $shopping_list->save();

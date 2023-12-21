@@ -96,7 +96,7 @@
 
                                                                     <h4>Adres dostawy: </h4>
 
-                                                                    @if($shopping_list->ADDRESSES_id != null)
+                                                                    @if($shopping_list->ADDRESSES_id != null && $shopping_list->address != null)
                                                                         <td>Przypisany address:</td>
                                                                         <p><strong>{{$shopping_list->address->name}} {{{$shopping_list->address->surname}}}</strong></p>
                                                                         <p>{{$shopping_list->address->city}}, {{$shopping_list->address->street}}<br>
@@ -121,7 +121,7 @@
                                                                         <form id="assignAddress" data-id="{{$shopping_list->id}}" method="POST">
                                                                             <div id="refreshAddress">
                                                                                 @csrf
-                                                                                @foreach($addresses as $address)
+                                                                                @forelse($addresses as $address)
                                                                                     <div class="form-check">
                                                                                         <input class="form-check-input" type="radio" value={{$address->id}} name="selectAddress" id="flexRadioDefault2"
                                                                                                @if($address->selected == true)
@@ -144,11 +144,18 @@
                                                                                         <p>Telefon: {{$address->phone_number}}</p>
                                                                                         _____________________________
                                                                                     </address>
-                                                                                @endforeach
+
+
+                                                                                @empty
+                                                                                    Brak adresów w książce adresowej
+                                                                                @endforelse
+                                                                            @if(!$addresses->isEmpty())
+                                                                                <button class="theme-btn-1 btn btn-effect-1" type="submit">
+                                                                                    {{ __('Zatwierdź') }}
+                                                                                </button>
+                                                                            @endif
                                                                             </div>
-                                                                            <button class="theme-btn-1 btn btn-effect-1" type="submit">
-                                                                                {{ __('Zatwierdź') }}
-                                                                            </button>
+
                                                                         </form>
                                                                     </div>
                                                                 </div>
@@ -271,14 +278,13 @@
                                                                     <br>
                                                                 </div>
                                                             </div>
+                                                            <div id="refreshActive">
+                                                            <h4 class="pt-4 pb-2 mb-0">Status:</h4>
+                                                                <strong class="">{!! \App\Enums\ShoppingListActive::getActiveText($shopping_list->active) !!}</strong>
 
-                                                            <h4 class="pt-4 pb-2">Status zamówinia:</h4>
-                                                            {{--@if($orderItem->status == null)
-                                                                Złożone
-                                                            @else
-                                                            {{$orderItem->status}}
-                                                            --}}
-                                                            <br>
+
+
+                                                                <br>
 
                                                             <div class="shoping-cart-total mt-50">
                                                                 <h4>Cart Totals</h4>
@@ -300,7 +306,7 @@
 
 
 
-                                                            <div id="refreshActive">
+
                                                                 <div class="btn-wrapper">
                                                                     @if($shopping_list->status->isStop())
                                                                         <button class="theme-btn-1 btn btn-effect-1 "style="opacity: 0.6; cursor: not-allowed;"title="Zamówinie w realizacji" type="submit">

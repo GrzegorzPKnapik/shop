@@ -105,7 +105,7 @@
                                 <div id="refreshAssignAddress">
                                     <h4>Adres dostawy: </h4>
 
-                                    @if($sl->ADDRESSES_id != null)
+                                    @if($sl->ADDRESSES_id != null && $sl->address != null)
                                         <td>Przypisany address:</td>
                                         <p><strong>{{$sl->address->name}} {{{$sl->address->surname}}}</strong></p>
                                         <p>{{$sl->address->city}}, {{$sl->address->street}}<br>
@@ -131,7 +131,7 @@
                                             <form id="assignAddress" data-id="{{$sl->id}}" method="POST">
                                                 <div id="refreshAddress">
                                                 @csrf
-                                            @foreach($addresses as $address)
+                                            @forelse($addresses as $address)
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" value={{$address->id}} name="selectAddress" id="flexRadioDefault2"
                                                                @if($address->selected == true)
@@ -154,12 +154,19 @@
                                                         <p>Telefon: {{$address->phone_number}}</p>
                                                         _____________________________
                                                     </address>
-                                            @endforeach
+
+                                                    @empty
+                                                        Brak adresów w książce adresowej
+                                            @endforelse
+
+                                                @if(!$addresses->isEmpty())
+                                                    <button class="theme-btn-1 btn btn-effect-1" type="submit">
+                                                        {{ __('Zatwierdź') }}
+                                                    </button>
+                                                @endif
                                                 </div>
-                                                <button class="theme-btn-1 btn btn-effect-1" type="submit">
-                                                    {{ __('Zatwierdź') }}
-                                                </button>
-                                                </form>
+
+                                            </form>
                                         </div>
                                     </div>
                         </div>
@@ -184,12 +191,9 @@
 
                             <form class="selectDay" method="POST">
                                     @csrf
-
-                                <input type="hidden" name="deliveryDate" value="{{ $deliveryDate }}">
-
                                 <div class="col-md-6">
                                     <div class="input-item">
-                                        <select name="select" class="nice-select" id="deliveryDateSelect">
+                                        <select name="selectDate" class="nice-select" id="deliveryDateSelect">
                                                 @foreach($collectionDates as $date)
                                                 <option value={{$date['date']}} {{ $date['date'] == $dDate['date'] ? 'selected' : '' }}> {{$date['name']}} ({{ $date['date'] }})
                                                     @php

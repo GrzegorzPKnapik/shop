@@ -363,7 +363,7 @@ class ShoppingListController extends Controller
             ]);
         }
 
-        if(!isset($shopping_list->address->id)){
+        if(!isset($shopping_list->address)){
             return response()->json([
                 'status' => 'warning',
                 'message' => 'Adres nie został przypisany!'

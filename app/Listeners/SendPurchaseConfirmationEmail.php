@@ -28,7 +28,6 @@ class SendPurchaseConfirmationEmail implements ShouldQueue
     {
         $order = $event->order;
 
-
         //Mail::to($order->shopping_list->user->email)->queue(new PurchaseConfirmation($order));
         Mail::to('grzegorz.p.knapik@gmail.com')->queue(new PurchaseConfirmation($order));
     }

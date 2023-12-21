@@ -39,14 +39,11 @@
                         <div class="account-login-inner section-bg-1">
                             <form action="#" class="ltn__form-box contact-form-box">
                                 <p class="text-center"> To track your order please enter your Order ID in the box below and press the "Track Order" button. This was given to you on your receipt and in the confirmation email you should have received. </p>
-                                @foreach($items as $item)
                                     <p class="text-center">
                                     <label>Order ID:</label>
-                                    <h1 class="text-center">#{{$item->order_id}}</h1>
+                                    <h1 class="text-center">#{{$order->id}}</h1>
                                  <br>
                                     </p>
-                                    @php break;@endphp
-                                @endforeach
 
 
                                 <table class="table text-center">
@@ -65,17 +62,17 @@
                                     <tbody>
 
 
-                                        @foreach($items as $index => $item)
+                                        @foreach($order->shopping_list->shopping_lists_products as $index => $item)
                                             <tr class="align-middle">
                                                 <td class="cart-product-subtotal">{{ $index +1}}.</td>
                                                 <td class="cart-product-image">
-                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->name)}}" alt="Zdjęcie"></a>
+                                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
                                                 </td>
                                                 <td class="cart-product-info">
-                                                    <h4><a>{{$item->product_name}}</a></h4>
+                                                    <h4><a>{{$item->product->name}}</a></h4>
                                                 </td>
 
-                                                <td class="cart-product-subtotal">${{$item->price}}</td>
+                                                <td class="cart-product-subtotal">${{$item->product->price}}</td>
                                                 <td class="cart-product-subtotal">x{{$item->quantity}}</td>
                                                 <td class="cart-product-subtotal">${{$item->sub_total}}</td>
                                             </tr>
@@ -87,32 +84,17 @@
 
 
                                 <p >
-                                    @foreach($order as $item)
-                                        @if($item->shopping_list->mode != 'shopping_list')
                                     <label>Dostawa: </label>
-                                        @endif
 
-                                    @if($item->shopping_list->mode == 'shopping_list')
-                                    <label>Ustawiony dzień realizacji cyklicznych dostaw: </label>
-                                        @endif
-                                    {{ \Carbon\Carbon::parse($item->shopping_list->delivery_date)->locale('pl')->isoFormat('dddd') . ', '}}
-                                        @if($item->shopping_list->mode == 'shopping_list')
-                                        <label>Najbliższa data cyklicznej dostawy: </label>
-                                        @endif
-                                            {{ date('Y-m-d', strtotime($item->shopping_list->delivery_date)) }}
-                                    @php break;@endphp
-                                    @endforeach
-                                    <br>
+                                    {{ \Carbon\Carbon::parse($order->shopping_list->delivery_date)->locale('pl')->isoFormat('dddd') . ', '}}
+                                            {{ date('Y-m-d', strtotime($order->shopping_list->delivery_date)) }}
                                 </p>
 
-                                @foreach($order as $item)
                                     <td>Address:</td>
-                                    <p><strong>{{$item->shopping_list->address->name}} {{{$item->shopping_list->address->surname}}}</strong></p>
-                                    <p>{{$item->shopping_list->address->city}}, {{$item->shopping_list->address->street}}<br>
-                                        {{$item->shopping_list->address->zip_code}}, {{$item->shopping_list->address->voivodeship}}</p>
-                                    <p>Telefon: {{$item->shopping_list->address->phone_number}}</p>
-                                    @php break;@endphp
-                                @endforeach
+                                    <p><strong>{{$order->shopping_list->address->name}} {{{$order->shopping_list->address->surname}}}</strong></p>
+                                    <p>{{$order->shopping_list->address->city}}, {{$order->shopping_list->address->street}}<br>
+                                        {{$order->shopping_list->address->zip_code}}, {{$order->shopping_list->address->voivodeship}}</p>
+                                    <p>Telefon: {{$order->shopping_list->address->phone_number}}</p>
 
                                 <p class="text-center">
                                     <label>Przygotuj taką kwotę:</label>
@@ -130,10 +112,7 @@
                                     <tr>
                                         <td>Order Total</td>
                                         <td><strong>$
-                                                @foreach($items as $item)
-                                                    {{$item->total}}
-                                                    @php break; @endphp
-                                                @endforeach
+                                                    {{$order->shopping_list->total}}
                                             </strong></td>
                                     </tr>
                                     </tbody>

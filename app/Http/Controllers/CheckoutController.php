@@ -47,6 +47,7 @@ class CheckoutController extends Controller
             $query->where('id', $user->id);
         })->orderByDesc('selected')->get();
 
+
         $sl = Shopping_list::where('id', $cart['cart']->id)->first();
 
         $deliveryDate = $this->deliveryDate();
