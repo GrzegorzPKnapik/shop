@@ -78,7 +78,13 @@ class OrderController extends Controller
     public function show(Order $order)
     {
 
-        $order = Order::with(['shopping_list.address', 'shopping_list.user', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->get();
+        $order = Order::with(['shopping_list.address', 'shopping_list.user'])
+        /*->with(['shopping_list.shopping_lists_products.product.image' => function($query)
+        {
+            $query->where('confirmed', true);
+        }])*/
+            ->where('id', $order->id)
+            ->get();
 
         return view('order.order_show', ['order' => $order]);
     }
@@ -167,6 +173,18 @@ class OrderController extends Controller
                 'status' => 'warning',
                 'message' => 'Adres nie został przypisany!'
             ]);
+        }
+
+        foreach ($shopping_list->shopping_lists_products as $item_product) {
+            if(!$item_product->product->status->isEnable())
+            {
+                $item_product->confirmed = false;
+                $item_product->save();
+            }else if ($item_product->product->status->isEnable() && $item_product->product->selected == true)
+            {
+                $item_product->confirmed = true;
+                $item_product->save();
+            }
         }
 
         $order = new Order();

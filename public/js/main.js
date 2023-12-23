@@ -1551,17 +1551,62 @@
             var id = $(this).data("id");
             $.ajax({
                 type: "POST",
-                url: '/shopping_list/activeChange/'+id,
+                url: '/shopping_list/haveUnavailableInSL/'+id,
             })
                 .done(function (response) {
-                    $("#refreshActive").load(location.href + " #refreshActive")
-                    Swal.fire(response.message, '', response.status);
+                    if(response.status == 'unavailable')
+                    {
+                        Swal.fire({
+                            title: 'Twoja lista zakupów zawiera niedostepny produkt!',
+                            text: 'Czy chcesz aktywować liste bez tego produktu?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Tak',
+                            cancelButtonText: 'Nie',
+                            position: 'center'
+                        }).then((result) => {
+                            if (result.value) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/shopping_list/activeChange/'+id,
+                                })
+                                    .done(function (response) {
+                                        $("#refreshActive").load(location.href + " #refreshActive")
+                                        Swal.fire(response.message, '', response.status);
+                                    })
+
+                                    .fail(function (xhr) {
+                                        var errorMessage = xhr.responseJSON.message;
+                                        Swal.fire('Błąd', errorMessage, 'error');
+                                    });
+                            }
+                        });
+                    }
+                    if(response.status == 'unavailableAll') {
+                        Swal.fire(response.message, '', response.status);
+                    }if(response.status == 'warning')
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: '/shopping_list/activeChange/'+id,
+                        })
+                            .done(function (response) {
+                                $("#refreshActive").load(location.href + " #refreshActive")
+                                Swal.fire(response.message, '', response.status);
+                            })
+                    }if(response.status == 'success')
+                    {
+                        $("#refreshActive").load(location.href + " #refreshActive")
+                        Swal.fire(response.message, '', response.status);
+                    }
+
+
                 })
 
-                .fail(function (xhr) {
-                    var errorMessage = xhr.responseJSON.message;
-                    Swal.fire('Błąd', errorMessage, 'error');
-                });
+
+
+
+
 
 
         });

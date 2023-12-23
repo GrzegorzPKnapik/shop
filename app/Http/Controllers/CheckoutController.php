@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\AddressStatus;
+use App\Enums\ProductStatus;
 use App\Enums\ShoppingListStatus;
 use App\Http\Requests\StoreAddressRequest;
 use App\Models\Address;
@@ -32,7 +33,20 @@ class CheckoutController extends Controller
 
         //przypisanie adresu wybranego domyslnie
         $cart = \Illuminate\Support\Facades\View::getShared('cart');
-        $shopping_list = Shopping_list::where('id', $cart['cart']->id)->first();
+        $shopping_list = Shopping_list::where('id', $cart['cart']->id)
+            ->with(['shopping_lists_products' => function($query) {
+                $query->where('selected', true)
+                    ->whereHas('product', function ($query) {
+                        $query->where('status', '==', ProductStatus::ENABLE);
+                    });
+            }])
+            ->first();
+
+
+
+
+
+
         if(!isset($shopping_list->address->id))
         {
             $shoppingListController = new ShoppingListController();
@@ -48,7 +62,18 @@ class CheckoutController extends Controller
         })->orderByDesc('selected')->get();
 
 
-        $sl = Shopping_list::where('id', $cart['cart']->id)->first();
+        $sl =  $shopping_list = Shopping_list::where('id', $cart['cart']->id)
+            ->with(['shopping_lists_products' => function($query) {
+                $query->where('selected', true)
+                    ->whereHas('product', function ($query) {
+                        $query->where('status', '==', ProductStatus::ENABLE);
+                    });
+            }])
+            ->first();
+
+
+
+
 
         $deliveryDate = $this->deliveryDate();
 

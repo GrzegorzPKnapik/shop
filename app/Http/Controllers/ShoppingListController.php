@@ -357,6 +357,49 @@ class ShoppingListController extends Controller
     }
 
 
+    public function haveUnavailableInSL(Shopping_list $shopping_list){
+
+        if($shopping_list->active == ShoppingListActive::TRUE)
+        {
+            $shopping_list->active = ShoppingListActive::FALSE;
+            $shopping_list->save();
+            event(new ShoppingListActivated($shopping_list));
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Dezaktywowano listę zakupów'
+            ]);
+        }
+
+
+        $productAvailable = false;
+        $productUnavailable = false;
+
+        foreach ($shopping_list->shopping_lists_products as $item_product) {
+            if ($item_product->product->status->isEnable())
+            {
+                $productAvailable = true;
+                break;
+            }else
+                $productUnavailable = true;
+
+        }
+
+        if (!$productAvailable) {
+            return response()->json([
+                'status' => 'unavailableAll',
+            ]);
+        }
+
+        if ($productUnavailable) {
+            return response()->json([
+                'status' => 'unavailableAll',
+            ]);
+        }
+
+
+
+    }
+
     public function activeChange(Shopping_list $shopping_list)
     {
 
@@ -381,14 +424,6 @@ class ShoppingListController extends Controller
             ]);
         }
 
-
-
-        foreach ($shopping_list->shopping_lists_products as $item_product) {
-            if (!$item_product->product->status->isEnable())
-            {
-
-            }
-        }
 
 
         if($shopping_list->active == ShoppingListActive::FALSE)
