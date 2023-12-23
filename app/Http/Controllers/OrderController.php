@@ -79,10 +79,10 @@ class OrderController extends Controller
     {
 
         $order = Order::with(['shopping_list.address', 'shopping_list.user'])
-        /*->with(['shopping_list.shopping_lists_products.product.image' => function($query)
+        ->with(['shopping_list.shopping_lists_products' => function($query)
         {
             $query->where('confirmed', true);
-        }])*/
+        }])
             ->where('id', $order->id)
             ->get();
 
@@ -166,7 +166,10 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)->where('USERS_id', $user->id)->first();
+        $shopping_list = Shopping_list::where('status', ShoppingListStatus::CART)
+            ->where('USERS_id', $user->id)
+            ->with('shopping_lists_products.product')
+            ->first();
 
         if(!isset($shopping_list->address)){
             return response()->json([
@@ -175,17 +178,23 @@ class OrderController extends Controller
             ]);
         }
 
-        foreach ($shopping_list->shopping_lists_products as $item_product) {
+
+
+
+        /*foreach ($shopping_list->shopping_lists_products as $item_product) {
             if(!$item_product->product->status->isEnable())
             {
-                $item_product->confirmed = false;
-                $item_product->save();
-            }else if ($item_product->product->status->isEnable() && $item_product->product->selected == true)
+                $item_product->update(['confirmed' => false]);
+                //$item_product->confirmed = false;
+                //$item_product->save();
+            }else if ($item_product->product->status->isEnable() && $item_product->selected == true)
             {
-                $item_product->confirmed = true;
-                $item_product->save();
+                $item_product->update(['confirmed' => true]);
+
+                //$item_product->confirmed = true;
+                //$item_product->save();
             }
-        }
+        }*/
 
         $order = new Order();
         $order->SHOPPING_LISTS_id = $shopping_list->id;
