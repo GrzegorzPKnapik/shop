@@ -22,15 +22,5 @@ class UnavailableProductInSL
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $users;
-
-    /**
-     * Create a new event instance.
-     */
-    public function __construct(Collection $users)
-    {
-        $this->users = $users;
-    }
-
 
 }

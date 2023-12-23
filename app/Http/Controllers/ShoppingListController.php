@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\AddressStatus;
+use App\Enums\ProductStatus;
 use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListMode;
 use App\Enums\ShoppingListStatus;
@@ -51,7 +52,10 @@ class ShoppingListController extends Controller
             $query->where('id', $user->id);
         })->orderByDesc('selected')->get();
 
+
         $shopping_list = Shopping_list::with(['orders', 'user', 'shopping_lists_products.product.image'])->where('id', $shopping_list->id)->first();
+
+
         $checkoutController = new CheckoutController();
         $collectionDates = $checkoutController->date();
         //$collectionDates = $this->checkoutController->date();
@@ -376,6 +380,17 @@ class ShoppingListController extends Controller
                 'message' => 'Data nie została podana!'
             ]);
         }
+
+
+
+        foreach ($shopping_list->shopping_lists_products as $item_product) {
+            if (!$item_product->product->status->isEnable())
+            {
+
+            }
+        }
+
+
         if($shopping_list->active == ShoppingListActive::FALSE)
         {
                 $shopping_list->active = ShoppingListActive::TRUE;

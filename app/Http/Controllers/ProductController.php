@@ -10,6 +10,8 @@ use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Description;
 use App\Models\Producer;
+use App\Models\Shopping_list;
+use App\Models\Shopping_lists_product;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -94,12 +96,9 @@ class ProductController extends controller
         //$oldPath = $image->name;
 
         try {
-            //  if (Storage::exists($oldPath)) {
-            //     Storage::delete($oldPath);
-            //  }
-            //$image->delete();
             $product->status = 'disable';
             $product->save();
+            event(new UnavailableProductInSL());
 
             //jednorazowe wyświetlenie wiadomości
             //Session::flash('status', __('shop.product.status.delete.success'));
@@ -165,39 +164,39 @@ class ProductController extends controller
 
 
 
-        $this->soldOutAction($request['product_status'], $old_product_status);
+        if ($old_product_status != $request['product_status'] && $request['product_status'] != ProductStatus::ENABLE->value)
+        {
+            //oblicz koszyk na nowo
+            $shopping_lists = Shopping_list::where('status', ShoppingListStatus::NONE)
+                ->orWhere('status', ShoppingListStatus::CART)
+                ->whereHas('shopping_lists_products.product', function ($query) {
+                    $query->where('status', '!=', ProductStatus::ENABLE);
+                })
+                ->get();
+
+            //działa
+            foreach ($shopping_lists as $shopping_list) {
+                $total = Shopping_lists_product::whereHas('shopping_list', function ($query) use ($shopping_list) {
+                    $query->where('id', $shopping_list->id);
+                })
+                    //warunek, że status produktu musi być równy ProductStatus::ENABLE,
+                    ->whereHas('product', function ($query) {
+                        $query->where('status', ProductStatus::ENABLE);
+                    })
+                    ->where('selected', true)
+                    ->sum('sub_total');
+
+                $shopping_list->total = $total;
+                $shopping_list->save();
+            }
+
+            event(new UnavailableProductInSL());
+        }
+
 
         return redirect()->route('product.index');
     }
 
-
-    public function soldOutAction($product_status, $old_product_status)
-    {
-        if ($old_product_status != $product_status && $product_status == ProductStatus::SOLD_OUT->value) {
-
-
-            $users = User::whereHas('shopping_lists', function ($query) {
-                $query->where('status', ShoppingListStatus::NONE)
-                    ->where('active', ShoppingListActive::TRUE)
-                    ->whereHas('shopping_lists_products.product', function ($query) {
-                        $query->where('status', ProductStatus::SOLD_OUT);
-                    });
-            })->with(['shopping_lists' => function ($query) {
-                $query->where('status', ShoppingListStatus::NONE)
-                    ->where('active', ShoppingListActive::TRUE)
-                    ->with(['shopping_lists_products.product' => function ($query) {
-                        $query->where('status', ProductStatus::SOLD_OUT);
-                    }]);
-            }])->get();
-
-
-            $collectWithRelations = collect($users);
-
-            event(new UnavailableProductInSL($collectWithRelations));
-
-
-        }
-    }
 
 
 }

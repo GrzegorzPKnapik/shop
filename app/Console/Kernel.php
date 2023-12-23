@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Enums\OrderStatus;
+use App\Enums\ProductStatus;
 use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListStatus;
 use App\Events\PurchaseSuccesful;
@@ -18,6 +19,12 @@ use function PHPUnit\Framework\isNull;
 
 class Kernel extends ConsoleKernel
 {
+    /**
+     * @param \Illuminate\Database\Eloquent\Model $item
+     * @return void
+     */
+
+
     /**
      * Define the application's command schedule.
      */
@@ -46,10 +53,10 @@ class Kernel extends ConsoleKernel
                     {*/
                         if ($order && $order->status->isDelivered() && $item->status->isStop()) {
                             //2. gdy isDelivered to tworzymy kopie ktora bedzie jak nowa s_l none status
+
                             $item->status = ShoppingListStatus::ORDER;
                             $item->active = ShoppingListActive::FALSE;
                             $item->save();
-
                             $this->copy($item);
                         }
                    // }
@@ -64,9 +71,23 @@ class Kernel extends ConsoleKernel
                             $order->shopping_list()->associate($item);
                             $order->save();
                             $item->status = ShoppingListStatus::STOP;
-                            //email z listy a nie zalogowanje osoby
-                            //event(new PurchaseSuccesful($item));
+                            event(new PurchaseSuccesful($order));
                             $item->save();
+
+                            //nadaj confirmed dla tej listy zrobic test
+                                foreach ($item->shopping_lists_products as $item_product) {
+                                    if(!$item_product->product->status->isEnable())
+                                    {
+                                        $item_product->confirmed = false;
+                                        $item_product->save();
+                                    }else if ($item_product->product->status->isEnable() && $item_product->product->selected == true)
+                                    {
+                                        $item_product->confirmed = true;
+                                        $item_product->save();
+                                    }
+                                }
+
+
 
                         }
 

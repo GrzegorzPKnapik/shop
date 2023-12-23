@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 
+use App\Enums\ProductStatus;
 use App\Enums\ShoppingListMode;
 use App\Enums\ShoppingListStatus;
 use App\Http\Controllers\Controller;
@@ -98,6 +99,7 @@ class CartService
     private function newShoppingListsProduct(Product $product, $shopping_list, $quantity): void
     {
         $shopping_lists_product = new Shopping_lists_product();
+        $shopping_lists_product->selected = true;
         $shopping_lists_product->sub_total = $product->price * $quantity;
         $shopping_lists_product->quantity = $quantity;
         $shopping_lists_product->PRODUCTS_id = $product->id;
@@ -111,7 +113,12 @@ class CartService
      */
     private function updateTotal($shopping_list): void
     {
+        //działa
         $total = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
+            ->where('selected', true)
+            ->whereHas('product', function ($query) {
+                $query->where('status', ProductStatus::ENABLE);
+            })
             ->sum('sub_total');
         $shopping_list->total = $total;
         $shopping_list->save();

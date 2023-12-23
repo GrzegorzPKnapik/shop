@@ -8,12 +8,9 @@
 <body>
 <h2>You have shopping lists with unavailable products in</h2>
 
-
-
 @foreach($shopping_lists as $index => $shopping_list)
 
     <h1>Title: {{$shopping_list->title}}</h1>
-    {{$index +1}}
 
 
 
@@ -39,7 +36,7 @@
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ $index+1 }}.</td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
                     <a href="product-details.html" style="display: inline-block; vertical-align: middle;">
-                        <img src="{{ $message->embed(public_path('storage/' . $item->product->image->name)) }}" alt="Product Image" width="100" height="100" style="display: block; margin: 0 auto;">
+                        <img src="{{ $message->embed(public_path('storage/' . $item->product->image->name)) }}" alt="Product Image" width="100" height="100" style="{{$item->product->status->isSoldOut() ? 'opacity: 0.8;' : ''}} display: block; margin: 0 auto;">
                     </a>
                 </td>
                 <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ $item->product->name }}</td>

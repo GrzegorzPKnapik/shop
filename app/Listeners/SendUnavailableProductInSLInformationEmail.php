@@ -10,6 +10,7 @@ use App\Mail\MailNotify;
 use App\Mail\PurchaseConfirmation;
 use App\Mail\UnavailableProductInSLInformation;
 use App\Models\Shopping_list;
+use App\Models\Shopping_lists_product;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,11 +35,26 @@ class SendUnavailableProductInSLInformationEmail implements ShouldQueue
      */
     public function handle(object $event): void
     {
+        $collectWithRelations = collect($this->usersWithUnavailableProduct());
 
-        $users = $event->users;
-        foreach ($users as $user) {
+        foreach ($collectWithRelations as $user) {
             Mail::to($user->email)->queue(new UnavailableProductInSLInformation($user));
         }
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    private function usersWithUnavailableProduct(): Collection
+    {
+        $slUsersWithUnavailableProduct = User::with(['shopping_lists' => function ($query) {
+            $query->where('status', ShoppingListStatus::NONE)
+                ->where('active', ShoppingListActive::TRUE)
+                ->whereHas('shopping_lists_products.product', function ($query) {
+                    $query->where('status', '!=', ProductStatus::ENABLE);
+                });
+        }])->get();
+        return $slUsersWithUnavailableProduct;
     }
 
 }

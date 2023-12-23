@@ -38,6 +38,23 @@
 
 <body>
 
+<style>
+    /* Dostosuj rozmiar etykiety */
+    .btn-outline-secondary {
+        font-size: 0.8rem; /* Dostosuj wielkość czcionki według własnych preferencji */
+        padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
+    }
+
+    .disabled-link {
+        color: #999; /* Ustaw kolor na szary lub inny kolor sugerujący nieaktywność */
+        pointer-events: none; /* Wyłącz interakcję z linkiem */
+    }
+
+    .disabled-icon {
+        opacity: 0.5;
+    }
+
+</style>
 
 <!-- Add your site or application content here -->
 <!-- Body main wrapper start -->
@@ -305,7 +322,7 @@
                         @foreach($items as $item)
                             <div class="mini-cart-item clearfix delete_mem{{$item->PRODUCTS_id}}">
                                 <div class="mini-cart-img">
-                                    <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
+                                    <a href="{{route('shop.product', $item->PRODUCTS_id)}}"><img class="{{$item->product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
                                     <span class="mini-cart-item-delete delete" data-id="{{$item->PRODUCTS_id}}"><i class="icon-cancel"></i></span>
                                 </div>
                                 <div class="mini-cart-info">

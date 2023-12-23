@@ -1,7 +1,23 @@
 @extends('layouts.appwhite')
 
 @section('content')
+    <style>
+        /* Dostosuj rozmiar etykiety */
+        .btn-outline-secondary {
+            font-size: 0.8rem; /* Dostosuj wielkość czcionki według własnych preferencji */
+            padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
+        }
 
+        .disabled-link {
+            color: #999; /* Ustaw kolor na szary lub inny kolor sugerujący nieaktywność */
+            pointer-events: none; /* Wyłącz interakcję z linkiem */
+        }
+
+        .disabled-icon {
+            opacity: 0.5;
+        }
+
+    </style>
     <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -146,7 +162,7 @@
                                             <button class="icon-cancel delete" data-id="{{$item->PRODUCTS_id}}"></button>
                                         </td>
                                         <td class="cart-product-image">
-                                            <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
+                                            <a href="{{route('shop.product', $item->PRODUCTS_id)}}"><img class="{{$item->product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
                                         </td>
                                         <td class="cart-product-info">
                                             <h4><a>{{$item->product->name}}</a></h4>

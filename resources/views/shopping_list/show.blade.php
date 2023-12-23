@@ -1,7 +1,23 @@
 @extends('layouts.appwhite')
 
 @section('content')
+    <style>
+        /* Dostosuj rozmiar etykiety */
+        .btn-outline-secondary {
+            font-size: 0.8rem; /* Dostosuj wielkość czcionki według własnych preferencji */
+            padding: 0.2rem 0.5rem; /* Dostosuj wypełnienie według własnych preferencji */
+        }
 
+        .disabled-link {
+            color: #999; /* Ustaw kolor na szary lub inny kolor sugerujący nieaktywność */
+            pointer-events: none; /* Wyłącz interakcję z linkiem */
+        }
+
+        .disabled-icon {
+            opacity: 0.5;
+        }
+
+    </style>
     <body>
 
 
@@ -77,20 +93,18 @@
                                                                     </h1>
                                                                 </div>
 
+
+
                                                                 <p class="text-center">
-                                                                    <label>Shopping List ID:</label>
-                                                                <h1 class="text-center">#{{$shopping_list->id}}</h1>
+                                                            @forelse($shopping_list->orders as $order)
+                                                                    <label>Last order ID:</label>
+                                                                    <h1 class="text-center">#{{$order->id}}</h1>
+                                                                    @empty
+
+                                                            @endforelse
                                                                 </p>
 
 
-                                                               @foreach ($shopping_list->orders as $index => $orderItem)
-                                                                    <p class="text-center">
-                                                                        <label>Order ID:</label>
-                                                                    <h1 class="text-center">#{{$orderItem->id}}</h1>
-                                                                    </p>
-                                                                    <br>
-                                                                    @php break;@endphp
-                                                                @endforeach
 
                                                                 <div id="refreshAssignAddress">
 
@@ -169,7 +183,7 @@
                                                             <br>
 
 
-                                                            <table class="table text-center caption-top table-sm">
+                                                            <table class="align-middle table text-center caption-top table-sm">
                                                                 <caption>Products</caption>
                                                                 <thead>
                                                                 <tr>
@@ -185,7 +199,9 @@
                                                                     @foreach ($shopping_list->shopping_lists_products as $index => $item)
                                                                         <tr>
                                                                             <td class="cart-product-name">{{ $index+1}}.</td>
-                                                                            <td class="cart-product-image"> <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a></td>
+                                                                            <td class="cart-product-image">
+                                                                                <a href="{{route('shop.product', $item->product->id)}}"><img class="{{$item->product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
+                                                                            </td>
                                                                             <td class="cart-product-name">{{$item->product->name}}</td>
                                                                             <td class="cart-product-name">${{$item->product->price}}</td>
                                                                             <td class="cart-product-name">x{{$item->quantity}}</td>
