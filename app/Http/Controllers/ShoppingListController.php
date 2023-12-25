@@ -463,20 +463,6 @@ class ShoppingListController extends Controller
         //nie działa
 
         //jeżeli jest nie zablokowana czyli status nie order blokada edycji
-        if($shopping_list->status != ShoppingListStatus::STOP)
-        {
-            $this->copy($shopping_list);
-
-            //starą ustawiam na shopping_list
-            //$shopping_list->status = null;
-            //$shopping_list->save();
-
-            return redirect()->route('welcome.index');
-
-
-        }
-
-
 
 
 
@@ -613,7 +599,7 @@ class ShoppingListController extends Controller
      * @param $order_is_delivered
      * @return void
      */
-    public function copy(Shopping_list $shopping_list): void
+    /*public function copy(Shopping_list $shopping_list): void
     {
         $order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
 
@@ -661,7 +647,7 @@ class ShoppingListController extends Controller
 
 
         $copiedOrder->save();
-    }
+    }*/
 
     private function endDate($date)
     {

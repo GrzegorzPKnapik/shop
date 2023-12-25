@@ -33,7 +33,9 @@ class AccountController extends Controller
             /*->orWhereNull('status')*/
             ->get();
 
-
+        /*$titleHasOrder = Order::with('shopping_list')->whereHas('shopping_list', function ($query) {
+            $query->where('title', $user->id);
+        })->get();*/
 
         /*  $shopping_lists = Shopping_list::with(['user'])
               ->whereHas('user', function ($query) use ($user) {

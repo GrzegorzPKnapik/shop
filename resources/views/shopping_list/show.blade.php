@@ -66,11 +66,14 @@
                                                                 <p class="text-center">
                                                                     <label>Title:</label>
                                                                     <h1 class="text-center">{{$shopping_list->title}}
-                                                                        <span style="font-size: smaller;">
+                                                                        @if(\PHPUnit\Framework\isNull($shopping_list->orders))
+                                                                            <span style="font-size: smaller;">
                                                                             <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                             <button class="icon-edit" style="font-size: 1rem;"></button>
                                                                         </a>
                                                                         </span>
+                                                                                @endif
+
                                                                     </h1>
                                                                 </div>
 

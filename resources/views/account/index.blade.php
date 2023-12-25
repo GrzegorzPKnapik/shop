@@ -58,7 +58,7 @@
                                                             class="fas fa-file-alt"></i></a>
                                                     <a data-bs-toggle="tab" href="#liton_tab_1_3">Downloads <i
                                                             class="fas fa-arrow-down"></i></a>
-                                                    @endcan
+                                                @endcan
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_4">Address <i
                                                         class="fas fa-map-marker-alt"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_5">Account details <i
@@ -74,8 +74,8 @@
                                             <div class="tab-pane fade active show" id="liton_tab_1_1">
                                                 <div class="ltn__myaccount-tab-content-inner">
                                                     <p>Hello <strong>
-                                                                {{ Auth::user()->name }}
-                                                            </strong> (not <strong>UserName</strong>?
+                                                            {{ Auth::user()->name }}
+                                                        </strong> (not <strong>UserName</strong>?
                                                         <small><a href="login-register.html">Log out</a></small> )</p>
                                                     <p>From your account dashboard you can view your
                                                         <span>recent orders</span>, manage your <span>shipping and billing addresses</span>,
@@ -93,7 +93,7 @@
                                                                 <tr>
                                                                     <th>Title</th>
                                                                     <th>Newest order number</th>
-<!--                                                                    <th>Shopping list number</th>-->
+                                                                    <!--                                                                    <th>Shopping list number</th>-->
                                                                     <th>Update date</th>
                                                                     <th>Price</th>
                                                                     <th>Active</th>
@@ -120,7 +120,7 @@
                                                                             <td class="cart-product-name"></td>
                                                                         @endif
 
-<!--                                                                        <td class="cart-product-name">#{{$item->id}}</td>-->
+                                                                        <!--                                                                        <td class="cart-product-name">#{{$item->id}}</td>-->
                                                                         <td class="cart-product-name">{{$item->updated_at}}</td>
 
                                                                         <td class="cart-product-name">${{$item->total}}</td>
@@ -219,7 +219,7 @@
                                                     </div>
                                                 </div>
 
-                                                @endcan
+                                            @endcan
 
                                             <div class="tab-pane fade" id="liton_tab_1_4">
                                                 <div class="ltn__myaccount-tab-content-inner">
@@ -232,6 +232,35 @@
 
                                                                 @can('isUser')
                                                                     @foreach($addresses as $address)
+                                                                        <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
+                                                                            <button class="icon-cancel deleteAddress" data-id="{{$address->id}}"></button></h4>
+                                                                        <div class="form-check selectAddress" data-id="{{$address->id}}">
+                                                                            <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
+                                                                                   @if($address->selected == true)
+                                                                                       checked
+                                                                                @endif
+
+                                                                            >
+
+                                                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                                                Wybrany jako główny
+                                                                            </label>
+                                                                        </div>
+
+                                                                        <address>
+                                                                            <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                                            <p>{{$address->city}}, {{$address->street}}<br>
+                                                                                {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                                            <p>Telefon: {{$address->phone_number}}</p>
+                                                                            <hr style="width: 60%; border-top: 3px solid black; background-color: black;">
+                                                                        </address>
+                                                                    @endforeach
+                                                                @endcan
+
+
+                                                                @can('isEmployee')
+                                                                    @foreach($addresses as $address)
+                                                                        @if($address->selected == true)
                                                                             <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
                                                                                 <button class="icon-cancel deleteAddress" data-id="{{$address->id}}"></button></h4>
                                                                             <div class="form-check selectAddress" data-id="{{$address->id}}">
@@ -254,37 +283,8 @@
                                                                                 <p>Telefon: {{$address->phone_number}}</p>
                                                                                 <hr style="width: 60%; border-top: 3px solid black; background-color: black;">
                                                                             </address>
+                                                                        @endif
                                                                     @endforeach
-                                                                @endcan
-
-
-                                                                @can('isEmployee')
-                                                                @foreach($addresses as $address)
-                                                                    @if($address->selected == true)
-                                                                    <h4><small><a href="{{ route('address.edit', $address->id) }}"> edit</a></small>
-                                                                    <button class="icon-cancel deleteAddress" data-id="{{$address->id}}"></button></h4>
-                                                                    <div class="form-check selectAddress" data-id="{{$address->id}}">
-                                                                        <input class="form-check-input" type="radio" name="selected" id="flexRadioDefault2"
-                                                                               @if($address->selected == true)
-                                                                                   checked
-                                                                            @endif
-
-                                                                        >
-
-                                                                        <label class="form-check-label" for="flexRadioDefault2">
-                                                                            Wybrany jako główny
-                                                                        </label>
-                                                                    </div>
-
-                                                                    <address>
-                                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                        <p>{{$address->city}}, {{$address->street}}<br>
-                                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                        <p>Telefon: {{$address->phone_number}}</p>
-                                                                        <hr style="width: 60%; border-top: 3px solid black; background-color: black;">
-                                                                    </address>
-                                                                    @endif
-                                                                @endforeach
                                                                 @endcan
                                                             </div>
                                                         </div>
@@ -301,118 +301,118 @@
 
                                                         <form class="addAddress" id="address" method="POST">
                                                             <div id="refreshForm">
-                                                            @csrf
-                                                            <div class="row mb-50">
-                                                                <div class="col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label>Imie:</label>
-                                                                        <input id="name" type="text" placeholder="Imie"
-                                                                               class="form-control @error('name') is-invalid @enderror"
-                                                                               name="name"
-                                                                               required autocomplete="name" autofocus>
-                                                                        @error('name')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                @csrf
+                                                                <div class="row mb-50">
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label>Imie:</label>
+                                                                            <input id="name" type="text" placeholder="Imie"
+                                                                                   class="form-control @error('name') is-invalid @enderror"
+                                                                                   name="name"
+                                                                                   required autocomplete="name" autofocus>
+                                                                            @error('name')
+                                                                            <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                                        @enderror
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label>Nazwisko:</label>
-                                                                        <input id="surname" type="text" placeholder="Nazwisko"
-                                                                               class="form-control @error('surname') is-invalid @enderror"
-                                                                               name="surname"
-                                                                               required autocomplete="surname" autofocus>
-                                                                        @error('surname')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label>Nazwisko:</label>
+                                                                            <input id="surname" type="text" placeholder="Nazwisko"
+                                                                                   class="form-control @error('surname') is-invalid @enderror"
+                                                                                   name="surname"
+                                                                                   required autocomplete="surname" autofocus>
+                                                                            @error('surname')
+                                                                            <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                                        @enderror
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label>Miasto:</label>
-                                                                        <input id="city" type="text" placeholder="Miasto"
-                                                                               class="form-control @error('city') is-invalid @enderror"
-                                                                               name="city" value="{{ old('city') }}"
-                                                                               required autocomplete="city" autofocus>
-                                                                        @error('city')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                    <div class="col-md-6">
+                                                                        <div class="mb-3">
+                                                                            <label>Miasto:</label>
+                                                                            <input id="city" type="text" placeholder="Miasto"
+                                                                                   class="form-control @error('city') is-invalid @enderror"
+                                                                                   name="city" value="{{ old('city') }}"
+                                                                                   required autocomplete="city" autofocus>
+                                                                            @error('city')
+                                                                            <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                                        @enderror
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-6">
+                                                                    <div class="col-md-6">
 
-                                                                    <div class="mb-3">
-                                                                        <label>Ulica:</label>
-                                                                        <input id="street" type="text" placeholder="Ulica"
-                                                                               class="form-control @error('street') is-invalid @enderror"
-                                                                               name="street" value="{{ old('street') }}"
-                                                                               required autocomplete="street" autofocus>
-                                                                        @error('street')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                        <div class="mb-3">
+                                                                            <label>Ulica:</label>
+                                                                            <input id="street" type="text" placeholder="Ulica"
+                                                                                   class="form-control @error('street') is-invalid @enderror"
+                                                                                   name="street" value="{{ old('street') }}"
+                                                                                   required autocomplete="street" autofocus>
+                                                                            @error('street')
+                                                                            <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                                        @enderror
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-6">
+                                                                    <div class="col-md-6">
 
-                                                                    <div class="mb-3">
-                                                                        <label>Kod pocztowy:</label>
-                                                                        <input id="zip_code" type="text" placeholder="Kod pocztowy"
-                                                                               class="form-control @error('zip_code') is-invalid @enderror"
-                                                                               name="zip_code" value="{{ old('zip_code') }}"
-                                                                               required autocomplete="zip_code" autofocus>
-                                                                        @error('zip_code')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                        <div class="mb-3">
+                                                                            <label>Kod pocztowy:</label>
+                                                                            <input id="zip_code" type="text" placeholder="Kod pocztowy"
+                                                                                   class="form-control @error('zip_code') is-invalid @enderror"
+                                                                                   name="zip_code" value="{{ old('zip_code') }}"
+                                                                                   required autocomplete="zip_code" autofocus>
+                                                                            @error('zip_code')
+                                                                            <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                                        @enderror
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-6">
+                                                                    <div class="col-md-6">
 
-                                                                    <div class="mb-3">
-                                                                        <label>Województwo:</label>
-                                                                        <input id="voivodeship" type="text" placeholder="Województwo"
-                                                                               class="form-control @error('voivodeship') is-invalid @enderror"
-                                                                               name="voivodeship" value="{{ old('voivodeship') }}"
-                                                                               required autocomplete="voivodeship" autofocus>
-                                                                        @error('voivodeship')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                        <div class="mb-3">
+                                                                            <label>Województwo:</label>
+                                                                            <input id="voivodeship" type="text" placeholder="Województwo"
+                                                                                   class="form-control @error('voivodeship') is-invalid @enderror"
+                                                                                   name="voivodeship" value="{{ old('voivodeship') }}"
+                                                                                   required autocomplete="voivodeship" autofocus>
+                                                                            @error('voivodeship')
+                                                                            <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                                        @enderror
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-6">
+                                                                    <div class="col-md-6">
 
-                                                                    <div class="mb-3">
-                                                                        <label>Numer telefonu:</label>
-                                                                        <input id="phone_number" type="text" placeholder="Numer telefonu"
-                                                                               class="form-control @error('phone_number') is-invalid @enderror"
-                                                                               name="phone_number" value="{{ old('phone_number') }}"
-                                                                               required autocomplete="phone_number" autofocus>
-                                                                        @error('phone_number')
-                                                                        <span class="invalid-feedback" role="alert">
+                                                                        <div class="mb-3">
+                                                                            <label>Numer telefonu:</label>
+                                                                            <input id="phone_number" type="text" placeholder="Numer telefonu"
+                                                                                   class="form-control @error('phone_number') is-invalid @enderror"
+                                                                                   name="phone_number" value="{{ old('phone_number') }}"
+                                                                                   required autocomplete="phone_number" autofocus>
+                                                                            @error('phone_number')
+                                                                            <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                                        @enderror
+                                                                            @enderror
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="btn-wrapper">
-                                                                <button type="submit"
-                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
-                                                                    {{__('Save changes')}}
-                                                                </button>
-                                                            </div>
+                                                                <div class="btn-wrapper">
+                                                                    <button type="submit"
+                                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
+                                                                        {{__('Save changes')}}
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -423,54 +423,54 @@
                                                     <p>The following addresses will be used on the checkout page by
                                                         default.</p>
                                                     <div class="ltn__form-box">
-                                                            <div class="row mb-50">
-                                                                <div class="col-md-6">
-                                                                    <label>Name:</label>
-                                                                    <input type="text" value="{{ Auth::user()->name }}" name="ltn__lastname"
-                                                                           readonly>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label>Surname:</label>
-                                                                    <input type="text" value="{{ Auth::user()->surname }}" name="ltn__lastname"
-                                                                           readonly>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label>Email:</label>
-                                                                    <input type="email" value="{{ Auth::user()->email }}" name="ltn__lastname"
-                                                                           readonly>
-                                                                </div>
-                                                                @can('isEmployee')
-                                                                    <div class="col-md-6">
-                                                                        <label>Pesel:</label>
-                                                                        <input type="text" value="{{ Auth::user()->pesel }}" name="ltn__lastname"
-                                                                               readonly>
-                                                                    </div>
-                                                                    @endcan
-
-
-
+                                                        <div class="row mb-50">
+                                                            <div class="col-md-6">
+                                                                <label>Name:</label>
+                                                                <input type="text" value="{{ Auth::user()->name }}" name="ltn__lastname"
+                                                                       readonly>
                                                             </div>
-                                                            <fieldset>
-                                                                <legend>Password change</legend>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <label>Current password (leave blank to leave
-                                                                            unchanged):</label>
-                                                                        <input type="password" name="ltn__name">
-                                                                        <label>New password (leave blank to leave
-                                                                            unchanged):</label>
-                                                                        <input type="password" name="ltn__lastname">
-                                                                        <label>Confirm new password:</label>
-                                                                        <input type="password" name="ltn__lastname">
-                                                                    </div>
-                                                                </div>
-                                                            </fieldset>
-                                                            <div class="btn-wrapper">
-                                                                <button type="submit"
-                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">
-                                                                    Save Changes
-                                                                </button>
+                                                            <div class="col-md-6">
+                                                                <label>Surname:</label>
+                                                                <input type="text" value="{{ Auth::user()->surname }}" name="ltn__lastname"
+                                                                       readonly>
                                                             </div>
+                                                            <div class="col-md-6">
+                                                                <label>Email:</label>
+                                                                <input type="email" value="{{ Auth::user()->email }}" name="ltn__lastname"
+                                                                       readonly>
+                                                            </div>
+                                                            @can('isEmployee')
+                                                                <div class="col-md-6">
+                                                                    <label>Pesel:</label>
+                                                                    <input type="text" value="{{ Auth::user()->pesel }}" name="ltn__lastname"
+                                                                           readonly>
+                                                                </div>
+                                                            @endcan
+
+
+
+                                                        </div>
+                                                        <fieldset>
+                                                            <legend>Password change</legend>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label>Current password (leave blank to leave
+                                                                        unchanged):</label>
+                                                                    <input type="password" name="ltn__name">
+                                                                    <label>New password (leave blank to leave
+                                                                        unchanged):</label>
+                                                                    <input type="password" name="ltn__lastname">
+                                                                    <label>Confirm new password:</label>
+                                                                    <input type="password" name="ltn__lastname">
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                        <div class="btn-wrapper">
+                                                            <button type="submit"
+                                                                    class="btn theme-btn-1 btn-effect-1 text-uppercase">
+                                                                Save Changes
+                                                            </button>
+                                                        </div>
 
                                                     </div>
                                                 </div>

@@ -42,31 +42,27 @@ class Kernel extends ConsoleKernel
                 {
 
                     $order = Order::where('SHOPPING_LISTS_id', $item->id)->first();
-                    if(isset($order))
-                    {
-                        if ($order->status->isDelivered()) {
+                   /* if(isset($order))
+                    {*/
+                        if ($order && $order->status->isDelivered() && $item->status->isStop()) {
                             //2. gdy isDelivered to tworzymy kopie ktora bedzie jak nowa s_l none status
-                            //stara s_l
                             $item->status = ShoppingListStatus::ORDER;
                             $item->active = ShoppingListActive::FALSE;
-
                             $item->save();
 
                             $this->copy($item);
                         }
-                    }
+                   // }
 
 
                     $end_date = Carbon::parse($item->end_mod_date)->format('Y-m-d');
                     /*Jeżeli jest wszytko jak nalezy czyli status shopping_list*/
                     if ($end_date == $currentTime) {
                         if ($item->status->isNone()) {
-                            //stwórz order
                             $order = new Order();
                             $order->status = OrderStatus::IN_PREPARE;
                             $order->shopping_list()->associate($item);
                             $order->save();
-                            //1.jezeli zamowimy to status order czyli nie zmienny
                             $item->status = ShoppingListStatus::STOP;
                             //email z listy a nie zalogowanje osoby
                             //event(new PurchaseSuccesful($item));
@@ -90,7 +86,7 @@ class Kernel extends ConsoleKernel
 
             }
 
-        })->at('22:52');
+        })->at('13:57');
             //})->daily();
 
 
