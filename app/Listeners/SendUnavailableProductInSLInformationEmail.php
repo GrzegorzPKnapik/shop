@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendPurchaseConfirmationEmail implements ShouldQueue
+class SendUnavailableProductInSLInformationEmail implements ShouldQueue
 {
 
     use Queueable;
@@ -26,7 +26,17 @@ class SendPurchaseConfirmationEmail implements ShouldQueue
      */
     public function handle(object $event): void
     {
-        $order = $event->order;
+        $users = $event->user;
+
+        foreach ($users as $user)
+        {
+            foreach ($user->shopping_lists as $shopping_list)
+            {
+
+
+            }
+        }
+
 
 
         //Mail::to($order->shopping_list->user->email)->queue(new PurchaseConfirmation($order));

@@ -68,7 +68,7 @@
 
 
                             <td class="cart-product-info">
-                                {{$product->price}}
+                                ${{$product->price}}
                             </td>
                             <td class="cart-product-info">
                                 {{$product->created_at}}

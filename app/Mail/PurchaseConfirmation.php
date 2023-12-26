@@ -30,7 +30,8 @@ class PurchaseConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('groceryshop@gmail.com', 'Grocery Shop')
+            from: new Address('groceryshop@gmail.com', 'Grocery Shop'),
+            subject: 'Purchase Confirmation'
         );
     }
 

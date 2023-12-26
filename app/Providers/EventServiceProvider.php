@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Events\PurchaseSuccesful;
 use App\Events\ShoppingListActivated;
+use App\Events\UnavailableProductInSL;
 use App\Listeners\SendActivatedConfirmationEmail;
 use App\Listeners\SendPurchaseConfirmationEmail;
+use App\Listeners\SendUnavailableProductInSLInformationEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ShoppingListActivated::class => [
             SendActivatedConfirmationEmail::class,
+        ],
+        UnavailableProductInSL::class => [
+            SendUnavailableProductInSLInformationEmail::class,
         ],
     ];
 

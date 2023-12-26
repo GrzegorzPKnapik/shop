@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Enums\ProductStatus;
+use App\Enums\ShoppingListActive;
+use App\Enums\ShoppingListStatus;
+use App\Events\UnavailableProductInSL;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Description;
 use App\Models\Order;
 use App\Models\Producer;
 use App\Models\Role;
+use App\Models\Shopping_list;
+use App\Models\Shopping_lists_product;
 use App\Models\Status;
+use App\Models\User;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
@@ -125,6 +131,7 @@ class ProductController extends Controller
 
     public function update(StoreProductRequest $request, Product $product): RedirectResponse{
 
+        $old_product_status = $product->status->value;
         //dd($request['description_name']);
         $image = Image::find($product->IMAGES_id);
         $oldPath = $image->name;
@@ -162,7 +169,40 @@ class ProductController extends Controller
 
         $product->save();
 
+
+        $this->soldOutAction($request['product_status'], $old_product_status);
+
         return redirect()->route('product.index');
+    }
+
+    /**
+     * @param $product_status
+     * @param $old_product_status
+     * @return void
+     */
+    private function soldOutAction($product_status, $old_product_status): void
+    {
+        if ($old_product_status != $product_status && $product_status == ProductStatus::SOLD_OUT->value) {
+
+            $users_shopping_lists = User::whereHas('shopping_lists', function ($query) {
+                $query->where('active', ShoppingListActive::TRUE)
+                    ->where('status', ShoppingListStatus::NONE)
+                    ->whereHas('shopping_lists_products.product', function ($query) {
+                        $query->where('status', ProductStatus::SOLD_OUT);
+                    });
+            })->with(['shopping_lists' => function ($query) {
+                $query->where('active', ShoppingListActive::TRUE)
+                    ->where('status', ShoppingListStatus::NONE)
+                    ->whereHas('shopping_lists_products.product', function ($query) {
+                        $query->where('status', ProductStatus::SOLD_OUT);
+                    });
+            }])->get();
+
+
+
+
+//            event(new UnavailableProductInSL($users_shopping_lists));
+        }
     }
 
 

@@ -134,15 +134,14 @@
                                 </div>
 
 
-
                                 <div class="col-md-6">
                                     <div class="input-item">
                                         <label>Status:</label>
                                         <select name="product_status" class="nice-select form-control @error('product_status') is-invalid @enderror">
                                             <option value="{{ $product->status }}">{{ $product->status->getStatusText() }}</option>
                                             @foreach($product->status::cases() as $status)
-                                                @if($status != $product->status)
-                                                    <option value="{{ $status->value }}">{{ $status->getStatusText() }}</option>
+                                                @if($status != $product->status && $status != \App\Enums\ProductStatus::DISABLE)
+                                                    <option value="{{$status}}">{{ $status->getStatusText() }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
