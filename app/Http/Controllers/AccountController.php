@@ -28,7 +28,7 @@ class AccountController extends Controller
             ->where('mode', 'shopping_list')
             ->orderBy('updated_at', 'desc')
             ->where(function(\Illuminate\Database\Eloquent\Builder $query) {
-                $query->where('status', '!=', ShoppingListStatus::RESUME)->orWhereNull('status');
+                $query->where('status', '!=', ShoppingListStatus::ORDER)->orWhereNull('status');
             })
             /*->orWhereNull('status')*/
             ->get();

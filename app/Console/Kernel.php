@@ -14,6 +14,7 @@ use App\Models\Status;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Carbon;
+use function PHPUnit\Framework\isNull;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,49 +27,71 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
 
             $currentTime = Carbon::now()->format('Y-m-d');
-            $orders = Order::with('shopping_list')->get();
 
-            foreach ($orders as $item) {
-
-
-                if ($item->shopping_list->active && $item->status->isDelivered()) {
-                    //stara s_l
-                    $item->shopping_list->status = ShoppingListStatus::RESUME;
-                    $item->shopping_list->active = ShoppingListActive::FALSE;
-                    $item->shopping_list->save();
-
-                    $this->copy($item->shopping_list);
-                }
-
-                $end_date = Carbon::parse($item->shopping_list->end_mod_date)->format('Y-m-d');
-                if ($end_date == $currentTime) {
+            $shopping_list = Shopping_list::all();
+            //mozna with order i sprawdzac czy order jest nulem
+            //$orders = Order::with('shopping_list')->get();
 
 
-                    //jeżeli jest wszytko jak nalezy czyli status shopping_list
-                    if ($item->shopping_list->active && $item->shopping_list->status->isNone() && $item->status->isNone()) {
-                        $item->status = OrderStatus::IN_PREPARE;
-                        $item->shopping_list->status = ShoppingListStatus::STOP;
-                        event(new PurchaseSuccesful($item));
+
+
+            foreach ($shopping_list as $item) {
+
+
+                if ($item->active == ShoppingListActive::TRUE)
+                {
+
+                    $order = Order::where('SHOPPING_LISTS_id', $item->id)->first();
+                    if(isset($order))
+                    {
+                        if ($order->status->isDelivered()) {
+                            //2. gdy isDelivered to tworzymy kopie ktora bedzie jak nowa s_l none status
+                            //stara s_l
+                            $item->status = ShoppingListStatus::ORDER;
+                            $item->active = ShoppingListActive::FALSE;
+
+                            $item->save();
+
+                            $this->copy($item);
+                        }
                     }
 
-                    //jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy
-                    if ($item->shopping_list->status->isCart() && $item->shopping_list->active == ShoppingListActive::TRUE) {
-                        $item->status = OrderStatus::SKIPPED;
-                        $item->shopping_list->delivery_date = $this->nextDate($item->shopping_list->delivery_date);
-                        $item->shopping_list->end_mod_date = $this->endDate($item->shopping_list->delivery_date);
-                        $item->shopping_list->mod_available_date = $this->mod_available_date($item->shopping_list->delivery_date);
 
+                    $end_date = Carbon::parse($item->end_mod_date)->format('Y-m-d');
+                    /*Jeżeli jest wszytko jak nalezy czyli status shopping_list*/
+                    if ($end_date == $currentTime) {
+                        if ($item->status->isNone()) {
+                            //stwórz order
+                            $order = new Order();
+                            $order->status = OrderStatus::IN_PREPARE;
+                            $order->shopping_list()->associate($item);
+                            $order->save();
+                            //1.jezeli zamowimy to status order czyli nie zmienny
+                            $item->status = ShoppingListStatus::STOP;
+                            //email z listy a nie zalogowanje osoby
+                            //event(new PurchaseSuccesful($item));
+                            $item->save();
+
+                        }
+
+                        /*Jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy*/
+                        if ($item->status->isCart()) {
+                            //$item->status = OrderStatus::SKIPPED;
+                            $item->delivery_date = $this->nextDate($item->delivery_date);
+                            $item->end_mod_date = $this->endDate($item->delivery_date);
+                            $item->mod_available_date = $this->mod_available_date($item->delivery_date);
+                            $item->save();
+                        }
                     }
+
                 }
 
 
-                $item->shopping_list->save();
-                $item->save();
 
             }
 
-
-            })->daily();
+        })->at('21:47');
+            //})->daily();
 
 
 
@@ -77,11 +100,6 @@ class Kernel extends ConsoleKernel
 
     public function copy(Shopping_list $shopping_list): void
     {
-
-
-        $order = Order::where('SHOPPING_LISTS_id', $shopping_list->id)->first();
-
-
         $copiedShoppingList = new Shopping_list();
 
         $copiedShoppingList->title = $shopping_list->title;
@@ -95,15 +113,15 @@ class Kernel extends ConsoleKernel
         $copiedShoppingList->created_at = $shopping_list->created_at;
         $copiedShoppingList->updated_at = $shopping_list->updated_at;
         $copiedShoppingList->USERS_id = $shopping_list->USERS_id;
+        $copiedShoppingList->ADDRESSES_id = $shopping_list->ADDRESSES_id;
+
+
 
         $copiedShoppingList->save();
 
 
-        //kopia asocjacyjnej
-        $shopping_lists_product = Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)->get();
 
-
-        foreach ($shopping_lists_product as $product) {
+        foreach ($shopping_list->shopping_lists_products as $product) {
             $copiedShoppingListsProduct = new Shopping_lists_product();
             $copiedShoppingListsProduct->sub_total = $product->sub_total;
             $copiedShoppingListsProduct->quantity = $product->quantity;
@@ -116,7 +134,7 @@ class Kernel extends ConsoleKernel
 
         //orde też musze skopiować tworze order z tymi samymi danymi ale zminia sie id shopping_list na skopiowaną
 
-        $copiedOrder = new Order();
+        /*$copiedOrder = new Order();
         $copiedOrder->status = OrderStatus::NONE;
         $copiedOrder->created_at = $order->created_at;
         $copiedOrder->updated_at = $order->updated_at;
@@ -125,7 +143,7 @@ class Kernel extends ConsoleKernel
         $copiedOrder->SHOPPING_LISTS_id = $copiedShoppingList->id;
 
 
-        $copiedOrder->save();
+        $copiedOrder->save();*/
     }
 
 

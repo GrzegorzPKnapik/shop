@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping list activated</title>
+    <title>Shopping list {{$data->active ? 'activated' : 'deactivated'}}</title>
 </head>
 <body>
-<h2>Shopping list activated</h2>
+<h2>Shopping list {{$data->active ? 'activated' : 'deactivated'}}</h2>
 
-<p>Your shopping list#{{$data->id}} has been activated!</p>
+
+<p>Your shopping list#{{$data->id}} has been {{$data->active ? 'activated' : 'deactivated'}}!</p>
 <h1>Title: {{$data->title}}</h1>
 
 

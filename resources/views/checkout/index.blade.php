@@ -157,7 +157,7 @@
                                             @endforeach
                                                 </div>
                                                 <button class="theme-btn-1 btn btn-effect-1" type="submit">
-                                                    {{ __('Przypisz address do s_l') }}
+                                                    {{ __('Zatwierdź') }}
                                                 </button>
                                                 </form>
                                         </div>
@@ -381,7 +381,7 @@
 
                                                 <button type="submit"
                                                         class="btn theme-btn-1 btn-effect-1 text-uppercase save-address" >
-                                                    {{__('Przypisz adres')}}
+                                                    {{__('Zatwierdź')}}
                                                 </button>
 
 

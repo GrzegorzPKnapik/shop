@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\AddressStatus;
+use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListMode;
 use App\Enums\ShoppingListStatus;
+use App\Events\ShoppingListActivated;
 use App\Http\Requests\StoreAddressRequest;
 use App\Models\Address;
 use App\Models\Order;
@@ -336,6 +338,7 @@ class ShoppingListController extends Controller
 
         $shopping_list->mode = ShoppingListMode::SHOPPING_LIST;
         $shopping_list->status = ShoppingListStatus::NONE;
+        $shopping_list->active = ShoppingListActive::FALSE;
         $shopping_list->save();
 
         $old_cart = Shopping_list::where('status', ShoppingListStatus::CART_DISABLE)->where('mode', ShoppingListMode::NORMAL)->where('USERS_id', $user->id)->first();
@@ -349,6 +352,43 @@ class ShoppingListController extends Controller
         return redirect()->route('account.index')->with('status',__('shop.address.status.delete.success'));
     }
 
+
+    public function activeChange(Shopping_list $shopping_list)
+    {
+
+        if(!isset($shopping_list->address->id)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Adres nie został przypisany!'
+            ]);
+        }
+
+        if(!isset($shopping_list->delivery_date)){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Data nie została podana!'
+            ]);
+        }
+        if($shopping_list->active == ShoppingListActive::FALSE)
+        {
+                $shopping_list->active = ShoppingListActive::TRUE;
+                $shopping_list->save();
+                event(new ShoppingListActivated($shopping_list));
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Aktywowano listę zakupów'
+            ]);
+        }else
+        {
+            $shopping_list->active = ShoppingListActive::FALSE;
+            $shopping_list->save();
+            event(new ShoppingListActivated($shopping_list));
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Dezaktywowano listę zakupów'
+            ]);
+        }
+    }
 
 /*    public function save(Shopping_list $shopping_list){
 
@@ -426,7 +466,7 @@ class ShoppingListController extends Controller
         }
         //nie działa
 
-        //jeżeli jest nie zablokowana czyli status nie order
+        //jeżeli jest nie zablokowana czyli status nie order blokada edycji
         if($shopping_list->status == ShoppingListStatus::RESUME)
         {
             $this->copy($shopping_list);

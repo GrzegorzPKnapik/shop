@@ -142,53 +142,6 @@ class OrderController extends Controller
     public function storeSL(Shopping_list $shopping_list)
     {
 
-        /*$addressController = new AddressController();
-        $address = $addressController->isAddress();
-
-
-        if(!isset($address)){
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'Adres nie został podany!'
-            ]);
-        }*/
-
-        $address = Shopping_list::where('id', $shopping_list->id)->whereNotNull('ADDRESSES_id')->first();
-
-
-        if(!isset($address)){
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'Adres nie został przypisany!'
-            ]);
-        }
-
-
-
-        if(!isset($shopping_list->delivery_date)){
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'Data nie została podana!'
-            ]);
-        }
-
-
-
-        if($shopping_list->active == ShoppingListActive::NULL)
-        {
-            $shopping_list->active = ShoppingListActive::TRUE;
-            $shopping_list->save();
-            event(new ShoppingListActivated($shopping_list));
-        }else{
-            $shopping_list->active = ShoppingListActive::NULL;
-            $shopping_list->save();
-            return response()->json([
-                'status' => 'deactivated',
-            ]);
-        }
-
-
-
 
         $order = new Order();
         $order->SHOPPING_LISTS_id = $shopping_list->id;
@@ -198,7 +151,7 @@ class OrderController extends Controller
         try {
             $order->save();
             return response()->json([
-               // event(new \App\Events\PurchaseSuccesful($purchase)),
+                //event(new PurchaseSuccesful($order)),
                 'status' => 'success',
                 'order' => $order->id
             ]);

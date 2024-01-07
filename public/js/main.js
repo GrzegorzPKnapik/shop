@@ -1517,6 +1517,9 @@
         });
 
 
+
+
+
         $(document).on("click", ".storeOrderSL", function () {
             event.preventDefault();
             var id = $(this).data("id");
@@ -1543,6 +1546,25 @@
         });
 
 
+        $(document).on("click", "#activeChange", function () {
+            event.preventDefault();
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: '/shopping_list/activeChange/'+id,
+            })
+                .done(function (response) {
+                    $("#refreshActive").load(location.href + " #refreshActive")
+                    Swal.fire(response.message, '', response.status);
+                })
+
+                .fail(function (xhr) {
+                    var errorMessage = xhr.responseJSON.message;
+                    Swal.fire('Błąd', errorMessage, 'error');
+                });
+
+
+        });
 
 
 

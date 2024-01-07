@@ -144,7 +144,7 @@
                                                                                 @endforeach
                                                                             </div>
                                                                             <button class="theme-btn-1 btn btn-effect-1" type="submit">
-                                                                                {{ __('Przypisz address do s_l') }}
+                                                                                {{ __('Zatwierdź') }}
                                                                             </button>
                                                                         </form>
                                                                     </div>
@@ -260,9 +260,11 @@
                                                                             <h4><small><a href="" class="deleteDay" data-id="{{$shopping_list->id}}"> Usuń adres</a></small>
                                                                         @endif
                                                                     </div>
-                                                                    <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$shopping_list->id}}" type="submit">
-                                                                        {{ __('Save delivery date') }}
-                                                                    </button>
+                                                                    <div>
+                                                                        <button class="theme-btn-1 btn btn-effect-1 saveDay" data-id="{{$shopping_list->id}}" type="submit">
+                                                                            {{ __('Zatwierdź') }}
+                                                                        </button>
+                                                                    </div>
                                                                     <br>
                                                                 </div>
                                                             </div>
@@ -303,13 +305,13 @@
                                                                             @endif
 
                                                                             @if($shopping_list->active == false && !$shopping_list->status->isStop())
-                                                                                <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$shopping_list->id}}" type="submit">
+                                                                                <button class="theme-btn-1 btn btn-effect-1" id="activeChange" data-id="{{$shopping_list->id}}" type="submit">
                                                                                     {{
                                                                                         __('Aktywuj')
                                                                                     }}
                                                                                     @endif
                                                                                     @if($shopping_list->active == true && !$shopping_list->status->isStop())
-                                                                                        <button class="theme-btn-1 btn btn-effect-1 storeOrderSL" data-id="{{$shopping_list->id}}" type="submit">
+                                                                                        <button class="theme-btn-1 btn btn-effect-1" id="activeChange" data-id="{{$shopping_list->id}}" type="submit">
                                                                                             {{
                                                                                             __('Dezaktywuj')
                                                                                        }}
@@ -488,7 +490,7 @@
                                                 <div class="btn-wrapper">
                                                     <button type="submit"
                                                             class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
-                                                        {{__('Zapisz adres')}}
+                                                        {{__('Zatwierdź')}}
                                                     </button>
 
                                                     <label>

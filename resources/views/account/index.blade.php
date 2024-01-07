@@ -93,7 +93,7 @@
                                                                 <tr>
                                                                     <th>Title</th>
                                                                     <th>Newest order number</th>
-                                                                    <th>Shopping list number</th>
+<!--                                                                    <th>Shopping list number</th>-->
                                                                     <th>Update date</th>
                                                                     <th>Price</th>
                                                                     <th>Active</th>
@@ -108,7 +108,10 @@
                                                                     <tr>
                                                                         <td class="cart-product-name">{{$item->title}}</td>
                                                                         @php
-                                                                            $latestOrder = $item->orders->sortByDesc('created_at')->first();
+                                                                            if(isset($item->orders))
+                                                                            {
+                                                                                $latestOrder = $item->orders->sortByDesc('created_at')->first();
+                                                                            }
                                                                         @endphp
 
                                                                         @if($latestOrder && !$latestOrder->status->isDelivered())
@@ -117,7 +120,7 @@
                                                                             <td class="cart-product-name"></td>
                                                                         @endif
 
-                                                                        <td class="cart-product-name">#{{$item->id}}</td>
+<!--                                                                        <td class="cart-product-name">#{{$item->id}}</td>-->
                                                                         <td class="cart-product-name">{{$item->updated_at}}</td>
 
                                                                         <td class="cart-product-name">${{$item->total}}</td>
