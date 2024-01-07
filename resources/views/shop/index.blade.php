@@ -134,11 +134,13 @@
                                                         @else
                                                             <img src="img/product/6.png" alt="Zdjęcie">
                                                         @endif
-                                                        <div class="product-badge">
-                                                            <ul>
-                                                                <li class="sale-badge">{{$product->status->isSoldOut() ? 'sold out' : ''}}</li>
-                                                            </ul>
-                                                        </div>
+                                                            @if(!$product->status->isEnable())
+                                                                <div class="product-badge">
+                                                                    <ul>
+                                                                        <li class="sale-badge">{{$product->status->isSoldOut() ? $product->status->getStatusText() : \App\Enums\ProductStatus::DISABLE}}</li>
+                                                                    </ul>
+                                                                </div>
+                                                            @endif
                                                         <div class="product-hover-action">
                                                             <ul>
                                                                 <li>

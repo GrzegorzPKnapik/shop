@@ -24,7 +24,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories=Category::all();
+        $categories=Category::where('status', '!=', CategoryStatus::DISABLE)->get();
         return view('categories.index',['categories'=>$categories]);
     }
 

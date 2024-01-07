@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ProducerStatus;
+use App\Enums\ProductStatus;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\StoreProducerRequest;
 use App\Http\Requests\StoreProductRequest;
@@ -26,7 +27,7 @@ class ProducerController extends Controller
 {
     public function index()
     {
-        $producers=Producer::all();
+        $producers=Producer::where('status', '!=', ProductStatus::DISABLE)->get();
         return view('producers.index',['producers'=>$producers]);
     }
 

@@ -50,9 +50,11 @@ class ShopController extends Controller
         }
 
 
-        $products = $query->paginate(3)->withQueryString();
+        $products = $query->paginate(6)->withQueryString();
+        $categories = Category::where('status', '!=', CategoryStatus::DISABLE)->get();
+        $descriptions = Description::all();
 
-        return view('shop.index', ['products'=>$products, 'categories'=>Category::where('status', '!=', CategoryStatus::DISABLE), 'descriptions'=>Description::all()])->render();
+        return view('shop.index', ['products'=>$products, 'categories'=>$categories, 'descriptions'=>$descriptions])->render();
 
     }
 

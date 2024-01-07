@@ -38,12 +38,37 @@ class WelcomeController extends controller
 
         $vegetablesProducts =  Product::where('status', '!=', ProductStatus::DISABLE)
             ->whereHas('category', function ($query) {
-                $query->where('name', 'vegetables');
+                $query->where('name', 'Warzywa');
+            })
+            ->get();
+
+        $drinksProducts =  Product::where('status', '!=', ProductStatus::DISABLE)
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'Napoje');
+            })
+            ->get();
+
+        $dairyProducts =  Product::where('status', '!=', ProductStatus::DISABLE)
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'Nabiał');
+            })
+            ->get();
+
+        $breadStuffProducts =  Product::where('status', '!=', ProductStatus::DISABLE)
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'Pieczywo');
             })
             ->get();
 
 
 
-        return view('welcome', ['products'=>$products, 'vegetablesProducts'=>$vegetablesProducts/*, 'productsByCategory'=>$productsByCategory*/]);
+
+
+        return view('welcome', ['products'=>$products,
+            'vegetablesProducts'=>$vegetablesProducts,
+            'drinksProducts'=>$drinksProducts,
+            'dairyProducts'=>$dairyProducts,
+            'breadStuffProducts'=>$breadStuffProducts
+        ]);
     }
 }

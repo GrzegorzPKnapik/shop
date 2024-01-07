@@ -74,18 +74,22 @@ class Kernel extends ConsoleKernel
                             event(new PurchaseSuccesful($order));
                             $item->save();
 
-                            //nadaj confirmed dla tej listy zrobic test
-                                foreach ($item->shopping_lists_products as $item_product) {
-                                    if(!$item_product->product->status->isEnable())
-                                    {
-                                        $item_product->confirmed = false;
-                                        $item_product->save();
-                                    }else if ($item_product->product->status->isEnable() && $item_product->product->selected == true)
-                                    {
-                                        $item_product->confirmed = true;
-                                        $item_product->save();
-                                    }
+                            foreach ($item->shopping_lists_products as $item_product) {
+
+                                if(!$item_product->product->status->isEnable())
+                                {
+                                    Shopping_lists_product::where('SHOPPING_LISTS_id', $item->id)
+                                        ->update([
+                                            'confirmed' => false,
+                                        ]);
+                                }else if ($item_product->product->status->isEnable() && $item_product->selected == true)
+                                {
+                                    Shopping_lists_product::where('SHOPPING_LISTS_id', $item->id)
+                                        ->update([
+                                            'confirmed' => true,
+                                        ]);
                                 }
+                            }
 
 
 

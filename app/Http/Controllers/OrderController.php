@@ -21,6 +21,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\ValueObjects\Cart;
 use function PHPUnit\Framework\isNull;
@@ -180,21 +181,22 @@ class OrderController extends Controller
 
 
 
+        foreach ($shopping_list->shopping_lists_products as $item_product) {
 
-        /*foreach ($shopping_list->shopping_lists_products as $item_product) {
             if(!$item_product->product->status->isEnable())
             {
-                $item_product->update(['confirmed' => false]);
-                //$item_product->confirmed = false;
-                //$item_product->save();
+                Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
+                    ->update([
+                        'confirmed' => false,
+                    ]);
             }else if ($item_product->product->status->isEnable() && $item_product->selected == true)
             {
-                $item_product->update(['confirmed' => true]);
-
-                //$item_product->confirmed = true;
-                //$item_product->save();
+                Shopping_lists_product::where('SHOPPING_LISTS_id', $shopping_list->id)
+                    ->update([
+                        'confirmed' => true,
+                    ]);
             }
-        }*/
+        }
 
         $order = new Order();
         $order->SHOPPING_LISTS_id = $shopping_list->id;

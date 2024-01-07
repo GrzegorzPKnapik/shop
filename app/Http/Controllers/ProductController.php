@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryStatus;
+use App\Enums\ProducerStatus;
 use App\Enums\ProductStatus;
 use App\Enums\ShoppingListActive;
 use App\Enums\ShoppingListStatus;
@@ -43,8 +45,8 @@ class ProductController extends controller
 
     public function create()
     {
-        $producers=Producer::all();
-        $categories=Category::all();
+        $producers=Producer::where('status', '!=', ProducerStatus::DISABLE)->get();
+        $categories=Category::where('status', '!=', CategoryStatus::DISABLE)->get();
         //chyba nie trzeba product przesyłać
         //$product=Product::with('image')->get();
         return view('products.create',['categories'=>$categories, 'producers'=>$producers]);
@@ -76,9 +78,9 @@ class ProductController extends controller
         $product->producer()->associate($request['producer_select']);
 
         $description = new Description();
-        $description->name = $request['description_name'];
-        $description->ingredients = $request['description_ingredients'];
-        $description->calories = $request['description_calories'];
+        $description->name = $request['description_name'] ?? '';
+        $description->ingredients = $request['description_ingredients'] ?? '';
+        $description->calories = $request['description_calories'] ?? '';
         $description->save();
 
         $product->image()->associate($image);
@@ -116,8 +118,8 @@ class ProductController extends controller
     }
 
     public function edit(Product $product){
-        $producers=Producer::all();
-        $categories=Category::all();
+        $producers=Producer::where('status', '!=', ProducerStatus::DISABLE)->get();
+        $categories=Category::where('status', '!=', CategoryStatus::DISABLE)->get();
 
         return view('products.edit',['product'=>$product, 'categories'=>$categories, 'producers'=>$producers]);
     }
@@ -154,9 +156,9 @@ class ProductController extends controller
 
         //Trzeba użyć metody update, aby zaktualizować dane w relacji
         $product->description->update([
-            'name' => $request['description_name'],
-            'ingredients' => $request['description_ingredients'],
-            'calories' => $request['description_calories'],
+            'name' => $request['description_name'] ?? '',
+            'ingredients' => $request['description_ingredients'] ?? '',
+            'calories' => $request['description_calories'] ?? '',
 
         ]);
 
