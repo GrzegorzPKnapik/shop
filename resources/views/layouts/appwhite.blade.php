@@ -54,6 +54,10 @@
         opacity: 0.5;
     }
 
+    .custom-left-align {
+        justify-content: flex-start !important;
+    }
+
 </style>
 
 <!-- Add your site or application content here -->
@@ -129,72 +133,15 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col header-menu-column menu-color-white---">
                         <div class="header-menu d-none d-xl-block">
                             <nav>
                                 <div class="ltn__main-menu">
                                     <ul>
-                                        <li class="menu-icon"><a href="#">Home</a>
-                                            <ul class="sub-menu menu-pages-img-show ltn__sub-menu-col-2---">
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                                <li>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-icon"><a href="#">About</a>
-                                            <ul>
-                                            </ul>
-                                        </li>
-
+                                        <li><a href="/">{{__('Home') }}</a></li>
                                         <li><a href="{{ route('shop.index') }}">{{__('Shop site') }}</a></li>
-                                        <li class="menu-icon"><a href="#">News</a>
-                                            <ul>
-
-                                            </ul>
-                                        </li>
-                                        <li class="menu-icon"><a href="#">Pages</a>
-                                            <ul class="mega-menu">
-                                                <li><a href="#">Inner Pages</a>
-                                                    <ul>
-
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Inner Pages</a>
-                                                    <ul>
-
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Shop Pages</a>
-                                                    <ul>
-
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a>Contact</a></li>
-                                        <li class="special-link"><a>GET A QUOTE</a></li>
-                                        <li></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -252,10 +199,6 @@
 
 
                                         @endguest
-                                        @auth
-                                        <li><a href="{{ route('cart.index') }}">{{ __('Koszyk') }}</a></li>
-                                        @endauth
-
                                         @can('isEmployee')
                                             <li><a href="{{ route('employeePanel.index') }}">{{ __('Employee panel') }}</a></li>
                                         @endcan

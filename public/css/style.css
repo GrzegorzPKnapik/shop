@@ -4081,7 +4081,8 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 ---------------------------------------------- */
 .header-menu-wrap,
 .header-menu-column {
-  position: inherit; }
+  position: inherit;
+}
 
 .ltn__main-menu ul {
   margin-bottom: 0; }
@@ -4106,7 +4107,8 @@ ul.wp-block-latest-posts.is-grid.alignwide {
   margin-right: 20px; }
 
 .ltn__main-menu > ul > li:last-child {
-  margin-right: 0px; }
+    margin-right: 500px;
+}
 
 .ltn__main-menu > ul > li > a {
   font-size: 16px;

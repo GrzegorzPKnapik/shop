@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appwhite')
 
 @section('content')
 
@@ -272,12 +272,6 @@
         </div>
     </div>
     <!-- FEATURE AREA END -->
-
-    <!-- Utilize Cart Menu Start -->
-    <!-- Utilize Cart Menu End -->
-
-    <!-- Utilize Mobile Menu Start -->
-    <!-- Utilize Mobile Menu End -->
 
     <div class="ltn__utilize-overlay"></div>
 

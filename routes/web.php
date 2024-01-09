@@ -78,6 +78,7 @@ Route::group(['middleware' => 'cart'], function (){
 
 
 
+
     Route::delete('/product/{product}', [ProductController::class, 'destroy']);
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
     Route::resource('product', ProductController::class)->only([

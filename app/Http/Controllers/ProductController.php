@@ -196,7 +196,7 @@ class ProductController extends controller
         }
 
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('status',__('shop.product.status.update.success'));
     }
 
 

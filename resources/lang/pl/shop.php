@@ -11,7 +11,7 @@ return [
     'index_title' => 'Lista produktów',
     'status' => [
         'store' => [
-            'success' => 'Produkt zapisany!'
+            'success' => 'Produkt dodany!'
         ],
         'update' => [
             'success' => 'Produkt zaktualizowany!'
@@ -21,6 +21,29 @@ return [
             'fail' => 'Błąd przy usuwaniu produktu!'
         ],
     ],
+    ],
+
+    'shopping_list' => [
+        'status' => [
+            'store' => [
+                'success' => 'Zapisano listę zakupów!'
+            ],
+        ],
+    ],
+
+    'category' => [
+        'status' => [
+            'store' => [
+                'success' => 'Kategoria dodana!'
+            ],
+            'update' => [
+                'success' => 'Kategoria zaktualizowana!'
+            ],
+            'delete' => [
+                'success' => 'Kategoria usunięta!',
+                'fail' => 'Błąd przy usuwaniu kategori!'
+            ],
+        ],
     ],
     'address' => [
         'status' => [

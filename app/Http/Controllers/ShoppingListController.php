@@ -353,7 +353,7 @@ class ShoppingListController extends Controller
             $old_cart->save();
         }
 
-        return redirect()->route('account.index')->with('status',__('shop.address.status.delete.success'));
+        return redirect()->route('account.index');
     }
 
 

@@ -53,7 +53,7 @@
         <!--    <div class="ltn__utilize-overlay"></div>-->
 
         <!-- BREADCRUMB AREA START -->
-        <div class="ltn__breadcrumb-area ltn__breadcrumb-area-3 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image plr--9---" data-bg="img/bg/9.jpg">
+        <div class="ltn__breadcrumb-area ltn__breadcrumb-area-3 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image plr--9---" data-bg="img/bg_used/4.jpg">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -157,11 +157,6 @@
                                                                 </li>
 
 
-
-                                                                <li>
-                                                                    <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                                        <i class="far fa-heart"></i></a>
-                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -328,7 +323,7 @@
                                                         <div class="modal-product-meta ltn__product-details-menu-1">
                                                             <ul>
                                                                 <li>
-                                                                    <strong>Dostępność:</strong>
+                                                                    <strong>Availability:</strong>
                                                                     <span>
                                                             {{$product->status->getStatusText()}}
                                                         </span>

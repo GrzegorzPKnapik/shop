@@ -1324,36 +1324,51 @@
             })
         }
 
+        var isIncrementing = false;
+
         $(document).on("click", ".increment", function () {
-            var id = $(this).data("id");
-            $.ajax({
-                type: "POST",
-                url: incUrl + id,
-                success: function () {
-                    $("#refreshSC").load(location.href + " #refreshSC");
-                    $("#refresh").load(location.href + " #refresh");
-                }
+            if (!isIncrementing) {
+                isIncrementing = true;
 
-            });
+                var id = $(this).data("id");
 
+                $.ajax({
+                    type: "POST",
+                    url: incUrl + id,
+                    success: function () {
+                        $("#refreshSC").load(location.href + " #refreshSC");
+                        $("#refresh").load(location.href + " #refresh");
 
-
-
+                        setTimeout(function () {
+                            isIncrementing = false;
+                        }, 250);
+                    }
+                });
+            }
         });
 
+        var isDecrementing = false;
+
         $(document).on("click", ".decrement", function () {
-            var id = $(this).data("id");
-            $.ajax({
-                type: "POST",
-                url: decUrl + id,
-                success: function (response) {
-                    $("#refreshSC").load(location.href + " #refreshSC");
-                    $("#refresh").load(location.href + " #refresh");
-                }
+            if (!isDecrementing) {
+                isDecrementing = true;
 
-            });
+                var id = $(this).data("id");
+                $.ajax({
+                    type: "POST",
+                    url: decUrl + id,
+                    success: function (response) {
+                        $("#refreshSC").load(location.href + " #refreshSC");
+                        $("#refresh").load(location.href + " #refresh");
+                        setTimeout(function () {
+                            isDecrementing = false;
+                        }, 250);
+                    }
 
 
+                });
+
+            }
         });
 
         $(document).on("click", ".cart_quantity_input", function (event) {

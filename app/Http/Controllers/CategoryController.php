@@ -40,7 +40,7 @@ class CategoryController extends Controller
         $category->status = CategoryStatus::ENABLE;
         $category->save();
 
-        return redirect()->route('category.index')->with('status',__('shop.product.status.store.success'));
+        return redirect()->route('category.index')->with('status',__('shop.category.status.store.success'));
     }
 
 
@@ -55,7 +55,7 @@ class CategoryController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => __('shop.product.status.delete.success'),
+                'message' => __('shop.category.status.delete.success'),
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -74,7 +74,7 @@ class CategoryController extends Controller
 
         $category->name=$request['name'];
         $category->save();
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('status',__('shop.category.status.update.success'));;
     }
 
 

@@ -15,7 +15,7 @@
         <!-- BREADCRUMB AREA START -->
         <div
             class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image"
-            data-bg="img/bg/9.jpg">
+            data-bg="img/bg_used/8.jpg">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -56,8 +56,6 @@
                                                             class="fas fa-file-alt"></i></a>
                                                     <a data-bs-toggle="tab" href="#liton_tab_1_7">Shopping lists<i
                                                             class="fas fa-file-alt"></i></a>
-                                                    <a data-bs-toggle="tab" href="#liton_tab_1_3">Downloads <i
-                                                            class="fas fa-arrow-down"></i></a>
                                                 @endcan
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_4">Address <i
                                                         class="fas fa-map-marker-alt"></i></a>
@@ -65,7 +63,11 @@
                                                         class="fas fa-user"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_6">Address create <i
                                                         class="fas fa-map-marker-alt"></i></a>
-                                                <a href="login.html">Logout <i class="fas fa-sign-out-alt"></i></a>
+                                                <a href="{{ route('logout') }}"
+                                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
