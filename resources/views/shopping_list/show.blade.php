@@ -200,7 +200,7 @@
                                                                         <tr>
                                                                             <td class="cart-product-name">{{ $index+1}}.</td>
                                                                             <td class="cart-product-image">
-                                                                                <a href="{{route('shop.product', $item->product->id)}}"><img class="{{$item->product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
+                                                                                <a href="{{route('shop.product', $item->product->id)}}"><img class="{{!$item->product->status->isEnable() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
                                                                             </td>
                                                                             <td class="cart-product-name">{{$item->product->name}}</td>
                                                                             <td class="cart-product-name">${{$item->product->price}}</td>

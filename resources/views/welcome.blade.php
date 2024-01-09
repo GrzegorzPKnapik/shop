@@ -160,6 +160,7 @@
                                 <a data-bs-toggle="tab" href="#liton_tab_3_3" class="">Napoje</a>
                                 <a data-bs-toggle="tab" href="#liton_tab_3_4" class="">Pieczywo</a>
                                 <a data-bs-toggle="tab" href="#liton_tab_3_5" class="">Nabiał</a>
+                                <a data-bs-toggle="tab" href="#liton_tab_3_6" class="">Mięsa</a>
                             </div>
                         </div>
                         <div class="tab-content">
@@ -483,6 +484,71 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="liton_tab_3_6">
+                                <div class="ltn__product-tab-content-inner">
+                                    <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
+                                        <!-- ltn__product-item -->
+                                        @foreach($meatProducts as $product)
+                                            <div class="col-lg-12">
+                                                <div class="ltn__product-item ltn__product-item-3 text-center">
+                                                    <div class="product-img">
+                                                        @if(!is_null($product->image->name))
+                                                            <a href="{{route('shop.product', $product->id)}}"><img class="{{$product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $product->image->name)}}" alt="Zdjęcie"></a>
+                                                        @else
+                                                            <img src="img/product/6.png" alt="Zdjęcie">
+                                                        @endif
+                                                        @if(!$product->status->isEnable())
+                                                            <div class="product-badge">
+                                                                <ul>
+                                                                    <li class="sale-badge">{{$product->status->isSoldOut() ? $product->status->getStatusText() : \App\Enums\ProductStatus::DISABLE}}</li>
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                        <div class="product-hover-action">
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal_{{ $product->id }}">
+                                                                        <i class="far fa-eye"></i>
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li>
+                                                                    <a href="" title="Add to Cart" class="add-to-cart {{$product->status->isSoldOut() ? 'disabled-icon' : ''}} {{$product->status->isSoldOut() ? 'disabled-link' : ''}}" data-id="{{$product->id}}">
+                                                                        <i class="fas fa-shopping-cart"></i>
+                                                                    </a>
+                                                                </li>
+
+
+
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-info">
+                                                        <div class="product-ratting">
+                                                            <ul>
+                                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                                <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                                                <li><a href="#"><i class="far fa-star"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
+                                                        <div class="product-price">
+                                                            <span>${{$product->price}}</span>
+                                                            <del>$35.00</del>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>

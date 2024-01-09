@@ -60,6 +60,12 @@ class WelcomeController extends controller
             })
             ->get();
 
+        $meatProducts =  Product::where('status', '!=', ProductStatus::DISABLE)
+            ->whereHas('category', function ($query) {
+                $query->where('name', 'Mięsa');
+            })
+            ->get();
+
 
 
 
@@ -68,7 +74,8 @@ class WelcomeController extends controller
             'vegetablesProducts'=>$vegetablesProducts,
             'drinksProducts'=>$drinksProducts,
             'dairyProducts'=>$dairyProducts,
-            'breadStuffProducts'=>$breadStuffProducts
+            'breadStuffProducts'=>$breadStuffProducts,
+            'meatProducts'=>$meatProducts
         ]);
     }
 }
