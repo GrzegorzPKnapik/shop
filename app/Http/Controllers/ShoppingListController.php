@@ -357,56 +357,12 @@ class ShoppingListController extends Controller
     }
 
 
-    public function haveUnavailableInSL(Shopping_list $shopping_list){
 
-        if($shopping_list->active == ShoppingListActive::TRUE)
-        {
-            $shopping_list->active = ShoppingListActive::FALSE;
-            $shopping_list->save();
-            event(new ShoppingListActivated($shopping_list));
+    public function validSL(Shopping_list $shopping_list){
+
+        if($shopping_list->active == ShoppingListActive::TRUE){
             return response()->json([
                 'status' => 'success',
-                'message' => 'Dezaktywowano listę zakupów'
-            ]);
-        }
-
-
-        $productAvailable = false;
-        $productUnavailable = false;
-
-        foreach ($shopping_list->shopping_lists_products as $item_product) {
-            if ($item_product->product->status->isEnable())
-            {
-                $productAvailable = true;
-                break;
-            }else
-                $productUnavailable = true;
-
-        }
-
-        if (!$productAvailable) {
-            return response()->json([
-                'status' => 'unavailableAll',
-            ]);
-        }
-
-        if ($productUnavailable) {
-            return response()->json([
-                'status' => 'unavailableAll',
-            ]);
-        }
-
-
-
-    }
-
-    public function activeChange(Shopping_list $shopping_list)
-    {
-
-        if($shopping_list->status->isStop()){
-            return response()->json([
-                'status' => 'warning',
-                'message' => 'Lista zablokowana, nie powinno cie tu być!'
             ]);
         }
 
@@ -424,6 +380,43 @@ class ShoppingListController extends Controller
             ]);
         }
 
+        $productUnavailable = 0;
+        $count = 0;
+        foreach ($shopping_list->shopping_lists_products as $item_product) {
+            $count ++;
+            if (!$item_product->product->status->isEnable()) {
+                $productUnavailable++;
+            }
+        }
+
+        if ($productUnavailable == 0) {
+            return response()->json([
+                'status' => 'success',
+            ]);
+        }else if($productUnavailable != 0 && $productUnavailable != $count)
+        {
+            return response()->json([
+                'status' => 'unavailableSingle',
+            ]);
+        }else
+            return response()->json([
+                'message' => 'Twoja lista zakupów posiada tylko niedostepne produkty',
+                'status' => 'warning',
+            ]);
+
+
+
+    }
+
+    public function activeChange(Shopping_list $shopping_list)
+    {
+
+        if($shopping_list->status->isStop()){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'Lista zablokowana, nie powinno cie tu być!'
+            ]);
+        }
 
 
         if($shopping_list->active == ShoppingListActive::FALSE)

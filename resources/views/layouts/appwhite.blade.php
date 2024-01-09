@@ -310,7 +310,7 @@
                         </div>
                     @endif
                     <br>
-                    @if($cart->mode=='shopping_list')
+                    @if($cart->mode->isShoppingList())
                     <div class="btn-wrapper">
                         <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zakończ edycje listy zakupów') }}</a>
                     </div>

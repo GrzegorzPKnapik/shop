@@ -1566,10 +1566,10 @@
             var id = $(this).data("id");
             $.ajax({
                 type: "POST",
-                url: '/shopping_list/haveUnavailableInSL/'+id,
+                url: '/shopping_list/validSL/'+id,
             })
                 .done(function (response) {
-                    if(response.status == 'unavailable')
+                    if(response.status == 'unavailableSingle')
                     {
                         Swal.fire({
                             title: 'Twoja lista zakupów zawiera niedostepny produkt!',
@@ -1597,9 +1597,9 @@
                             }
                         });
                     }
-                    if(response.status == 'unavailableAll') {
+                    if(response.status == 'warning') {
                         Swal.fire(response.message, '', response.status);
-                    }if(response.status == 'warning')
+                    }if(response.status == 'success')
                     {
                         $.ajax({
                             type: "POST",
@@ -1609,10 +1609,6 @@
                                 $("#refreshActive").load(location.href + " #refreshActive")
                                 Swal.fire(response.message, '', response.status);
                             })
-                    }if(response.status == 'success')
-                    {
-                        $("#refreshActive").load(location.href + " #refreshActive")
-                        Swal.fire(response.message, '', response.status);
                     }
 
 
