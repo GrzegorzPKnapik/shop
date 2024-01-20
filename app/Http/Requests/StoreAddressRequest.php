@@ -23,13 +23,13 @@ class StoreAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
-            'surname'=>'required',
-            'city'=>'required',
+            'name' => 'required|alpha',
+            'surname'=>'required|alpha',
+            'city'=>'required|alpha',
             'street'=>'required',
-            'zip_code'=>'required',
+            'zip_code' => 'required|regex:/^\d{2}-\d{3}$/',
             'voivodeship'=>'required',
-            'phone_number'=>'required|numeric'
+            'phone_number' => 'required|numeric|digits:9',
         ];
     }
 }

@@ -26,9 +26,9 @@ enum ProductStatus: string
     public function getStatusText(): string
     {
         return match($this) {
-            self::ENABLE => 'Available',
+            self::ENABLE => 'Dostępny',
             self::DISABLE,
-            self::SOLD_OUT => 'Sold out',
+            self::SOLD_OUT => 'Wyprzedany',
             // Dodaj inne statusy z ich tekstami
         };
     }

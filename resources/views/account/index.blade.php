@@ -21,13 +21,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">// Welcome to our company</h6>
-                                <h1 class="section-title white-color">My Account</h1>
+                                <h6 class="section-subtitle ltn__secondary-color"></h6>
+                                <h1 class="section-title white-color">Konto</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>My Account</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Konto</li>
                                 </ul>
                             </div>
                         </div>
@@ -52,16 +52,16 @@
                                                 <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dashboard
                                                     <i class="fas fa-home"></i></a>
                                                 @can('isUser')
-                                                    <a data-bs-toggle="tab" href="#liton_tab_1_2">Orders <i
+                                                    <a data-bs-toggle="tab" href="#liton_tab_1_2">Zamówienia <i
                                                             class="fas fa-file-alt"></i></a>
-                                                    <a data-bs-toggle="tab" href="#liton_tab_1_7">Shopping lists<i
+                                                    <a data-bs-toggle="tab" href="#liton_tab_1_7">Listy zakupów<i
                                                             class="fas fa-file-alt"></i></a>
                                                 @endcan
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_4">Address <i
+                                                <a data-bs-toggle="tab" href="#liton_tab_1_4">Adresy <i
                                                         class="fas fa-map-marker-alt"></i></a>
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_5">Account details <i
+                                                <a data-bs-toggle="tab" href="#liton_tab_1_5">Szczegóły konta <i
                                                         class="fas fa-user"></i></a>
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_6">Address create <i
+                                                <a data-bs-toggle="tab" href="#liton_tab_1_6">Utwórz nowy adres <i
                                                         class="fas fa-map-marker-alt"></i></a>
                                                 <a href="{{ route('logout') }}"
                                                    onclick="event.preventDefault();
@@ -75,29 +75,30 @@
                                         <div class="tab-content">
                                             <div class="tab-pane fade active show" id="liton_tab_1_1">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>Hello <strong>
+                                                    <p>Witaj <strong>
                                                             {{ Auth::user()->name }}
-                                                        </strong> (not <strong>UserName</strong>?
-                                                        <small><a href="login-register.html">Log out</a></small> )</p>
-                                                    <p>From your account dashboard you can view your
-                                                        <span>recent orders</span>, manage your <span>shipping and billing addresses</span>,
-                                                        and <span>edit your password and account details</span>.</p>
+                                                        </strong> (To nie twoje konto <strong>{{ Auth::user()->name }}
+                                                        </strong>?
+                                                        <small><a href="{{ route('logout') }}">Wyloguj się</a></small> )</p>
+                                                    <p>Pulpit konta umożliwia dostęp do
+                                                        <span>ostatnich zamówień</span>,  <span>szczegółów konta</span>, <span>zarządanie listami zakupów</span>, zarządanie <span>adresami</span>
+                                                        .</p>
                                                 </div>
                                             </div>
 
                                             @can('isUser')
                                                 <div class="tab-pane fade" id="liton_tab_1_7">
                                                     <div class="ltn__myaccount-tab-content-inner">
-                                                        <p>Aktywne cykliczne dostawy(cykliczna lista zakupów).</p>
+                                                        <p>Listy zakupów. Mozliwość włączenia cyklicznych dostaw oraz przechowywania zapisanych koszyków.</p>
                                                         <div class="table-responsive">
                                                             <table class="table text-center table-sm">
                                                                 <thead>
                                                                 <tr>
-                                                                    <th>Title</th>
-                                                                    <th>Update date</th>
-                                                                    <th>Price</th>
-                                                                    <th>Active</th>
-                                                                    <th>Action</th>
+                                                                    <th>Tytuł</th>
+                                                                    <th>Data ostatniej aktualizacji</th>
+                                                                    <th>Cena</th>
+                                                                    <th>Aktywna</th>
+                                                                    <th>Akcje</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -113,10 +114,10 @@
                                                                         <!--                                                                        <td class="cart-product-name">#{{$item->id}}</td>-->
                                                                         <td class="cart-product-name">{{$item->updated_at}}</td>
 
-                                                                        <td class="cart-product-name">${{$item->total}}</td>
+                                                                        <td class="cart-product-name">{{ number_format($item->total, 2, ',', ' ') }} zł</td>
                                                                         <td class="cart-product-name">
                                                                             @if($item->active==true)
-                                                                                {{__('YES')}}
+                                                                                {{__('TAK')}}
                                                                             @endif
                                                                         </td>
                                                                         <td>
@@ -139,10 +140,10 @@
                                                             <table class="table text-center table-sm">
                                                                 <thead>
                                                                 <tr>
-                                                                    <th>Number</th>
-                                                                    <th>Date</th>
-                                                                    <th>Price</th>
-                                                                    <th>Action</th>
+                                                                    <th>Numer</th>
+                                                                    <th>Data złożenia zamówienia</th>
+                                                                    <th>Cena</th>
+                                                                    <th>Akcje</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -152,7 +153,7 @@
                                                                         <td class="cart-product-name">#{{$item->id}}</td>
                                                                         <td class="cart-product-name">{{$item->created_at}}</td>
 
-                                                                        <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+                                                                        <td class="cart-product-name">{{ number_format($item->shopping_list->total, 2, ',', ' ') }} zł</td>
                                                                         <td>
                                                                             <a href="{{ route('order.show', $item->id) }}">
                                                                                 <button class="icon-search"></button>
@@ -161,48 +162,6 @@
 
                                                                     </tr>
                                                                 @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="liton_tab_1_3">
-                                                    <div class="ltn__myaccount-tab-content-inner">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Product</th>
-                                                                    <th>Date</th>
-                                                                    <th>Expire</th>
-                                                                    <th>Download</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>Carsafe - Car Service PSD Template</td>
-                                                                    <td>Nov 22, 2020</td>
-                                                                    <td>Yes</td>
-                                                                    <td><a href="#"><i
-                                                                                class="far fa-arrow-to-bottom mr-1"></i>
-                                                                            Download File</a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Carsafe - Car Service HTML Template</td>
-                                                                    <td>Nov 10, 2020</td>
-                                                                    <td>Yes</td>
-                                                                    <td><a href="#"><i
-                                                                                class="far fa-arrow-to-bottom mr-1"></i>
-                                                                            Download File</a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Carsafe - Car Service WordPress Theme</td>
-                                                                    <td>Nov 12, 2020</td>
-                                                                    <td>Yes</td>
-                                                                    <td><a href="#"><i
-                                                                                class="far fa-arrow-to-bottom mr-1"></i>
-                                                                            Download File</a></td>
-                                                                </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -283,8 +242,7 @@
                                             </div>
                                             <div class="tab-pane fade" id="liton_tab_1_6">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>The following addresses will be used on the checkout page by
-                                                        default.</p>
+
                                                     <div class="ltn__form-box">
 
 
@@ -400,7 +358,7 @@
                                                                 <div class="btn-wrapper">
                                                                     <button type="submit"
                                                                             class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
-                                                                        {{__('Save changes')}}
+                                                                        {{__('Zapisz adres')}}
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -410,17 +368,15 @@
                                             </div>
                                             <div class="tab-pane fade" id="liton_tab_1_5">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>The following addresses will be used on the checkout page by
-                                                        default.</p>
                                                     <div class="ltn__form-box">
                                                         <div class="row mb-50">
                                                             <div class="col-md-6">
-                                                                <label>Name:</label>
+                                                                <label>Imie:</label>
                                                                 <input type="text" value="{{ Auth::user()->name }}" name="ltn__lastname"
                                                                        readonly>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label>Surname:</label>
+                                                                <label>Nazwisko:</label>
                                                                 <input type="text" value="{{ Auth::user()->surname }}" name="ltn__lastname"
                                                                        readonly>
                                                             </div>
@@ -440,27 +396,6 @@
 
 
                                                         </div>
-                                                        <fieldset>
-                                                            <legend>Password change</legend>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <label>Current password (leave blank to leave
-                                                                        unchanged):</label>
-                                                                    <input type="password" name="ltn__name">
-                                                                    <label>New password (leave blank to leave
-                                                                        unchanged):</label>
-                                                                    <input type="password" name="ltn__lastname">
-                                                                    <label>Confirm new password:</label>
-                                                                    <input type="password" name="ltn__lastname">
-                                                                </div>
-                                                            </div>
-                                                        </fieldset>
-                                                        <div class="btn-wrapper">
-                                                            <button type="submit"
-                                                                    class="btn theme-btn-1 btn-effect-1 text-uppercase">
-                                                                Save Changes
-                                                            </button>
-                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -477,8 +412,7 @@
         </div>
         <!-- WISHLIST AREA START -->
 
-        <!-- FEATURE AREA START ( Feature - 3) -->
-        <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
+        <div class="ltn__feature-area before-bg-bottom-2-- mb--30--- plr--5 mb-120">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -490,9 +424,8 @@
                                             <img src="img/icons/icon-img/11.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Curated Products</h4>
-                                            <p>Provide Curated Products for
-                                                all product over $100</p>
+                                            <h4>Starannie Wyselekcjonowane Produkty Spożywcze</h4>
+                                            <p>Zapewniamy starannie wyselekcjonowane produkty spożywcze</p>
                                         </div>
                                     </div>
                                 </div>
@@ -502,9 +435,8 @@
                                             <img src="img/icons/icon-img/12.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Handmade</h4>
-                                            <p>We ensure the product quality
-                                                that is our main goal</p>
+                                            <h4>Działamy lokalnie</h4>
+                                            <p>W obrębie 20km od centrum Katowic</p>
                                         </div>
                                     </div>
                                 </div>
@@ -514,9 +446,8 @@
                                             <img src="img/icons/icon-img/13.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Natural Food</h4>
-                                            <p>Return product within 3 days
-                                                for any product you buy</p>
+                                            <h4>Lista zakupów</h4>
+                                            <p>Możliwość tworzenia list zakupów</p>
                                         </div>
                                     </div>
                                 </div>
@@ -526,9 +457,8 @@
                                             <img src="img/icons/icon-img/14.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Free home delivery</h4>
-                                            <p>We ensure the product quality
-                                                that you can trust easily</p>
+                                            <h4>Darmowa dostawa</h4>
+                                            <p>Oferujemy darmową dostawę czyklicznych zakupów</p>
                                         </div>
                                     </div>
                                 </div>
@@ -538,147 +468,7 @@
                 </div>
             </div>
         </div>
-        <!-- FEATURE AREA END -->
 
-        <!-- FOOTER AREA START -->
-        <footer class="ltn__footer-area  ">
-            <div class="footer-top-area  section-bg-1 plr--5">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6 col-sm-6 col-12">
-                            <div class="footer-widget footer-about-widget">
-                                <div class="footer-logo">
-                                    <div class="site-logo">
-                                        <img src="img/logo.png" alt="Logo">
-                                    </div>
-                                </div>
-                                <p>Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is
-                                    dummy text of the printing.</p>
-                                <div class="footer-address">
-                                    <ul>
-                                        <li>
-                                            <div class="footer-address-icon">
-                                                <i class="icon-placeholder"></i>
-                                            </div>
-                                            <div class="footer-address-info">
-                                                <p>Brooklyn, New York, United States</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="footer-address-icon">
-                                                <i class="icon-call"></i>
-                                            </div>
-                                            <div class="footer-address-info">
-                                                <p><a href="tel:+0123-456789">+0123-456789</a></p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="footer-address-icon">
-                                                <i class="icon-mail"></i>
-                                            </div>
-                                            <div class="footer-address-info">
-                                                <p><a href="mailto:example@example.com">example@example.com</a></p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="ltn__social-media mt-20">
-                                    <ul>
-                                        <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
-                                        <li><a href="#" title="Youtube"><i class="fab fa-youtube"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-6 col-sm-6 col-12">
-                            <div class="footer-widget footer-menu-widget clearfix">
-                                <h4 class="footer-title">Company</h4>
-                                <div class="footer-menu">
-                                    <ul>
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a href="blog.html">Blog</a></li>
-                                        <li><a href="shop.html">All Products</a></li>
-                                        <li><a href="locations.html">Locations Map</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="contact.html">Contact us</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-6 col-sm-6 col-12">
-                            <div class="footer-widget footer-menu-widget clearfix">
-                                <h4 class="footer-title">Services.</h4>
-                                <div class="footer-menu">
-                                    <ul>
-                                        <li><a href="order-tracking.html">Order tracking</a></li>
-                                        <li><a href="wishlist.html">Wish List</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="account.html">My account</a></li>
-                                        <li><a href="about.html">Terms & Conditions</a></li>
-                                        <li><a href="about.html">Promotional Offers</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-6 col-sm-6 col-12">
-                            <div class="footer-widget footer-menu-widget clearfix">
-                                <h4 class="footer-title">Customer Care</h4>
-                                <div class="footer-menu">
-                                    <ul>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="account.html">My account</a></li>
-                                        <li><a href="wishlist.html">Wish List</a></li>
-                                        <li><a href="order-tracking.html">Order tracking</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="contact.html">Contact us</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 col-sm-12 col-12">
-                            <div class="footer-widget footer-newsletter-widget">
-                                <h4 class="footer-title">Newsletter</h4>
-                                <p>Subscribe to our weekly Newsletter and receive updates via email.</p>
-                                <div class="footer-newsletter">
-                                    <form action="#">
-                                        <input type="email" name="email" placeholder="Email*">
-                                        <div class="btn-wrapper">
-                                            <button class="theme-btn-1 btn" type="submit"><i
-                                                    class="fas fa-location-arrow"></i></button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <h5 class="mt-30">We Accept</h5>
-                                <img src="img/icons/payment-4.png" alt="Payment Image">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ltn__copyright-area ltn__copyright-2 section-bg-2  ltn__border-top-2--- plr--5">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="ltn__copyright-design clearfix">
-                                <p>All Rights Reserved @ Company <span class="current-year"></span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12 align-self-center">
-                            <div class="ltn__copyright-menu text-right text-end">
-                                <ul>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Claim</a></li>
-                                    <li><a href="#">Privacy & Policy</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- FOOTER AREA END -->
     </div>
     <!-- Body main wrapper end -->
 

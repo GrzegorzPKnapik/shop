@@ -5,19 +5,19 @@
     <div class="body-wrapper">
 
         <!-- BREADCRUMB AREA START -->
-        <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="{{ asset('img/bg_used/9.jpg') }}">
+        <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="{{ asset('img/bg_used/2.jpg') }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Edycja produktu</h6>
-                                <h1 class="section-title white-color">Edit Product</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">// witamy w naszym sklepie</h6>
+                                <h1 class="section-title white-color">Edycja produktu</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Product</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Edycja produktu</li>
                                 </ul>
                             </div>
                         </div>
@@ -40,9 +40,9 @@
                                 @method('PUT')
 
 
-                                <h4 class="pt-4 pb-2">Product:</h4>
+                                <h4 class="pt-4 pb-2">Produkt:</h4>
                                 <div class="mb-3">
-                                    <label>Name:</label>
+                                    <label>Nazwa:</label>
                                     <input id="product_name" type="text" placeholder="nazwa" class="form-control @error('product_name') is-invalid @enderror" name="product_name" value="{{ $product->name }}" required autocomplete="product_name" autofocus>
                                 @error('product_name')
                                     <span class="invalid-feedback" role="alert">
@@ -61,7 +61,7 @@
                                     @enderror
                                 </div>
 
-                                <h4 class="pt-4 pb-2">Category:</h4>
+                                <h4 class="pt-4 pb-2">Kategoria:</h4>
 
                                 <div class="col-md-6">
                                     <div class="input-item">
@@ -81,7 +81,7 @@
                                 </div>
 
 
-                                <h4 class="pt-4 pb-2">Producer:</h4>
+                                <h4 class="pt-4 pb-2">Producent:</h4>
 
                                 <div class="col-md-6">
                                     <div class="input-item">
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
 
-                                <h4 class="pt-4 pb-2">Description:</h4>
+                                <h4 class="pt-4 pb-2">Opis:</h4>
 
 
                                 <div class="mb-3">
@@ -152,7 +152,7 @@
                                 </div>
 
 
-                                <h4 class="pt-4 pb-2">Image:</h4>
+                                <h4 class="pt-4 pb-2">Zdjęcie:</h4>
 
                                 <div class="mb-3">
                                     <label>Zdjęcie:</label>
@@ -210,68 +210,6 @@
 
         <!-- LOGIN AREA END -->
 
-    <!-- FEATURE AREA START ( Feature - 3) -->
-    <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ltn__feature-item-box-wrap ltn__border-between-column white-bg">
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/11.png') }}" alt="#">
-                                    </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Curated Products</h4>
-                                        <p>Provide Curated Products for
-                                            all product over $100</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/12.png') }}" alt="#">
-                                    </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Handmade</h4>
-                                        <p>We ensure the product quality
-                                            that is our main goal</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/13.png') }}" alt="#">
-                                    </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Natural Food</h4>
-                                        <p>Return product within 3 days
-                                            for any product you buy</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6 col-12">
-                                <div class="ltn__feature-item ltn__feature-item-8">
-                                    <div class="ltn__feature-icon">
-                                        <img src="{{ asset('img/icons/icon-img/14.png') }}" alt="#">
-                                    </div>
-                                    <div class="ltn__feature-info">
-                                        <h4>Free home delivery</h4>
-                                        <p>We ensure the product quality
-                                            that you can trust easily</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- FEATURE AREA END -->
 
     <div class="ltn__utilize-overlay"></div>
 

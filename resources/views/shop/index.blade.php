@@ -20,7 +20,7 @@
          }
 
         .disabled-icon {
-            opacity: 0.8;
+            opacity: 0.5;
         }
 
     </style>
@@ -59,13 +59,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">//  Welcome to our company</h6>
-                                <h1 class="section-title white-color">Shop</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">//  Witaj w naszym sklepie</h6>
+                                <h1 class="section-title white-color">Sklep</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Shop</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Sklep</li>
                                 </ul>
                             </div>
                         </div>
@@ -91,9 +91,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="showing-product-number text-right text-end">
-                                        <span>Showing 1–12 of 18 results</span>
-                                    </div>
+
                                 </li>
                                 <li>
 
@@ -103,10 +101,9 @@
                                         <form id="filterForm" action="{{route('shop.index')}}" method="GET" onchange="SubmitForm('filterForm');">
                                             @csrf
                                             <select name="sort" class="nice-select">
-                                                <option value="1" {{ request('sort') == 1 ? 'selected' : '' }}>Default Sorting</option>
-                                                <option value="2" {{ request('sort') == 2 ? 'selected' : '' }}>Sort by new arrivals</option>
-                                                <option value="3" {{ request('sort') == 3 ? 'selected' : '' }}>Sort by price: low to high</option>
-                                                <option value="4" {{ request('sort') == 4 ? 'selected' : '' }}>Sort by price: high to low</option>
+                                                <option value="1" {{ request('sort') == 1 ? 'selected' : '' }}>Domyślne sortowanie</option>
+                                                <option value="3" {{ request('sort') == 3 ? 'selected' : '' }}>Cena rosnąca</option>
+                                                <option value="4" {{ request('sort') == 4 ? 'selected' : '' }}>Cena malejąca</option>
                                             </select>
 
 
@@ -172,8 +169,8 @@
                                                         </div>
                                                         <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -218,10 +215,10 @@
                         <aside class="sidebar ltn__shop-sidebar ltn__right-sidebar">
 
                             <div class="widget ">
-                                <h4 class="ltn__widget-title ltn__widget-title-border">Search Objects</h4>
+                                <h4 class="ltn__widget-title ltn__widget-title-border">Wyszukaj produkt</h4>
                                 <!--                        <form id="searchForm" action="{{route('shop.index')}}" method="GET">-->
                                 {{--@csrf--}}
-                                <input type="text" name="search" value="{{request('search')}}" placeholder="Search your keyword...">
+                                <input type="text" name="search" value="{{request('search')}}" placeholder="Wyszukaj">
                                 <button class="theme-btn-1 btn btn-effect-1"  id="filter_button" type="submit">
                                     <i class="fas fa-search"></i> {{ __('Szukaj') }}
                                 </button>
@@ -231,19 +228,19 @@
 
                             <!-- Price Filter Widget -->
                             <div class="widget ltn__price-filter-widget">
-                                <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
+                                <h4 class="ltn__widget-title ltn__widget-title-border">Sortuj po cenie</h4>
                                 <div class="price_filter">
 
-                                    <input type="text" name="filter[price_min]" value="{{request('filter.price_min')}}" placeholder="Add Your Price" />
+                                    <input type="text" name="filter[price_min]" value="{{request('filter.price_min')}}" placeholder="Cena min" />
 
-                                    <input type="text" name="filter[price_max]" value="{{request('filter.price_max')}}" placeholder="Add Your Price" />
+                                    <input type="text" name="filter[price_max]" value="{{request('filter.price_max')}}" placeholder="Cena max" />
 
                                 </div>
                             </div>
 
                             <!-- Categories Widget -->
                             <div class="widget ltn__tagcloud-widget">
-                                <h4 class="ltn__widget-title ltn__widget-title-border">Categories</h4>
+                                <h4 class="ltn__widget-title ltn__widget-title-border">Kategorie</h4>
                                 <ul>
                                     @foreach($categories as $category)
                                         <li>
@@ -317,19 +314,19 @@
                                                         </div>
                                                         <h3>{{$product->name}}</h3>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                         <div class="modal-product-meta ltn__product-details-menu-1">
                                                             <ul>
                                                                 <li>
-                                                                    <strong>Availability:</strong>
+                                                                    <strong>Dostępność:</strong>
                                                                     <span>
                                                             {{$product->status->getStatusText()}}
                                                         </span>
                                                                 </li>
                                                                 <li>
-                                                                    <strong>Categories:</strong>
+                                                                    <strong>Kategoria:</strong>
                                                                     <span>
                                                             {{$product->category->name}}
                                                         </span>
@@ -337,7 +334,7 @@
 
                                                                 @if(isset($product->description->calories))
                                                                     <li>
-                                                                        <strong>Calories:</strong>
+                                                                        <strong>Kalorie:</strong>
                                                                         <span>
                                                             {{$product->description->calories}}
                                                         </span>
@@ -349,12 +346,12 @@
                                                             <ul>
 
                                                                 <li>
-                                                                        <label for="valueQuantity">max 99sztuk:</label>
-                                                                        <div class="cart-plus-minus m-auto">
-                                                                            <div class="dec qtybutton" onclick="decrement()">-</div>
-                                                                            <input type="number" value="1" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_quantity_input">
-                                                                            <div class="inc qtybutton" onclick="increment()">+</div>
-                                                                        </div>
+                                                                    <label for="valueQuantity_{{ $product->id }}">max 99sztuk:</label>
+                                                                    <div class="cart-plus-minus m-auto">
+                                                                        <div class="dec qtybutton" onclick="decrement({{ $product->id }})">-</div>
+                                                                        <input type="number" value="1" name="valueQuantity" id="valueQuantity_{{ $product->id }}" class="cart-plus-minus-box cart_quantity_input">
+                                                                        <div class="inc qtybutton" onclick="increment({{ $product->id }})">+</div>
+                                                                    </div>
                                                                 </li>
 
 
@@ -362,7 +359,7 @@
                                                                 <li>
                                                                     <a href="" title="Add to Cart" class="theme-btn-1 btn btn-effect-1 add-to-cart-value  {{$product->status->isSoldOut() ? 'disabled-icon' : ''}} {{$product->status->isSoldOut() ? 'disabled-link' : ''}}" data-id="{{$product->id}}">
                                                                         <i class="fas fa-shopping-cart"></i>
-                                                                        <span>ADD TO CART</span>
+                                                                        <span>DODAJ DO KOSZYKA</span>
                                                                     </a>
                                                                 </li>
                                                             </ul>
@@ -430,23 +427,24 @@
                 }
             }
 
-                function increment() {
-                var inputElement = document.getElementById('valueQuantity');
+            function increment(productId) {
+                var inputElement = document.getElementById("valueQuantity_" + productId);
                 var currentValue = parseInt(inputElement.value, 10);
 
                 if (currentValue < 99) {
-                inputElement.value = currentValue + 1;
-            }
+                    inputElement.value = currentValue + 1;
+                }
             }
 
-                function decrement() {
-                var inputElement = document.getElementById('valueQuantity');
+            function decrement(productId) {
+                var inputElement = document.getElementById("valueQuantity_" + productId);
                 var currentValue = parseInt(inputElement.value, 10);
 
                 if (currentValue > 1) {
-                inputElement.value = currentValue - 1;
+                    inputElement.value = currentValue - 1;
+                }
             }
-            }
+
 
         </script>
         @endsection

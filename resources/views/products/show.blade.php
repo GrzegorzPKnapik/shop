@@ -11,13 +11,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Show produktu</h6>
-                                <h1 class="section-title white-color">Show Product</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">// witamy w naszym sklepie</h6>
+                                <h1 class="section-title white-color">Podgląd produktu</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Show Product</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Podgląd produktu</li>
                                 </ul>
                             </div>
                         </div>
@@ -75,13 +75,13 @@
                                                 </div>
                                                 <h3>{{$product->name}}</h3>
                                                 <div class="product-price">
-                                                    <span>${{$product->price}}</span>
-                                                    <del>$35.00</del>
+                                                    <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                    <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                 </div>
                                                 <div class="modal-product-meta ltn__product-details-menu-1">
                                                     <ul>
                                                         <li>
-                                                            <strong>Categories:</strong>
+                                                            <strong>Kategoria:</strong>
                                                             <span>
                                                             {{$product->category->name}}
                                                         </span>
@@ -89,7 +89,7 @@
 
                                                         @if($product->description->calories!=null)
                                                             <li>
-                                                                <strong>Calories:</strong>
+                                                                <strong>Kalorie:</strong>
                                                                 <span>
                                                             {{$product->description->calories}}
                                                         </span>
@@ -131,7 +131,7 @@
                                 <div class="ltn__shop-details-tab-inner ltn__shop-details-tab-inner-2">
                                     <div class="ltn__shop-details-tab-menu">
                                         <div class="nav">
-                                            <a class="active show" data-bs-toggle="tab" href="#liton_tab_details_1_1">Description</a>
+                                            <a class="active show" data-bs-toggle="tab" href="#liton_tab_details_1_1">Opis</a>
                                         </div>
                                     </div>
                                     <div class="tab-content">

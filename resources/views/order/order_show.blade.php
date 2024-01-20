@@ -19,13 +19,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">// Welcome to our company</h6>
-                                <h1 class="section-title white-color">Order preview</h1>
+                                <h6 class="section-subtitle ltn__secondary-color"></h6>
+                                <h1 class="section-title white-color">Podgląd zamówienia</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>My Account</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Podgląd zamówinia</li>
                                 </ul>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                     <div class="col-lg-4">
                                         <div class="ltn__tab-menu-list mb-50">
                                             <div class="nav">
-                                                <a class="active show" data-bs-toggle="tab">Order preview <i
+                                                <a class="active show" data-bs-toggle="tab">Zamówinie <i
                                                         class="fas fa-file-alt"></i></a>
                                             </div>
                                         </div>
@@ -56,14 +56,14 @@
                                         <div class="tab-content">
 
                                             <div class="ltn__myaccount-tab-content-inner">
-                                                <p>Podgląd zamówienia</p>
+                                                <p>Zamówienie</p>
                                                 <div class="ltn__form-box">
                                                     <div class="ltn__myaccount-tab-content-inner">
                                                         <div class="table-responsive">
 
                                                             @foreach($order as $item)
                                                                 <p class="text-center">
-                                                                    <label>Order ID:</label>
+                                                                    <label>Numer zamówienia:</label>
                                                                 <h1 class="text-center">#{{$item->id}}</h1>
                                                                 <br>
                                                                 </p>
@@ -78,15 +78,15 @@
                                                             <br>
 
                                                             <table class="table text-center caption-top table-sm">
-                                                                <caption>Products</caption>
+                                                                <caption>Produkty</caption>
                                                                 <thead>
                                                                 <tr>
-                                                                    <th>Number</th>
-                                                                    <th>Image</th>
-                                                                    <th>Name</th>
-                                                                    <th>Price</th>
-                                                                    <th>Quantity</th>
-                                                                    <th>SubTotal</th>
+                                                                    <th>Numer</th>
+                                                                    <th>Zdjęcie</th>
+                                                                    <th>Nazwa</th>
+                                                                    <th>Cena</th>
+                                                                    <th>Ilość</th>
+                                                                    <th>Suma częściowa</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -96,9 +96,9 @@
                                                                             <td class="cart-product-name">{{ $index+1}}.</td>
                                                                             <td class="cart-product-image"> <a href="product-details.html"><img src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a></td>
                                                                             <td class="cart-product-name">{{$item->product->name}}</td>
-                                                                            <td class="cart-product-name">${{$item->product->price}}</td>
+                                                                            <td class="cart-product-name">{{ number_format($item->product->price, 2, ',', ' ') }} zł</td>
                                                                             <td class="cart-product-name">x{{$item->quantity}}</td>
-                                                                            <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                                                            <td class="cart-product-subtotal">{{ number_format($item->sub_total, 2, ',', ' ') }} zł</td>
                                                                         </tr>
                                                                     @endforeach
                                                                 @endforeach
@@ -114,25 +114,25 @@
                                                                     <br>
                                                                 </p>
 
-                                                            <div class="shoping-cart-total mt-50">
-                                                                <h4>Cart Totals</h4>
-                                                                <table class="table text-center table-sm">
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td>Vat</td>
-                                                                        <td>$00.00</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><strong>Order Total</strong></td>
-                                                                        <td><strong>$
-                                                                                @foreach($order as $item)
-                                                                                    {{$item->shopping_list->total}}
-                                                                                    @php break;@endphp
-                                                                                @endforeach
-                                                                            </strong></td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
+                                                                <div class="shoping-cart-total mt-50">
+                                                                    <h4>Podsumowanie</h4>
+                                                                    <table class="table text-center table-sm">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>VAT</td>
+                                                                            <td>00,00 zł</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Kwota</strong></td>
+                                                                            <td><strong>
+                                                                                    @foreach($order as $item)
+                                                                                        {{ number_format($item->shopping_list->total, 2, ',', ' ') }} zł
+                                                                                        @php break;@endphp
+                                                                                    @endforeach
+                                                                                </strong></td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
                                                             </div>
 
                                                         </div>

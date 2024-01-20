@@ -141,19 +141,19 @@ return [
     */
 
     'attributes' => [
-        'name' => 'nazwa',
-        'surname' => 'nazwisko',
-        'city' => 'miasto',
-        'street' => 'ulica',
-        'zip_code' => 'kod pocztowy',
-        'voivodeship' => 'województwo',
-        'phone_number' => 'numer telefonu',
+        'name' => 'Nazwa',
+        'surname' => 'Nazwisko',
+        'city' => 'Miasto',
+        'street' => 'Ulica',
+        'zip_code' => 'Kod pocztowy',
+        'voivodeship' => 'Województwo',
+        'phone_number' => 'Numer telefonu',
 
-        'product_name'=>'nazwa',
-        'product_price'=>'cena',
-        'description_name'=>'opis',
-        'description_ingredients'=>'składniki',
-        'description_calories'=>'kalorie'
+        'product_name'=>'Nazwa',
+        'product_price'=>'Cena',
+        'description_name'=>'Opis',
+        'description_ingredients'=>'Składniki',
+        'description_calories'=>'Kalorie'
 
     ],
 ];

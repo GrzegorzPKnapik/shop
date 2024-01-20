@@ -19,13 +19,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">//  Welcome to our company</h6>
-                                <h1 class="section-title white-color">Checkout</h1>
+                                <h6 class="section-subtitle ltn__secondary-color"></h6>
+                                <h1 class="section-title white-color">Kasa</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Checkout</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Kasa</li>
                                 </ul>
                             </div>
                         </div>
@@ -46,12 +46,12 @@
                                 <table class="table text-center table-sm">
                                     <thead>
                                     <tr>
-                                        <th>Number</th>
-                                        <th>Image</th>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>SubTotal</th>
+                                        <th>Numer</th>
+                                        <th>Zdjęcie</th>
+                                        <th>Nazwa</th>
+                                        <th>Cena</th>
+                                        <th>Ilość</th>
+                                        <th>Suma częściowa</th>
                                     </tr>
                                     </thead>
 
@@ -70,28 +70,16 @@
                                                     <h4><a>{{$item->product->name}}</a></h4>
                                                 </td>
 
-                                                <td class="cart-product-subtotal">${{$item->product->price}}</td>
+                                                <td class="cart-product-subtotal">{{ number_format($item->product->price, 2, ',', ' ') }} zł</td>
                                                 <td class="cart-product-subtotal">x{{$item->quantity}}</td>
 
 
 
-                                                <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                                <td class="cart-product-subtotal">{{ number_format($item->sub_total, 2, ',', ' ') }} zł</td>
                                             </tr>
                                         @endforeach
                                     @endif
 
-
-                                    <tr class="cart-coupon-row">
-                                        <td colspan="5">
-                                            <div class="cart-coupon">
-                                                <input type="text" name="cart-coupon" placeholder="Coupon code">
-                                                <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
-                                        </td>
-                                    </tr>
                                     </tbody>
                                 </table>
 
@@ -216,18 +204,18 @@
 
 
                         <div class="shoping-cart-total mt-50">
-                            <h4>Cart Totals</h4>
+                            <h4>Podsumowanie</h4>
                             <table class="table text-center table-sm">
                                 <tbody>
                                 <tr>
                                     <td>Vat</td>
-                                    <td>$00.00</td>
+                                    <td>00,00 zł</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Order Total</strong></td>
-                                    <td><strong>$
+                                    <td><strong>Kwota</strong></td>
+                                    <td><strong>
                                             @if(isset($cart))
-                                                {{$cart->total}}@endif</strong></td>
+                                                {{ number_format($cart->total, 2, ',', ' ') }} zł@endif</strong></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -238,7 +226,7 @@
 
 
                                 <button class="theme-btn-1 btn btn-effect-1 storeOrder" type="submit">
-                                    {{ __('Submit') }}
+                                    {{ __('Zatwierdź') }}
                                 </button>
 
 

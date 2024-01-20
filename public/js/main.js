@@ -1401,8 +1401,8 @@
         $(document).on("click", ".add-to-cart-value", function (event) {
             event.preventDefault();
             var closeButton = document.getElementById(`closeQV_${this.dataset.id}`);
-            var data = $('#valueQuantity');
             var id = $(this).data("id");
+            var data = $('#valueQuantity_' + id);
             $.ajax({
                 type: "POST",
                 url:  '/cart/addValue/' + id,
@@ -1870,6 +1870,40 @@
                 var newContent  = nameDay + ', ' + selectedDate;
                 $("#deliveryDate").html(newContent)
             });
+
+        var writeStartTime = 0;
+        $("#notepadTextarea").on("keyup", function() {
+            writeStartTime = new Date().getTime();
+            checkTimeTyped($(this).data("id"), $("#notepadTextarea").val())
+        });
+
+
+        function checkTimeTyped(id, notepad)
+        {
+            setTimeout(function() {
+                //Aktualizacja czasu
+                var elapsedTime = new Date().getTime() - writeStartTime;
+
+                //Brak aktualizacji nowej w ciągu sekundy
+                if (elapsedTime >= 1000) {
+                    saveNotepad(id, notepad);
+                }
+            }, 1000);
+        }
+
+
+        // Funkcja zapisująca notatki na serwerze
+
+        function saveNotepad(id, notepad) {
+
+            $.ajax({
+                type: "POST",
+                url: '/shopping_list/saveNotepad/' + id,
+                data: {notepad: notepad},
+                success: function (res) {
+                }
+            })
+        }
 
 
 

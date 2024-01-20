@@ -10,13 +10,13 @@
                 <div class="col-lg-12">
                     <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                         <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">Produkty</h6>
+                            <h6 class="section-subtitle ltn__secondary-color">// witamy w naszym sklepie</h6>
                             <h1 class="section-title white-color">Produkty</h1>
                         </div>
                         <div class="ltn__breadcrumb-list">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li>Product</li>
+                                <li><a href="index.html">Start</a></li>
+                                <li>Produkty</li>
                             </ul>
                         </div>
                     </div>
@@ -40,14 +40,14 @@
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Create date</th>
-                        <th>Update date</th>
-                        <th>Action</th>
+                        <th>Numer</th>
+                        <th>Zdjęcie</th>
+                        <th>Nazwa</th>
+                        <th>Kategoria</th>
+                        <th>Cena</th>
+                        <th>Data utworzenia</th>
+                        <th>Data aktualizacji</th>
+                        <th>Akcje</th>
 
 
                     </tr>
@@ -72,7 +72,7 @@
 
 
                             <td class="cart-product-info">
-                                ${{$product->price}}
+                                {{ number_format($product->price, 2, ',', ' ') }} zł
                             </td>
                             <td class="cart-product-info">
                                 {{$product->created_at}}

@@ -72,7 +72,7 @@ class CartController extends Controller
         if(!Auth::check()) {
             return response()->json([
                 'status' => 'warning',
-                'title' => 'prosze sie zalogować'
+                'title' => 'Proszę się zalogować'
             ]);
         }
 

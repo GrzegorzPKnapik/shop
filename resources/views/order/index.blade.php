@@ -10,13 +10,13 @@
                 <div class="col-lg-12">
                     <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                         <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">Orders</h6>
-                            <h1 class="section-title white-color">Orders</h1>
+                            <h6 class="section-subtitle ltn__secondary-color">// witamy w naszym sklepie</h6>
+                            <h1 class="section-title white-color">Zamówienia</h1>
                         </div>
                         <div class="ltn__breadcrumb-list">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li>Orders</li>
+                                <li><a href="index.html">Start</a></li>
+                                <li>Zamówienia</li>
                             </ul>
                         </div>
                     </div>
@@ -33,12 +33,12 @@
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
-                        <th>Number</th>
-                        <th>User number</th>
+                        <th>Numer</th>
+                        <th>Numer użytkownika</th>
                         <th>Status</th>
-                        <th>Date</th>
-                        <th>Price</th>
-                        <th>Action</th>
+                        <th>Data utworzenia</th>
+                        <th>Cena</th>
+                        <th>Akcje</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,7 +53,7 @@
                             </a>
                             </td>
                             <td class="cart-product-name">{{$item->created_at}}</td>
-                            <td class="cart-product-name">${{$item->shopping_list->total}}</td>
+                            <td class="cart-product-name">{{ number_format($item->shopping_list->total, 2, ',', ' ') }} zł</td>
                             <td>
                                 <a href="{{ route('order.show', $item->id) }}">
                                     <button class="icon-search"></button>

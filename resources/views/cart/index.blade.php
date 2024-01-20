@@ -55,13 +55,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">//  Welcome to our company</h6>
-                                <h1 class="section-title white-color">Cart</h1>
+                                <h6 class="section-subtitle ltn__secondary-color"></h6>
+                                <h1 class="section-title white-color">Koszyk</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Cart</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Koszyk</li>
                                 </ul>
                             </div>
                         </div>
@@ -82,12 +82,12 @@
                                     <table class="table text-center table-sm">
                                         <thead>
                                         <tr>
-                                            <th>Action</th>
-                                            <th>Image</th>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>SubTotal</th>
+                                            <th>Akcje</th>
+                                            <th>Zdjęcie</th>
+                                            <th>Nazwa</th>
+                                            <th>Cena</th>
+                                            <th>Ilość</th>
+                                            <th>Suma częściowa</th>
 
 
                                         </tr>
@@ -101,52 +101,30 @@
 
 
 
-                                            <tr class="align-middle">
 
-                                            </tr>
-
-
-                                            <tr class="cart-coupon-row">
-                                                <td colspan="5">
-                                                    <div class="cart-coupon">
-                                                        <input type="text" name="cart-coupon" placeholder="Coupon code">
-                                                        <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
                             <div class="shoping-cart-total mt-50">
-                                <h4>Cart Totals</h4>
+                                <h4>Podsumowanie</h4>
                                 <table class="table text-center table-sm">
                                     <tbody>
-                                    <tr>
-                                        <td>Cart Subtotal</td>
-                                        <td>$618.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shipping and Handing</td>
-                                        <td>$15.00</td>
-                                    </tr>
                                     <tr>
                                         <td>Vat</td>
                                         <td>$00.00</td>
                                     </tr>
-                                    <td><strong>Order Total</strong></td>
-                                    <td><strong>
-
-                                            $
-                                        </strong></td>
-                                    </tbody>
+                                    <td><strong>Kwota</strong></td>
+                                    <tr>
+                                        <td><strong>Kwota</strong></td>
+                                        <td><strong>$
+                                                {{$cart->total}}
+                                            </strong></td>
+                                    </tr>
                                 </table>
                                 <div class="btn-wrapper text-right text-end">
-                                    <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                                    <a href="checkout.html" class="theme-btn-1 btn btn-effect-1">Kasa</a>
                                 </div>
                             </div>
                             @endif
@@ -168,7 +146,7 @@
                                             <h4><a>{{$item->product->name}}</a></h4>
                                         </td>
 
-                                        <td class="cart-product-subtotal">${{$item->product->price}}</td>
+                                        <td class="cart-product-subtotal">{{ number_format($item->product->price, 2, ',', ' ') }} zł</td>
 
 
 
@@ -183,53 +161,34 @@
 
 
 
-                                        <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                        <td class="cart-product-subtotal">{{ number_format($item->sub_total, 2, ',', ' ') }} zł</td>
                                     </tr>
 
                                 @endforeach
 
 
-                                <tr class="cart-coupon-row">
-                                    <td colspan="5">
-                                        <div class="cart-coupon">
-                                            <input type="text" name="cart-coupon" placeholder="Coupon code">
-                                            <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
-                                    </td>
-                                </tr>
+
                                 </tbody>
                                 </table>
                         </div>
                     </div>
 
                     <div class="shoping-cart-total mt-50">
-                        <h4>Cart Totals</h4>
+                        <h4>Podsumowanie</h4>
                         <table class="table">
                             <tbody>
                             <tr>
-                                <td>Cart Subtotal</td>
-                                <td>$618.00</td>
-                            </tr>
-                            <tr>
-                                <td>Shipping and Handing</td>
-                                <td>$15.00</td>
-                            </tr>
-                            <tr>
                                 <td>Vat</td>
-                                <td>$00.00</td>
+                                <td>00,00 zł</td>
                             </tr>
-                            <td><strong>Order Total</strong></td>
+                            <td><strong>Kwota</strong></td>
                             <td><strong>
-
-                                    ${{$cart->total}}
+                                    {{ number_format($cart->total, 2, ',', ' ') }} zł
                                 </strong></td>
                             </tbody>
                         </table>
                         <div class="btn-wrapper text-right text-end">
-                            <a href="{{ route('checkout.index') }}" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                            <a href="{{ route('checkout.index') }}" class="theme-btn-1 btn btn-effect-1">Przejdź do kasy</a>
                         </div>
                     </div>
                     @endif

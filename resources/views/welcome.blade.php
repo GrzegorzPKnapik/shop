@@ -45,13 +45,13 @@
                                                     <i class="fa fa-play"></i>
                                                 </a>
                                             </div>
-                                            <h6 class="slide-sub-title animated"><img src="img/icons/icon-img/1.png" alt="#"> 100% genuine Products</h6>
-                                            <h1 class="slide-title animated ">Our Garden's  Most <br>   Favorite Food</h1>
+                                            <h6 class="slide-sub-title animated"><img src="img/icons/icon-img/1.png" alt="#"> {{__('shop.welcome_page.slide1.sub_title')}}</h6>
+                                            <h1 class="slide-title animated ">{{__('shop.welcome_page.slide1.slide_title')}} <br> </h1>
                                             <div class="slide-brief animated">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                                <p>{{__('shop.welcome_page.slide1.slide_brief')}}</p>
                                             </div>
                                             <div class="btn-wrapper animated">
-                                                <a href="shop.html" class="theme-btn-1 btn btn-effect-1 text-uppercase">Explore Products</a>
+                                                <a href="{{ route('shop.index') }}" class="theme-btn-1 btn btn-effect-1 text-uppercase">Odkryj produkty</a>
                                             </div>
                                         </div>
                                     </div>
@@ -71,15 +71,11 @@
                                 <div class="col-lg-12 align-self-center">
                                     <div class="slide-item-info">
                                         <div class="slide-item-info-inner ltn__slide-animation">
-                                            <h6 class="slide-sub-title ltn__secondary-color animated">// TALENTED ENGINEER & MECHANICS</h6>
-                                            <h1 class="slide-title animated ">Tasty & Healthy <br>  Organic Food</h1>
+                                            <h6 class="slide-sub-title ltn__secondary-color animated"></h6>
+                                            <h1 class="slide-title animated ">{{__('shop.welcome_page.slide2.slide_title')}} <br>  </h1>
                                             <div class="slide-brief animated">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
                                             </div>
-                                            <div class="btn-wrapper animated">
-                                                <a href="shop.html" class="theme-btn-1 btn btn-effect-1 text-uppercase">Explore Products</a>
-                                                <a href="about.html" class="btn btn-transparent btn-effect-3">LEARN MORE</a>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="slide-item-img slide-img-left">
@@ -106,37 +102,21 @@
                                     <img src="img/icons/svg/8-trolley.svg" alt="#">
                                 </div>
                                 <div class="ltn__feature-info">
-                                    <h4>Free shipping</h4>
-                                    <p>On all orders over $49.00</p>
+                                    <h4>Cykliczna dostawa</h4>
+                                    <p>Dodatkowa opcja pozwalająca na cykliczne realizowanie listy zakupów</p>
                                 </div>
                             </div>
-                            <div class="ltn__feature-item ltn__feature-item-8">
-                                <div class="ltn__feature-icon">
-                                    <img src="img/icons/svg/9-money.svg" alt="#">
-                                </div>
-                                <div class="ltn__feature-info">
-                                    <h4>15 days returns</h4>
-                                    <p>Moneyback guarantee</p>
-                                </div>
-                            </div>
+
                             <div class="ltn__feature-item ltn__feature-item-8">
                                 <div class="ltn__feature-icon">
                                     <img src="img/icons/svg/10-credit-card.svg" alt="#">
                                 </div>
                                 <div class="ltn__feature-info">
-                                    <h4>Secure checkout</h4>
-                                    <p>Protected by Paypal</p>
+                                    <h4>Szybka płatność</h4>
+                                    <p>Zabezpieczona przez Paypal</p>
                                 </div>
                             </div>
-                            <div class="ltn__feature-item ltn__feature-item-8">
-                                <div class="ltn__feature-icon">
-                                    <img src="img/icons/svg/11-gift-card.svg" alt="#">
-                                </div>
-                                <div class="ltn__feature-info">
-                                    <h4>Offer & gift here</h4>
-                                    <p>On all orders over</p>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -151,16 +131,16 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title-area ltn__section-title-2 text-center">
-                            <h1 class="section-title">Our Products</h1>
+                            <h1 class="section-title">{{__('shop.welcome_page.products_title')}}</h1>
                         </div>
                         <div class="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase text-center">
                             <div class="nav">
-                                <a class="active show" data-bs-toggle="tab" href="#liton_tab_3_1">Wszystko</a>
-                                <a data-bs-toggle="tab" href="#liton_tab_3_2" class="">Warzywa</a>
-                                <a data-bs-toggle="tab" href="#liton_tab_3_3" class="">Napoje</a>
-                                <a data-bs-toggle="tab" href="#liton_tab_3_4" class="">Pieczywo</a>
-                                <a data-bs-toggle="tab" href="#liton_tab_3_5" class="">Nabiał</a>
-                                <a data-bs-toggle="tab" href="#liton_tab_3_6" class="">Mięsa</a>
+                                <a class="active show" data-bs-toggle="tab" href="#liton_tab_3_1">{{__('shop.welcome_page.all')}}</a>
+                                <a data-bs-toggle="tab" href="#liton_tab_3_2" class="">{{__('shop.welcome_page.vegetables')}}</a>
+                                <a data-bs-toggle="tab" href="#liton_tab_3_3" class="">{{__('shop.welcome_page.drinks')}}</a>
+                                <a data-bs-toggle="tab" href="#liton_tab_3_4" class="">{{__('shop.welcome_page.bread_stuff')}}</a>
+                                <a data-bs-toggle="tab" href="#liton_tab_3_5" class="">{{__('shop.welcome_page.diary')}}</a>
+                                <a data-bs-toggle="tab" href="#liton_tab_3_6" class="">{{__('shop.welcome_page.meat')}}</a>
                             </div>
                         </div>
                         <div class="tab-content">
@@ -218,8 +198,8 @@
                                                     </div>
                                                     <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                     <div class="product-price">
-                                                        <span>${{$product->price}}</span>
-                                                        <del>$35.00</del>
+                                                        <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                        <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                     </div>
                                                 </div>
                                             </div>
@@ -283,8 +263,8 @@
                                                         </div>
                                                         <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -346,8 +326,8 @@
                                                         </div>
                                                         <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -409,8 +389,8 @@
                                                         </div>
                                                         <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -473,8 +453,8 @@
                                                         </div>
                                                         <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -537,8 +517,8 @@
                                                         </div>
                                                         <h2 class="product-title"><a href="product-details.html">{{$product->name}}</a></h2>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -565,28 +545,28 @@
                         <div class="ltn__counterup-item-3 text-color-white text-center">
                             <div class="counter-icon"> <img src="img/icons/icon-img/2.png" alt="#"> </div>
                             <h1><span class="counter">15</span><span class="counterUp-letter">K</span><span class="counterUp-icon">+</span> </h1>
-                            <h6>Active Clients</h6>
+                            <h6>Aktywni klienci</h6>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 align-self-center">
                         <div class="ltn__counterup-item-3 text-color-white text-center">
                             <div class="counter-icon"> <img src="img/icons/icon-img/3.png" alt="#"> </div>
                             <h1><span class="counter">33</span><span class="counterUp-letter">K</span><span class="counterUp-icon">+</span> </h1>
-                            <h6>Deliveries</h6>
+                            <h6>Zrealizowane dostawy</h6>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 align-self-center">
                         <div class="ltn__counterup-item-3 text-color-white text-center">
                             <div class="counter-icon"> <img src="img/icons/icon-img/4.png" alt="#"> </div>
                             <h1><span class="counter">10</span><span class="counterUp-icon">+</span> </h1>
-                            <h6>Get Rewards</h6>
+                            <h6>Otrzymane nagrody</h6>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-6 align-self-center">
                         <div class="ltn__counterup-item-3 text-color-white text-center">
                             <div class="counter-icon"> <img src="img/icons/icon-img/5.png" alt="#"> </div>
                             <h1><span class="counter">3</span><span class="counterUp-icon">+</span> </h1>
-                            <h6>Country Cover</h6>
+                            <h6>Pokrycie krajów</h6>
                         </div>
                     </div>
                 </div>
@@ -603,12 +583,12 @@
                     <div class="col-lg-12">
                         <div class="call-to-action-inner call-to-action-inner-4 text-center">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">//  any question you have  //</h6>
+                                <h6 class="section-subtitle ltn__secondary-color">//  Masz jakieś pytania?  //</h6>
                                 <h1 class="section-title white-color">897-876-987-90</h1>
                             </div>
                             <div class="btn-wrapper">
-                                <a href="tel:+123456789" class="theme-btn-1 btn btn-effect-1">MAKE A CALL</a>
-                                <a href="contact.blade.php" class="btn btn-transparent btn-effect-4 white-color">CONTACT US</a>
+                                <a href="tel:+123456789" class="theme-btn-1 btn btn-effect-1">Zadzwoń</a>
+                                <a href="contact.blade.php" class="btn btn-transparent btn-effect-4 white-color">Skontaktuj sie z nami</a>
                             </div>
                         </div>
                     </div>
@@ -636,9 +616,8 @@
                                             <img src="img/icons/icon-img/11.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Curated Products</h4>
-                                            <p>Provide Curated Products for
-                                                all product over $100</p>
+                                            <h4>Starannie Wyselekcjonowane Produkty Spożywcze</h4>
+                                            <p>Zapewniamy starannie wyselekcjonowane produkty spożywcze</p>
                                         </div>
                                     </div>
                                 </div>
@@ -648,9 +627,8 @@
                                             <img src="img/icons/icon-img/12.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Handmade</h4>
-                                            <p>We ensure the product quality
-                                                that is our main goal</p>
+                                            <h4>Działamy lokalnie</h4>
+                                            <p>W obrębie 20km od centrum Katowic</p>
                                         </div>
                                     </div>
                                 </div>
@@ -660,9 +638,8 @@
                                             <img src="img/icons/icon-img/13.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Natural Food</h4>
-                                            <p>Return product within 3 days
-                                                for any product you buy</p>
+                                            <h4>Lista zakupów</h4>
+                                            <p>Możliwość tworzenia list zakupów</p>
                                         </div>
                                     </div>
                                 </div>
@@ -672,9 +649,8 @@
                                             <img src="img/icons/icon-img/14.png" alt="#">
                                         </div>
                                         <div class="ltn__feature-info">
-                                            <h4>Free home delivery</h4>
-                                            <p>We ensure the product quality
-                                                that you can trust easily</p>
+                                            <h4>Darmowa dostawa</h4>
+                                            <p>Oferujemy darmową dostawę czyklicznych zakupów</p>
                                         </div>
                                     </div>
                                 </div>
@@ -726,8 +702,8 @@
                                                         </div>
                                                         <h3>{{$product->name}}</h3>
                                                         <div class="product-price">
-                                                            <span>${{$product->price}}</span>
-                                                            <del>$35.00</del>
+                                                            <span>{{ number_format($product->price, 2, ',', ' ') }} zł</span>
+                                                            <del>{{ number_format($product->price + 1, 2, ',', '') }} zł</del>
                                                         </div>
                                                         <div class="modal-product-meta ltn__product-details-menu-1">
                                                             <ul>
@@ -738,7 +714,7 @@
                                                         </span>
                                                                 </li>
                                                                 <li>
-                                                                    <strong>Categories:</strong>
+                                                                    <strong>Kategoria:</strong>
                                                                     <span>
                                                             {{$product->category->name}}
                                                         </span>
@@ -746,7 +722,7 @@
 
                                                                 @if(isset($product->description->calories))
                                                                     <li>
-                                                                        <strong>Calories:</strong>
+                                                                        <strong>Kalorie:</strong>
                                                                         <span>
                                                             {{$product->description->calories}}
                                                         </span>
@@ -758,11 +734,11 @@
                                                             <ul>
 
                                                                 <li>
-                                                                    <label for="valueQuantity">max 99sztuk:</label>
+                                                                    <label for="valueQuantity_{{ $product->id }}">max 99sztuk:</label>
                                                                     <div class="cart-plus-minus m-auto">
-                                                                        <div class="dec qtybutton" onclick="decrement()">-</div>
-                                                                        <input type="number" value="1" name="valueQuantity" id="valueQuantity" class="cart-plus-minus-box cart_quantity_input">
-                                                                        <div class="inc qtybutton" onclick="increment()">+</div>
+                                                                        <div class="dec qtybutton" onclick="decrement({{ $product->id }}">-</div>
+                                                                        <input type="number" value="1" name="valueQuantity" id="valueQuantity_{{ $product->id }}" class="cart-plus-minus-box cart_quantity_input">
+                                                                        <div class="inc qtybutton" onclick="increment({{ $product->id }})">+</div>
                                                                     </div>
                                                                 </li>
 
@@ -771,7 +747,7 @@
                                                                 <li>
                                                                     <a href="" title="Add to Cart" class="theme-btn-1 btn btn-effect-1 add-to-cart-value  {{$product->status->isSoldOut() ? 'disabled-icon' : ''}} {{$product->status->isSoldOut() ? 'disabled-link' : ''}}" data-id="{{$product->id}}">
                                                                         <i class="fas fa-shopping-cart"></i>
-                                                                        <span>ADD TO CART</span>
+                                                                        <span>DODAJ DO KOSZYKA</span>
                                                                     </a>
                                                                 </li>
                                                             </ul>
@@ -878,16 +854,17 @@
 
 
     <script>
-        function increment() {
-            var inputElement = document.getElementById('valueQuantity');
+        function increment(productId) {
+            var inputElement = document.getElementById("valueQuantity_" + productId);
             var currentValue = parseInt(inputElement.value, 10);
 
             if (currentValue < 99) {
                 inputElement.value = currentValue + 1;
             }
         }
-        function decrement() {
-            var inputElement = document.getElementById('valueQuantity');
+
+        function decrement(productId) {
+            var inputElement = document.getElementById("valueQuantity_" + productId);
             var currentValue = parseInt(inputElement.value, 10);
 
             if (currentValue > 1) {

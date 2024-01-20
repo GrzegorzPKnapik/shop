@@ -17,6 +17,7 @@ class Shopping_list extends Model
     protected $fillable = [
         'title',
         'total',
+        'notepad',
         'mode',
         'status',
         'active',

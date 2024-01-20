@@ -10,13 +10,13 @@
                 <div class="col-lg-12">
                     <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                         <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">Shopping lists</h6>
-                            <h1 class="section-title white-color">Shopping lists</h1>
+                            <h6 class="section-subtitle ltn__secondary-color">// witamy w naszym sklepie</h6>
+                            <h1 class="section-title white-color">Listy zakupów</h1>
                         </div>
                         <div class="ltn__breadcrumb-list">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li>Shopping lists</li>
+                                <li><a href="index.html">Start</a></li>
+                                <li>Listy zakupów</li>
                             </ul>
                         </div>
                     </div>
@@ -33,13 +33,13 @@
                 <table class="table text-center table-sm">
                     <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Newest order number</th>
-                        <th>Shopping list number</th>
-                        <th>Update date</th>
-                        <th>Price</th>
-                        <th>Active</th>
-                        <th>Action</th>
+                        <th>Tytuł</th>
+                        <th>Numer najnowszego zamówienia</th>
+                        <th>Numer listy zakupów</th>
+                        <th>Data aktualizacji</th>
+                        <th>Cena</th>
+                        <th>Aktywna</th>
+                        <th>Akcje</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -60,10 +60,10 @@
                             <td class="cart-product-name">#{{$item->id}}</td>
                             <td class="cart-product-name">{{$item->updated_at}}</td>
 
-                            <td class="cart-product-name">${{$item->total}}</td>
+                            <td class="cart-product-name">{{ number_format($item->total, 2, ',', ' ') }} zł</td>
                             <td class="cart-product-name">
                                 @if($item->active==true)
-                                    {{__('YES')}}
+                                    {{__('TAK')}}
                                 @endif
                             </td>
                             <td>

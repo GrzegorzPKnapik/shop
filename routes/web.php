@@ -126,6 +126,9 @@ Route::group(['middleware' => 'cart'], function (){
         Route::get('/shopping_list/save/{shopping_list}', [ShoppingListController::class, 'save'])->name('shoppingList.save');
         Route::get('/shopping_list/active/{shopping_list}', [ShoppingListController::class, 'active'])->name('shoppingList.active');
 
+        Route::post('/shopping_list/saveNotepad/{shopping_list}', [ShoppingListController::class, 'saveNotepad'])->name('shoppingList.saveNotepad');
+
+
 
 
 

@@ -17,6 +17,68 @@
             opacity: 0.5;
         }
 
+        @import url(https://fonts.googleapis.com/css?family=Roboto);
+        @import url(https://fonts.googleapis.com/css?family=Handlee);
+
+
+        .paper {
+            position: relative;
+            width: 90%;
+            max-width: 200px;
+            min-width: 400px;
+            height: 480px;
+            margin-right: auto;
+            background: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.3);
+            overflow: hidden;
+        }
+        .paper:before {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: 0;
+            width: 60px;
+            background: radial-gradient(#575450 6px, transparent 7px) repeat-y;
+            background-size: 30px 30px;
+            border-right: 3px solid #d3878b;
+            box-sizing: border-box;
+        }
+
+        .paper-content {
+            position: absolute;
+            top: 30px; right: 0; bottom: 30px; left: 60px;
+            background: linear-gradient(transparent, transparent 28px, #91D1D3 28px);
+            background-size: 30px 30px;
+        }
+
+        .paper-content textarea {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            max-height: 100%;
+            line-height: 30px;
+            padding: 0 10px;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: #3e83ea;
+            font-family: 'Handlee', cursive;
+            font-weight: bold;
+            font-size: 15px;
+            box-sizing: border-box;
+            z-index: 1;
+        }
+
+        .note-label {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #575450;
+        }
+
     </style>
     <body>
 
@@ -35,13 +97,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">// Welcome to our company</h6>
-                                <h1 class="section-title white-color">Shopping list preview</h1>
+                                <h6 class="section-subtitle ltn__secondary-color"></h6>
+                                <h1 class="section-title white-color">Podgląd listy zakupów</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Shopping list</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Podgląd listy zakupów</li>
                                 </ul>
                             </div>
                         </div>
@@ -63,7 +125,7 @@
                                     <div class="col-lg-4">
                                         <div class="ltn__tab-menu-list mb-50">
                                             <div class="nav">
-                                                <a class="active show" data-bs-toggle="tab">Shopping list<i
+                                                <a class="active show" data-bs-toggle="tab">Lista zakupów<i
                                                         class="fas fa-file-alt"></i></a>
                                             </div>
                                         </div>
@@ -80,7 +142,7 @@
 
                                                                 <div id="refreshTitle">
                                                                 <p class="text-center">
-                                                                    <label>Title:</label>
+                                                                    <label>Tytuł:</label>
                                                                     <h1 class="text-center">{{$shopping_list->title}}
                                                                         @if(\PHPUnit\Framework\isNull($shopping_list->orders))
                                                                             <span style="font-size: smaller;">
@@ -97,7 +159,7 @@
 
                                                                 <p class="text-center">
                                                             @forelse($shopping_list->orders as $order)
-                                                                    <label>Last order ID:</label>
+                                                                    <label>Ostatni numer zamówienia:</label>
                                                                     <h1 class="text-center">#{{$order->id}}</h1>
                                                                     @empty
 
@@ -184,15 +246,15 @@
 
 
                                                             <table class="align-middle table text-center caption-top table-sm">
-                                                                <caption>Products</caption>
+                                                                <caption>Produkty</caption>
                                                                 <thead>
                                                                 <tr>
-                                                                    <th>Number</th>
-                                                                    <th>Image</th>
-                                                                    <th>Name</th>
-                                                                    <th>Price</th>
-                                                                    <th>Quantity</th>
-                                                                    <th>SubTotal</th>
+                                                                    <th>Numer</th>
+                                                                    <th>Zdjęcie</th>
+                                                                    <th>Nazwa</th>
+                                                                    <th>Cena</th>
+                                                                    <th>Ilość</th>
+                                                                    <th>Suma częściowa</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -203,18 +265,23 @@
                                                                                 <a href="{{route('shop.product', $item->product->id)}}"><img class="{{!$item->product->status->isEnable() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
                                                                             </td>
                                                                             <td class="cart-product-name">{{$item->product->name}}</td>
-                                                                            <td class="cart-product-name">${{$item->product->price}}</td>
+                                                                            <td class="cart-product-name">{{ number_format($item->product->price, 2, ',', ' ') }} zł</td>
                                                                             <td class="cart-product-name">x{{$item->quantity}}</td>
-                                                                            <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                                                            <td class="cart-product-subtotal">{{ number_format($item->sub_total, 2, ',', ' ') }} zł</td>
                                                                         </tr>
                                                                     @endforeach
                                                                 </tbody>
                                                             </table>
 
+                                                            <div class="mb-50"></div>
 
 
-
-
+                                                            <div class="paper">
+                                                                <div class="note-label">Notatnik</div>
+                                                                <div class="paper-content">
+                                                                    <textarea id="notepadTextarea" data-id="{{$shopping_list->id}}" spellcheck="false" autofocus placeholder="Wpisz swoje notatki odnośnie zakupów">{{$shopping_list->notepad}}</textarea>
+                                                                </div>
+                                                            </div>
 
 
                                                             <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
@@ -303,17 +370,17 @@
                                                                 <br>
 
                                                             <div class="shoping-cart-total mt-50">
-                                                                <h4>Cart Totals</h4>
+                                                                <h4>Podsumownaie</h4>
                                                                 <table class="table text-center table-sm">
                                                                     <tbody>
                                                                     <tr>
                                                                         <td>Vat</td>
-                                                                        <td>$00.00</td>
+                                                                        <td>00,00</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td><strong>Order Total</strong></td>
-                                                                        <td><strong>$
-                                                                                    {{$shopping_list->total}}
+                                                                        <td><strong>Kwota</strong></td>
+                                                                        <td><strong>
+                                                                                    {{ number_format($shopping_list->total, 2, ',', ' ') }} zł
                                                                             </strong></td>
                                                                     </tr>
                                                                     </tbody>
@@ -350,10 +417,9 @@
 
                                                         </div>
 
-                                                        Moźliwość nanoszenia zmian i pracowania z listą zakupów
                                                         @if(!$shopping_list->status->isStop())
                                                             <div class="btn-wrapper">
-                                                                <a href="{{ route('shoppingList.upload', $shopping_list->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Załaduj listę zakupów do dalszej edycji') }}</a>
+                                                                <a href="{{ route('shoppingList.upload', $shopping_list->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Edytuj zawartość liste zakupów') }}</a>
                                                             </div>
                                                         @else
                                                             <div class="btn-wrapper">
@@ -365,7 +431,6 @@
 
 
                                                         <br>
-                                                        Tylko kopiuje produkty do koszyka i pracujemy jakby nie istniała lista zakupów, tworzy nowy koszyk w bazie
                                                         <div class="btn-wrapper">
                                                             <a href="{{ route('shoppingList.copyToCart', $shopping_list->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Skopiuj zawartość listy zakupów do koszyka') }}</a>
                                                         </div>

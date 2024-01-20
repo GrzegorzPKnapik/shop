@@ -5,19 +5,19 @@
     <div class="body-wrapper">
 
         <!-- BREADCRUMB AREA START -->
-        <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="{{ asset('img/bg/9.jpg') }}">
+        <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image" data-bg="{{ asset('img/bg_used/8.jpg') }}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">Edycja roli użytkownika</h6>
+                                <h6 class="section-subtitle ltn__secondary-color">// witaj w naszym sklepie</h6>
                                 <h1 class="section-title white-color">Edycja roli</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>Rola</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Edycja roli</li>
                                 </ul>
                             </div>
                         </div>
@@ -30,16 +30,6 @@
         <!-- LOGIN AREA START -->
         <div class="ltn__login-area pb-65">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title-area text-center">
-                            <h1 class="section-title">Sign In <br>To  Your Account</h1>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-                                Sit aliquid,  Non distinctio vel iste.</p>
-                        </div>
-                    </div>
-                </div>
-
 
                 <div class="row">
                     <div class="col-lg-6">
@@ -76,16 +66,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="account-create text-center pt-50">
-                            <h4>DON'T HAVE AN ACCOUNT?</h4>
-                            <p>Add items to your wishlistget personalised recommendations <br>
-                                check out more quickly track your orders register</p>
-                            <div class="btn-wrapper">
-                                <a href="{{ route('register') }}" class="theme-btn-1 btn black-btn">{{ __('Rejestracja') }}</a>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

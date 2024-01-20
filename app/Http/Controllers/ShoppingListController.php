@@ -692,6 +692,13 @@ class ShoppingListController extends Controller
         $copiedOrder->save();
     }*/
 
+
+    public function saveNotepad(Shopping_list $shopping_list, Request $request)
+    {
+        $shopping_list->notepad = $request->notepad;
+        $shopping_list->save();
+    }
+
     private function endDate($date)
     {
         $end_date = date('Y-m-d', strtotime($date . ' -1 day'));

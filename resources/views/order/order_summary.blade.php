@@ -15,13 +15,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">//  Welcome to our company</h6>
-                                <h1 class="section-title white-color">Order summary</h1>
+                                <h6 class="section-subtitle ltn__secondary-color"></h6>
+                                <h1 class="section-title white-color">Podsumowanie zamówienia</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a>Home</a></li>
-                                    <li>Order summary</li>
+                                    <li><a>Start</a></li>
+                                    <li>Podsumowanie zamówienia</li>
                                 </ul>
                             </div>
                         </div>
@@ -38,9 +38,9 @@
                     <div class="col-lg-8 offset-lg-2">
                         <div class="account-login-inner section-bg-1">
                             <form action="#" class="ltn__form-box contact-form-box">
-                                <p class="text-center"> To track your order please enter your Order ID in the box below and press the "Track Order" button. This was given to you on your receipt and in the confirmation email you should have received. </p>
+                                <p class="text-center"></p>
                                     <p class="text-center">
-                                    <label>Order ID:</label>
+                                    <label>Numer zamówienia:</label>
                                     <h1 class="text-center">#{{$order->id}}</h1>
                                  <br>
                                     </p>
@@ -49,12 +49,12 @@
                                 <table class="table text-center">
                                     <thead>
                                     <tr>
-                                        <th>Number</th>
-                                        <th>Image</th>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>SubTotal</th>
+                                        <th>Numer</th>
+                                        <th>Zdjęcie</th>
+                                        <th>Nazwa</th>
+                                        <th>Cena</th>
+                                        <th>Ilość</th>
+                                        <th>Suma częściowa</th>
                                     </tr>
                                     </thead>
 
@@ -72,9 +72,9 @@
                                                     <h4><a>{{$item->product->name}}</a></h4>
                                                 </td>
 
-                                                <td class="cart-product-subtotal">${{$item->product->price}}</td>
+                                                <td class="cart-product-subtotal">{{ number_format($item->product->price, 2, ',', ' ') }} zł</td>
                                                 <td class="cart-product-subtotal">x{{$item->quantity}}</td>
-                                                <td class="cart-product-subtotal">${{$item->sub_total}}</td>
+                                                <td class="cart-product-subtotal">{{ number_format($item->sub_total, 2, ',', ' ') }} zł</td>
                                             </tr>
                                         @endforeach
 
@@ -90,7 +90,7 @@
                                             {{ date('Y-m-d', strtotime($order->shopping_list->delivery_date)) }}
                                 </p>
 
-                                    <td>Address:</td>
+                                    <td>Adres:</td>
                                     <p><strong>{{$order->shopping_list->address->name}} {{{$order->shopping_list->address->surname}}}</strong></p>
                                     <p>{{$order->shopping_list->address->city}}, {{$order->shopping_list->address->street}}<br>
                                         {{$order->shopping_list->address->zip_code}}, {{$order->shopping_list->address->voivodeship}}</p>
@@ -102,29 +102,26 @@
                                 </p>
 
                                 <div class="shoping-cart-total mt-0 w-25">
-                                    <h4>Order total</h4>
+                                    <h4>Podsumowanie</h4>
                                 <table class="table">
                                     <tbody>
                                     <tr>
-                                        <td>Vat</td>
-                                        <td>$00.00</td>
+                                        <td>Vattt</td>
+                                        <td>00,00 zł</td>
                                     </tr>
                                     <tr>
-                                        <td>Order Total</td>
-                                        <td><strong>$
-                                                    {{$order->shopping_list->total}}
+                                        <td>Kwota</td>
+                                        <td><strong>
+                                                {{ number_format($order->shopping_list->total, 2, ',', ' ') }} zł
                                             </strong></td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 </div>
 
+                                <div class="mt-150"></div>
 
 
-                                <input type="text" name="email" placeholder="Email you used during checkout.">
-                                <div class="btn-wrapper mt-0 text-center">
-                                    <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Track Order</button>
-                                </div>
                             </form>
 
 

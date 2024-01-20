@@ -74,8 +74,8 @@
                     <div class="col-md-7">
                         <div class="ltn__top-bar-menu">
                             <ul>
-                                <li><a href="locations.html"><i class="icon-placeholder"></i> 15/A, Nest Tower, NYC</a></li>
-                                <li><a href="mailto:info@webmail.com?Subject=Flower%20greetings%20to%20you"><i class="icon-mail"></i> info@webmail.com</a></li>
+                                <li><a href="locations.html"><i class="icon-placeholder"></i> 15A, 3 Maja, Katowice</a></li>
+                                <li><a href="mailto:info@webmail.com?Subject=Flower%20greetings%20to%20you"><i class="icon-mail"></i> groceryshop467@gmail.com</a></li>
                             </ul>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                     <div class="col">
                         <div class="site-logo-wrap">
                             <div class="site-logo">
-                                <a href="/"><img src="{{asset('img/logo.png')}}" alt="Logo"></a>
+                                <a href="/"><img src="{{asset('img/logo_used.png')}}" alt="Logo"></a>
                             </div>
                         </div>
                     </div>
@@ -140,8 +140,8 @@
                             <nav>
                                 <div class="ltn__main-menu">
                                     <ul>
-                                        <li><a href="/">{{__('Home') }}</a></li>
-                                        <li><a href="{{ route('shop.index') }}">{{__('Shop site') }}</a></li>
+                                        <li><a href="/">{{__('shop.nav.home') }}</a></li>
+                                        <li><a href="{{ route('shop.index') }}">{{__('shop.nav.shop_site') }}</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -177,10 +177,10 @@
                                         @guest
 
                                             @if (Route::has('login'))
-                                                <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                                                <li><a href="{{ route('login') }}">{{ __('shop.nav.login') }}</a></li>
                                             @endif
                                             @if (Route::has('register'))
-                                                <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                                                <li><a href="{{ route('register') }}">{{ __('shop.nav.register') }}</a></li>
                                             @endif
 
                                         @else
@@ -190,7 +190,7 @@
                                                 <a href="{{ route('logout') }}"
                                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                                    {{ __('Logout') }}
+                                                    {{ __('shop.nav.logout') }}
                                                 </a></li>
 
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -200,15 +200,15 @@
 
                                         @endguest
                                         @can('isEmployee')
-                                            <li><a href="{{ route('employeePanel.index') }}">{{ __('Employee panel') }}</a></li>
+                                            <li><a href="{{ route('employeePanel.index') }}">{{ __('shop.nav.employee_panel') }}</a></li>
                                         @endcan
 
                                         @can('isAdmin')
-                                            <li><a href="{{ route('adminPanel.index') }}">{{ __('Admin panel') }}</a></li>
+                                            <li><a href="{{ route('adminPanel.index') }}">{{ __('shop.nav.admin_panel') }}</a></li>
                                         @endcan
 
                                         @auth
-                                        <li><a href="{{ route('account.index') }}">{{ __('My Account') }}</a></li>
+                                        <li><a href="{{ route('account.index') }}">{{ __('shop.nav.my_account') }}</a></li>
                                         @endauth
 
 
@@ -256,7 +256,7 @@
     <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
         <div class="ltn__utilize-menu-inner ltn__scrollbar">
             <div class="ltn__utilize-menu-head">
-                <span class="ltn__utilize-menu-title">Cart</span>
+                <span class="ltn__utilize-menu-title">Koszyk</span>
                 <button class="ltn__utilize-close">×</button>
             </div>
             <div id="refresh">
@@ -270,7 +270,7 @@
                                 </div>
                                 <div class="mini-cart-info">
                                     <h6><a href="#">{{$item->product->name}}</a></h6>
-                                    <span class="mini-cart-quantity">{{$item->quantity}} x ${{$item->product->price}}</span>
+                                    <span class="mini-cart-quantity">{{$item->quantity}} x {{ number_format($item->product->price, 2, ',', ' ') }} zł</span>
                                 </div>
                             </div>
 
@@ -288,16 +288,16 @@
                 <div class="mini-cart-footer">
 
                     <div class="mini-cart-sub-total">
-                        <h5>Total: <span>$
+                        <h5>Kwota: <span>
 
-                            {{$cart->total}}</span></h5>
+                            {{ number_format($cart->total, 2, ',', ' ') }} zł</span></h5>
 
                     </div>
 
                     <div class="btn-wrapper">
-                        <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                        <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">Koszyk</a>
                         @if($cart->mode!='shopping_list')
-                        <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                        <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Kasa</a>
                         @endif
                     </div>
 
@@ -315,7 +315,6 @@
                         <a href="{{ route('shoppingList.save', $cart->id) }}" class="theme-btn-2 btn btn-effect-2">{{ __('Zakończ edycje listy zakupów') }}</a>
                     </div>
                     @endif
-                    <p>Free Shipping on All Orders Over $100!</p>
                     @endif
                 </div>
 
@@ -338,11 +337,12 @@
                         <div class="footer-widget footer-about-widget">
                             <div class="footer-logo">
                                 <div class="site-logo">
-                                    <img src="{{asset('img/logo-2.png')}}" alt="Logo">
+                                    <img src="{{asset('img/logo1.png')}}" alt="Logo">
 Z
                                 </div>
                             </div>
-                            <p>Lorem Ipsum is simply dummy text of the and typesetting industry. Lorem Ipsum is dummy text of the printing.</p>
+                            <p>Nasza pasja to dostarczanie najwyższej jakości produktów spożywczych prosto pod Twoje drzwi, oszczędzając twój cenny czas.</p>
+
                             <div class="footer-address">
                                 <ul>
                                     <li>
@@ -350,7 +350,7 @@ Z
                                             <i class="icon-placeholder"></i>
                                         </div>
                                         <div class="footer-address-info">
-                                            <p>Brooklyn, New York, United States</p>
+                                            <p>Katowice, Polska</p>
                                         </div>
                                     </li>
                                     <li>
@@ -366,7 +366,8 @@ Z
                                             <i class="icon-mail"></i>
                                         </div>
                                         <div class="footer-address-info">
-                                            <p><a >example@example.com</a></p>
+                                            <p><a>
+                                                    groceryshop467@gmail.com</a></p>
                                         </div>
                                     </li>
                                 </ul>
@@ -383,38 +384,29 @@ Z
                     </div>
                     <div class="col-xl-2 col-md-6 col-sm-6 col-12">
                         <div class="footer-widget footer-menu-widget clearfix">
-                            <h4 class="footer-title">Company</h4>
+                            <h4 class="footer-title">Firma</h4>
                             <div class="footer-menu">
-                                <ul>
-
-                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-6 col-sm-6 col-12">
                         <div class="footer-widget footer-menu-widget clearfix">
-                            <h4 class="footer-title">Services.</h4>
+                            <h4 class="footer-title">Usłaugi</h4>
                             <div class="footer-menu">
-                                <ul>
-
-                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-6 col-sm-6 col-12">
                         <div class="footer-widget footer-menu-widget clearfix">
-                            <h4 class="footer-title">Customer Care</h4>
+                            <h4 class="footer-title">W trosce o klienta</h4>
                             <div class="footer-menu">
-                                <ul>
-
-                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-6 col-sm-12 col-12">
                         <div class="footer-widget footer-newsletter-widget">
                             <h4 class="footer-title">Newsletter</h4>
-                            <p>Subscribe to our weekly Newsletter and receive updates via email.</p>
+                            <p>Zapisz się do naszego cotygodniowego Biuletynu i otrzymuj powiadomienia o nowościach drogą mailową.</p>
                             <div class="footer-newsletter">
                                 <div id="mc_embed_signup">
                                     <form action="https://gmail.us5.list-manage.com/subscribe/post?u=dde0a42ff09e8d43cad40dc82&amp;id=72d274d15d" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
@@ -436,7 +428,7 @@ Z
                                     </form>
                                 </div>
                             </div>
-                            <h5 class="mt-30">We Accept</h5>
+                            <h5 class="mt-30">Akceptujemy</h5>
                             <img src="{{asset('img/icons/payment-4.png')}}" alt="Payment Image">
                         </div>
                     </div>
@@ -448,15 +440,15 @@ Z
                 <div class="row">
                     <div class="col-md-6 col-12">
                         <div class="ltn__copyright-design clearfix">
-                            <p>All Rights Reserved @ Company <span class="current-year"></span></p>
+                            <p>Wszelkie prawa zastrzeżone @ Company <span class="current-year"></span></p>
                         </div>
                     </div>
                     <div class="col-md-6 col-12 align-self-center">
                         <div class="ltn__copyright-menu text-right text-end">
                             <ul>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Claim</a></li>
-                                <li><a href="#">Privacy & Policy</a></li>
+                                <li><a href="#">Regulamin</a></li>
+                                <li><a href="#">Reklamacje</a></li>
+                                <li><a href="#">Polityka prywatności</a></li>
                             </ul>
                         </div>
                     </div>

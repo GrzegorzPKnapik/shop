@@ -21,13 +21,13 @@
                     <div class="col-lg-12">
                         <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
                             <div class="section-title-area ltn__section-title-2">
-                                <h6 class="section-subtitle ltn__secondary-color">// Welcome to our company</h6>
-                                <h1 class="section-title white-color">My Account</h1>
+                                <h6 class="section-subtitle ltn__secondary-color">// Witamy w naszym sklepie</h6>
+                                <h1 class="section-title white-color">Panel pracownika</h1>
                             </div>
                             <div class="ltn__breadcrumb-list">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li>My Account</li>
+                                    <li><a href="index.html">Start</a></li>
+                                    <li>Panel pracownika</li>
                                 </ul>
                             </div>
                         </div>
@@ -51,12 +51,12 @@
                                             <div class="nav">
                                                 <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dashboard
                                                     <i class="fas fa-home"></i></a>
-                                                <a href="{{ url(route('user.index')) }}">Users <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('order.index')) }}">Orders <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('shoppingList.index')) }}">Shopping lists <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('product.index')) }}">Products <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('producer.index')) }}">Producers <i class="fas fa-file-alt"></i></a>
-                                                <a href="{{ url(route('category.index')) }}">Categories <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('user.index')) }}">Użytkownicy <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('order.index')) }}">Zamówienia <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('shoppingList.index')) }}">Listy zakupów <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('product.index')) }}">Produkty <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('producer.index')) }}">Producenci <i class="fas fa-file-alt"></i></a>
+                                                <a href="{{ url(route('category.index')) }}">Kategorie <i class="fas fa-file-alt"></i></a>
 
 
 
@@ -74,13 +74,15 @@
                                         <div class="tab-content">
                                             <div class="tab-pane fade active show" id="liton_tab_1_1">
                                                 <div class="ltn__myaccount-tab-content-inner">
-                                                    <p>Hello <strong>
-                                                                {{ Auth::user()->name }}
-                                                            </strong> (not <strong>UserName</strong>?
-                                                        <small><a href="login-register.html">Log out</a></small> )</p>
-                                                    <p>From your account dashboard you can view your
-                                                        <span>recent orders</span>, manage your <span>shipping and billing addresses</span>,
-                                                        and <span>edit your password and account details</span>.</p>
+                                                    <p>Witaj <strong>
+                                                            {{ Auth::user()->name }}
+                                                        </strong> (To nie twoje konto <strong>{{ Auth::user()->name }}
+                                                        </strong>?
+                                                        <small><a href="{{ route('logout') }}">Wyloguj się</a></small> )</p>
+                                                    <p>Panel pracownika umożliwia dostęp do
+                                                        <span>zamówień</span>,  <span>użytkowników</span>, <span>list zakupów</span>, <span>produktów</span>,
+                                                        <span>producentów</span>, <span>kategori</span>
+                                                        .</p>
                                                 </div>
                                             </div>
 
@@ -96,68 +98,7 @@
         </div>
         <!-- WISHLIST AREA START -->
 
-        <!-- FEATURE AREA START ( Feature - 3) -->
-        <div class="ltn__feature-area before-bg-bottom-2 mb--30--- plr--5">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ltn__feature-item-box-wrap ltn__border-between-column white-bg">
-                            <div class="row">
-                                <div class="col-xl-3 col-md-6 col-12">
-                                    <div class="ltn__feature-item ltn__feature-item-8">
-                                        <div class="ltn__feature-icon">
-                                            <img src="img/icons/icon-img/11.png" alt="#">
-                                        </div>
-                                        <div class="ltn__feature-info">
-                                            <h4>Curated Products</h4>
-                                            <p>Provide Curated Products for
-                                                all product over $100</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 col-12">
-                                    <div class="ltn__feature-item ltn__feature-item-8">
-                                        <div class="ltn__feature-icon">
-                                            <img src="img/icons/icon-img/12.png" alt="#">
-                                        </div>
-                                        <div class="ltn__feature-info">
-                                            <h4>Handmade</h4>
-                                            <p>We ensure the product quality
-                                                that is our main goal</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 col-12">
-                                    <div class="ltn__feature-item ltn__feature-item-8">
-                                        <div class="ltn__feature-icon">
-                                            <img src="img/icons/icon-img/13.png" alt="#">
-                                        </div>
-                                        <div class="ltn__feature-info">
-                                            <h4>Natural Food</h4>
-                                            <p>Return product within 3 days
-                                                for any product you buy</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 col-12">
-                                    <div class="ltn__feature-item ltn__feature-item-8">
-                                        <div class="ltn__feature-icon">
-                                            <img src="img/icons/icon-img/14.png" alt="#">
-                                        </div>
-                                        <div class="ltn__feature-info">
-                                            <h4>Free home delivery</h4>
-                                            <p>We ensure the product quality
-                                                that you can trust easily</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- FEATURE AREA END -->
+
 
     </div>
     <!-- Body main wrapper end -->
