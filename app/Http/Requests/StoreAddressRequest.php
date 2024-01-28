@@ -28,7 +28,7 @@ class StoreAddressRequest extends FormRequest
             'city'=>'required|alpha',
             'street'=>'required',
             'zip_code' => 'required|regex:/^\d{2}-\d{3}$/',
-            'voivodeship'=>'required',
+            'voivodeship'=>'required|alpha',
             'phone_number' => 'required|numeric|digits:9',
         ];
     }

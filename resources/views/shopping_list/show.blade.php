@@ -25,7 +25,7 @@
             position: relative;
             width: 90%;
             max-width: 200px;
-            min-width: 400px;
+            min-width: 328px;
             height: 480px;
             margin-right: auto;
             background: #fafafa;
@@ -38,9 +38,9 @@
             position: absolute;
             top: 0; bottom: 0; left: 0;
             width: 60px;
-            background: radial-gradient(#575450 6px, transparent 7px) repeat-y;
+            background: radial-gradient(#b7b6b1 6px, transparent 7px) repeat-y;
             background-size: 30px 30px;
-            border-right: 3px solid #d3878b;
+            border-right: 3px solid #f1a1a6;
             box-sizing: border-box;
         }
 
@@ -61,7 +61,7 @@
             border: 0;
             outline: 0;
             background: transparent;
-            color: #3e83ea;
+            color: #69a3fc;
             font-family: 'Handlee', cursive;
             font-weight: bold;
             font-size: 15px;
@@ -120,6 +120,7 @@
                     <div class="col-lg-12">
                         <!-- PRODUCT TAB AREA START -->
                         <div class="ltn__product-tab-area">
+
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -128,33 +129,41 @@
                                                 <a class="active show" data-bs-toggle="tab">Lista zakupów<i
                                                         class="fas fa-file-alt"></i></a>
                                             </div>
+                                            <div class="mb-lg-3"></div>
+                                            <div class="paper">
+                                                <div class="note-label">Notatnik</div>
+                                                <div class="paper-content">
+                                                    <textarea id="notepadTextarea" data-id="{{$shopping_list->id}}" spellcheck="false" autofocus placeholder="Wpisz swoje notatki odnośnie zakupów">{{$shopping_list->notepad}}</textarea>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
+
 
                                     <div class="col-lg-8">
                                         <div class="tab-content">
 
                                             <div class="ltn__myaccount-tab-content-inner">
-                                                <p>Lista zakupów</p>
-                                                <div class="ltn__form-box">
-                                                    <div class="ltn__myaccount-tab-content-inner">
-                                                        <div class="table-responsive">
+                                                <div style="background-color: #7fb401; font-weight: bold" class="text-center">Tytuł:
 
-                                                                <div id="refreshTitle">
-                                                                <p class="text-center">
-                                                                    <label>Tytuł:</label>
-                                                                    <h1 class="text-center">{{$shopping_list->title}}
-                                                                        @if(\PHPUnit\Framework\isNull($shopping_list->orders))
-                                                                            <span style="font-size: smaller;">
+                                                <div id="refreshTitle">
+
+                                                    <h1 class="text-center">{{$shopping_list->title}}
+                                                        @if(\PHPUnit\Framework\isNull($shopping_list->orders))
+                                                            <span style="font-size: smaller;">
                                                                             <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                             <button class="icon-edit" style="font-size: 1rem;"></button>
                                                                         </a>
                                                                         </span>
-                                                                                @endif
+                                                        @endif
 
-                                                                    </h1>
-                                                                </div>
-
+                                                    </h1>
+                                                </div>
+                                                </div>
+                                                <div class="ltn__form-box">
+                                                    <div class="ltn__myaccount-tab-content-inner">
+                                                        <div class="table-responsive">
 
 
                                                                 <p class="text-center">
@@ -166,75 +175,73 @@
                                                             @endforelse
                                                                 </p>
 
+                                                            <div id="refreshAssignAddress">
+
+                                                                <h4>Adres dostawy: </h4>
+
+                                                                @if($shopping_list->ADDRESSES_id != null && $shopping_list->address != null)
+                                                                    <td>Przypisany adres:</td>
+                                                                    <p><strong>{{$shopping_list->address->name}} {{{$shopping_list->address->surname}}}</strong></p>
+                                                                    <p>{{$shopping_list->address->city}}, {{$shopping_list->address->street}}<br>
+                                                                        {{$shopping_list->address->zip_code}}, {{$shopping_list->address->voivodeship}}</p>
+                                                                    <p>Telefon: {{$shopping_list->address->phone_number}}</p>
+
+                                                                @else
+                                                                    <td>Adres:</td>
+                                                                    Nie przypisano adresu!
+
+                                                                @endif
 
 
-                                                                <div id="refreshAssignAddress">
-
-                                                                    <h4>Adres dostawy: </h4>
-
-                                                                    @if($shopping_list->ADDRESSES_id != null && $shopping_list->address != null)
-                                                                        <td>Przypisany address:</td>
-                                                                        <p><strong>{{$shopping_list->address->name}} {{{$shopping_list->address->surname}}}</strong></p>
-                                                                        <p>{{$shopping_list->address->city}}, {{$shopping_list->address->street}}<br>
-                                                                            {{$shopping_list->address->zip_code}}, {{$shopping_list->address->voivodeship}}</p>
-                                                                        <p>Telefon: {{$shopping_list->address->phone_number}}</p>
-
-                                                                    @else
-                                                                        <td>Address:</td>
-                                                                        Nie przypisano adresu!
-
-                                                                    @endif
-
-
-                                                                    <p>
-                                                                    <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                                Wybierz inny adres
-                                                                            </a></small></h4>
-                                                                    </p>
-                                                                </div>
-                                                                <div class="collapse" id="collapseExample">
-                                                                    <div class="card card-body">
-                                                                        <form id="assignAddress" data-id="{{$shopping_list->id}}" method="POST">
-                                                                            <div id="refreshAddress">
-                                                                                @csrf
-                                                                                @forelse($addresses as $address)
-                                                                                    <div class="form-check">
-                                                                                        <input class="form-check-input" type="radio" value={{$address->id}} name="selectAddress" id="flexRadioDefault2"
-                                                                                               @if($address->selected == true)
-                                                                                                   checked
-                                                                                            @endif
-                                                                                        >
-
-                                                                                        @if($address->selected == true)
-                                                                                            <label class="form-check-label" for="flexRadioDefault2">
-                                                                                                Wybrany jako główny
-                                                                                            </label>
+                                                                <p>
+                                                                <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                            Wybierz inny adres
+                                                                        </a></small></h4>
+                                                                </p>
+                                                            </div>
+                                                            <div class="collapse" id="collapseExample">
+                                                                <div class="card card-body">
+                                                                    <form id="assignAddress" data-id="{{$shopping_list->id}}" method="POST">
+                                                                        <div id="refreshAddress">
+                                                                            @csrf
+                                                                            @forelse($addresses as $address)
+                                                                                <div class="form-check">
+                                                                                    <input class="form-check-input" type="radio" value={{$address->id}} name="selectAddress" id="flexRadioDefault2"
+                                                                                           @if($address->selected == true)
+                                                                                               checked
                                                                                         @endif
+                                                                                    >
 
-                                                                                    </div>
+                                                                                    @if($address->selected == true)
+                                                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                                                            Wybrany jako główny
+                                                                                        </label>
+                                                                                    @endif
 
-                                                                                    <address>
-                                                                                        <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
-                                                                                        <p>{{$address->city}}, {{$address->street}}<br>
-                                                                                            {{$address->zip_code}}, {{$address->voivodeship}}</p>
-                                                                                        <p>Telefon: {{$address->phone_number}}</p>
-                                                                                        _____________________________
-                                                                                    </address>
+                                                                                </div>
+
+                                                                                <address>
+                                                                                    <p><strong>{{$address->name}} {{{$address->surname}}}</strong></p>
+                                                                                    <p>{{$address->city}}, {{$address->street}}<br>
+                                                                                        {{$address->zip_code}}, {{$address->voivodeship}}</p>
+                                                                                    <p>Telefon: {{$address->phone_number}}</p>
+                                                                                    _____________________________
+                                                                                </address>
 
 
-                                                                                @empty
-                                                                                    Brak adresów w książce adresowej
-                                                                                @endforelse
+                                                                            @empty
+                                                                                Brak adresów w książce adresowej
+                                                                            @endforelse
                                                                             @if(!$addresses->isEmpty())
                                                                                 <button class="theme-btn-1 btn btn-effect-1" type="submit">
                                                                                     {{ __('Zatwierdź') }}
                                                                                 </button>
                                                                             @endif
-                                                                            </div>
+                                                                        </div>
 
-                                                                        </form>
-                                                                    </div>
+                                                                    </form>
                                                                 </div>
+                                                            </div>
 
 
 
@@ -243,7 +250,6 @@
                                                                     </a></small></h4>
 
                                                             <br>
-
 
                                                             <table class="align-middle table text-center caption-top table-sm">
                                                                 <caption>Produkty</caption>
@@ -273,15 +279,7 @@
                                                                 </tbody>
                                                             </table>
 
-                                                            <div class="mb-50"></div>
 
-
-                                                            <div class="paper">
-                                                                <div class="note-label">Notatnik</div>
-                                                                <div class="paper-content">
-                                                                    <textarea id="notepadTextarea" data-id="{{$shopping_list->id}}" spellcheck="false" autofocus placeholder="Wpisz swoje notatki odnośnie zakupów">{{$shopping_list->notepad}}</textarea>
-                                                                </div>
-                                                            </div>
 
 
                                                             <h4 class="pt-4 pb-2">Cykliczne dostawy:</h4>
@@ -350,7 +348,7 @@
                                                                     </form>
                                                                     <div id="refreshDayDelete">
                                                                         @if($shopping_list->delivery_date != null)
-                                                                            <h4><small><a href="" class="deleteDay" data-id="{{$shopping_list->id}}"> Usuń adres</a></small>
+                                                                            <h4><small><a href="" class="deleteDay" data-id="{{$shopping_list->id}}"> Usuń date</a></small>
                                                                         @endif
                                                                     </div>
                                                                     <div>
@@ -370,7 +368,7 @@
                                                                 <br>
 
                                                             <div class="shoping-cart-total mt-50">
-                                                                <h4>Podsumownaie</h4>
+                                                                <h4>Podsumowanie</h4>
                                                                 <table class="table text-center table-sm">
                                                                     <tbody>
                                                                     <tr>
@@ -419,7 +417,7 @@
 
                                                         @if(!$shopping_list->status->isStop())
                                                             <div class="btn-wrapper">
-                                                                <a href="{{ route('shoppingList.upload', $shopping_list->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Edytuj zawartość liste zakupów') }}</a>
+                                                                <a href="{{ route('shoppingList.upload', $shopping_list->id) }}"  class="theme-btn-2 btn btn-effect-2">{{ __('Edytuj zawartość listy zakupów') }}</a>
                                                             </div>
                                                         @else
                                                             <div class="btn-wrapper">
@@ -623,7 +621,7 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label>Tytuł:</label>
-                                                        <input id="title" type="text" placeholder="Tytuł" value="{{$shopping_list->title}}"
+                                                        <input id="title" type="text" placeholder="Np: dom, firma, środki czystości, napoje" value="{{$shopping_list->title}}"
                                                                class="form-control  @error('title') is-invalid @enderror"
                                                                name="title"
                                                                required autocomplete="title" autofocus>
@@ -655,7 +653,9 @@
         </div>
     </div>
     </div>
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
+    {!! JsValidator::formRequest('App\Http\Requests\StoreAddressRequest') !!}
 
     </body>
 
