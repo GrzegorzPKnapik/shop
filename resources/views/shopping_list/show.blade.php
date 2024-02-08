@@ -147,33 +147,33 @@
                                             <div class="ltn__myaccount-tab-content-inner">
                                                 <div style="background-color: #7fb401; font-weight: bold" class="text-center">Tytuł:
 
-                                                <div id="refreshTitle">
+                                                    <div id="refreshTitle">
 
-                                                    <h1 class="text-center">{{$shopping_list->title}}
-                                                        @if(\PHPUnit\Framework\isNull($shopping_list->orders))
-                                                            <span style="font-size: smaller;">
+                                                        <h1 class="text-center">{{$shopping_list->title}}
+                                                            @if(\PHPUnit\Framework\isNull($shopping_list->orders))
+                                                                <span style="font-size: smaller;">
                                                                             <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                             <button class="icon-edit" style="font-size: 1rem;"></button>
                                                                         </a>
                                                                         </span>
-                                                        @endif
+                                                            @endif
 
-                                                    </h1>
-                                                </div>
+                                                        </h1>
+                                                    </div>
                                                 </div>
                                                 <div class="ltn__form-box">
                                                     <div class="ltn__myaccount-tab-content-inner">
                                                         <div class="table-responsive">
 
 
-                                                                <p class="text-center">
-                                                            @forelse($shopping_list->orders as $order)
+                                                            <p class="text-center">
+                                                                @forelse($shopping_list->orders as $order)
                                                                     <label>Ostatni numer zamówienia:</label>
-                                                                    <h1 class="text-center">#{{$order->id}}</h1>
-                                                                    @empty
+                                                            <h1 class="text-center">#{{$order->id}}</h1>
+                                                            @empty
 
                                                             @endforelse
-                                                                </p>
+                                                            </p>
 
                                                             <div id="refreshAssignAddress">
 
@@ -264,18 +264,18 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach ($shopping_list->shopping_lists_products as $index => $item)
-                                                                        <tr>
-                                                                            <td class="cart-product-name">{{ $index+1}}.</td>
-                                                                            <td class="cart-product-image">
-                                                                                <a href="{{route('shop.product', $item->product->id)}}"><img class="{{!$item->product->status->isEnable() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
-                                                                            </td>
-                                                                            <td class="cart-product-name">{{$item->product->name}}</td>
-                                                                            <td class="cart-product-name">{{ number_format($item->product->price, 2, ',', ' ') }} zł</td>
-                                                                            <td class="cart-product-name">x{{$item->quantity}}</td>
-                                                                            <td class="cart-product-subtotal">{{ number_format($item->sub_total, 2, ',', ' ') }} zł</td>
-                                                                        </tr>
-                                                                    @endforeach
+                                                                @foreach ($shopping_list->shopping_lists_products as $index => $item)
+                                                                    <tr>
+                                                                        <td class="cart-product-name">{{ $index+1}}.</td>
+                                                                        <td class="cart-product-image">
+                                                                            <a href="{{route('shop.product', $item->product->id)}}"><img class="{{!$item->product->status->isEnable() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
+                                                                        </td>
+                                                                        <td class="cart-product-name">{{$item->product->name}}</td>
+                                                                        <td class="cart-product-name">{{ number_format($item->product->price, 2, ',', ' ') }} zł</td>
+                                                                        <td class="cart-product-name">x{{$item->quantity}}</td>
+                                                                        <td class="cart-product-subtotal">{{ number_format($item->sub_total, 2, ',', ' ') }} zł</td>
+                                                                    </tr>
+                                                                @endforeach
                                                                 </tbody>
                                                             </table>
 
@@ -287,22 +287,22 @@
                                                                 <p>
 
 
-                                                                        @if($shopping_list->delivery_date == null)
-                                                                            <label>Brak dodanej daty dostawy </label>
-                                                                        @else
-                                                                            <label>Ustawiony dzień realizacji cyklicznych dostaw:
-                                                                                {{ \Carbon\Carbon::parse($shopping_list->delivery_date)->locale('pl')->isoFormat('dddd') }}
-                                                                            </label>
-                                                                            <br>
-                                                                            <label>Najbliższa data cyklicznej dostawy:
-                                                                                {{ date('Y-m-d', strtotime($shopping_list->delivery_date)) }}
-                                                                            </label>
-                                                                            <br>
-                                                                            <label>Data ostatniej możliwej edycji listy w przypadku złożenia zamówinia:
-                                                                                {{ date('Y-m-d', strtotime($shopping_list->mod_available_date)) }}
-                                                                            </label>
+                                                                    @if($shopping_list->delivery_date == null)
+                                                                        <label>Brak dodanej daty dostawy </label>
+                                                                    @else
+                                                                        <label>Ustawiony dzień realizacji cyklicznych dostaw:
+                                                                            {{ \Carbon\Carbon::parse($shopping_list->delivery_date)->locale('pl')->isoFormat('dddd') }}
+                                                                        </label>
+                                                                        <br>
+                                                                        <label>Najbliższa data cyklicznej dostawy:
+                                                                            {{ date('Y-m-d', strtotime($shopping_list->delivery_date)) }}
+                                                                        </label>
+                                                                        <br>
+                                                                        <label>Data ostatniej możliwej edycji listy w przypadku złożenia zamówinia:
+                                                                            {{ date('Y-m-d', strtotime($shopping_list->mod_available_date)) }}
+                                                                        </label>
 
-                                                                        @endif
+                                                                    @endif
 
                                                                     <br>
                                                                 </p>
@@ -360,30 +360,30 @@
                                                                 </div>
                                                             </div>
                                                             <div id="refreshActive">
-                                                            <h4 class="pt-4 pb-2 mb-0">Status:</h4>
+                                                                <h4 class="pt-4 pb-2 mb-0">Status:</h4>
                                                                 <strong class="">{!! \App\Enums\ShoppingListActive::getActiveText($shopping_list->active) !!}</strong>
 
 
 
                                                                 <br>
 
-                                                            <div class="shoping-cart-total mt-50">
-                                                                <h4>Podsumowanie</h4>
-                                                                <table class="table text-center table-sm">
-                                                                    <tbody>
-                                                                    <tr>
-                                                                        <td>Vat</td>
-                                                                        <td>00,00</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><strong>Kwota</strong></td>
-                                                                        <td><strong>
+                                                                <div class="shoping-cart-total mt-50">
+                                                                    <h4>Podsumowanie</h4>
+                                                                    <table class="table text-center table-sm">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>Vat</td>
+                                                                            <td>00,00</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Kwota</strong></td>
+                                                                            <td><strong>
                                                                                     {{ number_format($shopping_list->total, 2, ',', ' ') }} zł
-                                                                            </strong></td>
-                                                                    </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
+                                                                                </strong></td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
 
 
 
@@ -468,125 +468,125 @@
                                 <div class="row">
                                     <div class="ltn__form-box">
                                         <form id="assignNewAddress" data-id="{{$shopping_list->id}} method="POST">
-                                            <div id="refreshForm">
-                                                @csrf
-                                                <div class="row mb-50">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label>Imie:</label>
-                                                            <input id="name" type="text" placeholder="Imie"
-                                                                   class="form-control @error('name') is-invalid @enderror"
-                                                                   name="name"
-                                                                   required autocomplete="name" autofocus>
-                                                            @error('name')
-                                                            <span class="invalid-feedback" role="alert">
+                                        <div id="refreshForm">
+                                            @csrf
+                                            <div class="row mb-50">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label>Imie:</label>
+                                                        <input id="name" type="text" placeholder="Imie"
+                                                               class="form-control @error('name') is-invalid @enderror"
+                                                               name="name"
+                                                               required autocomplete="name" autofocus>
+                                                        @error('name')
+                                                        <span class="invalid-feedback" role="alert">
                                                                           <strong>{{$message }}</strong>
                                                                              </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label>Nazwisko:</label>
-                                                            <input id="surname" type="text" placeholder="Nazwisko"
-                                                                   class="form-control @error('surname') is-invalid @enderror"
-                                                                   name="surname"
-                                                                   required autocomplete="surname" autofocus>
-                                                            @error('surname')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label>Miasto:</label>
-                                                            <input id="city" type="text" placeholder="Miasto"
-                                                                   class="form-control @error('city') is-invalid @enderror"
-                                                                   name="city" value="{{ old('city') }}"
-                                                                   required autocomplete="city" autofocus>
-                                                            @error('city')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Ulica:</label>
-                                                            <input id="street" type="text" placeholder="Ulica"
-                                                                   class="form-control @error('street') is-invalid @enderror"
-                                                                   name="street" value="{{ old('street') }}"
-                                                                   required autocomplete="street" autofocus>
-                                                            @error('street')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Kod pocztowy:</label>
-                                                            <input id="zip_code" type="text" placeholder="Kod pocztowy"
-                                                                   class="form-control @error('zip_code') is-invalid @enderror"
-                                                                   name="zip_code" value="{{ old('zip_code') }}"
-                                                                   required autocomplete="zip_code" autofocus>
-                                                            @error('zip_code')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Województwo:</label>
-                                                            <input id="voivodeship" type="text" placeholder="Województwo"
-                                                                   class="form-control @error('voivodeship') is-invalid @enderror"
-                                                                   name="voivodeship" value="{{ old('voivodeship') }}"
-                                                                   required autocomplete="voivodeship" autofocus>
-                                                            @error('voivodeship')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <div class="mb-3">
-                                                            <label>Numer telefonu:</label>
-                                                            <input id="phone_number" type="text" placeholder="Numer telefonu"
-                                                                   class="form-control @error('phone_number') is-invalid @enderror"
-                                                                   name="phone_number" value="{{ old('phone_number') }}"
-                                                                   required autocomplete="phone_number" autofocus>
-                                                            @error('phone_number')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                          <strong>{{$message }}</strong>
-                                                                             </span>
-                                                            @enderror
-                                                        </div>
+                                                        @enderror
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label>Nazwisko:</label>
+                                                        <input id="surname" type="text" placeholder="Nazwisko"
+                                                               class="form-control @error('surname') is-invalid @enderror"
+                                                               name="surname"
+                                                               required autocomplete="surname" autofocus>
+                                                        @error('surname')
+                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label>Miasto:</label>
+                                                        <input id="city" type="text" placeholder="Miasto"
+                                                               class="form-control @error('city') is-invalid @enderror"
+                                                               name="city" value="{{ old('city') }}"
+                                                               required autocomplete="city" autofocus>
+                                                        @error('city')
+                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
 
-                                                <div class="btn-wrapper">
-                                                    <button type="submit"
-                                                            class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
-                                                        {{__('Zatwierdź')}}
-                                                    </button>
+                                                    <div class="mb-3">
+                                                        <label>Ulica:</label>
+                                                        <input id="street" type="text" placeholder="Ulica"
+                                                               class="form-control @error('street') is-invalid @enderror"
+                                                               name="street" value="{{ old('street') }}"
+                                                               required autocomplete="street" autofocus>
+                                                        @error('street')
+                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
 
-                                                    <label>
-                                                        <input class="form-check-input" name="checkboxSaveAddres" type="checkbox">
-                                                        <label class="tag-label">Zapisz adres w ksiażce adresów</label>
-                                                    </label>
+                                                    <div class="mb-3">
+                                                        <label>Kod pocztowy:</label>
+                                                        <input id="zip_code" type="text" placeholder="Kod pocztowy"
+                                                               class="form-control @error('zip_code') is-invalid @enderror"
+                                                               name="zip_code" value="{{ old('zip_code') }}"
+                                                               required autocomplete="zip_code" autofocus>
+                                                        @error('zip_code')
+                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <div class="mb-3">
+                                                        <label>Województwo:</label>
+                                                        <input id="voivodeship" type="text" placeholder="Województwo"
+                                                               class="form-control @error('voivodeship') is-invalid @enderror"
+                                                               name="voivodeship" value="{{ old('voivodeship') }}"
+                                                               required autocomplete="voivodeship" autofocus>
+                                                        @error('voivodeship')
+                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <div class="mb-3">
+                                                        <label>Numer telefonu:</label>
+                                                        <input id="phone_number" type="text" placeholder="Numer telefonu"
+                                                               class="form-control @error('phone_number') is-invalid @enderror"
+                                                               name="phone_number" value="{{ old('phone_number') }}"
+                                                               required autocomplete="phone_number" autofocus>
+                                                        @error('phone_number')
+                                                        <span class="invalid-feedback" role="alert">
+                                                                          <strong>{{$message }}</strong>
+                                                                             </span>
+                                                        @enderror
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            <div class="btn-wrapper">
+                                                <button type="submit"
+                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase save-address">
+                                                    {{__('Zatwierdź')}}
+                                                </button>
+
+                                                <label>
+                                                    <input class="form-check-input" name="checkboxSaveAddres" type="checkbox">
+                                                    <label class="tag-label">Zapisz adres w ksiażce adresów</label>
+                                                </label>
+                                            </div>
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
