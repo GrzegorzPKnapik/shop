@@ -70,7 +70,7 @@ class OrderController extends Controller
 
         $order = Order::with(['shopping_list.user', 'shopping_list.address', 'shopping_list.shopping_lists_products.product.image'])->where('id', $order->id)->first();
         //dd($order->shopping_list);
-        return view('order.order_summary', ['items' => $items, 'order' => $order]);
+        return view('order.order_summary', ['order' => $order]);
     }
 
 
@@ -181,7 +181,7 @@ class OrderController extends Controller
 
 
 
-        foreach ($shopping_list->shopping_lists_products as $item_product) {
+        foreach($shopping_list->shopping_lists_products as $item_product) {
 
             if(!$item_product->product->status->isEnable())
             {
@@ -206,6 +206,14 @@ class OrderController extends Controller
         $shopping_list->end_mod_date = null;
         $shopping_list->mod_available_date = null;
         $shopping_list->status = ShoppingListStatus::ORDER;
+
+        $old_cart = Shopping_list::where('status', ShoppingListStatus::CART_DISABLE)->where('mode', ShoppingListMode::NORMAL)->where('USERS_id', $user->id)->first();
+
+        if(isset($old_cart))
+        {
+            $old_cart->status = 'cart';
+            $old_cart->save();
+        }
 
         try {
             $shopping_list->save();

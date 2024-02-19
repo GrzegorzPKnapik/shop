@@ -51,13 +51,13 @@
                                             <div class="nav">
                                                 <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dashboard
                                                     <i class="fas fa-home"></i></a>
-                                                @can('isUser')
+
                                                     <a data-bs-toggle="tab" href="#liton_tab_1_2">Zamówienia <i
                                                             class="fas fa-file-alt"></i></a>
                                                     <a data-bs-toggle="tab" href="#liton_tab_1_7">Listy zakupów<i
                                                             class="fas fa-file-alt"></i></a>
-                                                @endcan
-                                                <a data-bs-toggle="tab" href="#liton_tab_1_4">Adresy <i
+
+                                                <a data-bs-toggle="tab" href="#liton_tab_1_4">Książka adresowa <i
                                                         class="fas fa-map-marker-alt"></i></a>
                                                 <a data-bs-toggle="tab" href="#liton_tab_1_5">Szczegóły konta <i
                                                         class="fas fa-user"></i></a>
@@ -86,7 +86,7 @@
                                                 </div>
                                             </div>
 
-                                            @can('isUser')
+
                                                 <div class="tab-pane fade" id="liton_tab_1_7">
                                                     <div class="ltn__myaccount-tab-content-inner">
                                                         <p>Listy zakupów. Mozliwość włączenia cyklicznych dostaw oraz przechowywania zapisanych koszyków.</p>
@@ -168,7 +168,7 @@
                                                     </div>
                                                 </div>
 
-                                            @endcan
+
 
                                             <div class="tab-pane fade" id="liton_tab_1_4">
                                                 <div class="ltn__myaccount-tab-content-inner">

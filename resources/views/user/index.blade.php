@@ -49,9 +49,11 @@
 
                             <td class="cart-product-name">#{{$user->id}}</td>
                             <td class="cart-product-name">{{$user->role->name}}
-                                <a href="{{route('user.editRole', $user->id)}}" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
-                                    <button class="icon-edit"></button>
-                                </a>
+                                @can('isAdmin')
+                                    <a href="{{route('user.editRole', $user->id)}}" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
+                                        <button class="icon-edit"></button>
+                                    </a>
+                                    @endcan
                             </td>
                             <td class="cart-product-name">{{$user->name}}</td>
                             <td class="cart-product-name">{{$user->surname}}</td>

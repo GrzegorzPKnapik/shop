@@ -35,7 +35,8 @@ class Kernel extends ConsoleKernel
 
             $currentTime = Carbon::now()->format('Y-m-d');
 
-            $shopping_list = Shopping_list::all();
+            //$shopping_list = Shopping_list::all();
+            $shopping_list = Shopping_list::with('shopping_lists_products.product')->get();
             //mozna with order i sprawdzac czy order jest nulem
             //$orders = Order::with('shopping_list')->get();
 
@@ -66,14 +67,8 @@ class Kernel extends ConsoleKernel
                     /*Jeżeli jest wszytko jak nalezy czyli status shopping_list*/
                     if ($end_date == $currentTime) {
                         if ($item->status->isNone()) {
-                            $order = new Order();
-                            $order->status = OrderStatus::IN_PREPARE;
-                            $order->shopping_list()->associate($item);
-                            $order->save();
-                            $item->status = ShoppingListStatus::STOP;
-                            event(new PurchaseSuccesful($order));
-                            $item->save();
 
+                            //problem z aktualizacją confirmed c11.02
                             foreach ($item->shopping_lists_products as $item_product) {
 
                                 if(!$item_product->product->status->isEnable())
@@ -90,6 +85,17 @@ class Kernel extends ConsoleKernel
                                         ]);
                                 }
                             }
+
+
+
+                            $order = new Order();
+                            $order->status = OrderStatus::IN_PREPARE;
+                            $order->shopping_list()->associate($item);
+                            $order->save();
+                            $item->status = ShoppingListStatus::STOP;
+                            $item->save();
+                            event(new PurchaseSuccesful($order));
+
 
 
 
@@ -111,8 +117,8 @@ class Kernel extends ConsoleKernel
 
             }
 
-        })->at('13:57');
-            //})->daily();
+        //})->at('00:17');
+            })->daily();
 
 
 

@@ -264,6 +264,7 @@
                 <div class="mini-cart-product-area ltn__scrollbar ">
                     @if(isset($cart) && isset($items))
                         @foreach($items as $item)
+                            @if($item->product)
                             <div class="mini-cart-item clearfix delete_mem{{$item->PRODUCTS_id}}">
                                 <div class="mini-cart-img">
                                     <a href="{{route('shop.product', $item->PRODUCTS_id)}}"><img class="{{$item->product->status->isSoldOut() ? 'disabled-icon' : ''}}" src="{{asset('storage/' . $item->product->image->name)}}" alt="Zdjęcie"></a>
@@ -274,7 +275,7 @@
                                     <span class="mini-cart-quantity">{{$item->quantity}} x {{ number_format($item->product->price, 2, ',', ' ') }} zł</span>
                                 </div>
                             </div>
-
+                            @endif
 
 
 
@@ -297,7 +298,7 @@
 
                     <div class="btn-wrapper">
                         <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">Koszyk</a>
-                        @if($cart->mode!='shopping_list')
+                        @if(!$cart->mode->isShoppingList())
                         <a href="{{ route('checkout.index') }}" class="theme-btn-2 btn btn-effect-2">Kasa</a>
                         @endif
                     </div>

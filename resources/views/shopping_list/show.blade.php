@@ -151,11 +151,14 @@
 
                                                         <h1 class="text-center">{{$shopping_list->title}}
                                                             @if(\PHPUnit\Framework\isNull($shopping_list->orders))
+                                                                @if(!$shopping_list->status->isStop())
+
                                                                 <span style="font-size: smaller;">
                                                                             <a data-bs-target="#quick_view_edit_title" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                             <button class="icon-edit" style="font-size: 1rem;"></button>
                                                                         </a>
                                                                         </span>
+                                                                @endif
                                                             @endif
 
                                                         </h1>
@@ -194,9 +197,12 @@
 
 
                                                                 <p>
+                                                                @if(!$shopping_list->status->isStop())
+
                                                                 <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                                             Wybierz inny adres
                                                                         </a></small></h4>
+                                                                    @endif
                                                                 </p>
                                                             </div>
                                                             <div class="collapse" id="collapseExample">
@@ -244,10 +250,12 @@
                                                             </div>
 
 
+                                                            @if(!$shopping_list->status->isStop())
 
                                                             <h4><small><a data-bs-target="#quick_view_modal" href="#" data-bs-toggle="modal" role="button" title="Quick View">
                                                                         Wpisz adres dostawy
                                                                     </a></small></h4>
+                                                            @endif
 
                                                             <br>
 
@@ -298,7 +306,7 @@
                                                                             {{ date('Y-m-d', strtotime($shopping_list->delivery_date)) }}
                                                                         </label>
                                                                         <br>
-                                                                        <label>Data ostatniej możliwej edycji listy w przypadku złożenia zamówinia:
+                                                                        <label>Data ostatniej możliwej edycji listy w przypadku aktywacji:
                                                                             {{ date('Y-m-d', strtotime($shopping_list->mod_available_date)) }}
                                                                         </label>
 
@@ -306,6 +314,8 @@
 
                                                                     <br>
                                                                 </p>
+                                                                @if(!$shopping_list->status->isStop())
+
                                                                 @if($shopping_list->delivery_date == null)
                                                                     <h4><small><a data-toggle="collapse" href="#collapseDayPicker" role="button" aria-expanded="false" aria-controls="collapseDayPicker">
                                                                                 Dodaj dzień dostawy
@@ -317,6 +327,8 @@
                                                                             </a></small></h4>
                                                                     </p>
                                                                     @endif
+                                                                    @endif
+
 
                                                                     </a></small></h4>
                                                             </div>

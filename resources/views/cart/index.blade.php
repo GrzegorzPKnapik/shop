@@ -188,7 +188,9 @@
                             </tbody>
                         </table>
                         <div class="btn-wrapper text-right text-end">
+                            @if(!$cart->mode->isShoppingList())
                             <a href="{{ route('checkout.index') }}" class="theme-btn-1 btn btn-effect-1">Przejdź do kasy</a>
+                            @endif
                         </div>
                     </div>
                     @endif
