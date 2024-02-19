@@ -201,6 +201,17 @@ class CartService
         $shopping_list = $this->findShoppingList()->first();
         $this->findShoppingListsProduct($product, $shopping_list)->delete();
         $this->updateTotal($shopping_list);
+
+        $user = Auth::user();
+
+        $old_cart = Shopping_list::where('status', ShoppingListStatus::CART_DISABLE)->where('mode', ShoppingListMode::NORMAL)->where('USERS_id', $user->id)->first();
+
+        if($shopping_list->total == 0 && isset($old_cart))
+        {
+                $old_cart->status = 'cart';
+                $old_cart->save();
+        }
+
     }
 
     /**
