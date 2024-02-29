@@ -144,6 +144,7 @@ $(function() {
                     }),
                     cache: false,
                     success: function(html) {
+
                         //$(".delete_mem" + id).fadeOut('slow');
 
 
@@ -153,13 +154,21 @@ $(function() {
                     }
                 })
                     .done(function (response) {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: response.message,
-                            showConfirmButton: false,
-                            timer: 3500,
-                        })
+
+                        if(response.status == 'error')
+                        {
+                            Swal.fire(response.message, '', 'warning');
+                        }else if(response.status == 'success')
+                        {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: response.message,
+                                showConfirmButton: false,
+                                timer: 3500,
+                            })
+                        }
+
                         //window.location.reload();
                     })
 

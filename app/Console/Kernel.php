@@ -34,21 +34,10 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
 
             $currentTime = Carbon::now()->format('Y-m-d');
-
-            //$shopping_list = Shopping_list::all();
             $shopping_list = Shopping_list::with('shopping_lists_products.product')->get();
-            //mozna with order i sprawdzac czy order jest nulem
-            //$orders = Order::with('shopping_list')->get();
-
-
-
-
             foreach ($shopping_list as $item) {
-
-
                 if ($item->active == ShoppingListActive::TRUE)
                 {
-
                     $order = Order::where('SHOPPING_LISTS_id', $item->id)->first();
                    /* if(isset($order))
                     {*/
@@ -86,8 +75,6 @@ class Kernel extends ConsoleKernel
                                 }
                             }
 
-
-
                             $order = new Order();
                             $order->status = OrderStatus::IN_PREPARE;
                             $order->shopping_list()->associate($item);
@@ -95,10 +82,6 @@ class Kernel extends ConsoleKernel
                             $item->status = ShoppingListStatus::STOP;
                             $item->save();
                             event(new PurchaseSuccesful($order));
-
-
-
-
                         }
 
                         /*Jeżeli satus o cart czyli nadal edycja to status i wyznacz nową date dostawy*/
@@ -110,16 +93,9 @@ class Kernel extends ConsoleKernel
                             $item->save();
                         }
                     }
-
                 }
-
-
-
             }
-
-        //})->at('00:17');
             })->daily();
-
 
 
 

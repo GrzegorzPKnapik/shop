@@ -82,6 +82,16 @@ class AddressController extends Controller
 
     public function destroy(Address $address): JsonResponse{
 
+        if($address->selected)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Nie możesz usunąć głównego adresu!',
+            ]);
+        }
+
+
+
         try {
             $address->delete();
             return response()->json([

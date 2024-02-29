@@ -5,6 +5,7 @@ namespace App\Enums;
 
 class ShoppingListActive
 {
+    //case '1' ok
     const TRUE = true;
     const FALSE = false;
     const NULL = null;

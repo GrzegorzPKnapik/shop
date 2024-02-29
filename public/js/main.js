@@ -1494,7 +1494,9 @@
                 .done(function (response) {
                     $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
                     $("#refreshDayDelete").load(location.href + " #refreshDayDelete")
+                    $("#refreshActive").load(location.href + " #refreshActive")
                     $('.collapse').collapse('hide');
+                    Swal.fire('Przypisany dzień został usunięty ', '', 'success');
                 })
 
                 .fail(function (xhr) {
@@ -1804,6 +1806,8 @@
                     $("#refreshShoppingList").load(location.href + " #refreshShoppingList")
                     $("#refreshDayDelete").load(location.href + " #refreshDayDelete")
                     $('.collapse').collapse('hide');
+                    Swal.fire('Dzień został przypisany ', '', 'success');
+
                 })
 
                 .fail(function (xhr) {

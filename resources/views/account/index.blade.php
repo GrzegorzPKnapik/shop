@@ -49,7 +49,7 @@
                                     <div class="col-lg-4">
                                         <div class="ltn__tab-menu-list mb-50">
                                             <div class="nav">
-                                                <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dashboard
+                                                <a class="active show" data-bs-toggle="tab" href="#liton_tab_1_1">Dom
                                                     <i class="fas fa-home"></i></a>
 
                                                     <a data-bs-toggle="tab" href="#liton_tab_1_2">Zamówienia <i
@@ -66,7 +66,7 @@
                                                 <a href="{{ route('logout') }}"
                                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                                    {{ __('Logout') }}
+                                                    {{ __('Wyloguj') }}
                                                 </a>
                                             </div>
                                         </div>
@@ -376,24 +376,10 @@
                                                                        readonly>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <label>Nazwisko:</label>
-                                                                <input type="text" value="{{ Auth::user()->surname }}" name="ltn__lastname"
-                                                                       readonly>
-                                                            </div>
-                                                            <div class="col-md-6">
                                                                 <label>Email:</label>
                                                                 <input type="email" value="{{ Auth::user()->email }}" name="ltn__lastname"
                                                                        readonly>
                                                             </div>
-                                                            @can('isEmployee')
-                                                                <div class="col-md-6">
-                                                                    <label>Pesel:</label>
-                                                                    <input type="text" value="{{ Auth::user()->pesel }}" name="ltn__lastname"
-                                                                           readonly>
-                                                                </div>
-                                                            @endcan
-
-
 
                                                         </div>
 

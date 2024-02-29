@@ -198,10 +198,16 @@
 
                                                                 <p>
                                                                 @if(!$shopping_list->status->isStop())
-
+                                                                    @if($shopping_list->ADDRESSES_id != null && $shopping_list->address != null)
                                                                 <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                                                                             Wybierz inny adres
                                                                         </a></small></h4>
+                                                                        @else
+                                                                        <h4><small><a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                                                    Wybierz adres
+                                                                                </a></small></h4>
+
+                                                                        @endif
                                                                     @endif
                                                                 </p>
                                                             </div>
@@ -595,7 +601,7 @@
 
                                                 <label>
                                                     <input class="form-check-input" name="checkboxSaveAddres" type="checkbox">
-                                                    <label class="tag-label">Zapisz adres w ksiażce adresów</label>
+                                                    <label class="tag-label">Zapisz adres w ksiażce adresowej</label>
                                                 </label>
                                             </div>
                                         </div>

@@ -93,6 +93,11 @@ class ShoppingListController extends Controller
         $shopping_list->end_mod_date = null;
         $shopping_list->mod_available_date = null;
 
+        if($shopping_list->active)
+        {
+            $shopping_list->active = ShoppingListActive::FALSE;
+            $shopping_list->save();
+        }
 
         try {
             $shopping_list->save();
@@ -422,6 +427,7 @@ class ShoppingListController extends Controller
         if($shopping_list->active == ShoppingListActive::FALSE)
         {
                 $shopping_list->active = ShoppingListActive::TRUE;
+
                 $shopping_list->save();
                 event(new ShoppingListActivated($shopping_list));
             return response()->json([

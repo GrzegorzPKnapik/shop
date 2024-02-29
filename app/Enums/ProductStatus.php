@@ -29,9 +29,9 @@ enum ProductStatus: string
             self::ENABLE => 'Dostępny',
             self::DISABLE,
             self::SOLD_OUT => 'Wyprzedany',
-            // Dodaj inne statusy z ich tekstami
         };
     }
+
 
 
 }

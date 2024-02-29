@@ -380,7 +380,7 @@
 
                                                     <label>
                                                         <input class="form-check-input" name="checkboxSaveAddres" type="checkbox">
-                                                        <label class="tag-label">zapisz adres w ksiażce adresów</label>
+                                                        <label class="tag-label">zapisz adres w ksiażce adresowej</label>
                                                     </label>
                                             </div>
                                             </div>

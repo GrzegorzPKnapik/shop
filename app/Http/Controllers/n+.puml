@@ -1,0 +1,127 @@
+@startuml
+skinparam classFontSize 16
+package "shop" {
+package "app" {
+        package "Console" {
+        class Kernel
+        }
+        package "Enums" {
+        enum ShoppingListMode
+        enum ProducerStatus
+        enum AddressStatus
+        enum CategoryStatus
+        enum OrderStatus
+        enum ProductStatus
+        enum RoleName
+        class ShoppingListActive
+        enum ShoppingListStatus
+                }
+        package "Events" {
+        class PurchaseSuccesful
+        class ShoppingListActivated
+        class UnavailableProductInSL
+                        }
+
+    package "Http" {
+        package "Controllers" {
+        class AccountController
+        class AddressController
+        class AdminPanelController
+        class CartController
+        class CategoryController
+        class CheckoutController
+        class Controller
+        class EmployeePanelController
+        class HomeController
+        class OrderController
+        class ProducerController
+        class ProductController
+        class RoleController
+        class ShopController
+        class ShoppingListController
+        class StatusController
+        class UserController
+        class WelcomeController
+          package "Auth" {
+          class RegisterController
+                    class LoginController
+                                 }
+        }
+        package "Middleware" {
+class CartMiddleware
+        }
+        package "Requests" {
+        class StoreAddressRequest
+        class StoreCategoryRequest
+        class StoreProducerRequest
+        class StoreProductRequest
+            }
+
+    }
+
+    package "Listeners" {
+class SendPurchaseConfirmationEmail
+class SendActivatedConfirmationEmail
+class SendUnavailableProductInSLInformationEmail
+        }
+        package "Mail" {
+class PurchaseConfirmation
+class ShoppingListActivatedConfirmation
+class UnavailableProductInSLInformation
+            }
+            package "Models" {
+class Category
+class Address
+class Description
+class Image
+class Order
+class Producer
+class Product
+class Role
+class Shopping_list
+class Shopping_lists_product
+class Status
+class User
+                }
+
+    package "Providers" {
+class EventServiceProvider
+        }
+        package "Services" {
+class CartService
+}
+}
+package "config" {
+circle "jsvalidation" as Configuration1 <<PHP>>
+    circle "mail" as Configuration2 <<PHP>>
+}
+//
+editRole
+index
+//
+package "public" {
+package "js" {
+class delete
+class main
+
+}
+package "storage" {
+package "products" {
+}
+}
+}
+package "resources" {
+ package "views" {
+
+    }
+
+
+}
+package "routes" {
+    class web
+}
+
+
+
+
+@enduml
