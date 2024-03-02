@@ -85,8 +85,8 @@
                                 <li>
                                     <div class="ltn__grid-list-tab-menu ">
                                         <div class="nav">
-                                            <a class="active show" data-bs-toggle="tab" href="#liton_product_grid"><i class="fas fa-th-large"></i></a>
-                                            <a data-bs-toggle="tab" href="#liton_product_list"><i class="fas fa-list"></i></a>
+<!--                                            <a class="active show" data-bs-toggle="tab" href="#liton_product_grid"><i class="fas fa-th-large"></i></a>
+                                            <a data-bs-toggle="tab" href="#liton_product_list"><i class="fas fa-list"></i></a>-->
                                         </div>
                                     </div>
                                 </li>

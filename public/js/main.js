@@ -1653,7 +1653,6 @@
             })
                 .done(function () {
                     $("#refreshForm").load(location.href + " #refreshForm");
-
                     Swal.fire('Dodano nowy adres', '', 'success');
                 $("#refreshAddress").load(location.href + " #refreshAddress");
 

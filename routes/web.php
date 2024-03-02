@@ -157,6 +157,3 @@ Route::group(['middleware' => 'cart'], function (){
     Route::get('/cart', [CartController::class, 'index'])->middleware('logged')->name('cart.index');;
 });
 
-
-
-

@@ -91,7 +91,7 @@ return [
     'not_regex'            => 'Format :attribute jest nieprawidłowy.',
     'numeric'              => ':attribute musi być liczbą.',
     'present'              => 'Pole :attribute musi być obecne.',
-    'regex'                => 'Format :attribute jest nieprawidłowy.',
+    'regex'                => ':attribute może zawierać jedynie litery.',
     'required'             => 'Pole :attribute jest wymagane.',
     'required_if'          => 'Pole :attribute jest wymagane gdy :other jest :value.',
     'required_unless'      => ':attribute jest wymagany jeżeli :other nie znajduje się w :values.',
